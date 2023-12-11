@@ -1,0 +1,55 @@
+<div id="hero" class="container">
+  <div class="user-input">
+    <h2>Search for tracks</h2>
+    <!-- Id is hardcoded for now, could be made to fetch a random track -->
+    <div class="row">
+      <button class="btn-request" (click)="getTrack('28cnXtME493VX9NOw9cIUh', GetTrackSources.SEARCH)">
+        Fetch Track
+      </button>
+      <input
+        placeholder="What's the key of..."
+        class="search-input"
+        (input)="search()"
+        type="text"
+        [(ngModel)]="searchTerm"
+      />
+      <button
+        class="btn-request"
+        [disabled]="!searchTerm.trim().length"
+        (click)="search()"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <loading-spinner *ngIf="isLoading"></loading-spinner>
+
+    <ng-container *ngIf="searchResults">
+      <div class="search-results-container">
+        <app-search-result
+          [searchResults]="searchResults"
+          (trackSelected)="getTrack($event, GetTrackSources.SEARCH)"
+          (trackSaved)="saveTrack($event)"
+        >
+          ></app-search-result
+        >
+      </div>
+    </ng-container>
+    <ng-container *ngIf="trackData; else emptyCard">
+      <div class="app-result-card-container">
+        <app-result-card
+          [trackData]="trackData.track"
+          [analysisData]="trackData.audioFeatures"
+        ></app-result-card>
+      </div>
+    </ng-container>
+    <ng-template #emptyCard>
+      <div class="empty-card app-result-card-container">
+        <p>No selected track</p>
+        <p>Click on a track to find out more</p>
+      </div>
+    </ng-template>
+  </div>
+</div>
+<div style="height: 100vh;"></div>

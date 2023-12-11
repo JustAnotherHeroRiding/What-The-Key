@@ -1,0 +1,21 @@
+<!-- search-result.component.html -->
+<ng-container *ngIf="searchResults && searchResults.tracks.items">
+  <div
+    *ngFor="let item of searchResults.tracks.items"
+    class="search-item"
+    (click)="selectTrack(item.uri.split(':')[2])"
+  >
+    <h3 class="card-text">{{ item.name }}</h3>
+    <p class="card-text">Album: {{ item.album.name }}</p>
+    <p class="card-text">Artist: {{ item.artists[0].name }}</p>
+    <div class="row">
+
+      <img
+      *ngIf="item.album.images[0]"
+      [src]="item.album.images[0].url"
+      alt="{{ item.name }}"
+      />
+      <button class="btn-save" (click)="saveTrack($event, item.uri.split(':')[2])">Save</button>
+    </div>
+  </div>
+</ng-container>

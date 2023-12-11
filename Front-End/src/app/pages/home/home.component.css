@@ -1,0 +1,101 @@
+.btn-request {
+  padding: 0.6em 0.5em;
+  border: 1px black solid;
+  border-radius: 15px;
+  font-size: 1.3em;
+  background-color: var(--cream);
+  font-weight: 800;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  cursor: pointer;
+}
+
+.btn-request:hover {
+  background-color: var(--cream-light);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1em;
+  gap: 1em;
+}
+
+.user-input {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--black-custom);
+  padding: 1em;
+  border: 1px solid var(--cream);
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  color: white;
+  text-align: center;
+  gap: 1em;
+}
+
+.row {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.search-results-container {
+  overflow-y: auto;
+  max-height: 80vh;
+  background-color: var(--black-custom);
+  color: white;
+  border-radius: 6px;
+  padding: 1em;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border: 1px solid var(--cream);
+  margin-bottom: auto;
+}
+
+.app-result-card-container {
+  display: flex;
+  margin-bottom: auto;
+}
+
+.search-input {
+  padding: 0.5em 1em; /* Adjust padding for better text visibility */
+  border-radius: 25px; /* More rounded edges */
+  border: 2px solid #ccc; /* Subtle border */
+  outline: none; /* Removes the default focus outline */
+  font-size: 1em; /* Adjust font size as needed */
+  color: #333; /* Font color */
+  background-color: #fff; /* Background color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft box shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for interactions */
+}
+
+.search-input::placeholder {
+  color: #999; /* Placeholder text color */
+}
+
+.search-input:focus {
+  border-color: var(--cream); /* Border color when focused */
+  box-shadow: 0 2px 5px var(--cream); /* Enhanced shadow when focused */
+}
+
+.empty-card {
+  background-color: var(--black-custom);
+  color: white;
+  padding: 1em;
+  text-align: center;
+  font-weight: 700;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+@media (max-width: 700px) {
+  .row {
+    flex-direction: column;
+  }
+}

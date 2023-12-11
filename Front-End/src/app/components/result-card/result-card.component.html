@@ -1,0 +1,19 @@
+<!-- result-card.component.html -->
+<div class="card" *ngIf="trackData && analysisData; else emptyCard">
+  <h1 class="card-text">{{ trackData.name }}</h1>
+  <h2 class="card-text">{{ trackData.artists[0].name}}</h2>
+  <img
+    *ngIf="trackData.album.images[0]"
+    [src]="trackData.album.images[0].url"
+    alt="{{ trackData.name }}"
+  />
+  <p>Key: {{ getNoteDisplayName(analysisData.key) }}</p>
+  <p>BPM: {{ analysisData.tempo }}</p>
+  <p>Year: {{ trackData.album.release_date | date : "yyyy" }}</p>
+</div>
+
+<ng-template #emptyCard>
+  <div class="card">
+    <p>No data available</p>
+  </div>
+</ng-template>

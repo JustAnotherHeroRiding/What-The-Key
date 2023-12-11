@@ -1,0 +1,50 @@
+.search-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 0;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.search-item:hover {
+  background-color: var(--cream);
+  color: black;
+  border-radius: 10px;
+}
+
+.search-item img {
+  width: 100px;
+  height: auto;
+}
+
+.card-text {
+  max-width: 20em;
+  text-align: start;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-save {
+  padding: 0.6em 0.5em;
+  border: 1px black solid;
+  border-radius: 15px;
+  font-size: 1.3em;
+  background-color: var(--cream);
+  font-weight: 800;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.btn-save:hover {
+  background-color: var(--black-custom);
+  color: white;
+}
+

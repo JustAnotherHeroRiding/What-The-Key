@@ -1,0 +1,120 @@
+#navbar {
+  background-color: var(--black-custom);
+  color: var(--cream);
+  padding: 0.4em 0.5em;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* Divide the navbar into three columns */
+  align-items: center;
+}
+
+.logo {
+  width: 3em;
+}
+
+.menu-logo,
+.logo {
+  height: auto;
+  border-radius: 99px;
+}
+
+.menu-logo {
+  width: 1.5em;
+}
+
+.middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  grid-column: 2 / 3; /* Place the title in the middle column */
+}
+
+#title span {
+  color: var(--beige-custom);
+  font-weight: 900;
+}
+
+#title {
+  text-align: center;
+  font-weight: 700;
+  margin: 0;
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5em;
+  font-weight: 600;
+  font-size: 1.2em;
+  margin-right: 0.4em;
+  align-items: center;
+}
+
+.menu-container {
+  grid-column: 3 / 4; /* Place the menu in the last column */
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--cream);
+  margin: 3px 0;
+}
+
+.menu > .menu-item {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  gap: 0.3em;
+  align-items: center;
+}
+
+.menu > .menu-item span:hover:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 1px;
+  background-color: var(--beige-custom);
+  border-bottom: 1px dashed var(--beige-custom);
+}
+
+@media (max-width: 630px) {
+  .hamburger {
+    display: grid; /* Show hamburger on small screens */
+    justify-content: end;
+    width: fit-content;
+    margin-left: auto;
+  }
+
+  .menu {
+    display: none; /* Hide the regular menu on small screens */
+    flex-direction: column; /* Stack menu items vertically */
+  }
+
+  .menu.active {
+    display: flex; /* Show menu when active (hamburger clicked) */
+    position: absolute;
+    right: 0px;
+    top: 3em;
+    background-color: black;
+    padding: 1em;
+    border-radius: 6px;
+    border: var(--beige-custom) 1px solid;
+    z-index: 1;
+    text-align: center;
+  }
+
+  #title {
+    grid-column: 2 / 3; /* Center title on small screens */
+  }
+}

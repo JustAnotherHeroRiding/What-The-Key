@@ -1,0 +1,21 @@
+<div class="column">
+  <input
+    (input)="searchSubmit($event)"
+    class="search-input"
+    type="text"
+    placeholder="What are you looking for?"
+  />
+  <div class="filters" id="filtersContainer">
+    <button *ngFor="let filter of filters" class="filter-btn">
+      {{ filter }}
+    </button>
+  </div>
+  <div class="grid-container">
+    <div *ngFor="let trackData of displayedLibrary">
+      <app-track
+        [trackData]="trackData"
+        (deleteRequest)="deleteTrack(trackData)"
+      ></app-track>
+    </div>
+  </div>
+</div>

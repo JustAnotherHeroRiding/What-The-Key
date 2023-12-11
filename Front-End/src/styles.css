@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("../node_modules/ngx-toastr/toastr.css");
+
+:root {
+  --black-custom: #000000;
+  --beige-custom: #f4dfc8;
+  --cream: #f4eae0;
+  --cream-light: #faf6f0;
+  --beige-darker: #e0dcd6;
+}
+
+* {
+  font-family: "Figtree", sans-serif;
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+main {
+  background-image: url("assets/background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 1em 0;
+}

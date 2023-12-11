@@ -1,0 +1,28 @@
+<nav id="navbar">
+  <div class="middle">
+    <img class="logo" src="../../assets/logo.png" alt="" />
+    <h1 id="title">What<span>The</span>Key</h1>
+  </div>
+  <div class="menu-container">
+    <div class="hamburger" (click)="toggleMenu()" *ngIf="isSmallScreen">
+      <!-- Hamburger Icon Lines -->
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div [class.active]="menuActive" class="menu">
+      <div (click)="navigateTo('/')" class="menu-item">
+        <span> Home</span>
+        <img class="menu-logo" src="../../assets/home.png" alt="" />
+      </div>
+      <div (click)="navigateTo('/library')" class="menu-item">
+        <span> Library</span>
+        <img class="menu-logo" src="../../assets/library.png" alt="" />
+      </div>
+      <div (click)="navigateTo('/deleted')" class="menu-item">
+        <span> Deleted</span>
+        <img class="menu-logo" src="../../assets/deleted.png" alt="" />
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,85 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.search-input {
+  background-color: var(--black-custom);
+  padding: 0.4em 0.6em;
+  border: 1px solid var(--cream);
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  color: white;
+  text-align: center;
+  gap: 1em;
+  font-size: 1.2em;
+  width: 35%;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  color: white;
+  padding: 1em;
+  background-color: black;
+  border: 1px solid var(--cream);
+  width: 70%;
+}
+
+.filter-btn {
+  padding: 0.6em 0.5em;
+  border: 1px black solid;
+  border-radius: 15px;
+  font-size: 1em;
+  background-color: var(--cream);
+  font-weight: 800;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  cursor: pointer;
+}
+
+.filter-btn:hover {
+  background-color: var(--cream-light);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(250px, 1fr)
+  ); /* Adjust minmax as needed */
+  grid-auto-rows: 1fr; /* Makes rows take up equal space */
+  gap: 10px;
+  text-align: center;
+  width: 70%;
+  margin: 0 auto;
+  background-color: black;
+  padding: 1em;
+  border: 1px solid var(--cream);
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  color: white;
+}
+
+@media (max-width: 800px) {
+  .grid-container {
+    width: 90%;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* For very small screens */
+@media (max-width: 400px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* Single column layout */
+  }
+}

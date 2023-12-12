@@ -11,139 +11,17 @@ datasource db {
 }
 
 model User {
-  id      Int     @id @default(autoincrement())
-  email   String  @unique
-  name    String?
-  library Track[]
+  id         Int     @id @default(autoincrement())
+  email      String  @unique
+  name       String?
+  library    Track[] @relation("UserLibrary") // Explicit relation field for library
+  recycleBin Track[] @relation("UserRecycleBin") // Explicit relation field for recycle bin
 }
 
 model Track {
-  albumId           String
-  album             SpotifyAlbum        @relation(fields: [albumId], references: [id])
-  artists           TrackArtist[] // This will link to the TrackArtist join table
-  available_markets String[]
-  disc_number       Int
-  duration_ms       Int
-  explicit          Boolean
-  external_ids      SpotifyExternalIds  @relation(fields: [], references: [])
-  external_urls     SpotifyExternalUrls @relation(fields: [], references: [])
-  href              String
-  id                String              @id
-  is_playable       Boolean
-  linked_from       String?
-  restrictions      SpotifyRestrictions @relation(fields: [], references: [])
-  name              String
-  popularity        Int
-  preview_url       String
-  track_number      Int
-  type              String
-  uri               String
-  is_local          Boolean
-  User              User?               @relation(fields: [userId], references: [id])
-  userId            Int?
-  SpotifyArtist     SpotifyArtist[]
-}
-
-model TrackArtist {
-  trackId  String
-  track    Track         @relation(fields: [trackId], references: [id])
-  artistId String
-  artist   SpotifyArtist @relation(fields: [artistId], references: [id])
-
-  @@id([trackId, artistId])
-}
-
-model SpotifyAlbum {
-  album_type             String
-  total_tracks           Int
-  available_markets      String[]
-  external_urls          SpotifyExternalUrls @relation(fields: [], references: [])
-  href                   String
-  id                     String              @id
-  images                 SpotifyImage[]
-  name                   String
-  release_date           String
-  release_date_precision String
-  restrictions           SpotifyRestrictions @relation(fields: [], references: [])
-  type                   String
-  uri                    String
-  artists                SpotifyArtist[]     @relation(references: [id])
-  Track                  Track[]
-}
-
-model SpotifyArtist {
-  external_urls SpotifyExternalUrls @relation(fields: [], references: [])
-  followers     SpotifyFollowers    @relation(fields: [], references: [])
-  genres        String[]
-  href          String
-  id            String              @id
-  images        SpotifyImage[]
-  name          String
-  popularity    Int
-  type          String
-  uri           String
-  albums        SpotifyAlbum[]      @relation(references: [id])
-  Track         Track?              @relation(fields: [trackId], references: [id])
-  trackId       Int?
-  tracks        TrackArtist[]
-}
-
-model SpotifyExternalUrls {
-  id            Int             @id @default(autoincrement())
-  spotify       String
-  Track         Track[]
-  SpotifyAlbum  SpotifyAlbum[]
-  SpotifyArtist SpotifyArtist[]
-}
-
-model SpotifyImage {
-  id            Int           @id @default(autoincrement())
-  url           String
-  height        Int
-  width         Int
-  SpotifyAlbum  SpotifyAlbum  @relation(fields: [], references: [])
-  SpotifyArtist SpotifyArtist @relation(fields: [], references: [])
-}
-
-model SpotifyRestrictions {
-  id           Int            @id @default(autoincrement())
-  reason       String
-  Track        Track[]
-  SpotifyAlbum SpotifyAlbum[]
-}
-
-model SpotifyExternalIds {
-  id    Int     @id @default(autoincrement())
-  isrc  String?
-  ean   String?
-  upc   String?
-  Track Track[]
-}
-
-model SpotifyFollowers {
-  id            Int             @id @default(autoincrement())
-  href          String?
-  total         Int
-  SpotifyArtist SpotifyArtist[]
-}
-
-model AudioFeatures {
-  acousticness     Float
-  analysis_url     String
-  danceability     Float
-  duration_ms      Float
-  energy           Float
   id               String @id
-  instrumentalness Float
-  key              Int
-  liveness         Float
-  loudness         Float
-  mode             Float
-  speechiness      Float
-  tempo            Float
-  time_signature   Float
-  track_href       String
-  type             String
-  uri              String
-  valence          Float
+  libraryUserId    Int? // Field to connect track to user's library
+  recycleBinUserId Int? // Field to connect track to user's recycle bin
+  UserLibrary      User?  @relation("UserLibrary", fields: [libraryUserId], references: [id]) // Relation to User's library
+  UserRecycleBin   User?  @relation("UserRecycleBin", fields: [recycleBinUserId], references: [id]) // Relation to User's recycle bin
 }

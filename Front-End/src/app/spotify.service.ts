@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError, switchMap, forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { SpotifyTracksSearchResult } from './spotify-types';
+import { SpotifyItem, SpotifyTracksSearchResult } from './spotify-types';
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from 'env';
+import { TrackData } from './pages/home/home.component';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class SpotifyService {
   private readonly clientId = SPOTIFY_CLIENT_ID; // Don't forget to delete when pushing
   private readonly clientSecret = SPOTIFY_CLIENT_SECRET;
@@ -45,7 +45,7 @@ export class SpotifyService {
       );
   }
 
-  fetchTrack(trackId: string): Observable<any> {
+  fetchTrack(trackId: string): Observable<SpotifyItem> {
     return this.getAuthToken().pipe(
       switchMap(() => this.makeTrackRequest(trackId)),
       catchError((error) => throwError(() => error))

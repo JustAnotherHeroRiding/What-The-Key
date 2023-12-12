@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TrackComponent } from './components/track/track.component';
 import { SingleTrackPageComponent } from './pages/single-track-page/single-track-page.component';
+import { LogInComponent } from './pages/auth/log-in/log-in.component';
+import { AccountComponent } from './pages/account/account.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { SingleTrackPageComponent } from './pages/single-track-page/single-track
     HomeComponent,
     TrackComponent,
     SingleTrackPageComponent,
+    LogInComponent,
+    AccountComponent,
+    AvatarComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +42,7 @@ import { SingleTrackPageComponent } from './pages/single-track-page/single-track
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot({
       timeOut: 2500,
       positionClass: 'toast-bottom-right',

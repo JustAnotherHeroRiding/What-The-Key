@@ -1,23 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from './spotify.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, of } from 'rxjs';
 import { SpotifyTracksSearchResult } from './spotify-types';
+import { SupabaseService } from './supabase.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   readonly title = 'What-the-key';
   trackData: any;
   private searchTerm$ = new Subject<string>();
   searchTerm: string = ''; // Add this line
   isLoading = false;
+  session = this.supabase.session;
 
   searchResults: SpotifyTracksSearchResult | null = null;
 
-  constructor(private spotifyService: SpotifyService) {
+  constructor(
+    private spotifyService: SpotifyService,
+    private supabase: SupabaseService
+  ) {
     this.searchTerm$
       .pipe(
         debounceTime(600),
@@ -66,8 +71,11 @@ export class AppComponent {
   }
 
   search() {
-
     // Emit the trimmed search term into the stream
     this.searchTerm$.next(this.searchTerm.trim());
+  }
+
+  ngOnInit(): void {
+    this.supabase.authChanges((_, session) => (this.session = session));
   }
 }

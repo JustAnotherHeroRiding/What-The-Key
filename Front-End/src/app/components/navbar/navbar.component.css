@@ -7,7 +7,7 @@
 }
 
 .logo {
-  width: 3em;
+  width: 2.5em;
 }
 
 .menu-logo,
@@ -58,6 +58,7 @@
   grid-area: start;
   display: flex;
   justify-content: flex-start;
+  gap: 1em;
 }
 
 .middle {
@@ -68,6 +69,7 @@
   grid-area: end;
   display: flex;
   justify-content: flex-end;
+  gap: 1em;
 }
 
 .auth {

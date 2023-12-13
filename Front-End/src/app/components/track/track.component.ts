@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class TrackComponent {
   @Input() trackData!: TrackData;
   @Output() deleteRequest = new EventEmitter<TrackData>();
+  @Output() restore = new EventEmitter<TrackData>();
 
   constructor(private router: Router) {}
 
@@ -24,7 +25,15 @@ export class TrackComponent {
     this.deleteRequest.emit(this.trackData);
   }
 
+  requestRestore(event: Event) {
+    event.stopPropagation();
+    this.restore.emit(this.trackData);
+  }
+
   goToTrackPage(trackId: string) {
     this.router.navigate(['/track', trackId]);
+  }
+  isDeletedPage(): boolean {
+    return this.router.url.startsWith('/deleted');
   }
 }

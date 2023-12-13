@@ -77,6 +77,29 @@ export class DeletedComponent {
     }
   }
 
+  restoreTrack(track: TrackData) {
+    try {
+      // Fetch the main library from local storage
+      const libraryRaw = localStorage.getItem('library'); // Assuming 'library' is the key for your main library
+      const library = libraryRaw ? JSON.parse(libraryRaw) : [];
+  
+      // Add the track back to the main library
+      library.push(track);
+  
+      // Update the main library in local storage
+      localStorage.setItem('library', JSON.stringify(library));
+  
+      // Remove the track from the recycling bin
+      this.deleteTrack(track);
+  
+      // Display success toast
+      this.toastr.success('Track has been restored to the library');
+    } catch (error) {
+      console.error('Error restoring track:', error);
+      this.toastr.error('Failed to restore track');
+    }
+  }
+
   filterTracks(query: string | null) {
     if (!query) {
       this.displayedLibrary = [...this.originalLibrary]; // Reset to original list if query is empty

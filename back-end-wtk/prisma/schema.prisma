@@ -13,7 +13,7 @@ datasource db {
 model User {
   id         Int     @id @default(autoincrement())
   email      String  @unique
-  name       String?
+  name       String
   library    Track[] @relation("UserLibrary") // Explicit relation field for library
   recycleBin Track[] @relation("UserRecycleBin") // Explicit relation field for recycle bin
 }

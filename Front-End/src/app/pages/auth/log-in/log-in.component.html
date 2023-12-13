@@ -4,7 +4,7 @@
     <div class="">
       <div class="flex-container" aria-live="polite">
         <p class="description">Sign in via magic link with your email below</p>
-        <form  [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="form-item">
+        <form [formGroup]="signInForm" class="form-item">
           <div class="form-item">
             <label for="email">Email</label>
             <input
@@ -15,9 +15,69 @@
               placeholder="Your email"
             />
           </div>
+          <div class="form-item">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              formControlName="password"
+              class="passwordField"
+              type="password"
+              placeholder="Enter Your Psassword"
+            />
+          </div>
           <div>
-            <button type="submit" class="button block" [disabled]="loading">
-              {{ loading ? 'Loading' : 'Send magic link' }}
+            <button
+              (click)="onSubmit('magicLink')"
+              type="submit"
+              class="button block"
+              [disabled]="loading"
+            >
+              {{ loading ? "Loading" : "Send magic link" }}
+            </button>
+            <button
+              (click)="onSubmit('signIn')"
+              type="submit"
+              class="button block"
+              [disabled]="loading"
+            >
+              {{ loading ? "Loading" : "Sign In" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="">
+      <div class="flex-container" aria-live="polite">
+        <p class="description">Sign Up</p>
+        <form [formGroup]="signInForm" class="form-item">
+          <div class="form-item">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              formControlName="email"
+              class="inputField"
+              type="email"
+              placeholder="Your email"
+            />
+          </div>
+          <div class="form-item">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              formControlName="password"
+              class="passwordField"
+              type="password"
+              placeholder="Enter Your Psassword"
+            />
+          </div>
+          <div>
+            <button
+              (click)="onSubmit('signUp')"
+              type="submit"
+              class="button block"
+              [disabled]="loading"
+            >
+              {{ loading ? "Loading" : "Sign Up" }}
             </button>
           </div>
         </form>
@@ -25,4 +85,3 @@
     </div>
   </ng-template>
 </div>
-

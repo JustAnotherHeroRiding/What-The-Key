@@ -13,6 +13,7 @@ export class LogInComponent {
 
   signInForm = this.formBuilder.group({
     email: '',
+    password: '',
   });
 
   constructor(
@@ -20,7 +21,7 @@ export class LogInComponent {
     private readonly formBuilder: FormBuilder
   ) {}
 
-  async onSubmit(): Promise<void> {
+ /*  async onSubmit(): Promise<void> {
     try {
       this.loading = true;
       const email = this.signInForm.value.email as string;
@@ -35,7 +36,40 @@ export class LogInComponent {
       this.signInForm.reset();
       this.loading = false;
     }
+  } */
+
+  async onSubmit(action: 'magicLink' | 'signIn' | 'signUp'): Promise<void> {
+    try {
+      this.loading = true;
+      const email = this.signInForm.value.email as string;
+      const password = this.signInForm.value.password as string;
+  
+      let result;
+      if (action === 'magicLink') {
+        result = await this.supabase.signIn(email); // Magic link sign-in
+      } else if (action === 'signIn') {
+        result = await this.supabase.signIn(email, password); // Regular sign-in
+      } else if (action === 'signUp') {
+        result = await this.supabase.signUp(email, password); // Sign-up
+      }
+  
+      if (result && result.error) throw result.error;
+  
+      if (action === 'magicLink') {
+        alert('Check your email for the login link!');
+      } else {
+        // Handle successful sign-in or sign-up
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    } finally {
+      this.signInForm.reset();
+      this.loading = false;
+    }
   }
+  
 
   ngOnInit(): void {
     // Fetch the initial session state

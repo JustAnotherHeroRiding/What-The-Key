@@ -1,12 +1,11 @@
-<div class="container" style="padding: 50px 0 100px 0">
+<div class="">
   <app-account *ngIf="session; else auth" [session]="session"></app-account>
   <ng-template #auth>
-    <div class="row flex-center flex">
-      <div class="col-6 form-widget" aria-live="polite">
-        <h1 class="header">Supabase + Angular</h1>
+    <div class="">
+      <div class="flex-container" aria-live="polite">
         <p class="description">Sign in via magic link with your email below</p>
-        <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="form-widget">
-          <div>
+        <form  [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="form-item">
+          <div class="form-item">
             <label for="email">Email</label>
             <input
               id="email"

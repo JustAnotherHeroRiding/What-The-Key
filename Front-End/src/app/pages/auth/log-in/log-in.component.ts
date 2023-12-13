@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Session } from '@supabase/supabase-js';
 import { SupabaseService } from 'src/app/supabase.service';
 @Component({
   selector: 'app-log-in',
@@ -8,7 +9,7 @@ import { SupabaseService } from 'src/app/supabase.service';
 })
 export class LogInComponent {
   loading = false;
-  session = this.supabase.session;
+  session = this.supabase.session
 
   signInForm = this.formBuilder.group({
     email: '',
@@ -37,6 +38,13 @@ export class LogInComponent {
   }
 
   ngOnInit(): void {
-    this.supabase.authChanges((_, session) => (this.session = session));
-  }
+    // Fetch the initial session state
+    this.session = this.supabase.session;
+
+    // Subscribe to future session changes
+    this.supabase.authChanges((_, session) => {
+      this.session = session;
+      //console.log('Session updated:', session);
+    });
+  } 
 }

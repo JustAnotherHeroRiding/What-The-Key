@@ -3,7 +3,11 @@
   (ngSubmit)="updateProfile()"
   class="form-widget"
 >
-  <app-avatar [avatarUrl]="this.avatarUrl" (upload)="updateAvatar($event)">
+  <app-avatar
+    [avatarUrl]="this.avatarUrl"
+    [position]="location"
+    (upload)="updateAvatar($event)"
+  >
   </app-avatar>
 
   <div>

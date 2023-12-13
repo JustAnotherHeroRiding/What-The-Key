@@ -39,6 +39,10 @@
   font-weight: 700;
   margin: 0;
 }
+.menu-all {
+  display: none; /* Initially hidden */
+  flex-direction: column; /* Stack menu items vertically */
+}
 
 .menu {
   display: flex;

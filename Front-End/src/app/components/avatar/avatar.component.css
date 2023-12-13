@@ -1,0 +1,9 @@
+.profile-picture {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}

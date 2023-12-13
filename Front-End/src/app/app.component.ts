@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SpotifyService } from './spotify.service';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, of } from 'rxjs';
 import { SpotifyTracksSearchResult } from './spotify-types';
 import { SupabaseService } from './supabase.service';
+import { Session } from '@supabase/supabase-js';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   readonly title = 'What-the-key';
   trackData: any;
   private searchTerm$ = new Subject<string>();
   searchTerm: string = ''; // Add this line
   isLoading = false;
-  session = this.supabase.session;
+  session : Session | null = null;
+  private sessionSubscription?: Subscription;
+  isLoadingSession = true; // New property to track session loading state
 
   searchResults: SpotifyTracksSearchResult | null = null;
 
@@ -75,7 +78,17 @@ export class AppComponent implements OnInit {
     this.searchTerm$.next(this.searchTerm.trim());
   }
 
-  ngOnInit(): void {
-    this.supabase.authChanges((_, session) => (this.session = session));
+  ngOnInit() {
+    this.sessionSubscription = this.supabase.session$.subscribe((session) => {
+      this.session = session;
+      this.isLoadingSession = false; // Update loading state
+      //console.log('Session:', session);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.sessionSubscription) {
+      this.sessionSubscription.unsubscribe();
+    }
   }
 }

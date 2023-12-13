@@ -10,9 +10,9 @@ import { Profile, SupabaseService } from 'src/app/supabase.service';
 export class AccountComponent implements OnInit {
   loading = false;
   profile!: Profile;
+  location = "account"
 
-  @Input()
-  session!: AuthSession;
+  @Input() session!: AuthSession;
 
   updateProfileForm = this.formBuilder.group({
     username: '',
@@ -26,15 +26,14 @@ export class AccountComponent implements OnInit {
   ) {}
 
   get avatarUrl() {
-    return this.updateProfileForm.value.avatar_url as string
+    return this.updateProfileForm.value.avatar_url as string;
   }
   async updateAvatar(event: string): Promise<void> {
     this.updateProfileForm.patchValue({
       avatar_url: event,
-    })
-    await this.updateProfile()
+    });
+    await this.updateProfile();
   }
-
 
   async ngOnInit(): Promise<void> {
     await this.getProfile();

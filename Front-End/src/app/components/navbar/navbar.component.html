@@ -1,5 +1,9 @@
 <nav id="navbar">
   <div class="menu-container">
+    <div *ngIf="isSmallScreen" class="middle menu-middle">
+      <img class="logo" src="../../assets/logo.png" alt="" />
+      <h1 id="title">What<span>The</span>Key</h1>
+    </div>
     <div class="hamburger" (click)="toggleMenu()" *ngIf="isSmallScreen">
       <!-- Hamburger Icon Lines -->
       <span></span>
@@ -8,38 +12,42 @@
     </div>
     <div [class.active]="menuActive" class="menu-all">
       <!-- Start -->
-      <div (click)="navigateTo('/')" class="menu-item">
-        <span> Home</span>
-        <img class="menu-logo" src="../../assets/home.png" alt="" />
-      </div>
-      <div (click)="navigateTo('/library')" class="menu-item">
-        <span> Library</span>
-        <img class="menu-logo" src="../../assets/library.png" alt="" />
-      </div>
-      <div (click)="navigateTo('/deleted')" class="menu-item">
-        <span> Deleted</span>
-        <img class="menu-logo" src="../../assets/deleted.png" alt="" />
+      <div class="menu-start">
+        <div (click)="navigateTo('/')" class="menu-item">
+          <span> Home</span>
+          <img class="menu-logo" src="../../assets/home.png" alt="" />
+        </div>
+        <div (click)="navigateTo('/library')" class="menu-item">
+          <span> Library</span>
+          <img class="menu-logo" src="../../assets/library.png" alt="" />
+        </div>
+        <div (click)="navigateTo('/deleted')" class="menu-item">
+          <span> Deleted</span>
+          <img class="menu-logo" src="../../assets/deleted.png" alt="" />
+        </div>
       </div>
       <!-- Middle -->
-      <div class="middle">
+      <div *ngIf="!isSmallScreen" class="middle menu-middle">
         <img class="logo" src="../../assets/logo.png" alt="" />
         <h1 id="title">What<span>The</span>Key</h1>
       </div>
       <!-- Right -->
-      <div *ngIf="session; else loginTemplate" class="menu-item">
-        <app-avatar
-          [avatarUrl]="profile?.avatar_url!"
-          [position]="location"
-        ></app-avatar>
-        <span (click)="navigateTo('/account')">{{ profile?.username }}</span>
-        <span (click)="signOut()">Log Out</span>
-      </div>
-
-      <ng-template #loginTemplate>
-        <div (click)="navigateTo('/account')" class="menu-item">
-          <span>Log In</span>
+      <div class="menu-end">
+        <div *ngIf="session; else loginTemplate" class="menu-item auth">
+          <app-avatar
+            [avatarUrl]="profile?.avatar_url!"
+            [position]="location"
+          ></app-avatar>
+          <span (click)="navigateTo('/account')">{{ profile?.username }}</span>
+          <span (click)="signOut()">Log Out</span>
         </div>
-      </ng-template>
+
+        <ng-template #loginTemplate>
+          <div (click)="navigateTo('/account')" class="menu-item">
+            <span>Log In</span>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 </nav>

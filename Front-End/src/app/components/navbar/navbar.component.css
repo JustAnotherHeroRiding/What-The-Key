@@ -3,7 +3,6 @@
   color: var(--cream);
   padding: 0.4em 0.5em;
   display: grid;
-  grid-template-columns: 1fr auto 1fr; /* Divide the navbar into three columns */
   align-items: center;
 }
 
@@ -26,7 +25,6 @@
   justify-content: center;
   align-items: center;
   gap: 1em;
-  grid-column: 2 / 3; /* Place the title in the middle column */
 }
 
 #title span {
@@ -39,23 +37,47 @@
   font-weight: 700;
   margin: 0;
 }
-.menu-all {
-  display: none; /* Initially hidden */
-  flex-direction: column; /* Stack menu items vertically */
+
+.menu-all.active {
+  display: flex;
 }
 
-.menu {
-  display: flex;
-  justify-content: flex-end;
+.menu-all {
+  width: 100%;
+  display: grid;
+  grid-template-areas: "start middle end"; /* Define areas */
+  grid-template-columns: 1fr auto 1fr; /* three columns layout */
   gap: 0.5em;
+  align-items: center;
   font-weight: 600;
   font-size: 1.2em;
   margin-right: 0.4em;
-  align-items: center;
+}
+
+.menu-start {
+  grid-area: start;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.middle {
+  grid-area: middle;
+}
+
+.menu-end {
+  grid-area: end;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.auth {
+  display: flex;
+  gap: 0.4em;
 }
 
 .menu-container {
-  grid-column: 3 / 4; /* Place the menu in the last column */
+  display: flex;
+  align-items: center;
 }
 
 .hamburger {
@@ -71,7 +93,7 @@
   margin: 3px 0;
 }
 
-.menu > .menu-item {
+.menu-all > .menu-item {
   position: relative;
   cursor: pointer;
   display: flex;
@@ -80,7 +102,7 @@
   align-items: center;
 }
 
-.menu > .menu-item span:hover:after {
+.menu-all > .menu-item span:hover:after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -100,12 +122,12 @@
     margin-left: auto;
   }
 
-  .menu {
+  .menu-all {
     display: none; /* Hide the regular menu on small screens */
     flex-direction: column; /* Stack menu items vertically */
   }
 
-  .menu.active {
+  .menu-all.active {
     display: flex; /* Show menu when active (hamburger clicked) */
     position: absolute;
     right: 0px;
@@ -118,7 +140,17 @@
     text-align: center;
   }
 
+  .menu-start {
+    flex-direction: column;
+  }
+  .auth {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   #title {
-    grid-column: 2 / 3; /* Center title on small screens */
+    text-align: left;
+    flex-grow: 1; /* Allow title to take up remaining space */
   }
 }

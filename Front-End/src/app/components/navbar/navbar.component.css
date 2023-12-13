@@ -93,7 +93,7 @@
   margin: 3px 0;
 }
 
-.menu-all > .menu-item {
+.menu-all  .menu-item {
   position: relative;
   cursor: pointer;
   display: flex;
@@ -102,7 +102,7 @@
   align-items: center;
 }
 
-.menu-all > .menu-item span:hover:after {
+.menu-all  .menu-item span:hover:after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -113,6 +113,7 @@
   background-color: var(--beige-custom);
   border-bottom: 1px dashed var(--beige-custom);
 }
+
 
 @media (max-width: 630px) {
   .hamburger {

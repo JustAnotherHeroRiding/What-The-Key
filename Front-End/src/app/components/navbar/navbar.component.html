@@ -38,12 +38,12 @@
             [avatarUrl]="profile?.avatar_url!"
             [position]="location"
           ></app-avatar>
-          <span (click)="navigateTo('/account')">{{ profile?.username }}</span>
-          <span (click)="signOut()">Log Out</span>
+          <span class="pointer" (click)="navigateTo('/account')">{{ profile?.username }}</span>
+          <span class="pointer" (click)="signOut()">Log Out</span>
         </div>
 
         <ng-template #loginTemplate>
-          <div (click)="navigateTo('/account')" class="menu-item">
+          <div (click)="navigateTo('/account')" class="menu-item pointer">
             <span>Log In</span>
           </div>
         </ng-template>

@@ -17,7 +17,7 @@ export class UserController {
     return user;
   }
 
-  @Get('nest/api/getAllUsers')
+  @Get('getAllUsers')
   async getAllUsers() {
     const { data, error } = await supabaseAdmin.auth.admin.listUsers();
 

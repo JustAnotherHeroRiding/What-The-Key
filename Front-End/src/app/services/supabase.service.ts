@@ -70,6 +70,17 @@ export class SupabaseService {
       return this.supabase.auth.signInWithOtp({ email });
     }
   }
+  signInWithGithub() {
+    return this.supabase.auth.signInWithOAuth({
+      provider: 'github',
+    });
+  }
+
+  signInWithSpotify() {
+    return this.supabase.auth.signInWithOAuth({
+      provider: 'spotify',
+    });
+  }
 
   async signUp(email: string, password: string, name: string) {
     // Attempt to sign up the user

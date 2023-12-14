@@ -43,9 +43,13 @@
           {{ loading ? "Loading" : "Sign In" }}
         </button>
       </div>
+      <div class="form-item-row provider-icons">
+        <app-github-provider></app-github-provider>
+        <app-spotify-provider></app-spotify-provider>
+      </div>
     </form>
     <p>Don't Have an account?</p>
-    <button (click)="navigateTo('register')">Sign up</button>
+    <button class="end" (click)="navigateTo('register')">Sign up</button>
   </div>
   <!-- Register Form -->
   <div
@@ -97,6 +101,6 @@
       </div>
     </form>
     <p>Have an account already?</p>
-    <button (click)="navigateTo('login')">Login</button>
+    <button class="end" (click)="navigateTo('login')">Login</button>
   </div>
 </ng-template>

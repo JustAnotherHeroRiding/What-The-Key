@@ -28,6 +28,10 @@
   gap: 1em;
 }
 
+.provider-icons {
+  justify-content: center;
+  align-items: center;
+}
 .form-item input {
   padding: 0.4em 0.8em;
   border-radius: 4px;
@@ -44,7 +48,15 @@
   cursor: pointer;
 }
 
+.flex-container button:hover {
+  opacity: 0.85;
+}
+
 .title {
   font-weight: 800;
   color: var(--cream);
+}
+
+.end  {
+  margin-left: auto;
 }

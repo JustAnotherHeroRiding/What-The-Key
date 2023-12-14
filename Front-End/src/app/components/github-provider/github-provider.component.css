@@ -1,0 +1,8 @@
+.github-icon {
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.github-icon:hover {
+    opacity: 0.85;
+}

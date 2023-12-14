@@ -27,7 +27,7 @@ export class SingleTrackPageComponent implements OnInit {
   loadTrackData(trackId: string): void {
     this.isLoading = true;
 
-    const targetTrack = this.spotify.fetchTrack(trackId).subscribe({
+    this.spotify.fetchTrack(trackId).subscribe({
       next: (data) => {
         this.isLoading = false;
         this.trackData = data as TrackData;

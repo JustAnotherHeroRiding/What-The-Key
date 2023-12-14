@@ -1,0 +1,8 @@
+.spotify-icon {
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.spotify-icon:hover {
+    opacity: 0.85;
+}

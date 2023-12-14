@@ -19,6 +19,8 @@ import { SingleTrackPageComponent } from './pages/single-track-page/single-track
 import { LogInComponent } from './pages/auth/log-in/log-in.component';
 import { AccountComponent } from './pages/account/account.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
+import { GithubProviderComponent } from './components/github-provider/github-provider.component';
+import { SpotifyProviderComponent } from './components/spotify-provider/spotify-provider.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { AvatarComponent } from './components/avatar/avatar.component';
     LogInComponent,
     AccountComponent,
     AvatarComponent,
+    GithubProviderComponent,
+    SpotifyProviderComponent,
   ],
   imports: [
     BrowserModule,

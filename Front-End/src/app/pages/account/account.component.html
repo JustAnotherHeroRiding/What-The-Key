@@ -1,5 +1,5 @@
 <div class="flex-container">
-  <h1 class="title">{{ profile.username }}</h1>
+  <h1 *ngIf="profile && profile.username" class="title"> {{ profile.username }}</h1>
   <form
     class="flex-container"
     [formGroup]="updateProfileForm"

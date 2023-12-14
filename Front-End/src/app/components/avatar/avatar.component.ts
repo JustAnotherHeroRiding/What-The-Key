@@ -17,7 +17,7 @@ export class AvatarComponent {
     }
   }
 
-  @Input() position? : string
+  @Input() position?: string;
 
   @Output() upload = new EventEmitter<string>();
 

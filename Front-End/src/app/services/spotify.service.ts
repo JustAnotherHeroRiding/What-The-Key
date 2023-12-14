@@ -45,7 +45,7 @@ export class SpotifyService {
       );
   }
 
-  fetchTrack(trackId: string): Observable<SpotifyItem> {
+  fetchTrack(trackId: string): Observable<TrackData> {
     return this.getAuthToken().pipe(
       switchMap(() => this.makeTrackRequest(trackId)),
       catchError((error) => throwError(() => error))

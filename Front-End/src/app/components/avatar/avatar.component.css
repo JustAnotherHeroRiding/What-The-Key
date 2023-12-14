@@ -1,12 +1,23 @@
-.profile-picture {
-    width: 1.5em;
-    height: 1.5em;
-    border-radius: 99px;
+.navbar {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.account {
+  max-width: 10vw;
+  width: 70%;
+  height: auto;
+}
+
+.navbar,
+.account {
+  border-radius: 999px;
+  border: var(--cream) 2px solid;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TrackData } from '../home/home.component';
+import { SpotifyService } from 'src/app/services/spotify.service';
+import { SpotifyItem } from 'src/app/utils/spotify-types';
 
 @Component({
   selector: 'app-single-track-page',
@@ -9,7 +11,9 @@ import { TrackData } from '../home/home.component';
 })
 export class SingleTrackPageComponent implements OnInit {
   trackData?: TrackData;
-  constructor(private route: ActivatedRoute) {}
+  isLoading = false;
+
+  constructor(private route: ActivatedRoute, private spotify: SpotifyService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -21,14 +25,17 @@ export class SingleTrackPageComponent implements OnInit {
   }
 
   loadTrackData(trackId: string): void {
-    const tracks: TrackData[] = JSON.parse(
-      localStorage.getItem('library') || '[]'
-    );
-    const targetTrack = tracks.find((track) => track.track.id === trackId);
-    if (targetTrack) {
-      this.trackData = targetTrack;
-    } else {
-      console.log('Track not found');
-    }
+    this.isLoading = true;
+
+    const targetTrack = this.spotify.fetchTrack(trackId).subscribe({
+      next: (data) => {
+        this.isLoading = false;
+        this.trackData = data as TrackData;
+      },
+      error: (error) => {
+        console.error('There was an error, no track was found', error);
+        this.isLoading = false;
+      },
+    });
   }
 }

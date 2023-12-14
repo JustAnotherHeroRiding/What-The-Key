@@ -3,6 +3,7 @@
       [src]="_avatarUrl ? _avatarUrl : '../assets/default-user.png'"
       alt="Avatar"
       class="profile-picture"
+      [ngClass]="position"
     />
   </div>
   <div *ngIf="!_avatarUrl" class="" style=""></div>

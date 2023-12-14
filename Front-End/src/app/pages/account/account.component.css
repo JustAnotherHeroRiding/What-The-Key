@@ -37,7 +37,8 @@
   border-radius: 4px;
 }
 
-.form-item button, .form-item-row button {
+.form-item button,
+.form-item-row button {
   padding: 0.6em 0.5em;
   border: 1px black solid;
   border-radius: 15px;
@@ -48,9 +49,9 @@
   cursor: pointer;
 }
 
-
 .title {
   font-weight: 800;
   color: var(--cream);
   width: 70%;
+  word-break: normal;
 }

@@ -5,6 +5,7 @@ import { DeletedComponent } from './pages/deleted/deleted.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SingleTrackPageComponent } from './pages/single-track-page/single-track-page.component';
 import { LogInComponent } from './pages/auth/log-in/log-in.component';
+import { ApiPlaygroundComponent } from './pages/api-playground/api-playground.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LogInComponent },
   { path: 'register', component: LogInComponent },
   { path: 'account', component: LogInComponent },
+  { path: 'api-playground', component: ApiPlaygroundComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 

@@ -6,9 +6,16 @@ import { UserController } from './controllers/auth.controller';
 import { UserService } from './services/user.service';
 import { TrackService } from './services/track.service';
 import { PrismaService } from './services/prisma.service';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
-  imports: [ConfigModule],
+  imports: [
+    ConfigModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
+  ],
   controllers: [AppController, UserController],
   providers: [AppService, UserService, TrackService, PrismaService],
 })

@@ -21,6 +21,7 @@ import { AccountComponent } from './pages/account/account.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { GithubProviderComponent } from './components/github-provider/github-provider.component';
 import { SpotifyProviderComponent } from './spotify-provider/spotify-provider.component';
+import { ApiPlaygroundComponent } from './pages/api-playground/api-playground.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { SpotifyProviderComponent } from './spotify-provider/spotify-provider.co
     AvatarComponent,
     GithubProviderComponent,
     SpotifyProviderComponent,
+    ApiPlaygroundComponent,
   ],
   imports: [
     BrowserModule,

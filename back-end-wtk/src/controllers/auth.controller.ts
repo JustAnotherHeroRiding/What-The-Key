@@ -24,7 +24,6 @@ export class UserController {
     if (error) {
       throw new UnauthorizedException('Invalid token');
     }
-    console.log(data);
     return data;
   }
 }

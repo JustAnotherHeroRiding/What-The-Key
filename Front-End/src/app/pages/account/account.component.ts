@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthSession } from '@supabase/supabase-js';
-import { Profile, SupabaseService } from 'src/app/supabase.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { Profile, SupabaseService } from 'src/app/services/supabase.service';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -10,7 +11,7 @@ import { Profile, SupabaseService } from 'src/app/supabase.service';
 export class AccountComponent implements OnInit {
   loading = false;
   profile!: Profile;
-  location = "account"
+  location = 'account';
 
   @Input() session!: AuthSession;
 
@@ -22,7 +23,8 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private readonly supabase: SupabaseService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private profileService: ProfileService
   ) {}
 
   get avatarUrl() {
@@ -62,6 +64,7 @@ export class AccountComponent implements OnInit {
 
       if (profile) {
         this.profile = profile;
+        this.profileService.updateProfile(this.profile);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -81,13 +84,17 @@ export class AccountComponent implements OnInit {
       const website = this.updateProfileForm.value.website as string;
       const avatar_url = this.updateProfileForm.value.avatar_url as string;
 
-      const { error } = await this.supabase.updateProfile({
+      const updatedProfile: Profile = {
         id: user.id,
         username,
         website,
         avatar_url,
-      });
+      };
+
+      const { error } = await this.supabase.updateProfile(updatedProfile);
       if (error) throw error;
+
+      await this.getProfile();
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from '../../spotify.service';
+import { SpotifyService } from '../../services/spotify.service';
 import { ToastrService } from 'ngx-toastr';
 import { TrackData } from '../home/home.component';
-import { FILTERS } from '../../filters';
+import { FILTERS } from '../../utils/filters';
 import { getNoteName } from '../../components/result-card/result-card.component';
 
 @Component({

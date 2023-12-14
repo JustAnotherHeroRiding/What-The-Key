@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { SpotifyTracksSearchResult } from '../../spotify-types';
+import { SpotifyTracksSearchResult } from '../../utils/spotify-types';
 @Component({
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from './spotify.service';
+import { SpotifyService } from './services/spotify.service';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, of } from 'rxjs';
-import { SpotifyTracksSearchResult } from './spotify-types';
-import { SupabaseService } from './supabase.service';
+import { SpotifyTracksSearchResult } from './utils/spotify-types';
+import { SupabaseService } from './services/supabase.service';
 import { Session } from '@supabase/supabase-js';
 @Component({
   selector: 'app-root',

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from '../../spotify.service';
+import { SpotifyService } from '../../services/spotify.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, of } from 'rxjs';
 import {
   AudioFeatures,
   SpotifyItem,
   SpotifyTracksSearchResult,
-} from '../../spotify-types';
+} from '../../utils/spotify-types';
 import { ToastrService } from 'ngx-toastr';
-import { BackEndService } from '../../backend.service';
+import { BackEndService } from '../../services/backend.service';
 
 export enum GetTrackSources {
   LIBRARY = 'library',

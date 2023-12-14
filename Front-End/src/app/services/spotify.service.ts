@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError, switchMap, forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { SpotifyItem, SpotifyTracksSearchResult } from './spotify-types';
+import { SpotifyItem, SpotifyTracksSearchResult } from '../utils/spotify-types';
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from 'env';
-import { TrackData } from './pages/home/home.component';
+import { TrackData } from '../pages/home/home.component';
 
 @Injectable({
   providedIn: 'root',

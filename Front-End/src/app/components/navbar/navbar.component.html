@@ -33,17 +33,23 @@
       </div>
       <!-- Right -->
       <div class="menu-end">
-        <div *ngIf="session; else loginTemplate" class="menu-item auth">
+        <div *ngIf="session; else loginTemplate" class="auth">
           <app-avatar
             [avatarUrl]="profile?.avatar_url!"
             [position]="location"
           ></app-avatar>
-          <span class="pointer" (click)="navigateTo('/account')">{{ profile?.username }}</span>
-          <span class="pointer" (click)="signOut()">Log Out</span>
+          <div class="menu-item">
+            <span class="pointer" (click)="navigateTo('/account')">{{
+              profile?.username
+            }}</span>
+          </div>
+          <div class="menu-item">
+            <span class="pointer menu-item" (click)="signOut()">Log Out</span>
+          </div>
         </div>
 
         <ng-template #loginTemplate>
-          <div (click)="navigateTo('/account')" class="menu-item pointer">
+          <div (click)="navigateTo('/login')" class="menu-item pointer">
             <span>Log In</span>
           </div>
         </ng-template>

@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthSession, User } from '@supabase/supabase-js';
-import { Profile, SupabaseService } from 'src/app/supabase.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { Profile, SupabaseService } from 'src/app/services/supabase.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,11 @@ export class NavbarComponent {
   loading = false;
   location = 'navbar';
 
-  constructor(private router: Router, private supabase: SupabaseService) {
+  constructor(
+    private router: Router,
+    private supabase: SupabaseService,
+    private profileService: ProfileService
+  ) {
     this.isSmallScreen = window.innerWidth < 630;
     window.onresize = () => {
       this.isSmallScreen = window.innerWidth < 630;
@@ -42,6 +47,10 @@ export class NavbarComponent {
       if (this.session) {
         this.updateProfile(this.session.user); // Call the async function
       }
+    });
+
+    this.profileService.currentProfile.subscribe((prof) => {
+      this.profile = prof;
     });
   }
 

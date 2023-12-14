@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Session } from '@supabase/supabase-js';
-import { SupabaseService } from 'src/app/supabase.service';
+import { Router } from '@angular/router';
+import { SupabaseService } from 'src/app/services/supabase.service';
+
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
@@ -9,52 +10,39 @@ import { SupabaseService } from 'src/app/supabase.service';
 })
 export class LogInComponent {
   loading = false;
-  session = this.supabase.session
+  session = this.supabase.session;
+  location?: string;
 
   signInForm = this.formBuilder.group({
     email: '',
     password: '',
+    username: '',
   });
 
   constructor(
     private readonly supabase: SupabaseService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router
   ) {}
-
- /*  async onSubmit(): Promise<void> {
-    try {
-      this.loading = true;
-      const email = this.signInForm.value.email as string;
-      const { error } = await this.supabase.signIn(email);
-      if (error) throw error;
-      alert('Check your email for the login link!');
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
-    } finally {
-      this.signInForm.reset();
-      this.loading = false;
-    }
-  } */
 
   async onSubmit(action: 'magicLink' | 'signIn' | 'signUp'): Promise<void> {
     try {
       this.loading = true;
       const email = this.signInForm.value.email as string;
       const password = this.signInForm.value.password as string;
-  
+      const username = this.signInForm.value.username as string;
+
       let result;
       if (action === 'magicLink') {
         result = await this.supabase.signIn(email); // Magic link sign-in
       } else if (action === 'signIn') {
         result = await this.supabase.signIn(email, password); // Regular sign-in
       } else if (action === 'signUp') {
-        result = await this.supabase.signUp(email, password); // Sign-up
+        result = await this.supabase.signUp(email, password, username); // Sign-up
       }
-  
+
       if (result && result.error) throw result.error;
-  
+
       if (action === 'magicLink') {
         alert('Check your email for the login link!');
       } else {
@@ -69,7 +57,6 @@ export class LogInComponent {
       this.loading = false;
     }
   }
-  
 
   ngOnInit(): void {
     // Fetch the initial session state
@@ -80,5 +67,10 @@ export class LogInComponent {
       this.session = session;
       //console.log('Session updated:', session);
     });
-  } 
+    this.location = this.router.url.split('/').pop() || '';
+  }
+
+  navigateTo(route: string) {
+    this.router.navigateByUrl(route);
+  }
 }

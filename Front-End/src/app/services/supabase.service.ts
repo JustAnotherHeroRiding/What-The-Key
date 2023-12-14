@@ -71,14 +71,29 @@ export class SupabaseService {
     }
   }
 
-  signUp(email: string, password: string) {
-    return this.supabase.auth.signUp({
+  async signUp(email: string, password: string, name: string) {
+    // Attempt to sign up the user
+    const { data: user, error } = await this.supabase.auth.signUp({
       email,
       password,
-      options: {
-        emailRedirectTo: '',
-      },
     });
+
+    // Handle any errors during signup
+    if (error) throw error;
+
+    // If signup is successful, create or update the user's profile
+    if (user.user) {
+      const profile: Profile = {
+        id: user.user.id,
+        username: name,
+        website: '', // Default or empty value
+        avatar_url: '', // Default or empty value
+      };
+
+      await this.updateProfile(profile);
+    }
+
+    return { user, error };
   }
 
   signOut() {

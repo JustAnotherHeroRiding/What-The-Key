@@ -11,6 +11,8 @@ const routes: Routes = [
   { path: 'library', component: LibraryComponent },
   { path: 'deleted', component: DeletedComponent },
   { path: 'track/:id', component: SingleTrackPageComponent },
+  { path: 'login', component: LogInComponent },
+  { path: 'register', component: LogInComponent },
   { path: 'account', component: LogInComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];

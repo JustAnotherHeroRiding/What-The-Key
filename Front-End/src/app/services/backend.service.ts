@@ -20,6 +20,6 @@ export class BackEndService {
       // Add other headers if needed
     });
 
-    return this.http.get(`${this.apiUrl}users/getAllUsers`, { headers });
+    return this.http.get(`${this.apiUrl}user/getAllUsers`, { headers });
   }
 }

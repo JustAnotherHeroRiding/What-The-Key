@@ -1,3 +1,6 @@
 <h1>Testing the api</h1>
 <button (click)="getAllUsers()">Get All Users</button>
-<pre>{{ result }}</pre>
+
+<div *ngIf="result && result.users" class="test-sheet">
+  <pre *ngFor="let user of result.users">{{ user | json }}</pre>
+</div>

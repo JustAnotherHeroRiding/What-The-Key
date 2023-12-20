@@ -20,7 +20,7 @@ import { LogInComponent } from './pages/auth/log-in/log-in.component';
 import { AccountComponent } from './pages/account/account.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { GithubProviderComponent } from './components/github-provider/github-provider.component';
-import { SpotifyProviderComponent } from './spotify-provider/spotify-provider.component';
+import { SpotifyProviderComponent } from './components/spotify-provider/spotify-provider.component';
 import { ApiPlaygroundComponent } from './pages/api-playground/api-playground.component';
 
 @NgModule({

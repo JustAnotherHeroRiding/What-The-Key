@@ -8,6 +8,7 @@ import { TrackService } from './services/track.service';
 import { PrismaService } from './services/prisma.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { TrackController } from './controllers/tracks.controller';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'public'),
     }),
   ],
-  controllers: [AppController, UserController],
+  controllers: [AppController, UserController, TrackController],
   providers: [AppService, UserService, TrackService, PrismaService],
 })
 export class AppModule {}

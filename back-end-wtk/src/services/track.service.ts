@@ -68,9 +68,10 @@ export class TrackService {
     return user;
   }
 
-  async addTrackToUserLibrary(
+  async addTrackToUserLibraryOrBin(
     trackId: string,
     profileId: string,
+    source: 'library' | 'recycleBin',
   ): Promise<Track> {
     // Ensure the user exists
     const user = await this.ensureUserExists(profileId);
@@ -79,17 +80,21 @@ export class TrackService {
       throw new Error('User not found, track will not be added.');
     }
 
+    // Determine which relation to connect based on the source
+    const relationField =
+      source === 'library' ? 'UserLibrary' : 'RecycleBinProfile';
+
     // Proceed to add or update the track with the local user ID
     return this.prisma.track.upsert({
       where: { id: trackId },
       update: {
-        UserLibrary: {
+        [relationField]: {
           connect: { id: user.id },
         },
       },
       create: {
         id: trackId,
-        UserLibrary: {
+        [relationField]: {
           connect: { id: user.id },
         },
       },

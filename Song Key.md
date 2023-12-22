@@ -69,8 +69,12 @@
 - Endpoint to fetch all users #DONE 
 ### PARSE THE REQUEST FROM ANGULAR #DONE 
 ##### Turns out my url was just wrong, users instead of user
-- Stores the track ids for users in a database instead of local storage 
-- fetch the tracks by first fetching the ids and then the tracks with a batch request to spotify
+- Stores the track ids for users in a database instead of local storage #DONE 
+- Adding a track should save the track id in the library and connect it with the user #DONE 
+- Replace the function using local storage with our back end service #DONE 
+- fetch the tracks by first fetching the ids and then the tracks with a batch request to spotify #DONE 
+##### So the reason is that the bearer token is null in the headers. Why is it null here but is correctly setting using the same function previously? 
+so previously i was manually fetching it, let's set one token for all spotify service requests
 
 ## Auth
 ##### How does it work? The supabase service provides a way to interface with the database and our auth. Here we have the session that will most likely give us data about our user. Let's use it in the navbar

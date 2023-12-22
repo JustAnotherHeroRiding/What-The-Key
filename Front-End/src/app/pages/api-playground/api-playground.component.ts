@@ -39,6 +39,7 @@ export class ApiPlaygroundComponent {
   result?: UsersList;
   session = this.supabase.session;
   user?: User | string;
+  tracks?: string;
 
   constructor(
     private backEnd: BackEndService,
@@ -81,4 +82,17 @@ export class ApiPlaygroundComponent {
       this.user = 'No User is logged in';
     }
   }
+
+  getTracks(src:string) {
+    this.backEnd.getTracks(src).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.tracks = data;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      },
+    });
+  }
+
 }

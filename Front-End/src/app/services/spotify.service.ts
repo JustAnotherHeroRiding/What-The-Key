@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError, switchMap, forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { SpotifyItem, SpotifyTracksSearchResult } from '../utils/spotify-types';
+import {
+  AudioFeatures,
+  SpotifyItem,
+  SpotifyTracksSearchResult,
+} from '../utils/spotify-types';
 import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from 'env';
 import { TrackData } from '../pages/home/home.component';
 
@@ -14,7 +18,19 @@ export class SpotifyService {
   private readonly clientSecret = SPOTIFY_CLIENT_SECRET;
   private accessToken: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.initToken();
+  }
+  private initToken(): void {
+    this.getAuthToken().subscribe({
+      next: (token) => {
+        this.accessToken = token;
+      },
+      error: (error) => {
+        console.error('Error fetching Spotify token:', error);
+      },
+    });
+  }
 
   private createHeaders(): HttpHeaders {
     return new HttpHeaders({
@@ -52,8 +68,46 @@ export class SpotifyService {
     );
   }
 
+  fetchMultipleTracks(trackIds: string): Observable<TrackData[]> {
+    return this.getAuthToken().pipe(
+      switchMap((token) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        });
+
+        const tracksRequest = this.http.get<{ tracks: SpotifyItem[] }>(
+          `https://api.spotify.com/v1/tracks?ids=${trackIds}`,
+          { headers }
+        );
+
+        const audioFeaturesRequest = this.http.get<{
+          audio_features: AudioFeatures[];
+        }>(`https://api.spotify.com/v1/audio-features?ids=${trackIds}`, {
+          headers,
+        });
+
+        return forkJoin({ tracksRequest, audioFeaturesRequest });
+      }),
+      map((results) => {
+        const tracks = results.tracksRequest.tracks;
+        const audioFeatures = results.audioFeaturesRequest.audio_features;
+
+        return tracks.map(
+          (track, index) =>
+            ({
+              track,
+              audioFeatures: audioFeatures[index],
+            } as TrackData)
+        );
+      }),
+      catchError((error) => throwError(() => error))
+    );
+  }
+
   private makeTrackRequest(trackId: string): Observable<any> {
     const headers = this.createHeaders();
+
     const trackRequest = this.http.get(
       `https://api.spotify.com/v1/tracks/${trackId}`,
       { headers }

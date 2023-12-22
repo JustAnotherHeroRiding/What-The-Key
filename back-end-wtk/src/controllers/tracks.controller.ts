@@ -1,4 +1,12 @@
-import { Controller, Post, Query, Res, HttpStatus, Get } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  HttpStatus,
+  Get,
+  Query,
+} from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { TrackService } from '../services/track.service';
 import { Response } from 'express';
@@ -17,7 +25,7 @@ export class TrackController {
     @Res() response: Response,
   ) {
     try {
-      const tracks = this.trackService.getUserTracks(userId, source);
+      const tracks = await this.trackService.getUserTracks(userId, source);
       response.status(HttpStatus.OK).json(tracks);
     } catch (error) {
       response
@@ -26,16 +34,18 @@ export class TrackController {
     }
   }
 
-  @Post('addToLibrary')
-  async addToLibrary(
-    @Query('userId') userId: string,
-    @Query('trackId') trackId: string,
+  @Post('addTrack')
+  async addTrack(
+    @Body('userId') userId: string,
+    @Body('trackId') trackId: string,
+    @Body('source') source: 'library' | 'recycleBin',
     @Res() response: Response,
   ) {
     try {
-      const track = await this.trackService.addTrackToUserLibrary(
+      const track = await this.trackService.addTrackToUserLibraryOrBin(
         trackId,
         userId,
+        source,
       );
       response.status(HttpStatus.OK).json(track);
     } catch (error) {

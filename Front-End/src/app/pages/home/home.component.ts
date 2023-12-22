@@ -105,18 +105,18 @@ export class HomeComponent {
   }
 
   saveTrack(trackId: string) {
-    this.getTrack(trackId, GetTrackSources.LIBRARY, (trackData: TrackData) => {
-      const library: TrackData[] = this.getLibrary();
-      if (!library.some((track) => track.track.id === trackData.track.id)) {
-        library.push(trackData);
-        localStorage.setItem('library', JSON.stringify(library));
-        this.toastr.success('Track added to library'); // Display success toast
-        //console.log('Track added to library:', trackData);
-      } else {
-        this.toastr.info('Track already in library'); // Display info toast
-        console.log('Track already in library');
+    this.backEndService.addTrack(trackId, GetTrackSources.LIBRARY).subscribe({
+      next: (response) => {
+        this.toastr.success('Track saved successfully!')
+      },
+      error: (err) => {
+        if (err.status === 409) { // Assuming 409 status code for duplicate track
+          this.toastr.info('Track already in library'); // Display info toast
+        } else {
+          this.toastr.error('Error adding track to library, are you logged in?'); // Display error toast
+        }
       }
-    });
+    })
   }
 
   private getLibrary(): TrackData[] {

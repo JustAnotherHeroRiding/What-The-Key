@@ -148,6 +148,13 @@
   },
   "active": "35185bcd0e34312b",
   "lastOpenFiles": [
+    "back-end-wtk/node_modules/fsevents",
+    "back-end-wtk/node_modules/@prisma/engines/download-lock",
+    "back-end-wtk/node_modules/@prisma/fetch-engine/dist/chunk-AXNJ4AIJ.js",
+    "back-end-wtk/dist/controllers/tracks.controller.d.ts",
+    "back-end-wtk/dist/controllers/tracks.controller.js",
+    "back-end-wtk/dist/controllers/tracks.controller.js.map",
+    "back-end-wtk/src/controllers/tracks.controller.ts",
     "Song Key.md"
   ]
 }

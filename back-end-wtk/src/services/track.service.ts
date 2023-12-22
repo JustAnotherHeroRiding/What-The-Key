@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { Track, Prisma } from '@prisma/client';
+import { Track, Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class TrackService {
@@ -52,5 +52,73 @@ export class TrackService {
     return this.prisma.track.delete({
       where,
     });
+  }
+
+  async ensureUserExists(profileId: string): Promise<User> {
+    let user = await this.prisma.user.findUnique({
+      where: { profileId: profileId },
+    });
+
+    if (!user) {
+      user = await this.prisma.user.create({
+        data: { profileId: profileId },
+      });
+    }
+
+    return user;
+  }
+
+  async addTrackToUserLibrary(
+    trackId: string,
+    profileId: string,
+  ): Promise<Track> {
+    // Ensure the user exists
+    const user = await this.ensureUserExists(profileId);
+
+    if (!user) {
+      throw new Error('User not found, track will not be added.');
+    }
+
+    // Proceed to add or update the track with the local user ID
+    return this.prisma.track.upsert({
+      where: { id: trackId },
+      update: {
+        UserLibrary: {
+          connect: { id: user.id },
+        },
+      },
+      create: {
+        id: trackId,
+        UserLibrary: {
+          connect: { id: user.id },
+        },
+      },
+    });
+  }
+
+  async getUserTracks(
+    userId: string,
+    source: 'library' | 'recycleBin',
+  ): Promise<Track[]> {
+    const user = await this.ensureUserExists(userId);
+
+    if (!user) {
+      throw new Error('User not found, track will not be added.');
+    }
+    if (source === 'library') {
+      return this.prisma.track.findMany({
+        where: {
+          libraryUserId: user.id,
+        },
+      });
+    } else if (source === 'recycleBin') {
+      return this.prisma.track.findMany({
+        where: {
+          recycleBinUserId: user.id,
+        },
+      });
+    } else {
+      throw new Error('Invalid source parameter');
+    }
   }
 }

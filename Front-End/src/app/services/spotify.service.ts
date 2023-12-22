@@ -61,13 +61,6 @@ export class SpotifyService {
       );
   }
 
-  fetchTrack(trackId: string): Observable<TrackData> {
-    return this.getAuthToken().pipe(
-      switchMap(() => this.makeTrackRequest(trackId)),
-      catchError((error) => throwError(() => error))
-    );
-  }
-
   fetchMultipleTracks(trackIds: string): Observable<TrackData[]> {
     return this.getAuthToken().pipe(
       switchMap((token) => {
@@ -101,6 +94,13 @@ export class SpotifyService {
             } as TrackData)
         );
       }),
+      catchError((error) => throwError(() => error))
+    );
+  }
+  
+  fetchTrack(trackId: string): Observable<TrackData> {
+    return this.getAuthToken().pipe(
+      switchMap(() => this.makeTrackRequest(trackId)),
       catchError((error) => throwError(() => error))
     );
   }

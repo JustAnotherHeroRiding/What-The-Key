@@ -74,7 +74,8 @@
 - Replace the function using local storage with our back end service #DONE 
 - fetch the tracks by first fetching the ids and then the tracks with a batch request to spotify #DONE 
 ##### So the reason is that the bearer token is null in the headers. Why is it null here but is correctly setting using the same function previously? 
-so previously i was manually fetching it, let's set one token for all spotify service requests
+so previously i was manually fetching it, let's set one token for all spotify service requests #DONE 
+- Handle the token refresh correctly for all requests
 
 ## Auth
 ##### How does it work? The supabase service provides a way to interface with the database and our auth. Here we have the session that will most likely give us data about our user. Let's use it in the navbar

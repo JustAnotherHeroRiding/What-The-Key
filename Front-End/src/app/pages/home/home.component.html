@@ -1,10 +1,15 @@
 <div id="hero" class="container">
   <div class="user-input">
     <h2>Search for tracks</h2>
-    <!-- Id is hardcoded for now, could be made to fetch a random track -->
     <div class="row">
-      <button class="btn-request" (click)="getTrack('28cnXtME493VX9NOw9cIUh', GetTrackSources.SEARCH)">
-        Fetch Track
+      <!-- Id is hardcoded for now, could be made to fetch a random track -->
+      <button
+        class="btn-request"
+        (click)="
+          getTrack(getRandomLibraryTrack().track.id, GetTrackSources.SEARCH)
+        "
+      >
+        Get Random
       </button>
       <input
         placeholder="What's the key of..."
@@ -52,4 +57,7 @@
     </ng-template>
   </div>
 </div>
-<div style="height: 100vh;"></div>
+
+<!-- Screen heigth width to test scrolling
+  <div style="height: 100vh"></div>
+ -->

@@ -1,6 +1,11 @@
 <h1>Testing the api</h1>
 <button (click)="getAllUsers()">Get All Users</button>
+<button (click)="validateSession()">Check auth</button>
 
 <div *ngIf="result && result.users" class="test-sheet">
-  <pre *ngFor="let user of result.users">{{ user | json }}</pre>
+  <pre *ngFor="let userReturned of result.users">{{ userReturned | json }}</pre>
+</div>
+
+<div class="test-sheet" *ngIf="user">
+  <pre> {{ user | json}}</pre>
 </div>

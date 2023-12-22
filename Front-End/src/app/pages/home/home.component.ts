@@ -141,4 +141,11 @@ export class HomeComponent {
       },
     });
   }
+
+  getRandomLibraryTrack() {
+    const library = this.getLibrary();
+    const randomIndex = Math.floor(Math.random() * library.length);
+    const randomTrack = library[randomIndex];
+    return randomTrack;
+  }
 }

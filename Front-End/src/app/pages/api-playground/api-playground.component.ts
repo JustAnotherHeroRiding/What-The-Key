@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BackEndService } from 'src/app/services/backend.service';
+import { SupabaseService } from 'src/app/services/supabase.service';
 
 interface User {
   id: string | null;
@@ -36,8 +37,21 @@ interface UsersList {
 })
 export class ApiPlaygroundComponent {
   result?: UsersList;
+  session = this.supabase.session;
+  user?: User | string;
 
-  constructor(private backEnd: BackEndService) {}
+  constructor(
+    private backEnd: BackEndService,
+    private supabase: SupabaseService
+  ) {}
+
+  ngOnInit(): void {
+    this.session = this.supabase.session;
+
+    this.supabase.authChanges((_, session) => {
+      this.session = session;
+    });
+  }
 
   getAllUsers() {
     this.backEnd.getAllUsers().subscribe({
@@ -49,5 +63,22 @@ export class ApiPlaygroundComponent {
         console.error('Error:', error);
       },
     });
+  }
+
+  validateSession() {
+    if (this.session) {
+      this.backEnd.validateSession(this.session).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.user = data;
+        },
+        error: (error) => {
+          console.error('Error:', error);
+        },
+      });
+    }
+    {
+      this.user = 'No User is logged in';
+    }
   }
 }

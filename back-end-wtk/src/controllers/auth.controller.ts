@@ -3,7 +3,7 @@ import { supabaseAdmin } from 'src/services/supabase.service';
 
 @Controller('user')
 export class UserController {
-  @Get('nest/api/session')
+  @Get('checkSession')
   async getSession(@Req() request) {
     const token = request.headers.authorization?.split(' ')[1];
     if (!token) throw new UnauthorizedException('No token provided');

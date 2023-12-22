@@ -1,0 +1,153 @@
+{
+  "main": {
+    "id": "edb597c775337e4d",
+    "type": "split",
+    "children": [
+      {
+        "id": "38516e09e9bf0272",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "35185bcd0e34312b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Song Key.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a38212b88b440c79",
+    "type": "split",
+    "children": [
+      {
+        "id": "862aceaeeb212f27",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3158cc49a0d6232d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "fc29fae24287e3d0",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "60d836a2e7fbb287",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "c37a16c0472bd057",
+    "type": "split",
+    "children": [
+      {
+        "id": "4881ad5f4c81a8ee",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9ba2776c19b7320d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Song Key.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e2c9f333a04f6268",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Song Key.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "b7382dccaea60ae5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "9eb543b692e4b473",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Song Key.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "35185bcd0e34312b",
+  "lastOpenFiles": [
+    "Song Key.md"
+  ]
+}

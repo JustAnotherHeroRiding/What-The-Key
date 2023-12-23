@@ -17,6 +17,9 @@ export class SpotifyService {
   private readonly clientId = SPOTIFY_CLIENT_ID; // Don't forget to delete when pushing
   private readonly clientSecret = SPOTIFY_CLIENT_SECRET;
   private accessToken: string | null = null;
+  /* Note that the access token is valid for 1 hour (3600 seconds). 
+  After that time, the token expires and you need to request a new one.
+ */
 
   constructor(private http: HttpClient) {
     this.initToken();

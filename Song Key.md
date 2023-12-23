@@ -77,6 +77,14 @@
 so previously i was manually fetching it, let's set one token for all spotify service requests #DONE 
 - Handle the token refresh correctly for all requests
 
+## Spotify Service
+- This will have to be transferred to the backend when it comes to making requests in order to hide the keys
+- The angular spotify service should only call the api which will handle the data fetching on the back end
+
+
+## Local storage to database
+- Replace all data previously stored in local storage to use the database instead. So far we have adding a track and the library of tracks, let's handle the rest of the data
+
 ## Auth
 ##### How does it work? The supabase service provides a way to interface with the database and our auth. Here we have the session that will most likely give us data about our user. Let's use it in the navbar
 - Style the auth components #DONE 

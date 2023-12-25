@@ -9,6 +9,7 @@ import {
   FilterValue,
   SortOrder,
   filterLocation,
+  sortByKey,
   sortTracksByFilter,
 } from '../../utils/filters';
 import { BackEndService } from 'src/app/services/backend.service';
@@ -110,9 +111,19 @@ export class LibraryComponent {
     return getNoteName(noteValue);
   }
 
-  activateFilter(filterValue: string) {
+  activateFilter(filterValue: string, key?: EventTarget) {
     if (filterValue in filterLocation) {
       const filter = filterValue as FilterLocationValue;
+
+      if (filterValue === 'key' && key) {
+        const keyNumber = parseInt((key as HTMLSelectElement).value);
+        if (isNaN(keyNumber)) {
+          this.displayedLibrary = [...this.originalLibrary];
+          return;
+        }
+        this.displayedLibrary = sortByKey(this.originalLibrary, keyNumber);
+        return;
+      }
 
       // Reset all filters to None, except the currently activated one
       Object.keys(this.sortOrders).forEach((key) => {

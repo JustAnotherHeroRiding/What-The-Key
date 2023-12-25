@@ -61,11 +61,7 @@ export function sortTracksByFilter(
     case 'tempo':
       return sortAscDesc(tracksCopy, sortOrder);
     case 'explicit':
-      // This will need a custom function that will be an either/or switch
       return sortExplicit(tracksCopy, sortOrder);
-    case 'key':
-      // This will allow the users to select songs with with a certain key
-      return sortAscDesc(tracksCopy, sortOrder);
     case 'mode':
       // Sorting major and minor tracks
       return sortAscDesc(tracksCopy, sortOrder);
@@ -98,4 +94,15 @@ function sortExplicit(tracks: TrackData[], sortOrder: SortOrder): TrackData[] {
     default:
       return [...tracks];
   }
+}
+
+export function sortByKey(
+  tracks: TrackData[],
+  currentKey: number
+): TrackData[] {
+  const result = tracks.filter(
+    (track) => track.audioFeatures.key === currentKey
+  );
+  console.log(result);
+  return result;
 }

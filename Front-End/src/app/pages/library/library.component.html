@@ -10,17 +10,37 @@
     placeholder="What are you looking for?"
   />
   <div class="filters" id="filtersContainer">
-    <button
-      *ngFor="let filter of filters | keyvalue"
-      (click)="activateFilter(filter.value)"
-      class="filter-btn"
-      [ngClass]="{
-        'active-desc': sortOrders[filter.value] === sortOrderEnum.Descending,
-        'active-asc': sortOrders[filter.value] === sortOrderEnum.Ascending
-      }"
-    >
-      {{ filter.key }}
-    </button>
+    <ng-container *ngFor="let filter of filters | keyvalue">
+      <!-- Dropdown for 'key' filter -->
+      <select
+        *ngIf="filter.key === 'key'"
+        class="filter-btn"
+        (change)="activateFilter(filter.value, $event.target!)"
+      >
+        <option disabled selected value="">Key</option>
+        <option value="reset">Reset</option>
+
+        <option
+          [value]="key"
+          *ngFor="let key of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
+        >
+          {{ getNoteDisplayName(key) }}
+        </option>
+      </select>
+
+      <!-- Button for other filters -->
+      <button
+        *ngIf="filter.key !== 'key'"
+        (click)="activateFilter(filter.value)"
+        class="filter-btn"
+        [ngClass]="{
+          'active-desc': sortOrders[filter.value] === sortOrderEnum.Descending,
+          'active-asc': sortOrders[filter.value] === sortOrderEnum.Ascending
+        }"
+      >
+        {{ filter.key }}
+      </button>
+    </ng-container>
   </div>
   <div class="grid-container">
     <div *ngFor="let trackData of displayedLibrary">

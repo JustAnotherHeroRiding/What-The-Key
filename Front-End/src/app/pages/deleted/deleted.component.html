@@ -1,4 +1,6 @@
-<div class="column">
+<loading-spinner *ngIf="loading"></loading-spinner>
+
+<div *ngIf="!loading" class="column">
   <input
     (input)="searchSubmit($event)"
     class="search-input"

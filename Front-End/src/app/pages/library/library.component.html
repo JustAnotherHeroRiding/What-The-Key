@@ -1,4 +1,8 @@
-<div class="column">
+<!-- Loading Spinner -->
+<loading-spinner *ngIf="loading"></loading-spinner>
+
+<!-- Content -->
+<div class="column" *ngIf="!loading">
   <input
     (input)="searchSubmit($event)"
     class="search-input"
@@ -12,7 +16,15 @@
   </div>
   <div class="grid-container">
     <div *ngFor="let trackData of displayedLibrary">
-      <app-track [trackData]="trackData" (deleteRequest)="deleteTrack(trackData)"></app-track>
+      <app-track
+        [trackData]="trackData"
+        (deleteRequest)="deleteTrack(trackData)"
+      ></app-track>
+    </div>
+
+    <!-- Empty Data Message -->
+    <div *ngIf="displayedLibrary.length === 0">
+      <p>No tracks available.</p>
     </div>
   </div>
 </div>

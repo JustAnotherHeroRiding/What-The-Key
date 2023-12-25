@@ -15,6 +15,7 @@ export class LibraryComponent {
   originalLibrary: TrackData[] = [];
   displayedLibrary: TrackData[] = [];
   filters = FILTERS;
+  loading = true;
 
   constructor(
     private spotifyService: SpotifyService,
@@ -27,6 +28,7 @@ export class LibraryComponent {
   }
 
   fetchTracks() {
+    this.loading = true;
     this.backendService.getTracks('library').subscribe({
       next: (trackIdsString: string) => {
         if (trackIdsString) {
@@ -35,9 +37,12 @@ export class LibraryComponent {
               // Process the fetched tracks and their audio features here
               this.originalLibrary = tracksData; // Store the original library for filtering purposes
               this.displayedLibrary = tracksData; // Update your displayed library
+              this.loading = false;
             },
-            error: (err) =>
-              console.error('Error fetching tracks from Spotify:', err),
+            error: (err) => {
+              console.error('Error fetching tracks from Spotify:', err);
+              this.loading = false;
+            },
           });
         } else {
           // Handle case where no track IDs are returned

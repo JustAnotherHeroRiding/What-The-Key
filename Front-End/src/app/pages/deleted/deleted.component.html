@@ -61,5 +61,8 @@
         (restore)="restoreTrack(trackData)"
       ></app-track>
     </div>
+    <div *ngIf="displayedLibrary.length === 0">
+      <p>No tracks available.</p>
+    </div>
   </div>
 </div>

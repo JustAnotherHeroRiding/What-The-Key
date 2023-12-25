@@ -10,7 +10,7 @@
 
 
 
-## Also provide some sample chord progressions
+## Provide sample chord progressions and scales
 - Let's try using the openai api to do this, after providing the song name, album, genre and other relevant song data besides the key and bpm
 
 
@@ -20,8 +20,9 @@
 - A list of tracks will be shown as search results after a debouncer function ticks down to 300ms #DONE 
 - If a Track is clicked, it should open the details for the track #DONE 
 
-## Loading spinner when searching
+## Loading spinners
 - Implement a loading spinner while the tracks are searching #DONE 
+- When adding or deleting a track, add a spinner
 
 ## Icons for Navbar and Buttons
 - Use Dall-E to generate a logo #DONE
@@ -99,6 +100,7 @@ so previously i was manually fetching it, let's set one token for all spotify se
 
 ## Caching data
 - When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires
+- Lazy load for components
 
 ## Auth
 ##### How does it work? The supabase service provides a way to interface with the database and our auth. Here we have the session that will most likely give us data about our user. Let's use it in the navbar

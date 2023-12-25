@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthSession } from '@supabase/supabase-js';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Profile, SupabaseService } from 'src/app/services/supabase.service';
@@ -25,7 +26,8 @@ export class AccountComponent implements OnInit {
   constructor(
     private readonly supabase: SupabaseService,
     private formBuilder: FormBuilder,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private router: Router
   ) {}
 
   get avatarUrl() {
@@ -109,6 +111,12 @@ export class AccountComponent implements OnInit {
   }
 
   async signOut() {
-    await this.supabase.signOut();
+    await this.supabase.signOut().then((res) => {
+      if (!res.error) {
+        this.router.navigate(['/']);
+      } else {
+        console.error(res.error);
+      }
+    });
   }
 }

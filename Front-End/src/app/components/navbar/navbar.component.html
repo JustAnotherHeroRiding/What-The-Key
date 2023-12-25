@@ -33,7 +33,7 @@
       </div>
       <!-- Right -->
       <div class="menu-end">
-        <div *ngIf="session; else loginTemplate" class="auth">
+        <div *ngIf="session && !loading; else loginTemplate" class="auth">
           <app-avatar
             (click)="navigateTo('/account')"
             [avatarUrl]="profile?.avatar_url!"

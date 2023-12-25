@@ -1,11 +1,13 @@
-<div class="flex-container">
-  <h1 *ngIf="profile && profile.username" class="title"> {{ profile.username }}</h1>
+<div *ngIf="!loading; else spinner" class="flex-container">
+  <h1 *ngIf="profile && profile.username" class="title">
+    {{ profile.username }}
+  </h1>
   <form
     class="flex-container"
     [formGroup]="updateProfileForm"
     (ngSubmit)="updateProfile()"
   >
-  <h3 class="title">Update your profile</h3>
+    <h3 class="title">Update your profile</h3>
     <app-avatar
       [avatarUrl]="this.avatarUrl"
       [position]="location"
@@ -18,8 +20,12 @@
       <input id="email" type="text" [value]="session.user.email" disabled />
     </div>
     <div class="form-item">
-      <label for="username">Name</label>
+      <label for="username">Username</label>
       <input formControlName="username" id="username" type="text" />
+    </div>
+    <div class="form-item">
+      <label for="full_name">Full Name</label>
+      <input formControlName="full_name" id="full_name" type="text" />
     </div>
     <div class="form-item">
       <label for="website">Website</label>
@@ -34,3 +40,6 @@
     </div>
   </form>
 </div>
+<ng-template #spinner>
+  <loading-spinner></loading-spinner>
+</ng-template>

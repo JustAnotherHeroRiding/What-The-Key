@@ -45,7 +45,7 @@ export class NavbarComponent {
       this.session = session;
 
       if (this.session) {
-        this.updateProfile(this.session.user); // Call the async function
+        this.updateProfile(this.session.user);
       }
     });
 

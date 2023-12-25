@@ -9,7 +9,7 @@ import { Profile, SupabaseService } from 'src/app/services/supabase.service';
   styleUrls: ['./account.component.css'],
 })
 export class AccountComponent implements OnInit {
-  loading = false;
+  loading = true;
   profile!: Profile;
   location = 'account';
 
@@ -19,7 +19,7 @@ export class AccountComponent implements OnInit {
     username: '',
     website: '',
     avatar_url: '',
-    full_name: ''
+    full_name: '',
   });
 
   constructor(
@@ -41,11 +41,12 @@ export class AccountComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.getProfile();
 
-    const { username, website, avatar_url } = this.profile;
+    const { username, website, avatar_url, full_name } = this.profile;
     this.updateProfileForm.patchValue({
       username,
       website,
       avatar_url,
+      full_name,
     });
   }
 
@@ -91,7 +92,7 @@ export class AccountComponent implements OnInit {
         username,
         website,
         avatar_url,
-        full_name
+        full_name,
       };
 
       const { error } = await this.supabase.updateProfile(updatedProfile);

@@ -41,6 +41,8 @@
 - Or use filters to display tracks according the characteristics in the audio features object #DONE 
 
 #### Filters
+- Map the button names to the actual TrackData fields #DONE 
+##### Should we flatten the track data into one array so that we do not have bother looking in both track and audio features?
 - Make each filter work
 [[Song Key#^filters-list]]
 ## ----------Filter ends here------------
@@ -91,6 +93,9 @@ so previously i was manually fetching it, let's set one token for all spotify se
 
 ## Drag and drop
 - Allow users to rearrange their tracks and have the order be permanent, this will most likely have to do a db call
+
+## Caching data
+- When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires
 
 ## Auth
 ##### How does it work? The supabase service provides a way to interface with the database and our auth. Here we have the session that will most likely give us data about our user. Let's use it in the navbar

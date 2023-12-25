@@ -8,8 +8,8 @@
     placeholder="What are you looking for?"
   />
   <div class="filters" id="filtersContainer">
-    <button *ngFor="let filter of filters" class="filter-btn">
-      {{ filter }}
+    <button *ngFor="let filter of filters | keyvalue" class="filter-btn">
+      {{ filter.key }}
     </button>
   </div>
   <div class="grid-container">

@@ -3,7 +3,13 @@ import { SpotifyService } from '../../services/spotify.service';
 import { ToastrService } from 'ngx-toastr';
 import { TrackData } from '../home/home.component';
 import { getNoteName } from '../../components/result-card/result-card.component';
-import { FILTERS } from '../../utils/filters';
+import {
+  FILTERS,
+  FilterLocationValue,
+  FilterValue,
+  filterLocation,
+  sortTracksByFilter,
+} from '../../utils/filters';
 import { BackEndService } from 'src/app/services/backend.service';
 
 @Component({
@@ -68,7 +74,7 @@ export class LibraryComponent {
     });
   }
 
-  filterTracks(query: string | null) {
+  searchTracks(query: string | null) {
     if (!query) {
       this.displayedLibrary = [...this.originalLibrary]; // Reset to original list if query is empty
       return;
@@ -87,10 +93,17 @@ export class LibraryComponent {
   searchSubmit(event: Event) {
     const inputEvent = event as InputEvent;
     const query = (inputEvent.target as HTMLInputElement).value;
-    this.filterTracks(query);
+    this.searchTracks(query);
   }
 
   getNoteDisplayName(noteValue: number): string {
     return getNoteName(noteValue);
+  }
+
+  activateFilter(filterValue: string) {
+    if (filterValue in filterLocation) {
+      const filter = filterValue as FilterLocationValue;
+      this.displayedLibrary = sortTracksByFilter(this.displayedLibrary, filter);
+    }
   }
 }

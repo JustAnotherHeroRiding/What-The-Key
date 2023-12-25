@@ -83,7 +83,7 @@ export class DeletedComponent {
     });
   }
 
-  filterTracks(query: string | null) {
+  searchTracks(query: string | null) {
     if (!query) {
       this.displayedLibrary = [...this.originalLibrary]; // Reset to original list if query is empty
       return;
@@ -102,7 +102,7 @@ export class DeletedComponent {
   searchSubmit(event: Event) {
     const inputEvent = event as InputEvent;
     const query = (inputEvent.target as HTMLInputElement).value;
-    this.filterTracks(query);
+    this.searchTracks(query);
   }
 
   getNoteDisplayName(noteValue: number): string {

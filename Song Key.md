@@ -43,6 +43,8 @@
 #### Filters
 - Map the button names to the actual TrackData fields #DONE 
 ##### Should we flatten the track data into one array so that we do not have bother looking in both track and audio features?
+- Only one filter can be active at a time, clicking another one will reset the active filter #DONE 
+- Some filters should be able to mix, but it should not possible by default, for example we should be able to sort by energy and decade together
 - Make each filter work
 [[Song Key#^filters-list]]
 ## ----------Filter ends here------------
@@ -120,30 +122,35 @@ so previously i was manually fetching it, let's set one token for all spotify se
 ##### 1. **Danceability Filter:**
 
 - Filter tracks based on their danceability score. You could create a slider or a set of predefined ranges (e.g., low, medium, high) for users to choose from.
+- Working filter for descending, ascending and reset #DONE 
+- Style the button depending on the current state #DONE 
 ##### 2. **Energy Filter:**
 
-- Similar to danceability, filter tracks based on their energy level. Again, a slider or predefined ranges could be used.
+- Similar to danceability, filter tracks based on their energy level. Again, a slider or predefined ranges could be used. #DONE 
+###### Used the same asc/desc/normal function again here
 ##### 3. **Mood/Valence Filter:**
 
-- Valence measures the musical positiveness conveyed by a track. You could filter tracks that are more positive/upbeat versus those that are more negative/somber.
+- Valence measures the musical positiveness conveyed by a track. You could filter tracks that are more positive/upbeat versus those that are more negative/somber. #DONE 
 ##### 4. **Acousticness Filter:**
 
-- Users can filter tracks based on how acoustic they are. This could be useful for finding more organic, less electronically-influenced music.
+- Users can filter tracks based on how acoustic they are. This could be useful for finding more organic, less electronically-influenced music. #DONE 
 ##### 5. **Instrumentalness Filter:**
 
-- This would be great for users who are looking for instrumental tracks, perhaps for background music or study sessions.
+- This would be great for users who are looking for instrumental tracks, perhaps for background music or study sessions. #DONE 
 ##### 6. **Duration Filter:**
 
-- Allow users to filter tracks based on their length. This could be handy for those who are looking for either quick listens or longer experiences.
+- Allow users to filter tracks based on their length. This could be handy for those who are looking for either quick listens or longer experiences. #DONE 
+- We could add a minimum/maximum length length
 ##### 7. **Popularity Filter:**
 
-- Users might want to filter tracks based on their popularity, which can be a proxy for how well-liked or recognized a track is.
+- Users might want to filter tracks based on their popularity, which can be a proxy for how well-liked or recognized a track is. #DONE 
 ##### 8. **Loudness Filter:**
 
-- While not a common filter, some users might be interested in filtering tracks based on their loudness levels.
+- While not a common filter, some users might be interested in filtering tracks based on their loudness levels. #DONE 
 ##### 9. **Tempo Filter:**
 
-- For users who are looking for music of a certain tempo (measured in beats per minute), this filter could be quite useful.
+- For users who are looking for music of a certain tempo (measured in beats per minute), this filter could be quite useful. #DONE 
+- We could add an input here to enter a number 
 ##### 10. **Artist/Album Filter:**
 
 - Allow filtering by artist or album. This is more straightforward but very useful, especially in a large library.

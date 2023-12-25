@@ -7,6 +7,7 @@ import {
   FILTERS,
   FilterLocationValue,
   FilterValue,
+  SortOrder,
   filterLocation,
   sortTracksByFilter,
 } from '../../utils/filters';
@@ -22,12 +23,18 @@ export class LibraryComponent {
   displayedLibrary: TrackData[] = [];
   filters = FILTERS;
   loading = true;
+  sortOrderEnum = SortOrder;
+  sortOrders: { [filter in FilterLocationValue | string]?: SortOrder } = {};
 
   constructor(
     private spotifyService: SpotifyService,
     private toastr: ToastrService,
     private backendService: BackEndService
-  ) {}
+  ) {
+    Object.keys(filterLocation).forEach((key) => {
+      this.sortOrders[key as FilterLocationValue] = SortOrder.None;
+    });
+  }
 
   ngOnInit(): void {
     this.fetchTracks();
@@ -84,8 +91,10 @@ export class LibraryComponent {
 
     // Filter from originalLibrary and update displayedLibrary
     this.displayedLibrary = this.originalLibrary
-      .filter((track) =>
-        track.track.name.toLowerCase().includes(lowerCaseQuery)
+      .filter(
+        (track) =>
+          track.track.name.toLowerCase().includes(lowerCaseQuery) ||
+          track.track.artists[0].name.toLowerCase().includes(lowerCaseQuery)
       )
       .slice(0, 10);
   }
@@ -103,7 +112,33 @@ export class LibraryComponent {
   activateFilter(filterValue: string) {
     if (filterValue in filterLocation) {
       const filter = filterValue as FilterLocationValue;
-      this.displayedLibrary = sortTracksByFilter(this.displayedLibrary, filter);
+
+      // Reset all filters to None, except the currently activated one
+      Object.keys(this.sortOrders).forEach((key) => {
+        if (key !== filter) {
+          this.sortOrders[key as keyof typeof filterLocation] = SortOrder.None;
+        }
+      });
+
+      // Toggle the sort order for the current filter
+      if (this.sortOrders[filter] === SortOrder.None) {
+        this.sortOrders[filter] = SortOrder.Descending;
+      } else if (this.sortOrders[filter] === SortOrder.Descending) {
+        this.sortOrders[filter] = SortOrder.Ascending;
+      } else {
+        this.sortOrders[filter] = SortOrder.None;
+      }
+
+      // Apply sorting or reset to original list
+      if (this.sortOrders[filter] === SortOrder.None) {
+        this.displayedLibrary = [...this.originalLibrary];
+      } else {
+        this.displayedLibrary = sortTracksByFilter(
+          this.displayedLibrary,
+          filter,
+          this.sortOrders[filter]!
+        );
+      }
     }
   }
 }

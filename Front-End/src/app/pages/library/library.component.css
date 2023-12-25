@@ -71,7 +71,13 @@
   color: white;
 }
 
+.filter-btn.active-desc {
+  background-color: var(--amber-600);
+}
 
+.filter-btn.active-asc {
+  background-color: var(--amber-200);
+}
 
 @media (max-width: 800px) {
   .grid-container {

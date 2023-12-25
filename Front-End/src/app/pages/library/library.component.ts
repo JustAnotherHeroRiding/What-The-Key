@@ -33,6 +33,7 @@ export class LibraryComponent {
           this.spotifyService.fetchMultipleTracks(trackIdsString).subscribe({
             next: (tracksData) => {
               // Process the fetched tracks and their audio features here
+              this.originalLibrary = tracksData; // Store the original library for filtering purposes
               this.displayedLibrary = tracksData; // Update your displayed library
             },
             error: (err) =>

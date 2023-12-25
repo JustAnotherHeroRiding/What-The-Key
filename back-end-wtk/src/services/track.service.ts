@@ -48,12 +48,6 @@ export class TrackService {
     });
   }
 
-  async deleteTrack(where: Prisma.TrackWhereUniqueInput): Promise<Track> {
-    return this.prisma.track.delete({
-      where,
-    });
-  }
-
   async ensureUserExists(profileId: string): Promise<User> {
     let user = await this.prisma.user.findUnique({
       where: { profileId: profileId },
@@ -106,6 +100,22 @@ export class TrackService {
         id: trackId,
         [connectField]: {
           connect: { id: user.id },
+        },
+      },
+    });
+  }
+
+  async deleteTrackPermanetly(trackId: string, userId: string): Promise<any> {
+    const user = await this.ensureUserExists(userId);
+
+    if (!user) {
+      throw new Error('User not found, cannot delete track.');
+    }
+    return this.prisma.track.update({
+      where: { id: trackId },
+      data: {
+        UserRecycleBin: {
+          disconnect: { id: user.id },
         },
       },
     });

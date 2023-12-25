@@ -64,22 +64,41 @@ export class BackEndService {
       );
   }
 
-  deleteTrack(trackId: string, source: 'library' | 'recycleBin'): Observable<any> {
+  deleteTrack(
+    trackId: string,
+    source: 'library' | 'recycleBin'
+  ): Observable<any> {
     const session = this.supabase.session;
     if (!session || !session.user.id) {
       throw new Error('User not found, please log in.');
     }
-  
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-  
+
     const body = {
       userId: session.user.id,
       trackId: trackId,
       source: source,
     };
-  
+
     return this.http.post(`${this.apiUrl}track/addTrack`, body, { headers });
+  }
+
+  deleteTrackPermanently(trackId: string): Observable<any> {
+    const session = this.supabase.session;
+    if (!session || !session.user.id) {
+      throw new Error('User not found, please log in.');
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    const body = {
+      userId: session.user.id,
+      trackId: trackId,
+    };
+    return this.http.post(`${this.apiUrl}track/deleteTrack`, body, { headers });
   }
 }

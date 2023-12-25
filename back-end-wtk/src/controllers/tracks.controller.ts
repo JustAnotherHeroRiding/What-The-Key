@@ -54,4 +54,23 @@ export class TrackController {
         .json({ message: error.message });
     }
   }
+
+  @Post('deleteTrack')
+  async deleteTrack(
+    @Body('userId') userId: string,
+    @Body('trackId') trackId: string,
+    @Res() response: Response,
+  ) {
+    try {
+      const track = await this.trackService.deleteTrackPermanetly(
+        trackId,
+        userId,
+      );
+      response.status(HttpStatus.OK).json(track);
+    } catch (error) {
+      response
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: error.message });
+    }
+  }
 }

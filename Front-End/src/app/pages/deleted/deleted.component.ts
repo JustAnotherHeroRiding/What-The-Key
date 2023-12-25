@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TrackData } from '../home/home.component';
 import { FILTERS } from '../../utils/filters';
 import { getNoteName } from '../../components/result-card/result-card.component';
+import { BackEndService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-deleted',
@@ -17,7 +18,8 @@ export class DeletedComponent {
 
   constructor(
     private spotifyService: SpotifyService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private backendService: BackEndService
   ) {}
 
   ngOnInit(): void {
@@ -25,15 +27,24 @@ export class DeletedComponent {
   }
 
   fetchTracks() {
-    const tracks = localStorage.getItem('recyclingBin');
-    if (tracks) {
-      this.originalLibrary = JSON.parse(tracks);
-      this.displayedLibrary = [...this.originalLibrary]; // Make a copy for display
-      // console.log(this.originalLibrary);
-    } else {
-      this.originalLibrary = [];
-      this.displayedLibrary = [];
-    }
+    this.backendService.getTracks('recycleBin').subscribe({
+      next: (trackIdsString: string) => {
+        if (trackIdsString) {
+          this.spotifyService.fetchMultipleTracks(trackIdsString).subscribe({
+            next: (tracksData) => {
+              // Process the fetched tracks and their audio features here
+              this.displayedLibrary = tracksData; // Update your displayed library
+            },
+            error: (err) =>
+              console.error('Error fetching tracks from Spotify:', err),
+          });
+        } else {
+          // Handle case where no track IDs are returned
+          this.displayedLibrary = [];
+        }
+      },
+      error: (err) => console.error('Error fetching track IDs:', err),
+    });
   }
 
   deleteTrack(track: TrackData) {

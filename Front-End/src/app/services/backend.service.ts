@@ -48,7 +48,7 @@ export class BackEndService {
       'Content-Type': 'application/json',
     });
     if (!session) {
-      throw new Error('User not found, please log in to get your');
+      throw new Error('User not found, please log in to get your tracks.');
     }
     const params = new HttpParams()
       .set('userId', session?.user.id)
@@ -62,5 +62,24 @@ export class BackEndService {
           return trackIds.join(','); // Join IDs into a comma-separated string
         })
       );
+  }
+
+  deleteTrack(trackId: string, source: 'library' | 'recycleBin'): Observable<any> {
+    const session = this.supabase.session;
+    if (!session || !session.user.id) {
+      throw new Error('User not found, please log in.');
+    }
+  
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+  
+    const body = {
+      userId: session.user.id,
+      trackId: trackId,
+      source: source,
+    };
+  
+    return this.http.post(`${this.apiUrl}track/addTrack`, body, { headers });
   }
 }

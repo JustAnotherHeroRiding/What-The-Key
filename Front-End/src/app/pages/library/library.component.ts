@@ -48,42 +48,18 @@ export class LibraryComponent {
   }
 
   deleteTrack(track: TrackData) {
-    try {
-      // Fetch the recycling bin from local storage or initialize it
-      const recyclingBinRaw = localStorage.getItem('recyclingBin');
-      const recyclingBin = recyclingBinRaw ? JSON.parse(recyclingBinRaw) : [];
-
-      // Find the track to delete in the original library
-      const index = this.originalLibrary.findIndex(
-        (t) => t.track.id === track.track.id
-      );
-
-      if (index === -1) {
-        throw new Error('Track not found in library');
-      }
-
-      // Move the track to the recycling bin
-      recyclingBin.push(this.originalLibrary[index]);
-
-      // Remove the track from the original library
-      this.originalLibrary.splice(index, 1);
-
-      // Update the displayed library
-      this.displayedLibrary = this.originalLibrary.filter(
-        (t) => t.track.id !== track.track.id
-      );
-
-      // Update local storage
-      localStorage.setItem('library', JSON.stringify(this.originalLibrary));
-      localStorage.setItem('recyclingBin', JSON.stringify(recyclingBin));
-
-      // Display success toast
-      this.toastr.success('Track removed from library');
-    } catch (error) {
-      console.error('Error deleting track:', error);
-      // Display error toast or handle the error appropriately
-      this.toastr.error('Failed to remove track from library');
-    }
+    this.backendService.deleteTrack(track.track.id, 'recycleBin').subscribe({
+      next: () => {
+        this.toastr.success('Track deleted successfully');
+        this.displayedLibrary = this.displayedLibrary.filter(
+          (t) => t.track.id !== track.track.id
+        );
+      },
+      error: (err) => {
+        this.toastr.error('Failed to delete track');
+        console.error('Error deleting track:', err);
+      },
+    });
   }
 
   filterTracks(query: string | null) {

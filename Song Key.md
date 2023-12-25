@@ -76,6 +76,7 @@
 ##### So the reason is that the bearer token is null in the headers. Why is it null here but is correctly setting using the same function previously? 
 so previously i was manually fetching it, let's set one token for all spotify service requests #DONE 
 - Handle the token refresh correctly for all requests
+###### [A spotify access token lasts for 1 hour](https://developer.spotify.com/documentation/web-api/concepts/access-token)
 
 ## Spotify Service
 - This will have to be transferred to the backend when it comes to making requests in order to hide the keys
@@ -84,6 +85,11 @@ so previously i was manually fetching it, let's set one token for all spotify se
 
 ## Local storage to database
 - Replace all data previously stored in local storage to use the database instead. So far we have adding a track and the library of tracks, let's handle the rest of the data
+- Loading spinners while the data is loading
+
+
+## Drag and drop
+- Allow users to rearrange their tracks and have the order be permanent, this will most likely have to do a db call
 
 ## Auth
 ##### How does it work? The supabase service provides a way to interface with the database and our auth. Here we have the session that will most likely give us data about our user. Let's use it in the navbar

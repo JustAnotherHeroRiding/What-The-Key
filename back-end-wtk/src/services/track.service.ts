@@ -80,21 +80,31 @@ export class TrackService {
       throw new Error('User not found, track will not be added.');
     }
 
-    // Determine which relation to connect based on the source
-    const relationField =
-      source === 'library' ? 'UserLibrary' : 'RecycleBinProfile';
+    // Determine which relation to connect and disconnect based on the source
+    let connectField, disconnectField;
+    if (source === 'library') {
+      connectField = 'UserLibrary';
+      disconnectField = 'UserRecycleBin';
+    } else {
+      // source is 'recycleBin'
+      connectField = 'UserRecycleBin';
+      disconnectField = 'UserLibrary';
+    }
 
     // Proceed to add or update the track with the local user ID
     return this.prisma.track.upsert({
       where: { id: trackId },
       update: {
-        [relationField]: {
+        [connectField]: {
           connect: { id: user.id },
+        },
+        [disconnectField]: {
+          disconnect: { id: user.id },
         },
       },
       create: {
         id: trackId,
-        [relationField]: {
+        [connectField]: {
           connect: { id: user.id },
         },
       },

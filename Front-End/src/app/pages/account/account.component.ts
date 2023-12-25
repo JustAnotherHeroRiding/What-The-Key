@@ -19,6 +19,7 @@ export class AccountComponent implements OnInit {
     username: '',
     website: '',
     avatar_url: '',
+    full_name: ''
   });
 
   constructor(
@@ -83,12 +84,14 @@ export class AccountComponent implements OnInit {
       const username = this.updateProfileForm.value.username as string;
       const website = this.updateProfileForm.value.website as string;
       const avatar_url = this.updateProfileForm.value.avatar_url as string;
+      const full_name = this.updateProfileForm.value.full_name as string;
 
       const updatedProfile: Profile = {
         id: user.id,
         username,
         website,
         avatar_url,
+        full_name
       };
 
       const { error } = await this.supabase.updateProfile(updatedProfile);

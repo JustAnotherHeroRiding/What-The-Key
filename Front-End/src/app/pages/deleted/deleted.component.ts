@@ -58,6 +58,7 @@ export class DeletedComponent {
           });
         } else {
           // Handle case where no track IDs are returned
+          this.loading = false;
           this.displayedLibrary = [];
         }
       },

@@ -35,12 +35,13 @@
       <div class="menu-end">
         <div *ngIf="session; else loginTemplate" class="auth">
           <app-avatar
+            (click)="navigateTo('/account')"
             [avatarUrl]="profile?.avatar_url!"
             [position]="location"
           ></app-avatar>
           <div class="menu-item">
             <span class="pointer" (click)="navigateTo('/account')">{{
-              profile?.username
+              profile?.username ? profile?.username : profile?.full_name
             }}</span>
           </div>
           <div class="menu-item">

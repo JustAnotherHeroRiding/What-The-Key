@@ -45,7 +45,7 @@
 ##### Should we flatten the track data into one array so that we do not have bother looking in both track and audio features?
 - Only one filter can be active at a time, clicking another one will reset the active filter #DONE 
 - Some filters should be able to mix, but it should not possible by default, for example we should be able to sort by energy and decade together
-- Make each filter work
+- Make each filter work #DONE 
 [[Song Key#^filters-list]]
 ## ----------Filter ends here------------
 - Special field for the tab links to ultimate guitar or any other website

@@ -15,6 +15,7 @@ export interface Profile {
   username: string;
   website: string;
   avatar_url: string;
+  full_name: string;
 }
 
 @Injectable({
@@ -50,7 +51,7 @@ export class SupabaseService {
   profile(user: User) {
     return this.supabase
       .from('profiles')
-      .select(`username, website, avatar_url`)
+      .select(`username, website, avatar_url, full_name`)
       .eq('id', user.id)
       .single();
   }
@@ -99,6 +100,7 @@ export class SupabaseService {
         username: name,
         website: '', // Default or empty value
         avatar_url: '', // Default or empty value
+        full_name: name, // Default or empty value
       };
 
       await this.updateProfile(profile);

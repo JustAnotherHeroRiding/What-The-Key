@@ -63,6 +63,7 @@ export class LibraryComponent {
         } else {
           // Handle case where no track IDs are returned
           this.displayedLibrary = [];
+          this.loading = false;
         }
       },
       error: (err) => console.error('Error fetching track IDs:', err),

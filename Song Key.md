@@ -95,6 +95,7 @@ so previously i was manually fetching it, let's set one token for all spotify se
 
 ## Drag and drop
 - Allow users to rearrange their tracks and have the order be permanent, this will most likely have to do a db call
+- There should be a icon on the top right that will be the only place where a track can be dragged from instead of making the entire draggable
 
 ## Caching data
 - When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires
@@ -154,6 +155,7 @@ so previously i was manually fetching it, let's set one token for all spotify se
 ##### 10. **Artist/Album Filter:**
 
 - Allow filtering by artist or album. This is more straightforward but very useful, especially in a large library.
+- No need to filter by artist/album as we can just search for it #DONE 
 ##### 11. **Explicit Content Filter:**
 
 - Some users might want to filter out tracks with explicit content.

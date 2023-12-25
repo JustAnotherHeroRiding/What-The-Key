@@ -94,7 +94,8 @@ export class LibraryComponent {
       .filter(
         (track) =>
           track.track.name.toLowerCase().includes(lowerCaseQuery) ||
-          track.track.artists[0].name.toLowerCase().includes(lowerCaseQuery)
+          track.track.artists[0].name.toLowerCase().includes(lowerCaseQuery) ||
+          track.track.album.name.toLowerCase().includes(lowerCaseQuery)
       )
       .slice(0, 10);
   }
@@ -134,7 +135,7 @@ export class LibraryComponent {
         this.displayedLibrary = [...this.originalLibrary];
       } else {
         this.displayedLibrary = sortTracksByFilter(
-          this.displayedLibrary,
+          this.originalLibrary,
           filter,
           this.sortOrders[filter]!
         );

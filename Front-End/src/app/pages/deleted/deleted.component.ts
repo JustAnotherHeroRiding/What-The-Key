@@ -93,8 +93,11 @@ export class DeletedComponent {
 
     // Filter from originalLibrary and update displayedLibrary
     this.displayedLibrary = this.originalLibrary
-      .filter((track) =>
-        track.track.name.toLowerCase().includes(lowerCaseQuery)
+      .filter(
+        (track) =>
+          track.track.name.toLowerCase().includes(lowerCaseQuery) ||
+          track.track.artists[0].name.toLowerCase().includes(lowerCaseQuery) ||
+          track.track.album.name.toLowerCase().includes(lowerCaseQuery)
       )
       .slice(0, 10);
   }

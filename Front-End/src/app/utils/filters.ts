@@ -11,8 +11,6 @@ export const FILTERS = {
   popularity: 'popularity',
   loudness: 'loudness',
   tempo: 'tempo',
-  artist: 'artist',
-  album: 'album',
   explicit: 'explicit',
   key: 'key',
   mode: 'mode',
@@ -28,8 +26,6 @@ export const filterLocation = {
   duration_ms: 'audioFeatures',
   popularity: 'track',
   loudness: 'audioFeatures',
-  artist: 'track',
-  album: 'track',
   tempo: 'audioFeatures',
   explicit: 'track',
   key: 'audioFeatures',
@@ -64,15 +60,9 @@ export function sortTracksByFilter(
     case 'loudness':
     case 'tempo':
       return sortAscDesc(tracksCopy, sortOrder);
-    case 'artist':
-      // This will need a custom function
-      return sortAscDesc(tracksCopy, sortOrder);
-    case 'album':
-      // This will need a custom function
-      return sortAscDesc(tracksCopy, sortOrder);
     case 'explicit':
       // This will need a custom function that will be an either/or switch
-      return sortAscDesc(tracksCopy, sortOrder);
+      return sortExplicit(tracksCopy, sortOrder);
     case 'key':
       // This will allow the users to select songs with with a certain key
       return sortAscDesc(tracksCopy, sortOrder);
@@ -97,4 +87,15 @@ function sortAscDesc(tracks: TrackData[], sortOrder: SortOrder): TrackData[] {
   });
 }
 
-// Add similar functions for other filters
+function sortExplicit(tracks: TrackData[], sortOrder: SortOrder): TrackData[] {
+  switch (sortOrder) {
+    case SortOrder.Descending: // Interpreted as 'Show Explicit'
+      return tracks.filter((track) => track.track.explicit);
+    case SortOrder.Ascending: // Interpreted as 'Show Clean'
+      return tracks.filter((track) => !track.track.explicit);
+    case SortOrder.None: // Reset to original
+      return [...tracks];
+    default:
+      return [...tracks];
+  }
+}

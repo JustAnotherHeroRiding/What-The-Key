@@ -28,6 +28,19 @@
         </option>
       </select>
 
+      <select
+        *ngIf="filter.key === 'mode'"
+        class="filter-btn"
+        (change)="activateFilter(filter.value, undefined, $event.target!)"
+      >
+        <option disabled selected value="">Mode</option>
+        <option value="reset">Reset</option>
+
+        <option [value]="key" *ngFor="let key of [0, 1]">
+          {{ modeMapLocal[key] }}
+        </option>
+      </select>
+
       <!-- Button for other filters -->
       <button
         *ngIf="filter.key !== 'key'"

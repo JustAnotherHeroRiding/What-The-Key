@@ -158,9 +158,9 @@ so previously i was manually fetching it, let's set one token for all spotify se
 - No need to filter by artist/album as we can just search for it #DONE 
 ##### 11. **Explicit Content Filter:**
 
-- Some users might want to filter out tracks with explicit content.
+- Some users might want to filter out tracks with explicit content. #DONE 
 ##### 12. **Key Filter**
-- Filter songs by the key they were written in, going back to the main point of the website
+- Filter songs by the key they were written in, going back to the main point of the website #DONE 
 ##### 13. **Mode**
 - Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content is derived. Major is represented by 1 and minor is 0.
 ##### 14. **Decade**

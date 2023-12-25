@@ -62,9 +62,6 @@ export function sortTracksByFilter(
       return sortAscDesc(tracksCopy, sortOrder);
     case 'explicit':
       return sortExplicit(tracksCopy, sortOrder);
-    case 'mode':
-      // Sorting major and minor tracks
-      return sortAscDesc(tracksCopy, sortOrder);
     case 'decade':
       // Users can select a decade and only receive tracks from it
       return sortAscDesc(tracksCopy, sortOrder);
@@ -103,6 +100,20 @@ export function sortByKey(
   const result = tracks.filter(
     (track) => track.audioFeatures.key === currentKey
   );
-  console.log(result);
+  return result;
+}
+
+export const modeMap: { [key: number]: string } = {
+  0: 'Minor',
+  1: 'Major',
+};
+/* Major is represented by 1 and minor is 0. */
+export function sortByMode(
+  tracks: TrackData[],
+  currentMode: number
+): TrackData[] {
+  const result = tracks.filter(
+    (track) => track.audioFeatures.mode === currentMode
+  );
   return result;
 }

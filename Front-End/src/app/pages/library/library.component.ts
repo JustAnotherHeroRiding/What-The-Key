@@ -6,10 +6,11 @@ import { getNoteName } from '../../components/result-card/result-card.component'
 import {
   FILTERS,
   FilterLocationValue,
-  FilterValue,
   SortOrder,
   filterLocation,
+  modeMap,
   sortByKey,
+  sortByMode,
   sortTracksByFilter,
 } from '../../utils/filters';
 import { BackEndService } from 'src/app/services/backend.service';
@@ -26,6 +27,7 @@ export class LibraryComponent {
   loading = true;
   sortOrderEnum = SortOrder;
   sortOrders: { [filter in FilterLocationValue | string]?: SortOrder } = {};
+  modeMapLocal = modeMap;
 
   constructor(
     private spotifyService: SpotifyService,
@@ -111,7 +113,7 @@ export class LibraryComponent {
     return getNoteName(noteValue);
   }
 
-  activateFilter(filterValue: string, key?: EventTarget) {
+  activateFilter(filterValue: string, key?: EventTarget, mode?: EventTarget) {
     if (filterValue in filterLocation) {
       const filter = filterValue as FilterLocationValue;
 
@@ -122,6 +124,14 @@ export class LibraryComponent {
           return;
         }
         this.displayedLibrary = sortByKey(this.originalLibrary, keyNumber);
+        return;
+      } else if (filterValue === 'mode' && mode) {
+        const modeNumber = parseInt((mode as HTMLSelectElement).value);
+        if (isNaN(modeNumber)) {
+          this.displayedLibrary = [...this.originalLibrary];
+          return;
+        }
+        this.displayedLibrary = sortByMode(this.originalLibrary, modeNumber);
         return;
       }
 

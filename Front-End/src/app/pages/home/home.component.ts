@@ -107,16 +107,19 @@ export class HomeComponent {
   saveTrack(trackId: string) {
     this.backEndService.addTrack(trackId, GetTrackSources.LIBRARY).subscribe({
       next: (response) => {
-        this.toastr.success('Track saved successfully!')
+        this.toastr.success('Track saved successfully!');
       },
       error: (err) => {
-        if (err.status === 409) { // Assuming 409 status code for duplicate track
+        if (err.status === 409) {
+          // Assuming 409 status code for duplicate track
           this.toastr.info('Track already in library'); // Display info toast
         } else {
-          this.toastr.error('Error adding track to library, are you logged in?'); // Display error toast
+          this.toastr.error(
+            'Error adding track to library, are you logged in?'
+          ); // Display error toast
         }
-      }
-    })
+      },
+    });
   }
 
   private getLibrary(): TrackData[] {
@@ -131,21 +134,16 @@ export class HomeComponent {
     }
   }
 
-  getBackEnd(): any {
-    return this.backEndService.getData().subscribe({
-      next: (data) => {
-        console.log(data);
+  getRandomLibraryTrack() {
+    const track = this.spotifyService.getRandomGuitarTrack().subscribe({
+      next: (track) => {
+        console.log(track);
+        this.getTrack(track.tracks[0].id, GetTrackSources.SEARCH);
       },
-      error: (error) => {
-        console.error('There was an error!', error);
+      error: (err) => {
+        console.error('Error fetching random track:', err);
+        this.toastr.error('Error fetching random track');
       },
     });
-  }
-
-  getRandomLibraryTrack() {
-    const library = this.getLibrary();
-    const randomIndex = Math.floor(Math.random() * library.length);
-    const randomTrack = library[randomIndex];
-    return randomTrack;
   }
 }

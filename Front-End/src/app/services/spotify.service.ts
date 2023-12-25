@@ -100,7 +100,7 @@ export class SpotifyService {
       catchError((error) => throwError(() => error))
     );
   }
-  
+
   fetchTrack(trackId: string): Observable<TrackData> {
     return this.getAuthToken().pipe(
       switchMap(() => this.makeTrackRequest(trackId)),
@@ -146,5 +146,20 @@ export class SpotifyService {
       `https://api.spotify.com/v1/search`,
       { headers, params }
     );
+  }
+
+  getRandomGuitarTrack(): Observable<any> {
+    const headers = this.createHeaders();
+    const seedGenres = 'rock,blues,punk,post-punk,alt-rock'; // Genres known for guitar music
+    const url = `https://api.spotify.com/v1/recommendations?&seed_genres=${seedGenres}&limit=1`;
+
+    return this.http.get(url, { headers });
+  }
+
+  getGenres(): Observable<any> {
+    const headers = this.createHeaders();
+    const url = `https://api.spotify.com/v1/recommendations/available-genre-seeds`;
+
+    return this.http.get(url, { headers });
   }
 }

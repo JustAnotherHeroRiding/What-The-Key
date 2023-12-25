@@ -49,6 +49,7 @@
 
 .filter-btn:hover {
   background-color: var(--cream-light);
+  opacity: 0.7;
 }
 
 .grid-container {

@@ -148,6 +148,10 @@
   },
   "active": "35185bcd0e34312b",
   "lastOpenFiles": [
+    "back-end-wtk/dist/services/spotify.service.d.ts",
+    "back-end-wtk/dist/services/spotify.service.js",
+    "back-end-wtk/dist/services/spotify.service.js.map",
+    "back-end-wtk/src/services/spotify.service.ts",
     "back-end-wtk/dist/tsconfig.build.tsbuildinfo",
     "back-end-wtk/dist/main.d.ts",
     "back-end-wtk/dist/main.js",
@@ -155,10 +159,6 @@
     "back-end-wtk/dist/app.module.d.ts",
     "back-end-wtk/dist/app.module.js",
     "back-end-wtk/dist/app.module.js.map",
-    "back-end-wtk/dist/services/app.service.d.ts",
-    "back-end-wtk/dist/services/app.service.js",
-    "back-end-wtk/dist/services/app.service.js.map",
-    "back-end-wtk/dist/controllers/tracks.controller.js.map",
     "Song Key.md"
   ]
 }

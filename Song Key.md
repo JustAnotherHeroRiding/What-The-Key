@@ -86,7 +86,7 @@ so previously i was manually fetching it, let's set one token for all spotify se
 ## Local storage to database
 - Replace all data previously stored in local storage to use the database instead. So far we have adding a track and the library of tracks, let's handle the rest of the data #DONE 
 - Fix the filters to work again #DONE 
-- Loading spinners while the data is loading
+- Loading spinners while the data is loading #DONE 
 
 
 ## Drag and drop

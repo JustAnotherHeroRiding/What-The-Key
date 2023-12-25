@@ -102,6 +102,12 @@ so previously i was manually fetching it, let's set one token for all spotify se
 - When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires
 - Lazy load for components
 
+## Figure out why it is so slow after creating the new supabase project 
+- When loading the library or deleted sections it is very very slow compared to before
+
+## Create an auth guard
+- If a user that is not logged in is trying to access sites such as /profile, /library, /deleted, they should be redirected to the log in screen #DONE 
+
 ## Auth
 ##### How does it work? The supabase service provides a way to interface with the database and our auth. Here we have the session that will most likely give us data about our user. Let's use it in the navbar
 - Style the auth components #DONE 

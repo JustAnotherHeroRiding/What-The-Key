@@ -81,6 +81,12 @@ export class NavbarComponent {
   }
 
   async signOut() {
-    await this.supabase.signOut();
+    await this.supabase.signOut().then((res) => {
+      if (!res.error) {
+        this.router.navigate(['/']);
+      } else {
+        console.error(res.error);
+      }
+    });
   }
 }

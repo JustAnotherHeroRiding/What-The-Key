@@ -16,7 +16,7 @@ export class AppComponent {
   private searchTerm$ = new Subject<string>();
   searchTerm: string = ''; // Add this line
   isLoading = false;
-  session : Session | null = null;
+  session : Session | undefined | null = undefined;
   private sessionSubscription?: Subscription;
   isLoadingSession = true; // New property to track session loading state
 

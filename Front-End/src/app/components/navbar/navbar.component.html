@@ -17,11 +17,11 @@
           <span> Home</span>
           <img class="menu-logo" src="../../assets/home.png" alt="" />
         </div>
-        <div (click)="navigateTo('/library')" class="menu-item">
+        <div *ngIf="session" (click)="navigateTo('/library')" class="menu-item">
           <span> Library</span>
           <img class="menu-logo" src="../../assets/library.png" alt="" />
         </div>
-        <div (click)="navigateTo('/deleted')" class="menu-item">
+        <div *ngIf="session" (click)="navigateTo('/deleted')" class="menu-item">
           <span> Deleted</span>
           <img class="menu-logo" src="../../assets/deleted.png" alt="" />
         </div>

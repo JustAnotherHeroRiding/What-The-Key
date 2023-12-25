@@ -23,7 +23,7 @@ export interface Profile {
 })
 export class SupabaseService {
   private supabase: SupabaseClient;
-  private _session = new BehaviorSubject<AuthSession | null>(null);
+  private _session = new BehaviorSubject<AuthSession | undefined | null>(undefined);
   private sessionTwo: AuthSession | null = null;
 
   constructor() {

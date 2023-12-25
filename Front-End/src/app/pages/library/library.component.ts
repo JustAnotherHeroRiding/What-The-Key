@@ -24,7 +24,7 @@ export class LibraryComponent {
   originalLibrary: TrackData[] = [];
   displayedLibrary: TrackData[] = [];
   filters = FILTERS;
-  loading = true;
+  loading = false;
   sortOrderEnum = SortOrder;
   sortOrders: { [filter in FilterLocationValue | string]?: SortOrder } = {};
   modeMapLocal = modeMap;

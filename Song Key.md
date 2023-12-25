@@ -162,6 +162,6 @@ so previously i was manually fetching it, let's set one token for all spotify se
 ##### 12. **Key Filter**
 - Filter songs by the key they were written in, going back to the main point of the website #DONE 
 ##### 13. **Mode**
-- Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content is derived. Major is represented by 1 and minor is 0.
+- Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content is derived. Major is represented by 1 and minor is 0. #DONE 
 ##### 14. **Decade**
 - We can get the release year and filter songs by the decade

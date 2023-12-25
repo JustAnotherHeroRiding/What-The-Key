@@ -47,6 +47,14 @@
   cursor: pointer;
 }
 
+.filter-btn.active-desc {
+  background-color: var(--amber-600);
+}
+
+.filter-btn.active-asc {
+  background-color: var(--amber-200);
+}
+
 .filter-btn:hover {
   background-color: var(--cream-light);
   opacity: 0.7;

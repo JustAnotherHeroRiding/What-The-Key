@@ -2,7 +2,16 @@ import { Component } from '@angular/core';
 import { SpotifyService } from '../../services/spotify.service';
 import { ToastrService } from 'ngx-toastr';
 import { TrackData } from '../home/home.component';
-import { FILTERS } from '../../utils/filters';
+import {
+  FILTERS,
+  FilterLocationValue,
+  SortOrder,
+  filterLocation,
+  modeMap,
+  sortByKey,
+  sortByMode,
+  sortTracksByFilter,
+} from '../../utils/filters';
 import { getNoteName } from '../../components/result-card/result-card.component';
 import { BackEndService } from 'src/app/services/backend.service';
 
@@ -16,6 +25,9 @@ export class DeletedComponent {
   displayedLibrary: TrackData[] = [];
   filters = FILTERS;
   loading = true;
+  sortOrderEnum = SortOrder;
+  sortOrders: { [filter in FilterLocationValue | string]?: SortOrder } = {};
+  modeMapLocal = modeMap;
 
   constructor(
     private spotifyService: SpotifyService,
@@ -110,5 +122,56 @@ export class DeletedComponent {
 
   getNoteDisplayName(noteValue: number): string {
     return getNoteName(noteValue);
+  }
+
+  activateFilter(filterValue: string, key?: EventTarget, mode?: EventTarget) {
+    if (filterValue in filterLocation) {
+      const filter = filterValue as FilterLocationValue;
+
+      if (filterValue === 'key' && key) {
+        const keyNumber = parseInt((key as HTMLSelectElement).value);
+        if (isNaN(keyNumber)) {
+          this.displayedLibrary = [...this.originalLibrary];
+          return;
+        }
+        this.displayedLibrary = sortByKey(this.originalLibrary, keyNumber);
+        return;
+      } else if (filterValue === 'mode' && mode) {
+        const modeNumber = parseInt((mode as HTMLSelectElement).value);
+        if (isNaN(modeNumber)) {
+          this.displayedLibrary = [...this.originalLibrary];
+          return;
+        }
+        this.displayedLibrary = sortByMode(this.originalLibrary, modeNumber);
+        return;
+      }
+
+      // Reset all filters to None, except the currently activated one
+      Object.keys(this.sortOrders).forEach((key) => {
+        if (key !== filter) {
+          this.sortOrders[key as keyof typeof filterLocation] = SortOrder.None;
+        }
+      });
+
+      // Toggle the sort order for the current filter
+      if (this.sortOrders[filter] === SortOrder.None) {
+        this.sortOrders[filter] = SortOrder.Descending;
+      } else if (this.sortOrders[filter] === SortOrder.Descending) {
+        this.sortOrders[filter] = SortOrder.Ascending;
+      } else {
+        this.sortOrders[filter] = SortOrder.None;
+      }
+
+      // Apply sorting or reset to original list
+      if (this.sortOrders[filter] === SortOrder.None) {
+        this.displayedLibrary = [...this.originalLibrary];
+      } else {
+        this.displayedLibrary = sortTracksByFilter(
+          this.originalLibrary,
+          filter,
+          this.sortOrders[filter]!
+        );
+      }
+    }
   }
 }

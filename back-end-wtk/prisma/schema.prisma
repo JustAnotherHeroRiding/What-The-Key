@@ -10,20 +10,34 @@ datasource db {
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
-  profileId  String  @unique // Assuming this corresponds to the id in the profiles table
-  library    Track[] @relation("UserLibrary")
-  recycleBin Track[] @relation("UserRecycleBin")
+  id            Int        @id @default(autoincrement())
+  profileId     String     @unique // Assuming this corresponds to the id in the profiles table
+  library       Track[]    @relation("UserLibrary")
+  recycleBin    Track[]    @relation("UserRecycleBin")
+  trackTabsUser TrackTab[] @relation("trackTabsUser")
 
   @@schema("public")
 }
 
 model Track {
-  id               String @id
+  id               String     @id
   libraryUserId    Int?
   recycleBinUserId Int?
-  UserLibrary      User?  @relation("UserLibrary", fields: [libraryUserId], references: [id])
-  UserRecycleBin   User?  @relation("UserRecycleBin", fields: [recycleBinUserId], references: [id])
+  UserLibrary      User?      @relation("UserLibrary", fields: [libraryUserId], references: [id])
+  UserRecycleBin   User?      @relation("UserRecycleBin", fields: [recycleBinUserId], references: [id])
+  trackTabsTrack   TrackTab[] @relation("trackTabsTrack")
+
+  @@schema("public")
+}
+
+model TrackTab {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  trackId String
+  tabUrl  String
+
+  user  User  @relation("trackTabsUser", fields: [userId], references: [id])
+  track Track @relation("trackTabsTrack", fields: [trackId], references: [id])
 
   @@schema("public")
 }

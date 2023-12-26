@@ -56,7 +56,6 @@ export class NavbarComponent {
 
   async updateProfile(user: User) {
     try {
-      this.loading = true;
       const {
         data: profile,
         error,

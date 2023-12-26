@@ -22,7 +22,7 @@
 
 ## Loading spinners
 - Implement a loading spinner while the tracks are searching #DONE 
-- When adding or deleting a track, add a spinner
+###### - When adding or deleting a track, add a spinner
 
 ## Icons for Navbar and Buttons
 - Use Dall-E to generate a logo #DONE
@@ -48,8 +48,11 @@
 - Some filters should be able to mix, but it should not possible by default, for example we should be able to sort by energy and decade together
 - Make each filter work #DONE 
 [[Song Key#^filters-list]]
-## ----------Filter ends here------------
-- Special field for the tab links to ultimate guitar or any other website
+## ----------Filter ends here-----------
+
+## Tabs
+- Added a new table that will save the relation between the track, the url of the tabs and the user that added the link #DONE 
+- Special field for the tab links to ultimate guitar or any other website. For now each user will upload their own link
 - Maybe even display a little preview of the tabs on hover
 ## Delete tracks
 - Add a delete button #DONE 
@@ -104,6 +107,10 @@ so previously i was manually fetching it, let's set one token for all spotify se
 
 ## Figure out why it is so slow after creating the new supabase project 
 - When loading the library or deleted sections it is very very slow compared to before
+
+## Playing songs
+- Figure out a way to play the song directly from spotify using the user's account
+- This way the user can see the information about the track and play along
 
 ## Create an auth guard
 - If a user that is not logged in is trying to access sites such as /profile, /library, /deleted, they should be redirected to the log in screen #DONE 

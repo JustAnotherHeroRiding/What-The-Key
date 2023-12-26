@@ -65,6 +65,9 @@ export class LogInComponent {
     // Subscribe to future session changes
     this.supabase.authChanges((_, session) => {
       this.session = session;
+      if (this.session) {
+        this.router.navigate(['/account']);
+      }
       //console.log('Session updated:', session);
     });
     this.location = this.router.url.split('/').pop() || '';

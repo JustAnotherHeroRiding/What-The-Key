@@ -16,7 +16,7 @@ export class AppComponent {
   private searchTerm$ = new Subject<string>();
   searchTerm: string = ''; // Add this line
   isLoading = false;
-  session : Session | undefined | null = undefined;
+  session: Session | undefined | null = undefined;
   private sessionSubscription?: Subscription;
   isLoadingSession = true; // New property to track session loading state
 
@@ -43,7 +43,7 @@ export class AppComponent {
         next: (data) => {
           if (data) {
             this.searchResults = data;
-            console.log('Debounced Search Data: ', data);
+            // console.log('Debounced Search Data: ', data);
           } else {
             this.searchResults = null; // Clear results if the search term is empty
           }

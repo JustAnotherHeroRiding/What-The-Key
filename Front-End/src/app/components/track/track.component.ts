@@ -20,10 +20,17 @@ export class TrackComponent {
   @Output() restore = new EventEmitter<TrackData>();
   @Output() addTabs = new EventEmitter<TrackData>();
   trackActions = TrackAction;
+  showAddTabModal = false;
+
   constructor(private router: Router) {}
 
   getNoteDisplayName(noteValue: number): string {
     return getNoteName(noteValue);
+  }
+
+  addTabModal(event: Event) {
+    event.stopPropagation();
+    this.showAddTabModal = !this.showAddTabModal;
   }
 
   handleAction(event: Event, action: TrackAction) {

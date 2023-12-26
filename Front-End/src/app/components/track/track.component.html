@@ -11,7 +11,10 @@
       />
     </svg>
   </div>
-  <div class="add-tabs" (click)="handleAction($event, trackActions.AddTabs)">
+  <!-- <div class="add-tabs" 
+  (click)="handleAction($event, trackActions.AddTabs)"
+  > -->
+  <div class="add-tabs" (click)="addTabModal($event)">
     <svg width="2em" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
       <path
         fill="none"
@@ -69,4 +72,21 @@
       ></path>
     </svg>
   </a>
+</div>
+<div *ngIf="showAddTabModal" class="modal-wrapper">
+  <div class="modal-content">
+    <span (click)="addTabModal($event)">X</span>
+    <p>Add your tab link</p>
+    <p>for {{ trackData.track.name }}</p>
+    <img
+      *ngIf="trackData.track.album.images[0]"
+      [src]="trackData.track.album.images[0].url"
+      alt="{{ trackData.track.name }}"
+    />
+    <form>
+      <input type="url" placeholder="Which tabs would you like to play along" />
+      <button (click)="handleAction($event, trackActions.AddTabs)">Add</button>
+    </form>
+    <!-- Add form/input elements here -->
+  </div>
 </div>

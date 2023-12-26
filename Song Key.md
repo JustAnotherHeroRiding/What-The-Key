@@ -52,7 +52,7 @@
 
 ## Tabs
 - Added a new table that will save the relation between the track, the url of the tabs and the user that added the link #DONE 
-- Special field for the tab links to ultimate guitar or any other website. There should be another icon #DONE  
+- Special field for the tab links to ultimate guitar or any other website. There should be another icon #DONE 
 - For now each user will upload their own link
 - Maybe even display a little preview of the tabs on hover
 ## Delete tracks

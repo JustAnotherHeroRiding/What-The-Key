@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { TrackData } from '../../pages/home/home.component';
 import { getNoteName } from '../result-card/result-card.component';
 import { Router } from '@angular/router';
@@ -31,6 +31,11 @@ export class TrackComponent {
   addTabModal(event: Event) {
     event.stopPropagation();
     this.showAddTabModal = !this.showAddTabModal;
+  }
+  
+  @HostListener('document:keydown.escape', ['$event']) 
+  onKeydownHandler(event: KeyboardEvent) {
+    this.showAddTabModal = false;
   }
 
   handleAction(event: Event, action: TrackAction) {

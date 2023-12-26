@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { Track, Prisma, User } from '@prisma/client';
+import { Track, Prisma, User, TrackTab } from '@prisma/client';
 
 @Injectable()
 export class TrackService {
@@ -145,5 +145,23 @@ export class TrackService {
     } else {
       throw new Error('Invalid source parameter');
     }
+  }
+
+  async addTabToTrack(
+    trackId: string,
+    userId: string,
+    tabUrl: string,
+  ): Promise<TrackTab> {
+    const user = await this.ensureUserExists(userId);
+    if (!user) {
+      throw new Error('User not found, cannot add tab.');
+    }
+    return this.prisma.trackTab.create({
+      data: {
+        trackId,
+        userId: user.id,
+        tabUrl,
+      },
+    });
   }
 }

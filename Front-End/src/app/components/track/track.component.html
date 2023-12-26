@@ -73,8 +73,8 @@
     </svg>
   </a>
 </div>
-<div *ngIf="showAddTabModal" class="modal-wrapper">
-  <div class="modal-content">
+<div *ngIf="showAddTabModal" class="modal-wrapper" (click)="addTabModal($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
     <span (click)="addTabModal($event)">X</span>
     <p>Add your tab link</p>
     <p>for {{ trackData.track.name }}</p>

@@ -1,62 +1,87 @@
 .track {
-    display: flex;
-    flex-direction: column;
-    border: var(--beige-custom) 1px solid;
-    border-radius: 8px;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
-    padding: 0.5em;
-    transition: all 0.3s ease-in-out;
-    position: relative;
-    height: 100%;
-  }
-  
-  .track img {
-    max-width: 10em;
-    height: auto;
-    border-radius: 4px;
-    border: var(--cream) 1px solid;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .track:hover {
-    background-color: var(--beige-custom);
-    color: black;
-    border-radius: 10px;
-  }
-  
-  .track:hover img {
-    border: 2px solid black;
-    scale: 1.05; /* Replace with your desired border color and width */
-  }
-  
-  .spotify-link,
-  .delete-trash, .restore {
-    position: absolute;
-    bottom: 0.2em;
-    transition: all 0.3s ease-in-out;
-    display: flex;
-    align-items: center;
-  }
-  
-  .delete-trash {
-    left: 0.3em;
-  }
-  
-  .spotify-link {
-    right: 0.3em;
-  }
+  display: flex;
+  flex-direction: column;
+  border: var(--beige-custom) 1px solid;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  padding: 0.5em;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  height: 100%;
+}
 
+.track img {
+  max-width: 10em;
+  height: auto;
+  border-radius: 4px;
+  border: var(--cream) 1px solid;
+  transition: all 0.3s ease-in-out;
+}
+
+.track:hover {
+  background-color: var(--beige-custom);
+  color: black;
+  border-radius: 10px;
+}
+
+.track:hover img {
+  border: 2px solid black;
+  scale: 1.05; /* Replace with your desired border color and width */
+}
+
+.track:hover div.add-tabs svg path {
+  stroke: black;
+}
+
+.spotify-link,
+.delete-trash,
+.restore,
+.add-tabs {
+  position: absolute;
+  bottom: 0.2em;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.add-tabs {
+  left: 0.3em;
+  bottom: 3em;
+}
+
+.delete-trash {
+  left: 0.3em;
+}
+
+.spotify-link {
+  right: 0.3em;
+}
+
+.restore {
+  left: 3.3em;
+}
+
+.spotify-link:hover,
+.delete-trash:hover,
+.restore:hover,
+.add-tabs:hover {
+  background-color: black;
+  padding: 0.3em;
+  border-radius: 99px;
+  cursor: pointer;
+}
+
+.add-tabs:hover svg path {
+  stroke: white !important;
+}
+
+/* For very small screens */
+@media (max-width: 600px) {
   .restore {
-    left: 3.3em;
+    left: auto;
+    right: 0.3em !important;
+    bottom: 3em;
   }
-  
-  .spotify-link:hover,
-  .delete-trash:hover, 
-  .restore:hover {
-    background-color: black;
-    padding: 0.3em;
-    border-radius: 99px;
-    cursor: pointer;
-  }
+}

@@ -1,5 +1,5 @@
 <div class="track" (click)="goToTrackPage(trackData.track.id)">
-  <div class="delete-trash" (click)="requestDelete($event)">
+  <div class="delete-trash" (click)="handleAction($event, trackActions.Delete)">
     <svg width="2em" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
       <path
         fill="none"
@@ -11,12 +11,30 @@
       />
     </svg>
   </div>
-  <div *ngIf="isDeletedPage()" class="restore" (click)="requestRestore($event)">
-    <svg
-      width="2em"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+  <div class="add-tabs" (click)="handleAction($event, trackActions.AddTabs)">
+    <svg width="2em" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+      <path
+        fill="none"
+        stroke="white"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M24 43.5c5.374 0 16.755-18.833 16.755-27.622S33.222 4.5 24 4.5S7.245 7.09 7.245 15.878S18.626 43.5 24 43.5"
+      />
+      <path
+        fill="none"
+        stroke="white"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M10.863 27.937c1.797-5.036 18.95-15.566 22.16-15.786c1.334-.092 1.334 1.112.785 1.896c-1.92 2.742-7.73 10.208-7.73 15.093c0 5.258 3.374 5.807 5.258 5.807a8.292 8.292 0 0 0 2.048-.354"
+      />
+    </svg>
+  </div>
+  <div
+    *ngIf="isDeletedPage()"
+    class="restore"
+    (click)="handleAction($event, trackActions.Restore)"
+  >
+    <svg width="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <g
         fill="none"
         stroke="green"

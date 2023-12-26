@@ -84,11 +84,19 @@
     width: 90%;
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .search-input {
+    width: 80%;
+  }
 }
 
 /* For very small screens */
 @media (max-width: 400px) {
   .grid-container {
     grid-template-columns: 1fr; /* Single column layout */
+  }
+
+  .search-input {
+    width: 95%;
   }
 }

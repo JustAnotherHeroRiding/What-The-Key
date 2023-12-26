@@ -51,9 +51,9 @@ export class LibraryComponent {
           this.spotifyService.fetchMultipleTracks(trackIdsString).subscribe({
             next: (tracksData) => {
               // Process the fetched tracks and their audio features here
+              this.loading = false;
               this.originalLibrary = tracksData; // Store the original library for filtering purposes
               this.displayedLibrary = tracksData; // Update your displayed library
-              this.loading = false;
             },
             error: (err) => {
               console.error('Error fetching tracks from Spotify:', err);

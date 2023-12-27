@@ -122,7 +122,7 @@ export class SpotifyService {
     return searchResponse.data;
   }
 
-  async getRandomGuitarTrack(): Promise<any> {
+  async getRandomGuitarTrack(): Promise<TrackData> {
     const headers = this.createHeaders();
     const seedGenres = 'rock,blues,punk,post-punk,alt-rock';
     const url = `https://api.spotify.com/v1/recommendations?&seed_genres=${seedGenres}&limit=1`;
@@ -131,7 +131,7 @@ export class SpotifyService {
     return response.data;
   }
 
-  async getGenres(): Promise<any> {
+  async getGenres(): Promise<string[]> {
     const headers = this.createHeaders();
     const url = `https://api.spotify.com/v1/recommendations/available-genre-seeds`;
 

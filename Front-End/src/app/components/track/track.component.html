@@ -73,7 +73,11 @@
     </svg>
   </a>
 </div>
-<div *ngIf="showAddTabModal" class="modal-wrapper" (click)="addTabModal($event)">
+<div
+  *ngIf="showAddTabModal"
+  class="modal-wrapper"
+  (click)="addTabModal($event)"
+>
   <div class="modal-content" (click)="$event.stopPropagation()">
     <span (click)="addTabModal($event)">X</span>
     <p>Add your tab link</p>
@@ -83,10 +87,14 @@
       [src]="trackData.track.album.images[0].url"
       alt="{{ trackData.track.name }}"
     />
-    <form>
-      <input type="url" placeholder="Which tabs would you like to play along" />
-      <button (click)="handleAction($event, trackActions.AddTabs)">Add</button>
+    <form #tabsForm="ngForm" (ngSubmit)="addTabs(tabsForm.value)">
+      <input
+        type="url"
+        name="tabUrl"
+        ngModel
+        placeholder="Which tabs would you like to play along"
+      />
+      <button type="submit">Add</button>
     </form>
-    <!-- Add form/input elements here -->
   </div>
 </div>

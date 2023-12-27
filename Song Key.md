@@ -89,9 +89,10 @@ so previously i was manually fetching it, let's set one token for all spotify se
 
 ## Spotify Service
 - Copy the service and correct all the imports #DONE 
-- See what won't work and how we can adjust the endpoints
-- This will have to be transferred to the backend when it comes to making requests in order to hide the keys
-- The angular spotify service should only call the api which will handle the data fetching on the back end
+- See what won't work and how we can adjust the endpoints #DONE 
+- This will have to be transferred to the backend when it comes to making requests in order to hide the keys #DONE 
+- The angular spotify service should only call the api which will handle the data fetching on the back end #DONE 
+##### Seems to be working for now. Random track, searching, library and deleted are working without issues and I did not have to make any changes to the components. Pay attention for any failed requests
 
 
 ## Local storage to database

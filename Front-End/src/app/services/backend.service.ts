@@ -101,4 +101,23 @@ export class BackEndService {
     };
     return this.http.post(`${this.apiUrl}track/deleteTrack`, body, { headers });
   }
+
+  addTabs(trackId: string, tabUrl: string): Observable<any> {
+    const session = this.supabase.session;
+
+    if (!session || !session.user.id) {
+      throw new Error('User not found, please log in.');
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    const body = {
+      userId: session.user.id,
+      trackId: trackId,
+      tabUrl: tabUrl,
+    };
+    return this.http.post(`${this.apiUrl}track/addTabs`, body, { headers });
+  }
 }

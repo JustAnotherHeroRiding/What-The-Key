@@ -152,15 +152,31 @@ export class TrackService {
     userId: string,
     tabUrl: string,
   ): Promise<TrackTab> {
+    // Ensure user exists
     const user = await this.ensureUserExists(userId);
     if (!user) {
       throw new Error('User not found, cannot add tab.');
     }
+
+    // Check if the tab entry already exists for the user and track
+    const existingTab = await this.prisma.trackTab.findFirst({
+      where: {
+        trackId: trackId,
+        userId: user.id,
+        tabUrl: tabUrl,
+      },
+    });
+
+    if (existingTab) {
+      throw new Error('Tab already added for this track by the user.');
+    }
+
+    // If the tab does not exist, create a new one
     return this.prisma.trackTab.create({
       data: {
-        trackId,
+        trackId: trackId,
         userId: user.id,
-        tabUrl,
+        tabUrl: tabUrl,
       },
     });
   }

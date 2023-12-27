@@ -73,4 +73,26 @@ export class TrackController {
         .json({ message: error.message });
     }
   }
+
+  @Post('addTabs')
+  async addTabs(
+    @Body('trackId') trackId: string,
+    @Body('userId') userId: string,
+    @Body('tabUrl') tabUrl: string,
+    @Res() response: Response,
+  ) {
+    try {
+      const track = await this.trackService.addTabToTrack(
+        trackId,
+        userId,
+        tabUrl,
+      );
+      response.status(HttpStatus.OK).json(track);
+    } catch (error) {
+      response
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: error.message });
+    }
+    // Replace with the actual return type
+  }
 }

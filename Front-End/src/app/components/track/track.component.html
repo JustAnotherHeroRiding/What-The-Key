@@ -74,26 +74,60 @@
   </a>
 </div>
 <div
-  *ngIf="showAddTabModal"
+  *ngIf="!showAddTabModal"
   class="modal-wrapper"
   (click)="addTabModal($event)"
 >
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <span (click)="addTabModal($event)">X</span>
-    <a *ngIf="trackTabUrl" href="{{ trackTabUrl }}">Your tabs</a>
-    <p>Add your tab link</p>
-    <p>for {{ trackData.track.name }}</p>
+    <span class="close-modal" (click)="addTabModal($event)">
+      <svg width="1em" viewBox="0 0 304 384" xmlns="http://www.w3.org/2000/svg">
+        <path
+          fill="black"
+          d="M299 73L179 192l120 119l-30 30l-120-119L30 341L0 311l119-119L0 73l30-30l119 119L269 43z"
+        />
+      </svg>
+    </span>
+
+    <ng-template #content>
+      <a
+        *ngIf="trackTabUrl; else noTabs"
+        class="modal-tab-link"
+        href="{{ trackTabUrl }}"
+        >Your tabs</a
+      >
+      <ng-template #noTabs>
+        <p class="no-tabs">No tabs added yet</p>
+        <p>Use the form below to add them</p>
+      </ng-template>
+    </ng-template>
+    <div style="position: relative">
+      <loading-spinner *ngIf="loadingTabs; else content"> </loading-spinner>
+    </div>
+    <span class="modal-track-name">
+      {{ trackData.track.name }}
+    </span>
+
+    <span class="modal-track-name">
+      {{ trackData.track.album.name }}
+    </span>
+
     <img
+      class="modal-img"
       *ngIf="trackData.track.album.images[0]"
       [src]="trackData.track.album.images[0].url"
       alt="{{ trackData.track.name }}"
     />
-    <form #tabsForm="ngForm" (ngSubmit)="addTabs(tabsForm.value)">
+    <form
+      class="modal-form"
+      #tabsForm="ngForm"
+      (ngSubmit)="addTabs(tabsForm.value)"
+    >
       <input
         type="url"
         name="tabUrl"
         ngModel
-        placeholder="Which tabs would you like to play along"
+        placeholder="Enter a url"
+        class="modal-form-input"
       />
       <button type="submit">Add</button>
     </form>

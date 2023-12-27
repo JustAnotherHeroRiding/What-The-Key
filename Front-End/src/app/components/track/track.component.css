@@ -107,10 +107,12 @@
   align-items: center;
 }
 
-.modal-content img {
+.modal-img {
   width: 85%;
   height: auto;
   max-width: 15em;
+  border: var(--beige-custom) 1.5px solid;
+  border-radius: 8px;
 }
 
 .modal-content form {
@@ -122,15 +124,15 @@
   gap: 1em;
 }
 
-.modal-content form input {
+.modal-form-input {
   background-color: var(--black-custom);
   padding: 0.4em 0.6em;
   border: 1px solid var(--cream);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   color: white;
-  text-align: center;
-  width: 80%;
+  text-align: start;
+  width: 100%;
 }
 
 .modal-content form button {
@@ -142,6 +144,32 @@
   font-weight: 800;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   cursor: pointer;
+  margin-left: auto;
+}
+
+.modal-track-name {
+  font-weight: 700;
+  color: var(--beige-custom);
+}
+
+.close-modal {
+  margin-left: auto;
+  padding: 0.2em 0.4em;
+  border-radius: 20px;
+  background-color: var(--beige-custom);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-modal:hover svg path {
+  fill: red;
+}
+
+.no-tabs {
+  color: red;
+  font-weight: 600;
 }
 
 /* For very small screens */

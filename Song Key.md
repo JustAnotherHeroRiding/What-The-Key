@@ -54,8 +54,9 @@
 - Added a new table that will save the relation between the track, the url of the tabs and the user that added the link #DONE 
 - Special field for the tab links to ultimate guitar or any other website. There should be another icon #DONE 
 - For now each user will upload their own link #DONE 
-- Maybe even display a little preview of the tabs on hover. Let's display the tab link in the modal
-- Style the modal until it looks nice
+- Maybe even display a little preview of the tabs on hover. Let's display the tab link in the modal #DONE 
+- Style the modal until it looks nice #DONE 
+- Once the tab successfully get's updated, display it and clear the input
 ## Delete tracks
 - Add a delete button #DONE 
 - Users can delete each of the saved tracks #DONE 

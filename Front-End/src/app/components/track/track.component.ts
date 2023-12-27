@@ -28,6 +28,7 @@ export class TrackComponent {
   trackActions = TrackAction;
   showAddTabModal = false;
   trackTabUrl?: string;
+  loadingTabs = false;
 
   constructor(
     private router: Router,
@@ -42,7 +43,8 @@ export class TrackComponent {
   addTabModal(event: Event) {
     event.stopPropagation();
     if (!this.showAddTabModal && !this.trackTabUrl) {
-      this.getTabs()
+      this.loadingTabs = true;
+      this.getTabs();
     }
     this.showAddTabModal = !this.showAddTabModal;
   }
@@ -88,6 +90,7 @@ export class TrackComponent {
     this.backendService.getTabs(this.trackData.track.id).subscribe({
       next: (response) => {
         this.trackTabUrl = response[0]?.tabUrl;
+        this.loadingTabs = false;
       },
       error: (error) => {
         console.error(error);

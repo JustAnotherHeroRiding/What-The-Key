@@ -120,4 +120,18 @@ export class BackEndService {
     };
     return this.http.post(`${this.apiUrl}track/addTabs`, body, { headers });
   }
+  getTabs(trackId: string): Observable<any> {
+    const session = this.supabase.session;
+    if (!session || !session.user.id) {
+      throw new Error('User not found, please log in.');
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    const params = new HttpParams()
+      .set('trackId', trackId)
+      .set('userId', session.user.id);
+    return this.http.get(`${this.apiUrl}track/getTabs`, { headers, params });
+  }
 }

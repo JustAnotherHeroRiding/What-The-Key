@@ -180,4 +180,18 @@ export class TrackService {
       },
     });
   }
+
+  async getTabsForTrack(trackId: string, userId: string): Promise<TrackTab[]> {
+    const user = await this.ensureUserExists(userId);
+
+    if (!user) {
+      throw new Error('User not found, cannot get tab.');
+    }
+    return this.prisma.trackTab.findMany({
+      where: {
+        trackId: trackId,
+        userId: user.id,
+      },
+    });
+  }
 }

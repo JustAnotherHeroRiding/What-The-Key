@@ -93,6 +93,21 @@ export class TrackController {
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ message: error.message });
     }
-    // Replace with the actual return type
+  }
+
+  @Get('getTabs')
+  async getTabs(
+    @Query('trackId') trackId: string,
+    @Query('userId') userId: string,
+    @Res() response: Response,
+  ) {
+    try {
+      const tabs = await this.trackService.getTabsForTrack(trackId, userId);
+      response.status(HttpStatus.OK).json(tabs);
+    } catch (error) {
+      response
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: error.message });
+    }
   }
 }

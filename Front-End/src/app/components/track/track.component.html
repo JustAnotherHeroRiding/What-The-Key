@@ -80,6 +80,7 @@
 >
   <div class="modal-content" (click)="$event.stopPropagation()">
     <span (click)="addTabModal($event)">X</span>
+    <a *ngIf="trackTabUrl" href="{{ trackTabUrl }}">Your tabs</a>
     <p>Add your tab link</p>
     <p>for {{ trackData.track.name }}</p>
     <img

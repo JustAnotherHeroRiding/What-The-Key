@@ -27,6 +27,7 @@ export class TrackComponent {
   @Output() restore = new EventEmitter<TrackData>();
   trackActions = TrackAction;
   showAddTabModal = false;
+  trackTabUrl?: string;
 
   constructor(
     private router: Router,
@@ -40,6 +41,9 @@ export class TrackComponent {
 
   addTabModal(event: Event) {
     event.stopPropagation();
+    if (!this.showAddTabModal && !this.trackTabUrl) {
+      this.getTabs()
+    }
     this.showAddTabModal = !this.showAddTabModal;
   }
 
@@ -78,6 +82,21 @@ export class TrackComponent {
           );
         },
       });
+  }
+
+  getTabs() {
+    this.backendService.getTabs(this.trackData.track.id).subscribe({
+      next: (response) => {
+        this.trackTabUrl = response[0]?.tabUrl;
+      },
+      error: (error) => {
+        console.error(error);
+        this.toastr.error(
+          error.message || 'An error occurred while fetching tabs.'
+        );
+        this.trackTabUrl = undefined; // Reset the trackTabUrl if an error occurs. This will ensure that the tabs are not displayed.
+      },
+    });
   }
 
   goToTrackPage(trackId: string) {

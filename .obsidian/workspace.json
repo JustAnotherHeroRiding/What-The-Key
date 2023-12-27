@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "d314ca4c28470690",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Song Key.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,19 +159,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "35185bcd0e34312b",
+  "active": "d314ca4c28470690",
   "lastOpenFiles": [
-    "back-end-wtk/dist/Front-End/src/app/services/supabase.service.js.map",
-    "back-end-wtk/dist/Front-End/src/app/services/supabase.service.js",
-    "back-end-wtk/dist/Front-End/src/app/services/supabase.service.d.ts",
-    "back-end-wtk/dist/Front-End/src/app/services/spotify.service.js.map",
-    "back-end-wtk/dist/Front-End/src/app/services/spotify.service.js",
-    "back-end-wtk/dist/Front-End/src/app/services/spotify.service.d.ts",
-    "back-end-wtk/dist/Front-End/src/app/services/backend.service.js.map",
-    "back-end-wtk/dist/Front-End/src/app/services/backend.service.js",
-    "back-end-wtk/dist/Front-End/src/app/services/backend.service.d.ts",
-    "back-end-wtk/dist/Front-End/src/app/services",
-    "back-end-wtk/dist/Front-End/src/app/pages/home/home.component.js.map",
+    "back-end-wtk/src/controllers/spotify.controller.ts",
+    "back-end-wtk/src/utils/spotify-types.ts",
+    "back-end-wtk/src/utils",
+    "back-end-wtk/src/spotify-types.ts",
+    "back-end-wtk/node_modules/axios/index.d.ts",
+    "back-end-wtk/node_modules/axios/SECURITY.md",
+    "back-end-wtk/node_modules/axios/README.md",
+    "back-end-wtk/node_modules/axios/lib/platform/browser/classes/URLSearchParams.js",
+    "back-end-wtk/node_modules/axios/lib/platform/browser/classes/Blob.js",
+    "back-end-wtk/node_modules/axios/lib/platform/node/classes/URLSearchParams.js",
+    "back-end-wtk/node_modules/axios/lib/platform/node/classes/FormData.js",
+    "back-end-wtk/node_modules/axios/lib/platform/browser/classes/FormData.js",
+    "back-end-wtk/node_modules/axios/lib/platform/common/utils.js",
+    "back-end-wtk/node_modules/axios/lib/helpers/README.md",
+    "back-end-wtk/node_modules/axios/lib/env/README.md",
+    "back-end-wtk/node_modules/axios/lib/core/README.md",
+    "back-end-wtk/node_modules/axios/lib/adapters/README.md",
+    "Front-End/README.md",
     "Song Key.md"
   ]
 }

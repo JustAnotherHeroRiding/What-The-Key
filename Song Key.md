@@ -88,6 +88,8 @@ so previously i was manually fetching it, let's set one token for all spotify se
 ###### [A spotify access token lasts for 1 hour](https://developer.spotify.com/documentation/web-api/concepts/access-token)
 
 ## Spotify Service
+- Copy the service and correct all the imports #DONE 
+- See what won't work and how we can adjust the endpoints
 - This will have to be transferred to the backend when it comes to making requests in order to hide the keys
 - The angular spotify service should only call the api which will handle the data fetching on the back end
 

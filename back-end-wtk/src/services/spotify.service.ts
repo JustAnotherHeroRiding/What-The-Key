@@ -1,164 +1,134 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, throwError, switchMap, forkJoin, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@nestjs/common';
+import axios from 'axios';
 import {
-  AudioFeatures,
   SpotifyItem,
+  AudioFeatures,
   SpotifyTracksSearchResult,
-} from '../../../Front-End/src/app/utils/spotify-types';
-import { TrackData } from '../../../Front-End/src/app/pages/home/home.component';
-
-@Injectable({
-  providedIn: 'root',
-})
+  TrackData,
+} from 'src/utils/spotify-types';
+@Injectable()
 export class SpotifyService {
-  private readonly clientId = process.env.SPOTIFY_CLIENT_ID; // Don't forget to delete when pushing
+  private readonly clientId = process.env.SPOTIFY_CLIENT_ID;
   private readonly clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
   private accessToken: string | null = null;
-  /* Note that the access token is valid for 1 hour (3600 seconds). 
-  After that time, the token expires and you need to request a new one.
- */
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.initToken();
   }
-  private initToken(): void {
-    this.getAuthToken().subscribe({
-      next: (token) => {
-        this.accessToken = token;
-      },
-      error: (error) => {
-        console.error('Error fetching Spotify token:', error);
-      },
-    });
+
+  private async initToken(): Promise<void> {
+    try {
+      const token = await this.getAuthToken();
+      this.accessToken = token;
+    } catch (error) {
+      console.error('Error fetching Spotify token:', error);
+    }
   }
 
-  private createHeaders(): HttpHeaders {
-    return new HttpHeaders({
+  private createHeaders(): Record<string, string> {
+    return {
       Authorization: `Bearer ${this.accessToken}`,
       'Content-Type': 'application/json',
-    });
+    };
   }
 
-  private getAuthToken(): Observable<string> {
+  private async getAuthToken(): Promise<string> {
     if (this.accessToken) {
-      return of(this.accessToken); // Return the existing token if it's already fetched
+      return this.accessToken;
     }
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: 'Basic ' + btoa(`${this.clientId}:${this.clientSecret}`),
-    });
-    const body = 'grant_type=client_credentials';
-
-    return this.http
-      .post<any>('https://accounts.spotify.com/api/token', body, { headers })
-      .pipe(
-        map((response) => {
-          this.accessToken = response.access_token;
-          return response.access_token;
-        }),
-        catchError((error) => throwError(() => error)),
-      );
-  }
-
-  fetchMultipleTracks(trackIds: string): Observable<TrackData[]> {
-    return this.getAuthToken().pipe(
-      switchMap((token) => {
-        const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        });
-
-        const tracksRequest = this.http.get<{ tracks: SpotifyItem[] }>(
-          `https://api.spotify.com/v1/tracks?ids=${trackIds}`,
-          { headers },
-        );
-
-        const audioFeaturesRequest = this.http.get<{
-          audio_features: AudioFeatures[];
-        }>(`https://api.spotify.com/v1/audio-features?ids=${trackIds}`, {
-          headers,
-        });
-
-        return forkJoin({ tracksRequest, audioFeaturesRequest });
-      }),
-      map((results) => {
-        const tracks = results.tracksRequest.tracks;
-        const audioFeatures = results.audioFeaturesRequest.audio_features;
-
-        return tracks.map(
-          (track, index) =>
-            ({
-              track,
-              audioFeatures: audioFeatures[index],
-            }) as TrackData,
-        );
-      }),
-      catchError((error) => throwError(() => error)),
+    const tokenResponse = await axios.post(
+      'https://accounts.spotify.com/api/token',
+      'grant_type=client_credentials',
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization:
+            'Basic ' +
+            Buffer.from(`${this.clientId}:${this.clientSecret}`).toString(
+              'base64',
+            ),
+        },
+      },
     );
+
+    this.accessToken = tokenResponse.data.access_token;
+    return tokenResponse.data.access_token;
   }
 
-  fetchTrack(trackId: string): Observable<TrackData> {
-    return this.getAuthToken().pipe(
-      switchMap(() => this.makeTrackRequest(trackId)),
-      catchError((error) => throwError(() => error)),
-    );
-  }
+  async fetchMultipleTracks(trackIds: string): Promise<TrackData[]> {
+    await this.getAuthToken();
 
-  private makeTrackRequest(trackId: string): Observable<any> {
     const headers = this.createHeaders();
+    const tracksResponse = await axios.get<{ tracks: SpotifyItem[] }>(
+      `https://api.spotify.com/v1/tracks?ids=${trackIds}`,
+      { headers },
+    );
+    const audioFeaturesResponse = await axios.get<{
+      audio_features: AudioFeatures[];
+    }>(`https://api.spotify.com/v1/audio-features?ids=${trackIds}`, {
+      headers,
+    });
 
-    const trackRequest = this.http.get(
+    const tracks = tracksResponse.data.tracks;
+    const audioFeatures = audioFeaturesResponse.data.audio_features;
+
+    return tracks.map((track, index) => ({
+      track,
+      audioFeatures: audioFeatures[index],
+    }));
+  }
+
+  async fetchTrack(trackId: string): Promise<TrackData> {
+    await this.getAuthToken();
+
+    const headers = this.createHeaders();
+    const trackResponse = await axios.get(
       `https://api.spotify.com/v1/tracks/${trackId}`,
       { headers },
     );
-    const audioFeaturesRequest = this.http.get(
+    const audioFeaturesResponse = await axios.get(
       `https://api.spotify.com/v1/audio-features/${trackId}`,
       { headers },
     );
 
-    return forkJoin({
-      track: trackRequest,
-      audioFeatures: audioFeaturesRequest,
+    return {
+      track: trackResponse.data,
+      audioFeatures: audioFeaturesResponse.data,
+    };
+  }
+
+  async searchTracks(searchQuery: string): Promise<SpotifyTracksSearchResult> {
+    await this.getAuthToken();
+
+    const headers = this.createHeaders();
+    const params = new URLSearchParams({
+      q: searchQuery,
+      type: 'track',
+      limit: '10',
     });
-  }
 
-  searchTracks(searchQuery: string): Observable<SpotifyTracksSearchResult> {
-    return this.getAuthToken().pipe(
-      switchMap(() => this.makeSearchRequest(searchQuery)),
-      catchError((error) => throwError(() => error)),
+    const searchResponse = await axios.get<SpotifyTracksSearchResult>(
+      `https://api.spotify.com/v1/search?${params}`,
+      { headers },
     );
+    return searchResponse.data;
   }
 
-  private makeSearchRequest(
-    searchQuery: string,
-  ): Observable<SpotifyTracksSearchResult> {
+  async getRandomGuitarTrack(): Promise<any> {
     const headers = this.createHeaders();
-    const params = new HttpParams()
-      .set('q', searchQuery)
-      .set('type', 'track')
-      .set('limit', 10);
-
-    return this.http.get<SpotifyTracksSearchResult>(
-      `https://api.spotify.com/v1/search`,
-      { headers, params },
-    );
-  }
-
-  getRandomGuitarTrack(): Observable<any> {
-    const headers = this.createHeaders();
-    const seedGenres = 'rock,blues,punk,post-punk,alt-rock'; // Genres known for guitar music
+    const seedGenres = 'rock,blues,punk,post-punk,alt-rock';
     const url = `https://api.spotify.com/v1/recommendations?&seed_genres=${seedGenres}&limit=1`;
 
-    return this.http.get(url, { headers });
+    const response = await axios.get(url, { headers });
+    return response.data;
   }
 
-  getGenres(): Observable<any> {
+  async getGenres(): Promise<any> {
     const headers = this.createHeaders();
     const url = `https://api.spotify.com/v1/recommendations/available-genre-seeds`;
 
-    return this.http.get(url, { headers });
+    const response = await axios.get(url, { headers });
+    return response.data;
   }
 }

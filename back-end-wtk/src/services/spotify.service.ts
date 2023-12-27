@@ -37,23 +37,30 @@ export class SpotifyService {
       return this.accessToken;
     }
 
-    const tokenResponse = await axios.post(
-      'https://accounts.spotify.com/api/token',
-      'grant_type=client_credentials',
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization:
-            'Basic ' +
-            Buffer.from(`${this.clientId}:${this.clientSecret}`).toString(
-              'base64',
-            ),
-        },
-      },
-    );
+    try {
+      const credentials = this.clientId + ':' + this.clientSecret;
+      const encodedCredentials = Buffer.from(credentials).toString('base64');
 
-    this.accessToken = tokenResponse.data.access_token;
-    return tokenResponse.data.access_token;
+      const response = await axios.post(
+        'https://accounts.spotify.com/api/token',
+        'grant_type=client_credentials',
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: `Basic ${encodedCredentials}`,
+          },
+        },
+      );
+
+      this.accessToken = response.data.access_token;
+      return this.accessToken;
+    } catch (error) {
+      console.error('Error fetching Spotify token:', error);
+      if (error.response) {
+        console.error('Response:', error.response.data);
+      }
+      throw error;
+    }
   }
 
   async fetchMultipleTracks(trackIds: string): Promise<TrackData[]> {

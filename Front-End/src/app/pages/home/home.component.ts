@@ -135,7 +135,7 @@ export class HomeComponent {
   }
 
   getRandomLibraryTrack() {
-    const track = this.spotifyService.getRandomGuitarTrack().subscribe({
+    this.spotifyService.getRandomGuitarTrack().subscribe({
       next: (track) => {
         console.log(track);
         this.getTrack(track.tracks[0].id, GetTrackSources.SEARCH);

@@ -9,6 +9,8 @@ import { PrismaService } from './services/prisma.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { TrackController } from './controllers/tracks.controller';
+import { SpotifyController } from './controllers/spotify.controller';
+import { SpotifyService } from './services/spotify.service';
 
 @Module({
   imports: [
@@ -17,7 +19,18 @@ import { TrackController } from './controllers/tracks.controller';
       rootPath: join(__dirname, '..', 'public'),
     }),
   ],
-  controllers: [AppController, UserController, TrackController],
-  providers: [AppService, UserService, TrackService, PrismaService],
+  controllers: [
+    AppController,
+    UserController,
+    TrackController,
+    SpotifyController,
+  ],
+  providers: [
+    AppService,
+    UserService,
+    TrackService,
+    PrismaService,
+    SpotifyService,
+  ],
 })
 export class AppModule {}

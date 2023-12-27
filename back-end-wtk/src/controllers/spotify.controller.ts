@@ -28,6 +28,4 @@ export class SpotifyController {
   async getGenres() {
     return await this.spotifyService.getGenres();
   }
-
-  // Add other endpoints as needed
 }

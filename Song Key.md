@@ -56,7 +56,7 @@
 - For now each user will upload their own link #DONE 
 - Maybe even display a little preview of the tabs on hover. Let's display the tab link in the modal #DONE 
 - Style the modal until it looks nice #DONE 
-- Once the tab successfully get's updated, display it and clear the input
+- Once the tab successfully get's updated, display it and clear the input #DONE 
 
 ## Delete tracks
 - Add a delete button #DONE 
@@ -96,6 +96,7 @@ so previously i was manually fetching it, let's set one token for all spotify se
 - This will have to be transferred to the backend when it comes to making requests in order to hide the keys #DONE 
 - The angular spotify service should only call the api which will handle the data fetching on the back end #DONE 
 ##### Seems to be working for now. Random track, searching, library and deleted are working without issues and I did not have to make any changes to the components. Pay attention for any failed requests
+- After one hour the token expires and requests start failing with an error code 401 due to the token being invalid, we will have to implement a token refresh
 
 
 ## Local storage to database

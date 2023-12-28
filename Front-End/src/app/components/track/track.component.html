@@ -11,9 +11,6 @@
       />
     </svg>
   </div>
-  <!-- <div class="add-tabs" 
-  (click)="handleAction($event, trackActions.AddTabs)"
-  > -->
   <div class="add-tabs" (click)="addTabModal($event)">
     <svg width="2em" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -74,15 +71,17 @@
   </a>
 </div>
 <div
-  *ngIf="!showAddTabModal"
+  *ngIf="showAddTabModal"
   class="modal-wrapper"
   (click)="addTabModal($event)"
 >
   <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="top-row">
-      <div style="position: relative">
-        <loading-spinner *ngIf="loadingTabs; else content"> </loading-spinner>
-      </div>
+      <loading-spinner
+        [customStyles]="modalSpinnerStyles"
+        *ngIf="loadingTabs; else content"
+      >
+      </loading-spinner>
       <ng-template #content>
         <a
           *ngIf="trackTabUrl; else noTabs"
@@ -91,8 +90,10 @@
           >Your tabs</a
         >
         <ng-template #noTabs>
-          <p class="no-tabs">No tabs added yet</p>
-          <p>Use the form below to add them</p>
+          <div class="no-tabs-col">
+            <p class="no-tabs">No tabs added yet</p>
+            <p>Use the form below to add them.</p>
+          </div>
         </ng-template>
       </ng-template>
       <span class="close-modal" (click)="addTabModal($event)">
@@ -109,13 +110,15 @@
       </span>
     </div>
 
-    <span class="modal-track-name">
-      {{ trackData.track.name }}
-    </span>
+    <div class="modal-track-data">
+      <span class="modal-track-name">
+        {{ trackData.track.name }} - {{ trackData.track.artists[0].name }}
+      </span>
 
-    <span class="modal-track-name">
-      {{ trackData.track.album.name }}
-    </span>
+      <span class="modal-track-name">
+        {{ trackData.track.album.name }}
+      </span>
+    </div>
 
     <img
       class="modal-img"
@@ -126,7 +129,7 @@
     <form
       class="modal-form"
       #tabsForm="ngForm"
-      (ngSubmit)="addTabs(tabsForm.value)"
+      (ngSubmit)="addTabs(tabsForm.value, tabsForm)"
     >
       <input
         type="url"

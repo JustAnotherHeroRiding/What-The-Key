@@ -10,6 +10,7 @@ import { getNoteName } from '../result-card/result-card.component';
 import { Router } from '@angular/router';
 import { BackEndService } from 'src/app/services/backend.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
 
 export enum TrackAction {
   Delete,
@@ -29,6 +30,12 @@ export class TrackComponent {
   showAddTabModal = false;
   trackTabUrl?: string;
   loadingTabs = false;
+  modalSpinnerStyles = {
+    bottom: '0%',
+    width: '20px',
+    height: '20px',
+    left: '1em',
+  };
 
   constructor(
     private router: Router,
@@ -69,16 +76,16 @@ export class TrackComponent {
     }
   }
 
-  addTabs(formValues: { tabUrl: string }) {
+  addTabs(formValues: { tabUrl: string }, formDirective: NgForm) {
     this.backendService
       .addTabs(this.trackData.track.id, formValues.tabUrl)
       .subscribe({
         next: (response) => {
-          // Handle successful response
+          this.getTabs();
           this.toastr.success('Tabs added successfully!');
+          formDirective.reset()
         },
         error: (error) => {
-          // Handle error response
           this.toastr.error(
             error.message || 'An error occurred while adding tabs.'
           );

@@ -163,12 +163,18 @@ export class TrackService {
       where: {
         trackId: trackId,
         userId: user.id,
-        tabUrl: tabUrl,
       },
     });
 
     if (existingTab) {
-      throw new Error('Tab already added for this track by the user.');
+      return this.prisma.trackTab.update({
+        where: {
+          id: existingTab.id,
+        },
+        data: {
+          tabUrl: tabUrl,
+        },
+      });
     }
 
     // If the tab does not exist, create a new one

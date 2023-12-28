@@ -115,7 +115,7 @@
   border: var(--beige-custom) 1.5px solid;
   border-radius: 8px;
   margin: 0 auto;
-  max-width: 15em;
+  max-width: 20em;
 }
 
 .modal-content form {
@@ -139,9 +139,8 @@
   font-size: 1em;
 }
 
-.modal-add-btn {
+.modal-add-btn, .modal-tab-link {
   padding: 0.6em 1em;
-  border: 1px black solid;
   border-radius: 15px;
   font-size: 1em;
   background-color: var(--cream);
@@ -150,6 +149,12 @@
   cursor: pointer;
   margin-left: auto;
   border: 1px solid var(--amber-600);
+}
+
+.modal-tab-link {
+  margin-right: auto;
+  margin-left: 0;
+  text-decoration: none;
 }
 
 .modal-add-btn:hover {
@@ -177,10 +182,17 @@
   fill: var(--red-600);
 }
 
+.no-tabs-col,
+.modal-track-data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: flex-start;
+}
+
 .no-tabs {
   font-weight: 700;
   padding: 0.3em;
-
   border: 1px solid var(--beige-custom);
   border-radius: 8px;
   width: fit-content;
@@ -190,6 +202,8 @@
 .top-row {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  position: relative;
 }
 
 /* For very small screens */

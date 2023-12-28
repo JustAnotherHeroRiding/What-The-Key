@@ -57,6 +57,7 @@
 - Maybe even display a little preview of the tabs on hover. Let's display the tab link in the modal #DONE 
 - Style the modal until it looks nice #DONE 
 - Once the tab successfully get's updated, display it and clear the input
+
 ## Delete tracks
 - Add a delete button #DONE 
 - Users can delete each of the saved tracks #DONE 

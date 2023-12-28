@@ -128,8 +128,7 @@ export class HomeComponent {
   getRandomTrack() {
     this.spotifyService.getRandomGuitarTrack().subscribe({
       next: (track) => {
-        console.log(track);
-        this.getTrack(track.tracks[0].id, GetTrackSources.SEARCH);
+        this.getTrack(track.tracks[0].id!, GetTrackSources.SEARCH);
       },
       error: (err) => {
         console.error('Error fetching random track:', err);

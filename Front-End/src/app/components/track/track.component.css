@@ -107,6 +107,18 @@
   justify-content: flex-start;
   align-items: flex-start;
   overflow: auto;
+  animation: balloonEffect 0.5s ease-out forwards;
+}
+
+@keyframes balloonEffect {
+  from {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .modal-img {
@@ -139,7 +151,8 @@
   font-size: 1em;
 }
 
-.modal-add-btn, .modal-tab-link {
+.modal-add-btn,
+.modal-tab-link {
   padding: 0.6em 1em;
   border-radius: 15px;
   font-size: 1em;

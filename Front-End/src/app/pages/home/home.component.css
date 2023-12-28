@@ -62,14 +62,14 @@
 }
 
 .search-input {
-  padding: 0.5em 1em; /* Adjust padding for better text visibility */
-  border-radius: 25px; /* More rounded edges */
-  border: 2px solid #ccc; /* Subtle border */
-  outline: none; /* Removes the default focus outline */
-  font-size: 1em; /* Adjust font size as needed */
-  color: #333; /* Font color */
-  background-color: #fff; /* Background color */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft box shadow for depth */
+  padding: 0.5em 1em; 
+  border-radius: 25px; 
+  border: 2px solid #ccc; 
+  outline: none; 
+  font-size: 1em; 
+  color: black; 
+  background-color: #fff; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
   transition: all 0.3s ease; /* Smooth transition for interactions */
 }
 

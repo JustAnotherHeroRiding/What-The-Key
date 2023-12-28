@@ -239,3 +239,39 @@ export const genres = {
     'world-music',
   ],
 };
+
+export interface RandomTrack {
+  tracks: [
+    {
+      album: SpotifyAlbum;
+      artists: SpotifyArtist[];
+      available_markets: string[];
+      disc_number: number | null;
+      duration_ms: number | null;
+      explicit: boolean;
+      external_ids: string[];
+      external_urls: {
+        spotify: string | null;
+      };
+      href: string | null;
+      id: string | null;
+      is_local: boolean;
+      name: string | null;
+      popularity: number | null;
+      preview_url: string | null;
+      track_number: number | null;
+      type: string | null;
+      uri: string | null;
+    }
+  ];
+  seeds: SpotifySeed[];
+}
+
+export interface SpotifySeed {
+  initialPoolSize: number | null;
+  afterFilteringSize: number | null;
+  afterRelinkingSize: number | null;
+  id: string | null;
+  type: string | null;
+  href: null | string;
+}

@@ -108,17 +108,28 @@ so previously i was manually fetching it, let's set one token for all spotify se
 
 ## Drag and drop
 - Allow users to rearrange their tracks and have the order be permanent, this will most likely have to do a db call
-- There should be a icon on the top right that will be the only place where a track can be dragged from instead of making the entire draggable
+- There should be a icon on the top right that will be the only place where a track can be dragged from instead of making the entire track draggable
 
 ## Caching data
 - When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires #DONE 
+##### Seems like i handled all the cases where data needs to be invalidated, but let's pay attention if stale data will show up somewhere
+
+## Caching User data
+- Let's also cache the user data for the profile page so that it does not send a new request every time
+
+## Lazy load
+##### Right now all components are loaded when the page first renders. Let's make it so that they are only rendered once their route is opened.
+`    path: 'news', loadChildren: () => import('./news/weather.module').then(m => m.WeatherModule)`
+This is how the example for lazy loading was. A new module was created. We will need to create a new module for each feature in my app that I do not want to load on the initial page render.
+- Create a module for the library
+- Create a module for the recycle bin/deleted component
 - Lazy load for components
 
 
 ## Junction tables
 - Add 2 new models to use as tables for the library and recycle bin for each user #DONE 
-- Currently when adding a track it does not work from the home page as the prisma operation does not seem to be valid
-- Also adding a track to the bin does not remove it from the library
+- Currently when adding a track it does not work from the home page as the prisma operation does not seem to be valid #DONE 
+- Also adding a track to the bin does not remove it from the library #DONE 
 
 ## Add Tab modal transition
 - It should grow like a balloon to its intended size

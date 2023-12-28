@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {
   AudioFeatures,
+  RandomTrack,
   SpotifyItem,
   SpotifyTracksSearchResult,
 } from '../utils/spotify-types';
@@ -37,15 +38,15 @@ export class SpotifyService {
       .pipe(catchError((error) => throwError(() => error)));
   }
 
-  getRandomGuitarTrack(): Observable<any> {
+  getRandomGuitarTrack(): Observable<RandomTrack> {
     return this.http
-      .get<any>(`${this.backendUrl}/random-guitar-track`)
+      .get<RandomTrack>(`${this.backendUrl}/random-guitar-track`)
       .pipe(catchError((error) => throwError(() => error)));
   }
 
-  getGenres(): Observable<any> {
+  getGenres(): Observable<string[]> {
     return this.http
-      .get<any>(`${this.backendUrl}/genres`)
+      .get<string[]>(`${this.backendUrl}/genres`)
       .pipe(catchError((error) => throwError(() => error)));
   }
 }

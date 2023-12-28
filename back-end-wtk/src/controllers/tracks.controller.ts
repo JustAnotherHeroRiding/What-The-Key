@@ -49,6 +49,7 @@ export class TrackController {
       );
       response.status(HttpStatus.OK).json(track);
     } catch (error) {
+      console.log(error);
       response
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ message: error.message });

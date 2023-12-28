@@ -114,6 +114,12 @@ so previously i was manually fetching it, let's set one token for all spotify se
 - When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires #DONE 
 - Lazy load for components
 
+
+## Junction tables
+- Add 2 new models to use as tables for the library and recycle bin for each user #DONE 
+- Currently when adding a track it does not work from the home page as the prisma operation does not seem to be valid
+- Also adding a track to the bin does not remove it from the library
+
 ## Add Tab modal transition
 - It should grow like a balloon to its intended size
 

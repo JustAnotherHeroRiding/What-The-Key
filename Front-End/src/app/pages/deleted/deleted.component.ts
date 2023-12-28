@@ -85,7 +85,7 @@ export class DeletedComponent {
         this.displayedLibrary = this.displayedLibrary.filter(
           (t) => t.track.id !== track.track.id
         );
-        this.trackCacheService.invalidateCache('recycleBin')
+        this.trackCacheService.invalidateCache('recycleBin');
       },
       error: (err) => {
         this.toastr.error('Failed to delete track');
@@ -101,7 +101,8 @@ export class DeletedComponent {
         this.displayedLibrary = this.displayedLibrary.filter(
           (t) => t.track.id !== track.track.id
         );
-        this.trackCacheService.invalidateCache('library')
+        this.trackCacheService.invalidateCache('library');
+        this.trackCacheService.invalidateCache('recycleBin');
       },
       error: (err) => {
         this.toastr.error('Failed to restore track');

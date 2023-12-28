@@ -73,6 +73,16 @@ export class TrackService {
       throw new Error('User not found, track will not be added.');
     }
 
+    let track = await this.prisma.track.findUnique({ where: { id: trackId } });
+    if (!track) {
+      track = await this.prisma.track.create({
+        data: {
+          id: trackId,
+          // You may need to provide other required fields for a new track
+        },
+      });
+    }
+
     const data = {
       trackId: trackId,
       userId: user.id,
@@ -81,11 +91,19 @@ export class TrackService {
 
     if (source === 'library') {
       await this.prisma.libraryTrack.create({ data });
-    } else {
+      await this.prisma.recycleBinTrack.deleteMany({
+        where: { trackId: trackId, userId: user.id },
+      });
+    } else if (source === 'recycleBin') {
       await this.prisma.recycleBinTrack.create({ data });
+      await this.prisma.libraryTrack.deleteMany({
+        where: { trackId: trackId, userId: user.id },
+      });
+    } else {
+      throw new Error('Please use a valid source, library or recycleBin.');
     }
 
-    return this.prisma.track.findUnique({ where: { id: trackId } });
+    return track;
   }
 
   async deleteTrackPermanently(trackId: string, userId: string): Promise<void> {

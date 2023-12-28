@@ -79,7 +79,6 @@ export class SpotifyService {
 
   async fetchMultipleTracks(trackIds: string): Promise<TrackData[]> {
     await this.getAuthToken();
-
     const headers = this.createHeaders();
     const tracksResponse = await axios.get<{ tracks: SpotifyItem[] }>(
       `https://api.spotify.com/v1/tracks?ids=${trackIds}`,

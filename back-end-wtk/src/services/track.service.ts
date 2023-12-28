@@ -131,7 +131,7 @@ export class TrackService {
     const user = await this.ensureUserExists(userId);
 
     if (!user) {
-      throw new Error('User not found, track will not be added.');
+      throw new Error('User not found, cannot fetch tracks.');
     }
     if (source === 'library') {
       return this.prisma.libraryTrack
@@ -151,7 +151,7 @@ export class TrackService {
         .then((results) => results.map((r) => r.track));
     } else {
       throw new Error(
-        'Please provide the correct source(library of recycleBin',
+        'Please provide the correct source(library of recycleBin).',
       );
     }
   }

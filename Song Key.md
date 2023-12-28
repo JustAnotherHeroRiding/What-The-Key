@@ -114,8 +114,11 @@ so previously i was manually fetching it, let's set one token for all spotify se
 - When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires #DONE 
 ##### Seems like i handled all the cases where data needs to be invalidated, but let's pay attention if stale data will show up somewhere
 
-## Caching User data
+### Caching User data
 - Let's also cache the user data for the profile page so that it does not send a new request every time
+
+### Caching single tracks
+- When opening the same single track page it should display the cached data
 
 ## Lazy load
 ##### Right now all components are loaded when the page first renders. Let's make it so that they are only rendered once their route is opened.
@@ -124,6 +127,7 @@ This is how the example for lazy loading was. A new module was created. We will 
 - Create a module for the library
 - Create a module for the recycle bin/deleted component
 - Lazy load for components
+# Continue here #Checkpoint
 
 
 ## Junction tables
@@ -132,9 +136,10 @@ This is how the example for lazy loading was. A new module was created. We will 
 - Also adding a track to the bin does not remove it from the library #DONE 
 
 ## Add Tab modal transition
-- It should grow like a balloon to its intended size
+- It should grow like a balloon to its intended size #DONE 
 
 ## Figure out why it is so slow after creating the new supabase project 
+##### I believe that I have sped it up as much as possible and with the cache the experience will be much better.
 - When loading the library or deleted sections it is very very slow compared to before
 
 ## Playing songs

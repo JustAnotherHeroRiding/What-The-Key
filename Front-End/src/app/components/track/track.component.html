@@ -48,7 +48,7 @@
     </svg>
   </div>
   <h2>{{ trackData.track.name }}</h2>
-  <h3>{{ trackData.track.artists[0].name }}</h3>
+  <h3 class="artist-name">{{ trackData.track.artists[0].name }}</h3>
   <img
     *ngIf="trackData.track.album.images[0]"
     [src]="trackData.track.album.images[0].url"
@@ -112,7 +112,10 @@
 
     <div class="modal-track-data">
       <span class="modal-track-name">
-        {{ trackData.track.name }} - {{ trackData.track.artists[0].name }}
+        {{ trackData.track.name }} -
+        <span class="artist-name">
+          {{ trackData.track.artists[0].name }}
+        </span>
       </span>
 
       <span class="modal-track-name">

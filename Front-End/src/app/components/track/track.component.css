@@ -26,6 +26,14 @@
   border-radius: 10px;
 }
 
+.artist-name {
+  color: var(--artist-gray);
+}
+
+.track:hover .artist-name {
+  color: var(--slate-800);
+}
+
 .track:hover img {
   border: 2px solid black;
   scale: 1.05; /* Replace with your desired border color and width */

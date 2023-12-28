@@ -96,7 +96,8 @@ so previously i was manually fetching it, let's set one token for all spotify se
 - This will have to be transferred to the backend when it comes to making requests in order to hide the keys #DONE 
 - The angular spotify service should only call the api which will handle the data fetching on the back end #DONE 
 ##### Seems to be working for now. Random track, searching, library and deleted are working without issues and I did not have to make any changes to the components. Pay attention for any failed requests
-- After one hour the token expires and requests start failing with an error code 401 due to the token being invalid, we will have to implement a token refresh
+- After one hour the token expires and requests start failing with an error code 401 due to the token being invalid, we will have to implement a token refresh #DONE 
+##### I added a timestamp and once it reaches 3600 seconds from the current time, it will refresh the token once a request is made
 
 
 ## Local storage to database
@@ -110,8 +111,11 @@ so previously i was manually fetching it, let's set one token for all spotify se
 - There should be a icon on the top right that will be the only place where a track can be dragged from instead of making the entire draggable
 
 ## Caching data
-- When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires
+- When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires #DONE 
 - Lazy load for components
+
+## Add Tab modal transition
+- It should grow like a balloon to its intended size
 
 ## Figure out why it is so slow after creating the new supabase project 
 - When loading the library or deleted sections it is very very slow compared to before

@@ -14,6 +14,7 @@ import {
   sortTracksByFilter,
 } from '../../utils/filters';
 import { BackEndService } from 'src/app/services/backend.service';
+import { TrackCacheService } from 'src/app/services/track-cache.service';
 
 @Component({
   selector: 'app-library',
@@ -32,7 +33,8 @@ export class LibraryComponent {
   constructor(
     private spotifyService: SpotifyService,
     private toastr: ToastrService,
-    private backendService: BackEndService
+    private backendService: BackEndService,
+    private trackCacheService: TrackCacheService
   ) {
     Object.keys(filterLocation).forEach((key) => {
       this.sortOrders[key as FilterLocationValue] = SortOrder.None;
@@ -44,16 +46,26 @@ export class LibraryComponent {
   }
 
   fetchTracks() {
+    if (this.trackCacheService.isCacheValid('library')) {
+      const cachedTracks = this.trackCacheService.getCache('library');
+      if (cachedTracks) {
+        this.originalLibrary = [...cachedTracks];
+        this.displayedLibrary = [...cachedTracks];
+        return;
+      }
+    }
+
     this.loading = true;
     this.backendService.getTracks('library').subscribe({
       next: (trackIdsString: string) => {
         if (trackIdsString) {
           this.spotifyService.fetchMultipleTracks(trackIdsString).subscribe({
             next: (tracksData) => {
-              // Process the fetched tracks and their audio features here
+              this.trackCacheService.setCache(tracksData, 'library');
+
               this.loading = false;
               this.originalLibrary = tracksData; // Store the original library for filtering purposes
-              this.displayedLibrary = tracksData; // Update your displayed library
+              this.displayedLibrary = tracksData; // Update the displayed library
             },
             error: (err) => {
               console.error('Error fetching tracks from Spotify:', err);
@@ -61,7 +73,6 @@ export class LibraryComponent {
             },
           });
         } else {
-          // Handle case where no track IDs are returned
           this.displayedLibrary = [];
           this.loading = false;
         }
@@ -77,6 +88,7 @@ export class LibraryComponent {
         this.displayedLibrary = this.displayedLibrary.filter(
           (t) => t.track.id !== track.track.id
         );
+        this.trackCacheService.invalidateCache('library');
       },
       error: (err) => {
         this.toastr.error('Failed to delete track');

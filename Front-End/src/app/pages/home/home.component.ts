@@ -9,6 +9,7 @@ import {
 } from '../../utils/spotify-types';
 import { ToastrService } from 'ngx-toastr';
 import { BackEndService } from '../../services/backend.service';
+import { TrackCacheService } from 'src/app/services/track-cache.service';
 
 export enum GetTrackSources {
   LIBRARY = 'library',
@@ -37,7 +38,8 @@ export class HomeComponent {
   constructor(
     private spotifyService: SpotifyService,
     private toastr: ToastrService,
-    private backEndService: BackEndService
+    private backEndService: BackEndService,
+    private trackCacheService: TrackCacheService
   ) {
     this.searchTerm$
       .pipe(
@@ -107,6 +109,7 @@ export class HomeComponent {
   saveTrack(trackId: string) {
     this.backEndService.addTrack(trackId, GetTrackSources.LIBRARY).subscribe({
       next: (response) => {
+        this.trackCacheService.invalidateCache('library');
         this.toastr.success('Track saved successfully!');
       },
       error: (err) => {
@@ -122,19 +125,7 @@ export class HomeComponent {
     });
   }
 
-  private getLibrary(): TrackData[] {
-    const libraryData = localStorage.getItem('library');
-    try {
-      const library = JSON.parse(libraryData!);
-      //console.log('Library data:', library); // Add this line to log the library data in the console
-      return Array.isArray(library) ? library : [];
-    } catch (error) {
-      console.error('Error parsing library data:', error);
-      return [];
-    }
-  }
-
-  getRandomLibraryTrack() {
+  getRandomTrack() {
     this.spotifyService.getRandomGuitarTrack().subscribe({
       next: (track) => {
         console.log(track);

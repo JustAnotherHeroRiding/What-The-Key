@@ -62,7 +62,7 @@ export class TrackController {
     @Res() response: Response,
   ) {
     try {
-      const track = await this.trackService.deleteTrackPermanetly(
+      const track = await this.trackService.deleteTrackPermanently(
         trackId,
         userId,
       );

@@ -14,6 +14,7 @@ import {
 } from '../../utils/filters';
 import { getNoteName } from '../../components/result-card/result-card.component';
 import { BackEndService } from 'src/app/services/backend.service';
+import { TrackCacheService } from 'src/app/services/track-cache.service';
 
 @Component({
   selector: 'app-deleted',
@@ -24,7 +25,7 @@ export class DeletedComponent {
   originalLibrary: TrackData[] = [];
   displayedLibrary: TrackData[] = [];
   filters = FILTERS;
-  loading = true;
+  loading = false;
   sortOrderEnum = SortOrder;
   sortOrders: { [filter in FilterLocationValue | string]?: SortOrder } = {};
   modeMapLocal = modeMap;
@@ -32,7 +33,8 @@ export class DeletedComponent {
   constructor(
     private spotifyService: SpotifyService,
     private toastr: ToastrService,
-    private backendService: BackEndService
+    private backendService: BackEndService,
+    private trackCacheService: TrackCacheService
   ) {}
 
   ngOnInit(): void {
@@ -40,13 +42,23 @@ export class DeletedComponent {
   }
 
   fetchTracks() {
+    if (this.trackCacheService.isCacheValid('recycleBin')) {
+      const cachedTracks = this.trackCacheService.getCache('recycleBin');
+      if (cachedTracks) {
+        this.originalLibrary = [...cachedTracks];
+        this.displayedLibrary = [...cachedTracks];
+        return;
+      }
+    }
+
     this.loading = true;
     this.backendService.getTracks('recycleBin').subscribe({
       next: (trackIdsString: string) => {
         if (trackIdsString) {
           this.spotifyService.fetchMultipleTracks(trackIdsString).subscribe({
             next: (tracksData) => {
-              // Process the fetched tracks and their audio features here
+              this.trackCacheService.setCache(tracksData, 'recycleBin');
+
               this.originalLibrary = tracksData; // Store the original library for filtering purposes
               this.displayedLibrary = tracksData; // Update your displayed library
               this.loading = false;
@@ -73,6 +85,7 @@ export class DeletedComponent {
         this.displayedLibrary = this.displayedLibrary.filter(
           (t) => t.track.id !== track.track.id
         );
+        this.trackCacheService.invalidateCache('recycleBin')
       },
       error: (err) => {
         this.toastr.error('Failed to delete track');
@@ -88,6 +101,7 @@ export class DeletedComponent {
         this.displayedLibrary = this.displayedLibrary.filter(
           (t) => t.track.id !== track.track.id
         );
+        this.trackCacheService.invalidateCache('library')
       },
       error: (err) => {
         this.toastr.error('Failed to restore track');

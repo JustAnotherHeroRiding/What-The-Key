@@ -11,6 +11,7 @@ export class SpotifyService {
   private readonly clientId = process.env.SPOTIFY_CLIENT_ID;
   private readonly clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
   private accessToken: string | null = null;
+  private tokenTimestamp: number | null = null;
 
   constructor() {
     this.initToken();
@@ -32,8 +33,20 @@ export class SpotifyService {
     };
   }
 
+  private isTokenValid(): boolean {
+    const now = Date.now();
+    return (
+      this.accessToken &&
+      this.tokenTimestamp &&
+      now - this.tokenTimestamp < 3600000
+    );
+  }
+
   private async getAuthToken(): Promise<string> {
-    if (this.accessToken) {
+    const now = Date.now();
+    if (this.isTokenValid()) {
+      // 3600000 milliseconds = 1 hour
+      // This will check if the token is expired
       return this.accessToken;
     }
 
@@ -53,6 +66,7 @@ export class SpotifyService {
       );
 
       this.accessToken = response.data.access_token;
+      this.tokenTimestamp = now;
       return this.accessToken;
     } catch (error) {
       console.error('Error fetching Spotify token:', error);
@@ -123,6 +137,7 @@ export class SpotifyService {
   }
 
   async getRandomGuitarTrack(): Promise<TrackData> {
+    await this.getAuthToken();
     const headers = this.createHeaders();
     const seedGenres = 'rock,blues,punk,post-punk,alt-rock';
     const url = `https://api.spotify.com/v1/recommendations?&seed_genres=${seedGenres}&limit=1`;
@@ -132,6 +147,7 @@ export class SpotifyService {
   }
 
   async getGenres(): Promise<string[]> {
+    await this.getAuthToken();
     const headers = this.createHeaders();
     const url = `https://api.spotify.com/v1/recommendations/available-genre-seeds`;
 

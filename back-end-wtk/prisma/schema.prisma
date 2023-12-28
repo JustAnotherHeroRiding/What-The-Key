@@ -10,23 +10,47 @@ datasource db {
 }
 
 model User {
-  id            Int        @id @default(autoincrement())
-  profileId     String     @unique // Assuming this corresponds to the id in the profiles table
-  library       Track[]    @relation("UserLibrary")
-  recycleBin    Track[]    @relation("UserRecycleBin")
-  trackTabsUser TrackTab[] @relation("trackTabsUser")
+  id               Int               @id @default(autoincrement())
+  profileId        String            @unique // Assuming this corresponds to the id in the profiles table
+  libraryTracks    LibraryTrack[]    @relation("UserToLibraryTrack")
+  recycleBinTracks RecycleBinTrack[] @relation("UserToRecycleBinTrack")
+  trackTabsUser    TrackTab[]        @relation("trackTabsUser")
 
   @@schema("public")
 }
 
 model Track {
-  id               String     @id
+  id               String            @id
   libraryUserId    Int?
   recycleBinUserId Int?
-  UserLibrary      User?      @relation("UserLibrary", fields: [libraryUserId], references: [id])
-  UserRecycleBin   User?      @relation("UserRecycleBin", fields: [recycleBinUserId], references: [id])
-  trackTabsTrack   TrackTab[] @relation("trackTabsTrack")
+  libraryTracks    LibraryTrack[]    @relation("TrackToLibraryTrack")
+  recycleBinTracks RecycleBinTrack[] @relation("TrackToRecycleBinTrack")
+  trackTabsTrack   TrackTab[]        @relation("trackTabsTrack")
 
+  @@schema("public")
+}
+
+model LibraryTrack {
+  trackId String
+  userId  Int
+  addedAt DateTime @default(now())
+
+  track Track @relation("TrackToLibraryTrack", fields: [trackId], references: [id])
+  user  User  @relation("UserToLibraryTrack", fields: [userId], references: [id])
+
+  @@id([trackId, userId])
+  @@schema("public")
+}
+
+model RecycleBinTrack {
+  trackId String
+  userId  Int
+  addedAt DateTime @default(now())
+
+  track Track @relation("TrackToRecycleBinTrack", fields: [trackId], references: [id])
+  user  User  @relation("UserToRecycleBinTrack", fields: [userId], references: [id])
+
+  @@id([trackId, userId])
   @@schema("public")
 }
 

@@ -64,61 +64,46 @@ export class TrackService {
 
   async addTrackToUserLibraryOrBin(
     trackId: string,
-    profileId: string,
+    userId: string,
     source: 'library' | 'recycleBin',
   ): Promise<Track> {
-    // Ensure the user exists
-    const user = await this.ensureUserExists(profileId);
+    const user = await this.ensureUserExists(userId);
 
     if (!user) {
       throw new Error('User not found, track will not be added.');
     }
 
-    // Determine which relation to connect and disconnect based on the source
-    let connectField, disconnectField;
+    const data = {
+      trackId: trackId,
+      userId: user.id,
+      addedAt: new Date(),
+    };
+
     if (source === 'library') {
-      connectField = 'UserLibrary';
-      disconnectField = 'UserRecycleBin';
+      await this.prisma.libraryTrack.create({ data });
     } else {
-      // source is 'recycleBin'
-      connectField = 'UserRecycleBin';
-      disconnectField = 'UserLibrary';
+      await this.prisma.recycleBinTrack.create({ data });
     }
 
-    // Proceed to add or update the track with the local user ID
-    return this.prisma.track.upsert({
-      where: { id: trackId },
-      update: {
-        [connectField]: {
-          connect: { id: user.id },
-        },
-        [disconnectField]: {
-          disconnect: { id: user.id },
-        },
-      },
-      create: {
-        id: trackId,
-        [connectField]: {
-          connect: { id: user.id },
-        },
-      },
-    });
+    return this.prisma.track.findUnique({ where: { id: trackId } });
   }
 
-  async deleteTrackPermanetly(trackId: string, userId: string): Promise<any> {
+  async deleteTrackPermanently(trackId: string, userId: string): Promise<void> {
     const user = await this.ensureUserExists(userId);
 
     if (!user) {
       throw new Error('User not found, cannot delete track.');
     }
-    return this.prisma.track.update({
-      where: { id: trackId },
-      data: {
-        UserRecycleBin: {
-          disconnect: { id: user.id },
-        },
-      },
+
+    await this.prisma.recycleBinTrack.deleteMany({
+      where: { trackId: trackId, userId: user.id },
     });
+
+    //If I want to delete the tab when the user removed the track.
+    //It's nice that if a user adds the track again, the tab will remain.
+    /* await this.prisma.trackTab.deleteMany({
+      where: { trackId, userId: user.id },
+    }); */
   }
 
   async getUserTracks(
@@ -131,19 +116,25 @@ export class TrackService {
       throw new Error('User not found, track will not be added.');
     }
     if (source === 'library') {
-      return this.prisma.track.findMany({
-        where: {
-          libraryUserId: user.id,
-        },
-      });
+      return this.prisma.libraryTrack
+        .findMany({
+          where: { userId: user.id },
+          include: { track: true },
+          orderBy: { addedAt: 'desc' },
+        })
+        .then((results) => results.map((r) => r.track));
     } else if (source === 'recycleBin') {
-      return this.prisma.track.findMany({
-        where: {
-          recycleBinUserId: user.id,
-        },
-      });
+      return this.prisma.recycleBinTrack
+        .findMany({
+          where: { userId: user.id },
+          include: { track: true },
+          orderBy: { addedAt: 'desc' },
+        })
+        .then((results) => results.map((r) => r.track));
     } else {
-      throw new Error('Invalid source parameter');
+      throw new Error(
+        'Please provide the correct source(library of recycleBin',
+      );
     }
   }
 

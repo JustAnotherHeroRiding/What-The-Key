@@ -40,6 +40,7 @@
 - When navigating to the library section, all the saved tracks will be shown #DONE 
 - Here the user can search for the saved tracks #DONE 
 - Or use filters to display tracks according the characteristics in the audio features object #DONE 
+- Save tracks when fetching a random track #DONE 
 
 #### Filters
 - Map the button names to the actual TrackData fields #DONE 
@@ -149,6 +150,7 @@ This is how the example for lazy loading was. A new module was created. We will 
 
 ## Create an auth guard
 - If a user that is not logged in is trying to access sites such as /profile, /library, /deleted, they should be redirected to the log in screen #DONE 
+- Add a canLoad method for lazy loaded routes #DONE 
 
 ## Auth
 ##### How does it work? The supabase service provides a way to interface with the database and our auth. Here we have the session that will most likely give us data about our user. Let's use it in the navbar

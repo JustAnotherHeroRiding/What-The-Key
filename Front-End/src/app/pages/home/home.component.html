@@ -3,9 +3,7 @@
     <h2>Search for tracks</h2>
     <div class="row">
       <!-- Id is hardcoded for now, could be made to fetch a random track -->
-      <button class="btn-request" (click)="getRandomTrack()">
-        Get Random
-      </button>
+      <button class="btn-request" (click)="getRandomTrack()">Get Random</button>
       <input
         placeholder="What's the key of..."
         class="search-input"
@@ -41,6 +39,7 @@
         <app-result-card
           [trackData]="trackData.track"
           [analysisData]="trackData.audioFeatures"
+          (trackSaved)="saveTrack($event)"
         ></app-result-card>
       </div>
     </ng-container>

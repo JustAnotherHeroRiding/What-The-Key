@@ -10,6 +10,8 @@
   <p>Key: {{ getNoteDisplayName(analysisData.key) }}</p>
   <p>BPM: {{ analysisData.tempo }}</p>
   <p>Year: {{ trackData.album.release_date | date : "yyyy" }}</p>
+  <button class="btn-save" (click)="saveTrack($event, trackData.uri.split(':')[2])">Save</button>
+
 </div>
 
 <ng-template #emptyCard>

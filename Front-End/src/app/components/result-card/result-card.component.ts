@@ -31,6 +31,7 @@ export class ResultCardComponent implements OnInit {
   @Input() trackData: any; // For track information
   @Input() analysisData: any; // For analysis information
   @Output() trackSelected = new EventEmitter<string>();
+  @Output() trackSaved = new EventEmitter<string>();
 
   selectTrack(trackId: string) {
     this.trackSelected.emit(trackId);
@@ -42,5 +43,10 @@ export class ResultCardComponent implements OnInit {
 
   getNoteDisplayName(noteValue: number): string {
     return getNoteName(noteValue);
+  }
+
+  saveTrack(event: MouseEvent, trackId: string) {
+    event.stopPropagation();
+    this.trackSaved.emit(trackId);
   }
 }

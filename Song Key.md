@@ -112,7 +112,7 @@ so previously i was manually fetching it, let's set one token for all spotify se
 
 ## Caching data
 - When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires #DONE 
-##### Seems like i handled all the cases where data needs to be invalidated, but let's pay attention if stale data will show up somewhere
+##### Seems like i handled all the cases where track data needs to be invalidated, but let's pay attention if stale data will show up somewhere
 
 ### Caching User data
 - Let's also cache the user data for the profile page so that it does not send a new request every time
@@ -124,10 +124,8 @@ so previously i was manually fetching it, let's set one token for all spotify se
 ##### Right now all components are loaded when the page first renders. Let's make it so that they are only rendered once their route is opened.
 `    path: 'news', loadChildren: () => import('./news/weather.module').then(m => m.WeatherModule)`
 This is how the example for lazy loading was. A new module was created. We will need to create a new module for each feature in my app that I do not want to load on the initial page render.
-- Create a module for the library
-- Create a module for the recycle bin/deleted component
+- Create a module for the library and recycle bin/deleted components as the logic is mostly the same here. These can even be condensed to one component.
 - Lazy load for components
-# Continue here #Checkpoint
 
 
 ## Junction tables
@@ -141,6 +139,8 @@ This is how the example for lazy loading was. A new module was created. We will 
 ## Figure out why it is so slow after creating the new supabase project 
 ##### I believe that I have sped it up as much as possible and with the cache the experience will be much better.
 - When loading the library or deleted sections it is very very slow compared to before
+##### Optimization Possibility
+- We could store the array of track ids as one string which we can get directly from the db and make the call to spotify with it instead of fetching all track ids which is slower. However let's see what the actual bottleneck is.
 
 ## Playing songs
 - Figure out a way to play the song directly from spotify using the user's account

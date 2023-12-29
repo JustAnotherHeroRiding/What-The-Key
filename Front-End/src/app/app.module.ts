@@ -9,19 +9,16 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ResultCardComponent } from './components/result-card/result-card.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
-import { LibraryComponent } from './pages/library/library.component';
-import { DeletedComponent } from './pages/deleted/deleted.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TrackComponent } from './components/track/track.component';
-import { SingleTrackPageComponent } from './pages/single-track-page/single-track-page.component';
 import { LogInComponent } from './pages/auth/log-in/log-in.component';
 import { AccountComponent } from './pages/account/account.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { GithubProviderComponent } from './components/github-provider/github-provider.component';
 import { SpotifyProviderComponent } from './components/spotify-provider/spotify-provider.component';
 import { ApiPlaygroundComponent } from './pages/api-playground/api-playground.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -29,12 +26,7 @@ import { ApiPlaygroundComponent } from './pages/api-playground/api-playground.co
     NavbarComponent,
     ResultCardComponent,
     SearchResultComponent,
-    LoadingSpinnerComponent,
-    LibraryComponent,
-    DeletedComponent,
     HomeComponent,
-    TrackComponent,
-    SingleTrackPageComponent,
     LogInComponent,
     AccountComponent,
     AvatarComponent,
@@ -53,6 +45,7 @@ import { ApiPlaygroundComponent } from './pages/api-playground/api-playground.co
       timeOut: 2500,
       positionClass: 'toast-bottom-right',
     }),
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

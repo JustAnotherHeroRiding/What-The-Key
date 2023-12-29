@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { SpotifyService } from '../../services/spotify.service';
+import { SpotifyService } from '../../../services/spotify.service';
 import { ToastrService } from 'ngx-toastr';
-import { TrackData } from '../home/home.component';
+import { TrackData } from '../../home/home.component';
 import {
   FILTERS,
   FilterLocationValue,
@@ -11,8 +11,8 @@ import {
   sortByKey,
   sortByMode,
   sortTracksByFilter,
-} from '../../utils/filters';
-import { getNoteName } from '../../components/result-card/result-card.component';
+} from '../../../utils/filters';
+import { getNoteName } from '../../../components/result-card/result-card.component';
 import { BackEndService } from 'src/app/services/backend.service';
 import { TrackCacheService } from 'src/app/services/track-cache.service';
 

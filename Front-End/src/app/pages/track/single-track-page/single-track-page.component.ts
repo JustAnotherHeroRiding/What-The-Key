@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TrackData } from '../home/home.component';
+import { TrackData } from '../../home/home.component';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { SpotifyItem } from 'src/app/utils/spotify-types';
 

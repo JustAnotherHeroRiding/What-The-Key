@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SpotifyService } from '../../services/spotify.service';
+import { SpotifyService } from '../../../services/spotify.service';
 import { ToastrService } from 'ngx-toastr';
-import { TrackData } from '../home/home.component';
-import { getNoteName } from '../../components/result-card/result-card.component';
+import { TrackData } from '../../home/home.component';
+import { getNoteName } from '../../../components/result-card/result-card.component';
 import {
   FILTERS,
   FilterLocationValue,
@@ -12,7 +12,7 @@ import {
   sortByKey,
   sortByMode,
   sortTracksByFilter,
-} from '../../utils/filters';
+} from '../../../utils/filters';
 import { BackEndService } from 'src/app/services/backend.service';
 import { TrackCacheService } from 'src/app/services/track-cache.service';
 
@@ -89,6 +89,7 @@ export class LibraryComponent {
           (t) => t.track.id !== track.track.id
         );
         this.trackCacheService.invalidateCache('library');
+        this.trackCacheService.invalidateCache('recycleBin');
       },
       error: (err) => {
         this.toastr.error('Failed to delete track');

@@ -110,9 +110,9 @@ export class TrackComponent {
   }
 
   goToTrackPage(trackId: string) {
-    this.router.navigate(['/track', trackId]);
+    this.router.navigate(['tracks/track', trackId]);
   }
   isDeletedPage(): boolean {
-    return this.router.url.startsWith('/deleted');
+    return this.router.url.startsWith('tracks/deleted');
   }
 }

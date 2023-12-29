@@ -17,11 +17,11 @@
           <span> Home</span>
           <img class="menu-logo" src="../../assets/home.png" alt="" />
         </div>
-        <div *ngIf="session" (click)="navigateTo('/library')" class="menu-item">
+        <div *ngIf="session" (click)="navigateTo('tracks/library')" class="menu-item">
           <span> Library</span>
           <img class="menu-logo" src="../../assets/library.png" alt="" />
         </div>
-        <div *ngIf="session" (click)="navigateTo('/deleted')" class="menu-item">
+        <div *ngIf="session" (click)="navigateTo('tracks/deleted')" class="menu-item">
           <span> Deleted</span>
           <img class="menu-logo" src="../../assets/deleted.png" alt="" />
         </div>
@@ -40,7 +40,7 @@
             [position]="location"
           ></app-avatar>
           <div class="menu-item">
-            <span class="pointer" (click)="navigateTo('/account')">{{
+            <span class="pointer" (click)="navigateTo('auth/account')">{{
               profile?.username ? profile?.username : profile?.full_name
             }}</span>
           </div>
@@ -50,7 +50,7 @@
         </div>
 
         <ng-template #loginTemplate>
-          <div (click)="navigateTo('/login')" class="menu-item pointer">
+          <div (click)="navigateTo('auth/login')" class="menu-item pointer">
             <span>Log In</span>
           </div>
         </ng-template>

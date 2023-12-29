@@ -124,8 +124,9 @@ so previously i was manually fetching it, let's set one token for all spotify se
 ##### Right now all components are loaded when the page first renders. Let's make it so that they are only rendered once their route is opened.
 `    path: 'news', loadChildren: () => import('./news/weather.module').then(m => m.WeatherModule)`
 This is how the example for lazy loading was. A new module was created. We will need to create a new module for each feature in my app that I do not want to load on the initial page render.
-- Create a module for the library and recycle bin/deleted components as the logic is mostly the same here. These can even be condensed to one component.
-- Lazy load for components
+- Create a module for the library and recycle bin/deleted components as the logic is mostly the same here. These can even be condensed to one component. #DONE 
+- Shared module for components such as spinners that are needed in multiple modules #DONE 
+- Module for auth components #DONE 
 
 
 ## Junction tables

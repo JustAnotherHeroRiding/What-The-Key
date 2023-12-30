@@ -14,7 +14,7 @@ import {
 } from '../../../utils/filters';
 import { getNoteName } from '../../../components/result-card/result-card.component';
 import { BackEndService } from 'src/app/services/backend.service';
-import { TrackCacheService } from 'src/app/services/track-cache.service';
+import { TrackCacheService } from 'src/app/services/Cache/track-cache.service';
 
 @Component({
   selector: 'app-deleted',

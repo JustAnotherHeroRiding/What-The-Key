@@ -116,9 +116,12 @@ so previously i was manually fetching it, let's set one token for all spotify se
 ##### Seems like i handled all the cases where track data needs to be invalidated, but let's pay attention if stale data will show up somewhere
 
 ### Caching User data
+- User cache service #DONE 
+##### Let's' think where i will need to update the cache, most likely just in the profile component. The navbar should also use the cache
 - Let's also cache the user data for the profile page so that it does not send a new request every time
 
 ### Caching single tracks
+- An object containing track id as key and the track data as a value to store the cache #DONE 
 - When opening the same single track page it should display the cached data
 
 ## Lazy load

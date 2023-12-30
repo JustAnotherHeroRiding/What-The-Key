@@ -49,8 +49,8 @@ export class LibraryComponent {
     if (this.trackCacheService.isCacheValid('library')) {
       const cachedTracks = this.trackCacheService.getCache('library');
       if (cachedTracks) {
-        this.originalLibrary = [...cachedTracks];
-        this.displayedLibrary = [...cachedTracks];
+        this.originalLibrary = [...cachedTracks as TrackData[]];
+        this.displayedLibrary = [...cachedTracks as TrackData[]];
         return;
       }
     }

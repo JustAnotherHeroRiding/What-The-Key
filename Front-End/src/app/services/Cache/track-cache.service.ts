@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TrackData } from '../../pages/home/home.component';
 
-type CacheType = 'library' | 'recycleBin';
+type CacheType = 'library' | 'recycleBin' | 'single';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class TrackCacheService {
     const now = Date.now();
     const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
 
-    if (trackId && this.singleTrackCacheValid?.[trackId]) {
+    if (trackId && this.singleTrackCacheValid?.[trackId] && src === 'single') {
       return now - (this.singleTrackTimestamp?.[trackId] ?? 0) < fiveMinutes;
     } else if (src === 'library') {
       if (this.libraryCacheValid && this.libraryCacheTimestamp) {
@@ -40,7 +40,7 @@ export class TrackCacheService {
   }
 
   getCache(src: CacheType, trackId?: string) {
-    if (trackId) {
+    if (trackId && src === 'single') {
       return this.singleTrackCache?.[trackId];
     } else if (src === 'library') {
       return this.libraryCache;
@@ -51,7 +51,7 @@ export class TrackCacheService {
   setCache(cache: TrackData[] | TrackData, src: CacheType, trackId?: string) {
     const now = Date.now();
 
-    if (trackId) {
+    if (trackId && src === 'single') {
       this.singleTrackCache = {
         ...this.singleTrackCache,
         [trackId]: cache as TrackData,
@@ -76,7 +76,7 @@ export class TrackCacheService {
   }
 
   invalidateCache(src: CacheType, trackId?: string) {
-    if (trackId && this.singleTrackCacheValid?.[trackId]) {
+    if (trackId && this.singleTrackCacheValid?.[trackId] && src === 'single') {
       this.singleTrackCacheValid[trackId] = false;
     } else if (src === 'library' && this.libraryCacheValid)
       this.libraryCacheValid = false;

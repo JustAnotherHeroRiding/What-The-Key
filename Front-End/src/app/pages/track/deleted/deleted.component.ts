@@ -45,8 +45,8 @@ export class DeletedComponent {
     if (this.trackCacheService.isCacheValid('recycleBin')) {
       const cachedTracks = this.trackCacheService.getCache('recycleBin');
       if (cachedTracks) {
-        this.originalLibrary = [...cachedTracks];
-        this.displayedLibrary = [...cachedTracks];
+        this.originalLibrary = [...(cachedTracks as TrackData[])];
+        this.displayedLibrary = [...(cachedTracks as TrackData[])];
         return;
       }
     }

@@ -122,7 +122,8 @@ so previously i was manually fetching it, let's set one token for all spotify se
 
 ### Caching single tracks
 - An object containing track id as key and the track data as a value to store the cache #DONE 
-- When opening the same single track page it should display the cached data
+- Updated track cache to handle caching and invalidating the single track data #DONE 
+- When opening the same single track page it should display the cached data #DONE 
 
 ## Lazy load
 ##### Right now all components are loaded when the page first renders. Let's make it so that they are only rendered once their route is opened.

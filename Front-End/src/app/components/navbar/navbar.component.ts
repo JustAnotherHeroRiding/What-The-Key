@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthSession, User } from '@supabase/supabase-js';
+import { Subject } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Profile, SupabaseService } from 'src/app/services/supabase.service';
 
@@ -9,13 +10,14 @@ import { Profile, SupabaseService } from 'src/app/services/supabase.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, OnDestroy {
   isSmallScreen = false;
   menuActive = false;
   session = this.supabase.session;
   profile: Profile | null = null;
   loading = false;
   location = 'navbar';
+  private destroy = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -55,28 +57,9 @@ export class NavbarComponent {
   }
 
   async updateProfile(user: User) {
-    try {
-      const {
-        data: profile,
-        error,
-        status,
-      } = await this.supabase.profile(user);
-
-      //console.log(profile, error, status);
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (profile) {
-        this.profile = profile;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
-    } finally {
-      this.loading = false;
-    }
+    this.loading = true;
+    await this.profileService.fetchAndUpdateProfile(user);
+    this.loading = false;
   }
 
   async signOut() {
@@ -87,5 +70,10 @@ export class NavbarComponent {
         console.error(res.error);
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

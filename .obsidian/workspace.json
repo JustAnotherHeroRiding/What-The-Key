@@ -148,8 +148,6 @@
   },
   "active": "d314ca4c28470690",
   "lastOpenFiles": [
-    "Android/Android App notes.md",
-    "Song Key.md",
     "back-end-wtk/dist/tsconfig.build.tsbuildinfo",
     "back-end-wtk/dist/main.d.ts",
     "back-end-wtk/dist/main.js",
@@ -160,6 +158,9 @@
     "back-end-wtk/dist/services/spotify.service.d.ts",
     "back-end-wtk/dist/services/spotify.service.js",
     "back-end-wtk/dist/services/spotify.service.js.map",
+    "back-end-wtk/dist/utils/spotify-types.js.map",
+    "Android/Android App notes.md",
+    "Song Key.md",
     "back-end-wtk/node_modules/axios/SECURITY.md",
     "back-end-wtk/node_modules/axios/README.md",
     "back-end-wtk/node_modules/axios/lib/helpers/README.md",

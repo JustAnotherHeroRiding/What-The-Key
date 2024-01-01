@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UnauthorizedException } from '@nestjs/common';
+/* import { Controller, Get, Req, UnauthorizedException } from '@nestjs/common';
 import { supabaseAdmin } from 'src/services/supabase.service';
 
 @Controller('user')
@@ -27,3 +27,4 @@ export class UserController {
     return data;
   }
 }
+ */

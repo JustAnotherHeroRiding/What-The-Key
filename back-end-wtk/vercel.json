@@ -3,10 +3,7 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "buildCommand": "prisma generate && nest build"
-      }
+      "use": "@vercel/node"
     }
   ],
   "headers": [
@@ -20,10 +17,10 @@
       ]
     }
   ],
-  "rewrites": [
+  "routes": [
     {
       "source": "/(.*)",
-      "destination": "src/main.ts"
+      "dest": "dist/main.ts"
     }
   ]
 }

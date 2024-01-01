@@ -19,7 +19,7 @@
   ],
   "routes": [
     {
-      "source": "/(.*)",
+      "src": "/(.*)",
       "dest": "dist/main.ts"
     }
   ]

@@ -13,7 +13,7 @@ export class AuthCacheService {
 
   isCacheValid(): boolean {
     const now = Date.now();
-    const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
+    const fiveMinutes = 15 * 60 * 1000; // 15 minutes in milliseconds
 
     if (this.profileCacheValid && this.profileCacheTimestamp) {
       return now - this.profileCacheTimestamp < fiveMinutes;
@@ -27,7 +27,6 @@ export class AuthCacheService {
   setCache(cache: Profile) {
     const now = Date.now();
     this.profileCache = cache;
-    console.log(this.profileCache);
     this.profileCacheValid = true;
     this.profileCacheTimestamp = now;
   }

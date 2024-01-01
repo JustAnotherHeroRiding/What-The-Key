@@ -23,7 +23,7 @@ export class TrackCacheService {
 
   isCacheValid(src: CacheType, trackId?: string): boolean {
     const now = Date.now();
-    const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
+    const fiveMinutes = 15 * 60 * 1000; // 15 minutes in milliseconds
 
     if (trackId && this.singleTrackCacheValid?.[trackId] && src === 'single') {
       return now - (this.singleTrackTimestamp?.[trackId] ?? 0) < fiveMinutes;

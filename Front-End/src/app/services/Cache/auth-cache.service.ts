@@ -27,6 +27,7 @@ export class AuthCacheService {
   setCache(cache: Profile) {
     const now = Date.now();
     this.profileCache = cache;
+    console.log(this.profileCache);
     this.profileCacheValid = true;
     this.profileCacheTimestamp = now;
   }

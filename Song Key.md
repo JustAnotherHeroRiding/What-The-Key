@@ -14,7 +14,7 @@
 - Let's try using the openai api to do this, after providing the song name, album, genre and other relevant song data besides the key and bpm
 
 ## Displaying Modes
-- Show where that track is in a minor or major key using the mode field, Major is 1, minor is 0
+- Show where that track is in a minor or major key using the mode field, Major is 1, minor is 0 #DONE 
 
 ## Drag and drop
 - Allow users to rearrange their tracks and have the order be permanent, this will most likely have to do a db call

@@ -44,7 +44,7 @@ export class SupabaseService {
   profile(user: User) {
     return this.supabase
       .from('profiles')
-      .select(`username, website, avatar_url, full_name`)
+      .select(`id, username, website, avatar_url, full_name`)
       .eq('id', user.id)
       .single();
   }

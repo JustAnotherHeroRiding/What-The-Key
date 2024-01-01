@@ -17,7 +17,11 @@ export class ProfileService {
   ) {}
 
   async fetchAndUpdateProfile(user: User) {
-    if (this.authCacheService.isCacheValid() && user.id === this.authCacheService.getCache()?.id) {
+    //console.log(user.id, this.authCacheService.getCache());
+    if (
+      this.authCacheService.isCacheValid() &&
+      user.id === this.authCacheService.getCache()?.id
+    ) {
       this.profileSource.next(this.authCacheService.getCache());
       return;
     }
@@ -27,6 +31,8 @@ export class ProfileService {
       throw error;
     }
     if (profile) {
+      console.log(profile);
+
       this.authCacheService.setCache(profile);
       this.profileSource.next(profile);
     }

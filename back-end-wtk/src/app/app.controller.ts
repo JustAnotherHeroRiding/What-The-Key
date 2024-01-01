@@ -14,4 +14,9 @@ export class AppController {
   async getPostById(@Param('id') id: string): Promise<TrackModel> {
     return this.trackService.track({ id: id });
   }
+
+  @Get('hello')
+  getHello(): string {
+    return 'Hello World';
+  }
 }

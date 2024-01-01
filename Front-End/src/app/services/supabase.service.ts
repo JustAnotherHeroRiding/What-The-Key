@@ -103,7 +103,7 @@ export class SupabaseService {
   }
 
   signOut() {
-    return this.supabase.auth.signOut();
+    return this.supabase.auth.signOut().then();
   }
 
   updateProfile(profile: Profile) {

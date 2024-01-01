@@ -54,7 +54,10 @@
     [src]="trackData.track.album.images[0].url"
     alt="{{ trackData.track.name }}"
   />
-  <p>Key: {{ getNoteDisplayName(trackData.audioFeatures.key) }}</p>
+  <p>
+    Key: {{ getNoteDisplayName(trackData.audioFeatures.key) }}
+    {{ getModeDisplayName(trackData.audioFeatures.mode) }}
+  </p>
   <p>BPM: {{ trackData.audioFeatures.tempo.toFixed(2) }}</p>
   <p>Year: {{ trackData.track.album.release_date | date : "yyyy" }}</p>
   <a

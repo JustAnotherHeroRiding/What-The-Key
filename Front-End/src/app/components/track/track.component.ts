@@ -47,6 +47,10 @@ export class TrackComponent {
     return getNoteName(noteValue);
   }
 
+  getModeDisplayName(mode: number): string {
+    return mode === 1 ? 'Major' : 'Minor';
+  }
+
   addTabModal(event: Event) {
     event.stopPropagation();
     if (!this.showAddTabModal && !this.trackTabUrl) {
@@ -83,7 +87,7 @@ export class TrackComponent {
         next: (response) => {
           this.getTabs();
           this.toastr.success('Tabs added successfully!');
-          formDirective.reset()
+          formDirective.reset();
         },
         error: (error) => {
           this.toastr.error(
@@ -113,6 +117,6 @@ export class TrackComponent {
     this.router.navigate(['tracks/track', trackId]);
   }
   isDeletedPage(): boolean {
-    return this.router.url.startsWith('tracks/deleted');
+    return this.router.url.startsWith('/tracks/deleted');
   }
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Session, User } from '@supabase/supabase-js';
 import { Subject } from 'rxjs';
 import { AuthCacheService } from 'src/app/services/Cache/auth-cache.service';
+import { TrackCacheService } from 'src/app/services/Cache/track-cache.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Profile, SupabaseService } from 'src/app/services/supabase.service';
 
@@ -69,14 +70,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   async signOut() {
-    await this.supabase.signOut().then((res) => {
+    try {
+      const res = await this.supabase.signOut();
       if (!res.error) {
+        // Invalidate cache first
         this.authCache.invalidateCache();
+
+        // After cache invalidation, navigate to the desired route
         this.router.navigate(['/']);
       } else {
         console.error(res.error);
       }
-    });
+    } catch (error) {
+      console.error('Error during sign out:', error);
+    }
   }
 
   ngOnDestroy() {

@@ -13,6 +13,16 @@
 ## Provide sample chord progressions and scales
 - Let's try using the openai api to do this, after providing the song name, album, genre and other relevant song data besides the key and bpm
 
+## Displaying Modes
+- Show where that track is in a minor or major key using the mode field, Major is 1, minor is 0
+
+## Drag and drop
+- Allow users to rearrange their tracks and have the order be permanent, this will most likely have to do a db call
+- There should be a icon on the top right that will be the only place where a track can be dragged from instead of making the entire track draggable
+## Playing songs
+- Figure out a way to play the song directly from spotify using the user's account
+- This way the user can see the information about the track and play along
+
 
 ## fetch tracks and populate the card
 - Input bar to search #DONE 
@@ -107,10 +117,6 @@ so previously i was manually fetching it, let's set one token for all spotify se
 - Loading spinners while the data is loading #DONE 
 
 
-## Drag and drop
-- Allow users to rearrange their tracks and have the order be permanent, this will most likely have to do a db call
-- There should be a icon on the top right that will be the only place where a track can be dragged from instead of making the entire track draggable
-
 ## Caching data
 - When a user first loads a component, it will make a db call. If a user then renders that component again, the track data should be cached and another request will not be needed unless the cache expires #DONE 
 ##### Seems like i handled all the cases where track data needs to be invalidated, but let's pay attention if stale data will show up somewhere
@@ -119,7 +125,7 @@ so previously i was manually fetching it, let's set one token for all spotify se
 - User cache service #DONE 
 ##### Let's' think where i will need to update the cache, most likely just in the profile component. The navbar should also use the cache
 - Let's also cache the user data for the profile page so that it does not send a new request every time #DONE 
-- Use the observable session instead of the synchronous
+- Use the observable session instead of the synchronous #DONE 
 
 ### Caching single tracks
 - An object containing track id as key and the track data as a value to store the cache #DONE 
@@ -149,9 +155,7 @@ This is how the example for lazy loading was. A new module was created. We will 
 ##### Optimization Possibility
 - We could store the array of track ids as one string which we can get directly from the db and make the call to spotify with it instead of fetching all track ids which is slower. However let's see what the actual bottleneck is.
 
-## Playing songs
-- Figure out a way to play the song directly from spotify using the user's account
-- This way the user can see the information about the track and play along
+
 
 ## Create an auth guard
 - If a user that is not logged in is trying to access sites such as /profile, /library, /deleted, they should be redirected to the log in screen #DONE 

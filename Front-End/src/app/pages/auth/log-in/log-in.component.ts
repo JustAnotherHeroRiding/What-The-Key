@@ -37,7 +37,9 @@ export class LogInComponent {
       if (action === 'magicLink') {
         result = await this.supabase.signIn(email); // Magic link sign-in
       } else if (action === 'signIn') {
-        result = await this.supabase.signIn(email, password); // Regular sign-in
+        result = await this.supabase.signIn(email, password).then((creds) => {
+          location.reload();
+        }); // Regular sign-in
       } else if (action === 'signUp') {
         result = await this.supabase.signUp(email, password, username); // Sign-up
       }

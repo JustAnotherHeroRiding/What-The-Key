@@ -97,7 +97,7 @@ export class BackEndService {
         };
 
         // Ensure you are using the correct URL and HTTP method for deletion
-        return this.http.post(`${this.apiUrl}track/deleteTrack`, body, {
+        return this.http.post(`${this.apiUrl}track/addTrack`, body, {
           headers,
         });
       }),

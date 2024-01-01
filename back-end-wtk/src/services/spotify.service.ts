@@ -111,7 +111,6 @@ export class SpotifyService {
       `https://api.spotify.com/v1/audio-features/${trackId}`,
       { headers },
     );
-
     return {
       track: trackResponse.data,
       audioFeatures: audioFeaturesResponse.data,

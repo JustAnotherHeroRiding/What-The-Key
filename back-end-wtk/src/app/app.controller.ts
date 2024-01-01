@@ -1,7 +1,7 @@
-/* import { Controller, Get, Param } from '@nestjs/common';
-import { UserService } from '../services/user.service';
+import { Controller, Get, Param } from '@nestjs/common';
+import { UserService } from '../auth/user.service';
 import { Track as TrackModel } from '@prisma/client';
-import { TrackService } from '../services/track.service';
+import { TrackService } from '../tracks/track.service';
 
 @Controller()
 export class AppController {
@@ -15,4 +15,3 @@ export class AppController {
     return this.trackService.track({ id: id });
   }
 }
- */

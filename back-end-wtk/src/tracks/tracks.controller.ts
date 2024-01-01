@@ -1,4 +1,4 @@
-/* import {
+import {
   Controller,
   Post,
   Body,
@@ -7,8 +7,8 @@
   Get,
   Query,
 } from '@nestjs/common';
-import { UserService } from '../services/user.service';
-import { TrackService } from '../services/track.service';
+import { UserService } from '../auth/user.service';
+import { TrackService } from './track.service';
 import { Response } from 'express';
 
 @Controller('track')
@@ -112,4 +112,3 @@ export class TrackController {
     }
   }
 }
- */

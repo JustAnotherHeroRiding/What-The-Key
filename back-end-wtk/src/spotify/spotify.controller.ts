@@ -1,4 +1,4 @@
-/* import {
+import {
   Controller,
   Get,
   Query,
@@ -6,7 +6,7 @@
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { SpotifyService } from 'src/services/spotify.service';
+import { SpotifyService } from 'src/spotify/spotify.service';
 @Controller('spotify')
 export class SpotifyController {
   constructor(private readonly spotifyService: SpotifyService) {}
@@ -71,4 +71,3 @@ export class SpotifyController {
     }
   }
 }
- */

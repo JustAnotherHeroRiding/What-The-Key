@@ -1,5 +1,5 @@
-/* import { Controller, Get, Req, UnauthorizedException } from '@nestjs/common';
-import { supabaseAdmin } from 'src/services/supabase.service';
+import { Controller, Get, Req, UnauthorizedException } from '@nestjs/common';
+import { supabaseAdmin } from 'src/supabase.service';
 
 @Controller('user')
 export class UserController {
@@ -27,4 +27,3 @@ export class UserController {
     return data;
   }
 }
- */

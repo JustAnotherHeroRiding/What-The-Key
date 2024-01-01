@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { supabaseAdmin } from './supabase.service';
-import { PrismaService } from './prisma.service';
+import { supabaseAdmin } from '../supabase.service';
+import { PrismaService } from '../services/prisma.service';
 
 @Injectable()
 export class UserService {

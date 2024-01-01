@@ -5,7 +5,7 @@ import {
   AudioFeatures,
   SpotifyTracksSearchResult,
   TrackData,
-} from 'src/utils/spotify-types';
+} from '../utils/spotify-types';
 @Injectable()
 export class SpotifyService {
   private readonly clientId = process.env.SPOTIFY_CLIENT_ID;

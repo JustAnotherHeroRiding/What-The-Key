@@ -1,5 +1,5 @@
 import { Controller, Get, Req, UnauthorizedException } from '@nestjs/common';
-import { supabaseAdmin } from 'src/supabase.service';
+import { supabaseAdmin } from '../supabase.service';
 
 @Controller('user')
 export class UserController {

@@ -6,7 +6,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { SpotifyService } from 'src/spotify/spotify.service';
+import { SpotifyService } from './spotify.service';
 @Controller('spotify')
 export class SpotifyController {
   constructor(private readonly spotifyService: SpotifyService) {}

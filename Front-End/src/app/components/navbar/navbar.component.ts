@@ -1,7 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthSession, User } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 import { Subject } from 'rxjs';
+import { AuthCacheService } from 'src/app/services/Cache/auth-cache.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Profile, SupabaseService } from 'src/app/services/supabase.service';
 
@@ -13,7 +14,7 @@ import { Profile, SupabaseService } from 'src/app/services/supabase.service';
 export class NavbarComponent implements OnInit, OnDestroy {
   isSmallScreen = false;
   menuActive = false;
-  session = this.supabase.session;
+  session: Session | null = null;
   profile: Profile | null = null;
   loading = false;
   location = 'navbar';
@@ -22,7 +23,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private supabase: SupabaseService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private authCache: AuthCacheService
   ) {
     this.isSmallScreen = window.innerWidth < 630;
     window.onresize = () => {
@@ -40,7 +42,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Fetch the initial session state
-    this.session = this.supabase.session;
+    this.supabase.session$.subscribe((session) => {
+      if (session) {
+        this.session = session;
+      }
+    });
 
     // Subscribe to future session changes
     this.supabase.authChanges((_, session) => {
@@ -65,6 +71,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   async signOut() {
     await this.supabase.signOut().then((res) => {
       if (!res.error) {
+        this.authCache.invalidateCache();
         this.router.navigate(['/']);
       } else {
         console.error(res.error);

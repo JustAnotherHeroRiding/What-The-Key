@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, switchMap, take, throwError } from 'rxjs';
 import { Session } from '@supabase/supabase-js';
 import { SupabaseService } from './supabase.service';
 
@@ -34,104 +34,150 @@ export class BackEndService {
   }
 
   addTrack(trackId: string, source: string): Observable<any> {
-    const session = this.supabase.session;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    const body = { trackId, userId: session?.user.id, source };
-    return this.http.post(`${this.apiUrl}track/addTrack`, body, { headers });
+    return this.supabase.session$.pipe(
+      take(1),
+      switchMap((session) => {
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+        });
+        const body = { trackId, userId: session?.user.id, source };
+        return this.http.post(`${this.apiUrl}track/addTrack`, body, {
+          headers,
+        });
+      }),
+      catchError((error) => {
+        return throwError(() => new Error(error.message));
+      })
+    );
   }
 
   getTracks(source: string): Observable<string> {
-    const session = this.supabase.session;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    if (!session) {
-      throw new Error('User not found, please log in to get your tracks.');
-    }
-    const params = new HttpParams()
-      .set('userId', session?.user.id)
-      .set('source', source);
+    return this.supabase.session$.pipe(
+      take(1), // Take the first emitted value then complete
+      switchMap((session) => {
+        if (!session || !session.user) {
+          throw new Error('User not found, please log in to get your tracks.');
+        }
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        const params = new HttpParams()
+          .set('userId', session.user.id)
+          .set('source', source);
 
-    return this.http
-      .get<any[]>(`${this.apiUrl}track/getTracks`, { headers, params })
-      .pipe(
-        map((trackObjects) => {
-          const trackIds = trackObjects.map((track) => track.id); // Extract IDs from each object
-          return trackIds.join(','); // Join IDs into a comma-separated string
-        })
-      );
+        return this.http.get<any[]>(`${this.apiUrl}track/getTracks`, {
+          headers,
+          params,
+        });
+      }),
+      map((trackObjects) => {
+        const trackIds = trackObjects.map((track) => track.id);
+        return trackIds.join(',');
+      }),
+      catchError((error) => {
+        return throwError(() => new Error(error.message));
+      })
+    );
   }
 
   deleteTrack(
     trackId: string,
     source: 'library' | 'recycleBin'
   ): Observable<any> {
-    const session = this.supabase.session;
-    if (!session || !session.user.id) {
-      throw new Error('User not found, please log in.');
-    }
+    return this.supabase.session$.pipe(
+      take(1),
+      switchMap((session) => {
+        if (!session || !session.user.id) {
+          throw new Error('User not found, please log in.');
+        }
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        const body = {
+          userId: session.user.id,
+          trackId: trackId,
+          source: source,
+        };
 
-    const body = {
-      userId: session.user.id,
-      trackId: trackId,
-      source: source,
-    };
-
-    return this.http.post(`${this.apiUrl}track/addTrack`, body, { headers });
+        // Ensure you are using the correct URL and HTTP method for deletion
+        return this.http.post(`${this.apiUrl}track/deleteTrack`, body, {
+          headers,
+        });
+      }),
+      catchError((error) => {
+        return throwError(() => new Error(error.message));
+      })
+    );
   }
 
   deleteTrackPermanently(trackId: string): Observable<any> {
-    const session = this.supabase.session;
-    if (!session || !session.user.id) {
-      throw new Error('User not found, please log in.');
-    }
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
+    return this.supabase.session$.pipe(
+      take(1),
+      switchMap((session) => {
+        if (!session || !session.user.id) {
+          throw new Error('User not found, please log in.');
+        }
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+        });
 
-    const body = {
-      userId: session.user.id,
-      trackId: trackId,
-    };
-    return this.http.post(`${this.apiUrl}track/deleteTrack`, body, { headers });
+        const body = {
+          userId: session.user.id,
+          trackId: trackId,
+        };
+        return this.http.post(`${this.apiUrl}track/deleteTrack`, body, {
+          headers,
+        });
+      }),
+      catchError((error) => {
+        return throwError(() => new Error(error.message));
+      })
+    );
   }
 
   addTabs(trackId: string, tabUrl: string): Observable<any> {
-    const session = this.supabase.session;
+    return this.supabase.session$.pipe(
+      take(1),
+      switchMap((session) => {
+        if (!session || !session.user.id) {
+          throw new Error('User not found, please log in.');
+        }
 
-    if (!session || !session.user.id) {
-      throw new Error('User not found, please log in.');
-    }
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+        });
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    const body = {
-      userId: session.user.id,
-      trackId: trackId,
-      tabUrl: tabUrl,
-    };
-    return this.http.post(`${this.apiUrl}track/addTabs`, body, { headers });
+        const body = {
+          userId: session.user.id,
+          trackId: trackId,
+          tabUrl: tabUrl,
+        };
+        return this.http.post(`${this.apiUrl}track/addTabs`, body, { headers });
+      }),
+      catchError((error) => {
+        return throwError(() => new Error(error.message));
+      })
+    );
   }
   getTabs(trackId: string): Observable<any> {
-    const session = this.supabase.session;
-    if (!session || !session.user.id) {
-      throw new Error('User not found, please log in.');
-    }
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
+    return this.supabase.session$.pipe(
+      take(1),
+      switchMap((session) => {
+        if (!session || !session.user.id) {
+          throw new Error('User not found, please log in.');
+        }
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+        });
 
-    const params = new HttpParams()
-      .set('trackId', trackId)
-      .set('userId', session.user.id);
-    return this.http.get(`${this.apiUrl}track/getTabs`, { headers, params });
+        const params = new HttpParams()
+          .set('trackId', trackId)
+          .set('userId', session.user.id);
+        return this.http.get(`${this.apiUrl}track/getTabs`, {
+          headers,
+          params,
+        });
+      }),
+      catchError((error) => {
+        return throwError(() => new Error(error.message));
+      })
+    );
   }
 }

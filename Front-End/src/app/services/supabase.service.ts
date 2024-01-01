@@ -8,7 +8,7 @@ import {
   User,
 } from '@supabase/supabase-js';
 import { supabase_url, supabase_anon_key } from 'env';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface Profile {
   id?: string;
@@ -23,8 +23,9 @@ export interface Profile {
 })
 export class SupabaseService {
   private supabase: SupabaseClient;
-  private _session = new BehaviorSubject<AuthSession | undefined | null>(undefined);
-  private sessionTwo: AuthSession | null = null;
+  private _session = new BehaviorSubject<AuthSession | undefined | null>(
+    undefined
+  );
 
   constructor() {
     this.supabase = createClient(supabase_url, supabase_anon_key);
@@ -37,17 +38,9 @@ export class SupabaseService {
     });
   }
 
-  get session$() {
+  get session$(): Observable<Session | null | undefined> {
     return this._session.asObservable();
   }
-
-  get session() {
-    this.supabase.auth.getSession().then(({ data }) => {
-      this.sessionTwo = data.session;
-    });
-    return this.sessionTwo;
-  }
-
   profile(user: User) {
     return this.supabase
       .from('profiles')

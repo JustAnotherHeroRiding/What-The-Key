@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Session } from '@supabase/supabase-js';
 import { SupabaseService } from 'src/app/services/supabase.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { SupabaseService } from 'src/app/services/supabase.service';
 })
 export class LogInComponent {
   loading = false;
-  session = this.supabase.session;
+  session: Session | null = null;
   location?: string;
 
   signInForm = this.formBuilder.group({
@@ -60,7 +61,11 @@ export class LogInComponent {
 
   ngOnInit(): void {
     // Fetch the initial session state
-    this.session = this.supabase.session;
+    this.supabase.session$.subscribe((session) => {
+      if (session) {
+        this.session = session;
+      }
+    });
 
     // Subscribe to future session changes
     this.supabase.authChanges((_, session) => {

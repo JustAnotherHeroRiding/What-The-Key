@@ -118,7 +118,8 @@ so previously i was manually fetching it, let's set one token for all spotify se
 ### Caching User data
 - User cache service #DONE 
 ##### Let's' think where i will need to update the cache, most likely just in the profile component. The navbar should also use the cache
-- Let's also cache the user data for the profile page so that it does not send a new request every time
+- Let's also cache the user data for the profile page so that it does not send a new request every time #DONE 
+- Use the observable session instead of the synchronous
 
 ### Caching single tracks
 - An object containing track id as key and the track data as a value to store the cache #DONE 

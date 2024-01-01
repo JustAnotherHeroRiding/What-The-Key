@@ -17,7 +17,7 @@ export class ProfileService {
   ) {}
 
   async fetchAndUpdateProfile(user: User) {
-    if (this.authCacheService.isCacheValid()) {
+    if (this.authCacheService.isCacheValid() && user.id === this.authCacheService.getCache()?.id) {
       this.profileSource.next(this.authCacheService.getCache());
       return;
     }

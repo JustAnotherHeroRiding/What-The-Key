@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Session } from '@supabase/supabase-js';
 import { BackEndService } from 'src/app/services/backend.service';
 import { SupabaseService } from 'src/app/services/supabase.service';
 
@@ -37,7 +38,7 @@ interface UsersList {
 })
 export class ApiPlaygroundComponent {
   result?: UsersList;
-  session = this.supabase.session;
+  session: Session | null = null;
   user?: User | string;
   tracks?: string;
 
@@ -47,7 +48,11 @@ export class ApiPlaygroundComponent {
   ) {}
 
   ngOnInit(): void {
-    this.session = this.supabase.session;
+    this.supabase.session$.subscribe((sesh) => {
+      if (sesh) {
+        this.session = sesh;
+      }
+    });
 
     this.supabase.authChanges((_, session) => {
       this.session = session;
@@ -83,7 +88,7 @@ export class ApiPlaygroundComponent {
     }
   }
 
-  getTracks(src:string) {
+  getTracks(src: string) {
     this.backEnd.getTracks(src).subscribe({
       next: (data) => {
         console.log(data);
@@ -94,5 +99,4 @@ export class ApiPlaygroundComponent {
       },
     });
   }
-
 }

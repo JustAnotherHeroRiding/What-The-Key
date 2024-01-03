@@ -21,6 +21,8 @@
             android:layout_weight="1"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
+            style="@style/FigtreeBold"
+            android:textColor="@color/black"
             android:text="Fetch Track" />
 
         <Space
@@ -35,6 +37,8 @@
             android:layout_weight="1"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
+            style="@style/FigtreeBold"
+            android:textColor="@color/black"
             android:text="Fetch Random Track" />
 
     </LinearLayout>

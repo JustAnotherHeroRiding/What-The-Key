@@ -7,4 +7,53 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Basic colors -->
+    <color name="beige_custom">#FFF4DFC8</color>
+    <color name="cream">#FFF4EAE0</color>
+    <color name="cream_light">#FFFAF6F0</color>
+    <color name="beige_darker">#FFE0DCD6</color>
+
+    <!-- Amber color palette -->
+    <color name="amber_s50">#FFFFFBEA</color>
+    <color name="amber_100">#FFFFF3C7</color>
+    <color name="amber_200">#FFFFDE8A</color>
+    <color name="amber_300">#FFFFCD34</color>
+    <color name="amber_400">#FFFFBF24</color>
+    <color name="amber_500">#FFFF9E0B</color>
+    <color name="amber_600">#FFD97706</color>
+    <color name="amber_700">#FFB45309</color>
+    <color name="amber_800">#FF92400E</color>
+    <color name="amber_900">#FF78350F</color>
+    <color name="amber_950">#FF451A03</color>
+
+    <!-- Red color palette -->
+    <color name="red_50">#FFFEF2F2</color>
+    <color name="red_100">#FFFEE2E2</color>
+    <color name="red_200">#FFFECA</color>
+    <color name="red_300">#FFFCA5A5</color>
+    <color name="red_400">#FFF87171</color>
+    <color name="red_500">#FFEF4444</color>
+    <color name="red_600">#FFDC2626</color>
+    <color name="red_700">#FFB91C1C</color>
+    <color name="red_800">#FF991B1B</color>
+    <color name="red_900">#FF7F1D1D</color>
+    <color name="red_950">#FF450A0A</color>
+
+    <!-- Slate color palette -->
+    <color name="slate_50">#FFF8FAFC</color>
+    <color name="slate_100">#FFF1F5F9</color>
+    <color name="slate_200">#FFE2E8F0</color>
+    <color name="slate_300">#FFCBD5E1</color>
+    <color name="slate_400">#FF94A3B8</color>
+    <color name="slate_500">#FF64748B</color>
+    <color name="slate_600">#FF475569</color>
+    <color name="slate_700">#FF334155</color>
+    <color name="slate_800">#FF1E293B</color>
+    <color name="slate_900">#FF0F172A</color>
+    <color name="slate_950">#FF020617</color>
+
+    <!-- Additional colors -->
+    <color name="artist_gray">#FFB3B3B3</color>
+
 </resources>

@@ -32,28 +32,40 @@ class HomeViewModel : ViewModel() {
     val text: LiveData<String> = _text
 
     fun fetchTrackInfo() {
+        println("Function called")
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val retrofit =
-                        Retrofit.Builder()
-                                .baseUrl("https://what-the-key.vercel.app/api/") 
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build()
+                    Retrofit.Builder()
+                        .baseUrl("https://what-the-key.vercel.app/api/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build()
 
                 val spotifyService = retrofit.create(SpotifyService::class.java)
                 val response = spotifyService.fetchTrack("1kHPOtD1fo3kWOgcs0oisd")
 
-                if (response.isSuccessful) {
-                    // On success, switch to the main thread to update UI
-                    withContext(Dispatchers.Main) {
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        // On success, switch to the main thread to update UI
                         val track = response.body()
                         _text.value = track?.let { Gson().toJson(it) } // Update LiveData
+
+                        // Print the successful response
+                        println("Success: ${Gson().toJson(track)}")
+                    } else {
+                        // Handle the case where the response is not successful
+                        _text.value = "Unsuccessful response"
+                        println("Error: ${response.errorBody()?.string()}")
                     }
                 }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) { _text.value = "Error fetching track data" }
+                withContext(Dispatchers.Main) {
+                    _text.value = "Error fetching track data"
+                    println("Exception: ${e.message}")
+                }
                 e.printStackTrace()
             }
         }
     }
+
 }

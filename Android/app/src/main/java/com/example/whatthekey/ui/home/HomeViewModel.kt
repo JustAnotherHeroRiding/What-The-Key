@@ -23,26 +23,57 @@ class HomeViewModel : ViewModel() {
     interface SpotifyService {
         @GET("spotify/track/{id}")
         suspend fun fetchTrack(@Path("id") trackId: String): Response<TrackData>
+
+        @GET("spotify/random-guitar-track")
+        suspend fun fetchRandomGuitarTrack(): Response<List<TrackData>>
     }
 
-    private val _text = MutableLiveData<String>()
+    private val _trackData = MutableLiveData<TrackData>()
 
-    val text: LiveData<String> = _text
+    val trackData: LiveData<TrackData> = _trackData
 
-    fun fetchTrackInfo() {
-        Log.d("TrackInfo", "Function called")
+    private val _randomTrackData = MutableLiveData<TrackData>()
+
+    val randomTrackData: LiveData<TrackData> = _randomTrackData
+
+
+    fun fetchRandomTrack() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                // This will log all http request notes
-                // This helped me finally see the json response, but it logs too much
-               /* val logging = HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.BODY)
-                }
-
-                val client = OkHttpClient.Builder()
-                    .addInterceptor(logging)
+                val retrofit = Retrofit.Builder()
+                    .baseUrl("https://what-the-key.vercel.app/api/")
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build()
-*/
+                val spotifyService = retrofit.create(SpotifyService::class.java)
+                val response = spotifyService.fetchRandomGuitarTrack()
+
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        // On success, switch to the main thread to update UI
+                        val randomTrackData = response.body()?.getOrNull(0)
+                        Log.d("Track Info", "Response successful ${randomTrackData}")
+                        if (randomTrackData != null) {
+                            _randomTrackData.value = randomTrackData
+                        }
+
+                    } else {
+                        // Handle the case where the response is not successful
+                        _randomTrackData.value = null
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    _randomTrackData.value = null
+                }
+                e.printStackTrace()
+
+            }
+        }
+    }
+
+    fun fetchTrackInfo() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
                 val retrofit = Retrofit.Builder()
                     .baseUrl("https://what-the-key.vercel.app/api/")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -55,21 +86,17 @@ class HomeViewModel : ViewModel() {
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
                         // On success, switch to the main thread to update UI
-                        val track = response.body()
-                        _text.value = track?.let { Gson().toJson(it) } // Update LiveData
+                        val trackData = response.body()
+                        _trackData.value = trackData
 
-                        // Print the successful response
-                        Log.d("TrackInfo", "Success: ${Gson().toJson(track)}")
                     } else {
                         // Handle the case where the response is not successful
-                        _text.value = "Unsuccessful response"
-                        Log.d("TrackInfo", "Response is unsuccessful")
+                        _trackData.value = null
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    _text.value = "Error fetching track data"
-                    Log.d("TrackInfoError", "Exception: ${e.message}")
+                    _trackData.value = null
                 }
                 e.printStackTrace()
             }

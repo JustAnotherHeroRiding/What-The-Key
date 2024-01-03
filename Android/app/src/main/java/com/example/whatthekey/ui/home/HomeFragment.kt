@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.whatthekey.databinding.FragmentHomeBinding
+import com.bumptech.glide.Glide
 
 class HomeFragment : Fragment() {
 
@@ -17,21 +18,28 @@ class HomeFragment : Fragment() {
         get() = _binding!!
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         // Set up observer
-        homeViewModel.text.observe(viewLifecycleOwner) { trackInfo ->
-            binding.textHome.text = trackInfo
+        homeViewModel.trackData.observe(viewLifecycleOwner) { trackInfo ->
+            binding.textTrackName.text = trackInfo.track.name
+            Glide.with(this).load(trackInfo.track.external_urls.spotify) // URL of the image
+                .into(binding.trackImage)   // ImageView in which to load the image
+        }
+
+        homeViewModel.randomTrackData.observe(viewLifecycleOwner) { trackInfo ->
+            binding.textTrackName.text = trackInfo.track.name
+            Glide.with(this).load(trackInfo.track.external_urls.spotify)
+                .into(binding.trackImage)
         }
 
         // Set up button click listener
         binding.buttonFetchTrack.setOnClickListener { homeViewModel.fetchTrackInfo() }
+        binding.buttonFetchRandom.setOnClickListener { homeViewModel.fetchRandomTrack() }
 
         return root
     }

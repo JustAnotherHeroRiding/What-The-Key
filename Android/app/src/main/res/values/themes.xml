@@ -11,6 +11,17 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <!-- Custom text appearance using Figtree font -->
+        <item name="textAppearanceBody1">@style/figtreeFont</item>
+        <item name="textAppearanceBody2">@style/figtreeFont</item>
+        <item name="textAppearanceSubtitle1">@style/figtreeFont</item>
+        <item name="textAppearanceSubtitle2">@style/figtreeFont</item>
+        <item name="textAppearanceCaption">@style/figtreeFont</item>
+        <item name="textAppearanceOverline">@style/figtreeFont</item>
+        <item name="textAppearanceButton">@style/figtreeFont</item>
+    </style>
+    <!-- Figtree -->
+    <style name="figtreeFont" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/figtree</item>
     </style>
 </resources>

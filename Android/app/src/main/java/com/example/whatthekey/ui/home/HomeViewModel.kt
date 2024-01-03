@@ -17,6 +17,8 @@ import retrofit2.http.Path
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import com.example.whatthekey.model.TrackData
+import com.example.whatthekey.model.RandomTrack
+import com.example.whatthekey.model.Track
 
 class HomeViewModel : ViewModel() {
 
@@ -25,16 +27,16 @@ class HomeViewModel : ViewModel() {
         suspend fun fetchTrack(@Path("id") trackId: String): Response<TrackData>
 
         @GET("spotify/random-guitar-track")
-        suspend fun fetchRandomGuitarTrack(): Response<List<TrackData>>
+        suspend fun fetchRandomGuitarTrack(): Response<RandomTrack>
     }
 
     private val _trackData = MutableLiveData<TrackData>()
 
     val trackData: LiveData<TrackData> = _trackData
 
-    private val _randomTrackData = MutableLiveData<TrackData>()
+    private val _randomTrackData = MutableLiveData<Track>()
 
-    val randomTrackData: LiveData<TrackData> = _randomTrackData
+    val randomTrackData: LiveData<Track> = _randomTrackData
 
 
     fun fetchRandomTrack() {
@@ -49,13 +51,17 @@ class HomeViewModel : ViewModel() {
 
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {
-                        // On success, switch to the main thread to update UI
-                        val randomTrackData = response.body()?.getOrNull(0)
-                        Log.d("Track Info", "Response successful ${randomTrackData}")
-                        if (randomTrackData != null) {
-                            _randomTrackData.value = randomTrackData
-                        }
+                        val randomTrackResponse = response.body()
+                        Log.d("Track Info", "Response successful: $randomTrackResponse")
 
+                        // Check if the response body and the tracks list are not null or empty
+                        if (randomTrackResponse != null && randomTrackResponse.tracks.isNotEmpty()) {
+                            // Post the first track to LiveData
+                            _randomTrackData.value = randomTrackResponse.tracks.first()
+                        } else {
+                            // Handle the case where the track list is empty or the response is null
+                            _randomTrackData.value = null
+                        }
                     } else {
                         // Handle the case where the response is not successful
                         _randomTrackData.value = null

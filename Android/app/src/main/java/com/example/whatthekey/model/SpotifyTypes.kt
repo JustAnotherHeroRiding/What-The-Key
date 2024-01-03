@@ -1,4 +1,5 @@
 package com.example.whatthekey.model
+
 data class SpotifyTracksSearchResult(
     val tracks: Tracks
 )
@@ -110,4 +111,44 @@ data class AudioFeatures(
     val type: String,
     val uri: String,
     val valence: Double
+)
+
+
+data class RandomTrack(
+    val tracks: List<Track>,
+    val seeds: List<SpotifySeed>
+)
+
+data class Track(
+    val album: SpotifyAlbum,
+    val artists: List<SpotifyArtist>,
+    val available_markets: List<String>,
+    val disc_number: Int?, // Assuming this is nullable
+    val duration_ms: Int?,
+    val explicit: Boolean,
+    val external_ids: ExternalIds,
+    val external_urls: ExternalUrls,
+    val href: String?,
+    val id: String?,
+    val is_local: Boolean,
+    val name: String?,
+    val popularity: Int?,
+    val preview_url: String?,
+    val track_number: Int?,
+    val type: String?,
+    val uri: String?
+)
+data class ExternalUrls(
+    val spotify: String?
+)
+data class ExternalIds(
+    val isrc: String?
+)
+data class SpotifySeed(
+    val initialPoolSize: Int?,
+    val afterFilteringSize: Int?,
+    val afterRelinkingSize: Int?,
+    val id: String?,
+    val type: String?,
+    val href: String?
 )

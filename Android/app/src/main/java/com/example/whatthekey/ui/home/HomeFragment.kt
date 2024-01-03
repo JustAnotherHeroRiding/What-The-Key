@@ -27,13 +27,15 @@ class HomeFragment : Fragment() {
         // Set up observer
         homeViewModel.trackData.observe(viewLifecycleOwner) { trackInfo ->
             binding.textTrackName.text = trackInfo.track.name
-            Glide.with(this).load(trackInfo.track.external_urls.spotify) // URL of the image
+            binding.trackAlbum.text = trackInfo.track.album.name
+            Glide.with(this).load(trackInfo.track.album.images[0].url) // URL of the image
                 .into(binding.trackImage)   // ImageView in which to load the image
         }
 
         homeViewModel.randomTrackData.observe(viewLifecycleOwner) { trackInfo ->
-            binding.textTrackName.text = trackInfo.track.name
-            Glide.with(this).load(trackInfo.track.external_urls.spotify)
+            binding.textTrackName.text = trackInfo.name
+            binding.trackAlbum.text = trackInfo.album.name
+            Glide.with(this).load(trackInfo.album.images[0].url)
                 .into(binding.trackImage)
         }
 

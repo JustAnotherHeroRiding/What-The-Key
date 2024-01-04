@@ -12,18 +12,6 @@ function DeletedScreen({
   return (
     <View style={styles.container}>
       <Text>Deleted</Text>
-      <TouchableOpacity style={styles.btnRandom}>
-        <Text style={styles.btnText}>Fetch Random Track</Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
-      <Button
-        title="Go to Library"
-        onPress={() => navigation.navigate("Library")}
-      />
-      <Button
-        title="Go to Deleted"
-        onPress={() => navigation.navigate("Deleted")}
-      />
     </View>
   );
 }
@@ -35,16 +23,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
-  },
-  btnRandom: {
-    backgroundColor: colors.beigeCustom,
-    padding: 10,
-    borderRadius: 10,
-  },
-  btnText: {
-    fontFamily: "figtree-bold",
-    color: "black",
-    fontSize: 16,
   },
 });
 

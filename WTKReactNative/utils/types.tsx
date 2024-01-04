@@ -4,6 +4,7 @@ export type RootStackParamList = {
   Home: undefined;
   Library: undefined;
   Deleted: undefined;
+  Auth: undefined;
 };
 
 export type HomeScreenNavigationProp = NativeStackNavigationProp<
@@ -17,4 +18,9 @@ export type LibraryScreenNavigationProp = NativeStackNavigationProp<
 export type DeletedScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "Deleted"
+>;
+
+export type AuthScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Auth"
 >;

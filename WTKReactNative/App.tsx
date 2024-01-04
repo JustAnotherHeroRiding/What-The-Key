@@ -1,17 +1,21 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import colors from "./assets/colors";
 import * as Font from "expo-font";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/home";
 import LibraryScreen from "./screens/library";
 import DeletedScreen from "./screens/deleted";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AuthScreen from "./screens/auth";
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
   useEffect(() => {
     const loadFonts = async () => {
       await Font.loadAsync({
@@ -20,18 +24,36 @@ export default function App() {
         "figtree-black": require("./assets/fonts/figtree_black.ttf"),
         "figtree-semibold": require("./assets/fonts/figtree_semibold.ttf"),
       });
+      setFontsLoaded(true);
     };
 
     loadFonts();
   }, []);
 
+  if (!fontsLoaded) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Library" component={LibraryScreen} />
-        <Stack.Screen name="Deleted" component={DeletedScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: styles.navText,
+          tabBarActiveTintColor: colors.beigeCustom,
+          tabBarInactiveTintColor: "gray",
+          tabBarStyle: {
+            backgroundColor: "black",
+          },
+        }}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Library" component={LibraryScreen} />
+        <Tab.Screen name="Deleted" component={DeletedScreen} />
+        <Tab.Screen name="Log In" component={AuthScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
@@ -43,15 +65,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+    overflow: "scroll",
   },
-  btnRandom: {
-    backgroundColor: colors.beigeCustom,
-    padding: 10,
-    borderRadius: 10,
-  },
-  btnText: {
-    fontFamily: "figtree-bold",
-    color: "black",
+  navText: {
+    color: colors.cream,
     fontSize: 16,
   },
 });

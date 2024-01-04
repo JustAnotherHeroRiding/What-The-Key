@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "d314ca4c28470690",
+            "id": "b7cc62dce9733f31",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Song Key.md",
+                "file": "WTKReactNative/React Native App.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Song Key.md",
+                "file": "WTKReactNative/React Native App.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Song Key.md",
+                "file": "WTKReactNative/React Native App.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Song Key.md"
+                "file": "WTKReactNative/React Native App.md"
               }
             }
           }
@@ -146,19 +146,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d314ca4c28470690",
+  "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/utils/note-key.ts",
+    "WTKReactNative/UiComponents/TrackResultCard.tsx",
+    "WTKReactNative/UiComponents/TrackResultCard.ts",
+    "WTKReactNative/UiComponents",
+    "WTKReactNative/screens/UiComponents",
+    "WTKReactNative/utils/spotify-types.ts",
+    "Song Key.md",
+    "WTKReactNative/React Native App.md",
     "back-end-wtk/dist/app/app.controller.d.ts",
     "back-end-wtk/dist/app/app.controller.js",
     "back-end-wtk/dist/app/app.controller.js.map",
     "back-end-wtk/src/app/app.controller.ts",
     "back-end-wtk/dist/auth/user.service.d.ts",
-    "back-end-wtk/dist/auth/user.service.js",
-    "back-end-wtk/dist/auth/user.service.js.map",
-    "back-end-wtk/src/auth/user.service.ts",
-    "back-end-wtk/dist/app/app.service.js.map",
-    "back-end-wtk/dist/app/app.service.js",
-    "back-end-wtk/dist/app/app.service.d.ts",
     "Android/app/build/intermediates/packaged_res/debug/mipmap-xxxhdpi-v4/ic_launcher_round.webp",
     "Android/app/build/intermediates/packaged_res/debug/mipmap-xxxhdpi-v4/ic_launcher.webp",
     "Android/app/build/intermediates/packaged_res/debug/mipmap-xxhdpi-v4/ic_launcher_round.webp",
@@ -170,7 +172,6 @@
     "Android/app/build/intermediates/packaged_res/debug/mipmap-hdpi-v4/ic_launcher_round.webp",
     "Android/app/build/intermediates/packaged_res/debug/mipmap-hdpi-v4/ic_launcher.webp",
     "Android/Android App notes.md",
-    "Song Key.md",
     "back-end-wtk/node_modules/axios/SECURITY.md",
     "back-end-wtk/node_modules/axios/README.md",
     "back-end-wtk/node_modules/axios/lib/helpers/README.md",

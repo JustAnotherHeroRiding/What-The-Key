@@ -14,39 +14,40 @@ import { TrackData } from '../pages/home/home.component';
   providedIn: 'root',
 })
 export class SpotifyService {
-  private backendUrl = 'http://localhost:3000/api/spotify'; // URL of the NestJS spotify controller
+  private backendUrlDev = 'http://localhost:3000/api/spotify'; // URL of the NestJS spotify controller
+  private backendUrlProd = "https://what-the-key.vercel.app/api/spotify"
 
   constructor(private http: HttpClient) {}
 
   fetchMultipleTracks(trackIds: string): Observable<TrackData[]> {
     return this.http
-      .get<TrackData[]>(`${this.backendUrl}/tracks?ids=${trackIds}`)
+      .get<TrackData[]>(`${this.backendUrlProd}/tracks?ids=${trackIds}`)
       .pipe(catchError((error) => throwError(() => error)));
   }
 
   fetchTrack(trackId: string): Observable<TrackData> {
     return this.http
-      .get<TrackData>(`${this.backendUrl}/track/${trackId}`)
+      .get<TrackData>(`${this.backendUrlProd}/track/${trackId}`)
       .pipe(catchError((error) => throwError(() => error)));
   }
 
   searchTracks(searchQuery: string): Observable<SpotifyTracksSearchResult> {
     return this.http
       .get<SpotifyTracksSearchResult>(
-        `${this.backendUrl}/search?query=${searchQuery}`
+        `${this.backendUrlProd}/search?query=${searchQuery}`
       )
       .pipe(catchError((error) => throwError(() => error)));
   }
 
   getRandomGuitarTrack(): Observable<RandomTrack> {
     return this.http
-      .get<RandomTrack>(`${this.backendUrl}/random-guitar-track`)
+      .get<RandomTrack>(`${this.backendUrlProd}/random-guitar-track`)
       .pipe(catchError((error) => throwError(() => error)));
   }
 
   getGenres(): Observable<string[]> {
     return this.http
-      .get<string[]>(`${this.backendUrl}/genres`)
+      .get<string[]>(`${this.backendUrlProd}/genres`)
       .pipe(catchError((error) => throwError(() => error)));
   }
 }

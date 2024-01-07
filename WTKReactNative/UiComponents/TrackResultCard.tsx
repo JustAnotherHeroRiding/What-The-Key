@@ -13,7 +13,6 @@ import colors from "../assets/colors";
 
 interface ResultCardProps {
   trackData: TrackData;
-  // Include analysisData type if needed
 }
 const screen = Dimensions.get("window");
 const imageSize = screen.width * 0.85; // 90% of screen width

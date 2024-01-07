@@ -8,12 +8,13 @@ import { SupabaseService } from './supabase.service';
   providedIn: 'root',
 })
 export class BackEndService {
-  private apiUrl = 'http://localhost:3000/api/';
+  private apiUrlDev = 'http://localhost:3000/api/';
+  private apiUrlProd = 'https://what-the-key.vercel.app/api/';
 
   constructor(private http: HttpClient, private supabase: SupabaseService) {}
 
   getData(): Observable<any> {
-    return this.http.get(`${this.apiUrl}hello`);
+    return this.http.get(`${this.apiUrlProd}hello`);
   }
 
   getAllUsers(): Observable<any> {
@@ -22,7 +23,7 @@ export class BackEndService {
       // Add other headers if needed
     });
 
-    return this.http.get(`${this.apiUrl}user/getAllUsers`, { headers });
+    return this.http.get(`${this.apiUrlProd}user/getAllUsers`, { headers });
   }
 
   validateSession(session: Session): Observable<any> {
@@ -30,7 +31,7 @@ export class BackEndService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get(`${this.apiUrl}user/checkSession`, { headers });
+    return this.http.get(`${this.apiUrlProd}user/checkSession`, { headers });
   }
 
   addTrack(trackId: string, source: string): Observable<any> {
@@ -41,7 +42,7 @@ export class BackEndService {
           'Content-Type': 'application/json',
         });
         const body = { trackId, userId: session?.user.id, source };
-        return this.http.post(`${this.apiUrl}track/addTrack`, body, {
+        return this.http.post(`${this.apiUrlProd}track/addTrack`, body, {
           headers,
         });
       }),
@@ -63,7 +64,7 @@ export class BackEndService {
           .set('userId', session.user.id)
           .set('source', source);
 
-        return this.http.get<any[]>(`${this.apiUrl}track/getTracks`, {
+        return this.http.get<any[]>(`${this.apiUrlProd}track/getTracks`, {
           headers,
           params,
         });
@@ -97,7 +98,7 @@ export class BackEndService {
         };
 
         // Ensure you are using the correct URL and HTTP method for deletion
-        return this.http.post(`${this.apiUrl}track/addTrack`, body, {
+        return this.http.post(`${this.apiUrlProd}track/addTrack`, body, {
           headers,
         });
       }),
@@ -122,7 +123,7 @@ export class BackEndService {
           userId: session.user.id,
           trackId: trackId,
         };
-        return this.http.post(`${this.apiUrl}track/deleteTrack`, body, {
+        return this.http.post(`${this.apiUrlProd}track/deleteTrack`, body, {
           headers,
         });
       }),
@@ -149,7 +150,9 @@ export class BackEndService {
           trackId: trackId,
           tabUrl: tabUrl,
         };
-        return this.http.post(`${this.apiUrl}track/addTabs`, body, { headers });
+        return this.http.post(`${this.apiUrlProd}track/addTabs`, body, {
+          headers,
+        });
       }),
       catchError((error) => {
         return throwError(() => new Error(error.message));
@@ -170,7 +173,7 @@ export class BackEndService {
         const params = new HttpParams()
           .set('trackId', trackId)
           .set('userId', session.user.id);
-        return this.http.get(`${this.apiUrl}track/getTabs`, {
+        return this.http.get(`${this.apiUrlProd}track/getTabs`, {
           headers,
           params,
         });

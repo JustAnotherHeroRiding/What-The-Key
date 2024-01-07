@@ -5,7 +5,7 @@ const colors = {
     creamLight: '#faf6f0',
     beigeDarker: '#e0dcd6',
   
-    amberS50: '#fffbeb',
+    amber50: '#fffbeb',
     amber100: '#fef3c7',
     amber200: '#fde68a',
     amber300: '#fcd34d',

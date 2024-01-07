@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, ImageBackground, StyleSheet, View } from "react-native";
+import { ActivityIndicator, ImageBackground, StyleSheet, View, Image, Text, StyleProp, TextStyle } from "react-native";
 import colors from "./assets/colors";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
@@ -54,7 +54,44 @@ export default function App() {
         <SafeAreaView style={StyleSheet.absoluteFill}>
           <NavigationContainer theme={navTheme}>
             <Tab.Navigator
-              screenOptions={{
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused }) => {
+                  let imageSource;
+
+                  if (route.name === 'Home') {
+                    imageSource =
+                      require('./assets/images/home.png')
+                  } else if (route.name === 'Library') {
+                    imageSource =
+                      require('./assets/images/library.png')
+                  } else if (route.name === 'Deleted') {
+                    imageSource =
+                      require('./assets/images/deleted.png')
+                  } else if (route.name === 'Log In') {
+                    imageSource =
+                      require('./assets/images/default-user.png')
+                  }
+
+                  return <Image source={imageSource} style={{ width: 25, height: 25, borderRadius: 40, marginTop: 8 }} />;
+                }, tabBarLabel: ({ focused, color }) => {
+                  let label;
+                  let customStyle: StyleProp<TextStyle> = {
+                    color: focused ? colors.beigeCustom : colors.slate300,
+                    fontFamily: focused ? 'figtree-black' : 'figtree-regular', 
+                  };
+
+                  if (route.name === 'Home') {
+                    label = 'Home';
+                  } else if (route.name === 'Library') {
+                    label = 'Library';
+                  } else if (route.name === 'Deleted') {
+                    label = 'Deleted';
+                  } else if (route.name === 'Log In') {
+                    label = 'Log In';
+                  }
+
+                  return <Text style={customStyle}>{label}</Text>;
+                },
                 tabBarLabelStyle: styles.navText,
                 tabBarActiveTintColor: colors.beigeCustom,
                 tabBarInactiveTintColor: "gray",
@@ -62,8 +99,8 @@ export default function App() {
                   backgroundColor: "black",
                 },
                 headerShown: false,
-                tabBarHideOnKeyboard: true
-              }}
+                tabBarHideOnKeyboard: true,
+              })}
             >
               <Tab.Screen name="Home" component={HomeScreen} />
               <Tab.Screen name="Library" component={LibraryScreen} />

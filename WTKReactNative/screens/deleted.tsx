@@ -3,6 +3,7 @@ import { Text, Button, TouchableOpacity, StyleSheet, ScrollView } from "react-na
 import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
 import { DeletedScreenNavigationProp } from "../utils/types";
+import tw from "../utils/tailwindRN";
 
 function DeletedScreen({
   navigation,
@@ -10,19 +11,10 @@ function DeletedScreen({
   navigation: DeletedScreenNavigationProp;
 }) {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text>Deleted</Text>
+    <ScrollView contentContainerStyle={tw`flex items-center justify-center flex-1 flex-col`} >
+      <Text className="bg-black text-white px-4">Deleted</Text>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-  },
-});
 
 export default DeletedScreen;

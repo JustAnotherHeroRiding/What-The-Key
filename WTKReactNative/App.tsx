@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, ImageBackground, StyleSheet, View } from "react-native";
 import colors from "./assets/colors";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
@@ -39,29 +39,27 @@ export default function App() {
   }
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-
-        <NavigationContainer>
-          <Tab.Navigator
-            screenOptions={{
-              tabBarLabelStyle: styles.navText,
-              tabBarActiveTintColor: colors.beigeCustom,
-              tabBarInactiveTintColor: "gray",
-              tabBarStyle: {
-                backgroundColor: "black",
-              },
-              headerShown: false,
-            }}
-          >
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Library" component={LibraryScreen} />
-            <Tab.Screen name="Deleted" component={DeletedScreen} />
-            <Tab.Screen name="Log In" component={AuthScreen} />
-          </Tab.Navigator>
-        </NavigationContainer>
+      <SafeAreaView style={StyleSheet.absoluteFill}>
+          <NavigationContainer>
+            <Tab.Navigator
+              screenOptions={{
+                tabBarLabelStyle: styles.navText,
+                tabBarActiveTintColor: colors.beigeCustom,
+                tabBarInactiveTintColor: "gray",
+                tabBarStyle: {
+                  backgroundColor: "black",
+                },
+                headerShown: false,
+              }}
+            >
+              <Tab.Screen name="Home" component={HomeScreen} />
+              <Tab.Screen name="Library" component={LibraryScreen} />
+              <Tab.Screen name="Deleted" component={DeletedScreen} />
+              <Tab.Screen name="Log In" component={AuthScreen} />
+            </Tab.Navigator>
+          </NavigationContainer>
       </SafeAreaView>
-
-    </SafeAreaProvider>
+    </SafeAreaProvider >
   );
 }
 

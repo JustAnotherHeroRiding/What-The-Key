@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: colors.cream,
+        padding: 10,
+        borderRadius: 40,
+        marginTop: "3%"
     },
 });
 

@@ -7,6 +7,8 @@ import {
   TextInput,
   Alert,
   ScrollView,
+  ImageBackground,
+  Image
 } from "react-native";
 import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
@@ -34,7 +36,6 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       const responseExtended = await fetch(
         `https://what-the-key.vercel.app/api/spotify/track/${data.tracks[0].id}`
       );
-
       const dataExtended = await responseExtended.json();
 
       if (!responseExtended.ok) {
@@ -46,7 +47,6 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       if (error instanceof Error) {
         Alert.alert("Error", error.message);
       } else {
-        // Handle non-Error objects thrown
         Alert.alert("Error", "An unknown error occurred");
       }
     } finally {
@@ -55,12 +55,13 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   };
 
   return (
+  <ImageBackground source={require('../assets/images/background.png')}
+    style={StyleSheet.absoluteFill}
+  >
     <ScrollView
-      style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
       <StatusBar style="auto" />
-
       <View style={styles.blackContainer}>
         <TextInput
           style={styles.searchInput}
@@ -80,20 +81,17 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       {isLoading && <LoadingSpinner />}
 
       {randomTrack && <ResultCard trackData={randomTrack} />}
-      {randomTrack && <ResultCard trackData={randomTrack} />}
-
     </ScrollView>
-
+  </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
+
   contentContainer: {
-    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   },
   blackContainer: {
     backgroundColor: "black",
@@ -101,6 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     width: "80%",
+    marginTop: "3%"
   },
   btnRandom: {
     backgroundColor: colors.beigeCustom,

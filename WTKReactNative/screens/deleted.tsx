@@ -10,7 +10,7 @@ function DeletedScreen({
   navigation: DeletedScreenNavigationProp;
 }) {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text>Deleted</Text>
     </ScrollView>
   );

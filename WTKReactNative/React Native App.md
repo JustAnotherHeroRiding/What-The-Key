@@ -6,10 +6,10 @@ We need to implement the same 4 pages with full feature parity
 
 
 ## Navigation
-- Navigate between the pages, using the same logos and look from the website
+- Navigate between the pages, using the same logos and look from the website #DONE 
 
 ## Home page
-- Get random track
+- Get random track #DONE 
 - Search spotify tracks
 - Add tracks to library
 

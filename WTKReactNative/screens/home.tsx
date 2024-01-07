@@ -11,13 +11,17 @@ import {
 import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
 import { HomeScreenNavigationProp } from "../utils/types";
-import { RandomTrack, TrackData } from "../utils/spotify-types";
+import { TrackData } from "../utils/spotify-types";
 import ResultCard from "../UiComponents/TrackResultCard";
+import LoadingSpinner from "../UiComponents/LoadingSpinner";
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const [randomTrack, setRandomTrack] = useState<TrackData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const fetchRandomTrack = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(
         "https://what-the-key.vercel.app/api/spotify/random-guitar-track"
@@ -37,7 +41,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         throw new Error(dataExtended.message || "Error fetching track");
       }
 
-      setRandomTrack(dataExtended); // Update your state with the track data
+      setRandomTrack(dataExtended);
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert("Error", error.message);
@@ -45,13 +49,15 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         // Handle non-Error objects thrown
         Alert.alert("Error", "An unknown error occurred");
       }
+    } finally {
+      setIsLoading(false); // End loading
     }
   };
 
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={styles.contentContainer} // Add this line
+      contentContainerStyle={styles.contentContainer}
     >
       <StatusBar style="auto" />
 
@@ -60,7 +66,6 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
           style={styles.searchInput}
           placeholder="Search"
           placeholderTextColor="gray"
-          // Add other properties for TextInput as needed
         />
         <View style={styles.flexRow}>
           <TouchableOpacity style={styles.btnRandom} onPress={fetchRandomTrack}>
@@ -72,8 +77,13 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
           </TouchableOpacity>
         </View>
       </View>
+      {isLoading && <LoadingSpinner />}
+
       {randomTrack && <ResultCard trackData={randomTrack} />}
+      {randomTrack && <ResultCard trackData={randomTrack} />}
+
     </ScrollView>
+
   );
 }
 
@@ -83,14 +93,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   contentContainer: {
-    alignItems: "center", // Move alignItems here
+    alignItems: "center",
   },
   blackContainer: {
     backgroundColor: "black",
     padding: 20,
     borderRadius: 10,
     alignItems: "center",
-    width: "80%", // Adjust width as per your website's design
+    width: "80%",
   },
   btnRandom: {
     backgroundColor: colors.beigeCustom,

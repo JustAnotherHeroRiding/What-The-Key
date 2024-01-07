@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, Button, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
 import { DeletedScreenNavigationProp } from "../utils/types";
@@ -10,9 +10,9 @@ function DeletedScreen({
   navigation: DeletedScreenNavigationProp;
 }) {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text>Deleted</Text>
-    </View>
+    </ScrollView>
   );
 }
 

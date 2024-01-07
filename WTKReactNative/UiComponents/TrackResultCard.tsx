@@ -16,7 +16,7 @@ interface ResultCardProps {
   // Include analysisData type if needed
 }
 const screen = Dimensions.get("window");
-const imageSize = screen.width * 0.9; // 90% of screen width
+const imageSize = screen.width * 0.85; // 90% of screen width
 
 const ResultCard = ({ trackData }: ResultCardProps) => {
   if (!trackData) {
@@ -42,7 +42,7 @@ const ResultCard = ({ trackData }: ResultCardProps) => {
         />
       )}
       <Text style={styles.cardText}>
-        Key: {getNoteName(trackData.audioFeatures.key)}
+        Key: {getNoteName(trackData.audioFeatures.key)} {trackData.audioFeatures.mode === 1 ? "Major" : "Minor"}
       </Text>
       <Text style={styles.cardText}>BPM: {trackData.audioFeatures.tempo}</Text>
       <Text style={styles.cardText}>
@@ -50,7 +50,7 @@ const ResultCard = ({ trackData }: ResultCardProps) => {
       </Text>
       <TouchableOpacity
         style={styles.btnSave}
-        //       onPress={() => onSave(trackData.uri.split(":")[2])}
+      //       onPress={() => onSave(trackData.uri.split(":")[2])}
       >
         <Text style={styles.btnText}>Save</Text>
       </TouchableOpacity>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   albumImage: {
-    maxWidth: 300,
+    maxWidth: imageSize,
     width: imageSize,
     height: 300,
     borderRadius: 4,

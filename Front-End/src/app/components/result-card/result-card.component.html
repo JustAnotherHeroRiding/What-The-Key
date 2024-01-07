@@ -1,17 +1,24 @@
 <!-- result-card.component.html -->
 <div class="card" *ngIf="trackData && analysisData; else emptyCard">
   <h1 class="card-text">{{ trackData.name }}</h1>
-  <h2 class="card-text">{{ trackData.artists[0].name}}</h2>
+  <h2 class="card-text">{{ trackData.artists[0].name }}</h2>
   <img
     *ngIf="trackData.album.images[0]"
     [src]="trackData.album.images[0].url"
     alt="{{ trackData.name }}"
   />
-  <p>Key: {{ getNoteDisplayName(analysisData.key) }}</p>
+  <p>
+    Key: {{ getNoteDisplayName(analysisData.key) }}
+    {{ analysisData.mode === 1 ? "Major" : "Minor" }}
+  </p>
   <p>BPM: {{ analysisData.tempo }}</p>
   <p>Year: {{ trackData.album.release_date | date : "yyyy" }}</p>
-  <button class="btn-save" (click)="saveTrack($event, trackData.uri.split(':')[2])">Save</button>
-
+  <button
+    class="btn-save"
+    (click)="saveTrack($event, trackData.uri.split(':')[2])"
+  >
+    Save
+  </button>
 </div>
 
 <ng-template #emptyCard>

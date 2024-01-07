@@ -60,6 +60,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       contentContainerStyle={styles.contentContainer}
     >
       <StatusBar style="auto" />
+
       <View style={styles.blackContainer}>
         <TextInput
           style={styles.searchInput}

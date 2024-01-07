@@ -11,7 +11,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AuthScreen from "./screens/auth";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinner from "./UiComponents/LoadingSpinner";
-import tw from "./utils/tailwindRN";
 
 const navTheme = {
   ...DefaultTheme,
@@ -99,7 +98,7 @@ export default function App() {
                   backgroundColor: "black",
                 },
                 headerShown: false,
-                tabBarHideOnKeyboard: true,
+                tabBarHideOnKeyboard: true
               })}
             >
               <Tab.Screen name="Home" component={HomeScreen} />

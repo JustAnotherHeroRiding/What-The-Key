@@ -58,7 +58,6 @@ export default function App() {
   }
 
 
-
   return (
     <SafeAreaProvider>
       <ImageBackground source={require('./assets/images/background.png')}
@@ -67,6 +66,7 @@ export default function App() {
         <SafeAreaView style={StyleSheet.absoluteFill}>
           <NavigationContainer theme={navTheme}>
             <Tab.Navigator
+              key={session ? 'logged-in' : 'logged-out'} // Add this line
               screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused }) => {
                   let imageSource;
@@ -80,7 +80,7 @@ export default function App() {
                   } else if (route.name === 'Deleted') {
                     imageSource =
                       require('./assets/images/deleted.png')
-                  } else if (route.name === 'Log In') {
+                  } else if (route.name === 'Auth') {
                     imageSource =
                       require('./assets/images/default-user.png')
                   }
@@ -99,8 +99,8 @@ export default function App() {
                     label = 'Library';
                   } else if (route.name === 'Deleted') {
                     label = 'Deleted';
-                  } else if (route.name === 'Log In') {
-                    label = 'Log In';
+                  } else if (route.name === 'Auth') {
+                    label = session ? "Profile" : "Log In";
                   }
 
                   return <Text style={customStyle}>{label}</Text>;
@@ -115,9 +115,14 @@ export default function App() {
               })}
             >
               <Tab.Screen name="Home" component={HomeScreen} />
-              <Tab.Screen name="Library" component={LibraryScreen} />
-              <Tab.Screen name="Deleted" component={DeletedScreen} />
-              <Tab.Screen name="Log In" component={AuthScreen} />
+              {session && (
+                <>
+                  <Tab.Screen name="Library" component={LibraryScreen} />
+                  <Tab.Screen name="Deleted" component={DeletedScreen} />
+                </>
+              )}
+              <Tab.Screen name="Auth"
+                component={AuthScreen} />
             </Tab.Navigator>
           </NavigationContainer>
         </SafeAreaView>

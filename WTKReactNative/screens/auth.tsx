@@ -80,6 +80,13 @@ export default function AuthScreen({ navigation }: { navigation: AuthScreenNavig
     setLoading(false)
   }
 
+  async function logOut() {
+    setLoading(true)
+    const { error } = await supabase.auth.signOut()
+    if (error) Alert.alert(error.message)
+    setLoading(false)
+  }
+
   async function signUpWithEmail() {
     setLoading(true)
     const {
@@ -108,6 +115,7 @@ export default function AuthScreen({ navigation }: { navigation: AuthScreenNavig
     <View style={tw.style(`p-4 flex flex-col justify-center items-center bg-black mx-4 rounded-md my-auto border border-cream`)}>
       <View style={tw.style(`py-4 self-stretch`)}>
         <Input
+          className="text-white"
           label="Email"
           leftIcon={{ type: 'font-awesome', name: 'envelope' }}
           onChangeText={(text) => setEmail(text)}
@@ -118,6 +126,7 @@ export default function AuthScreen({ navigation }: { navigation: AuthScreenNavig
       </View>
       <View style={tw.style(`py-4 self-stretch`)}>
         <Input
+          className="text-white"
           label="Password"
           leftIcon={{ type: 'font-awesome', name: 'lock' }}
           onChangeText={(text) => setPassword(text)}
@@ -132,6 +141,9 @@ export default function AuthScreen({ navigation }: { navigation: AuthScreenNavig
       </View>
       <View style={tw.style(`self-stretch`)}>
         <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
+      </View>
+      <View style={tw.style(`py-4 mt-4 self-stretch`)}>
+        <Button title="Log Out" disabled={loading} onPress={() => logOut()} />
       </View>
     </View>
   )

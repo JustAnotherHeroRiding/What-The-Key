@@ -25,3 +25,4 @@ We need to implement the same 4 pages with full feature parity
 ## Auth
 - Log in and manage the library of tracks using the same database as the website
 - Use the supabase tutorial to set up the auth flow [Link](https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native)
+- Implement deep linking for verifying the email [Deep linking Guide](https://supabase.com/docs/guides/auth/native-mobile-deep-linking?platform=react-native)

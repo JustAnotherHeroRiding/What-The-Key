@@ -11,6 +11,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AuthScreen from "./screens/auth";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinner from "./UiComponents/LoadingSpinner";
+import { Session } from "@supabase/supabase-js";
+import { supabase } from "./utils/supabase";
 
 const navTheme = {
   ...DefaultTheme,
@@ -25,6 +27,8 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
+  const [session, setSession] = useState<Session | null>(null)
+
   useEffect(() => {
     const loadFonts = async () => {
       await Font.loadAsync({
@@ -35,7 +39,13 @@ export default function App() {
       });
       setFontsLoaded(true);
     };
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
 
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
     loadFonts();
   }, []);
 
@@ -46,6 +56,9 @@ export default function App() {
       </View>
     );
   }
+
+
+
   return (
     <SafeAreaProvider>
       <ImageBackground source={require('./assets/images/background.png')}

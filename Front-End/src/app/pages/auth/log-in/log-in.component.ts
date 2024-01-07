@@ -13,6 +13,7 @@ export class LogInComponent {
   loading = false;
   session: Session | null = null;
   location?: string;
+  showPassword = false;
 
   signInForm = this.formBuilder.group({
     email: '',
@@ -25,6 +26,10 @@ export class LogInComponent {
     private readonly formBuilder: FormBuilder,
     private readonly router: Router
   ) {}
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 
   async onSubmit(action: 'magicLink' | 'signIn' | 'signUp'): Promise<void> {
     try {

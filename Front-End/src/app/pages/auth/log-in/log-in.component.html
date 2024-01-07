@@ -21,9 +21,12 @@
           id="password"
           formControlName="password"
           class="passwordField"
-          type="password"
-          placeholder="Enter Your Psassword"
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Enter Your password"
         />
+        <button type="button" (click)="togglePasswordVisibility()">
+          {{ showPassword ? "Hide" : "Show" }}
+        </button>
       </div>
       <div class="form-item-row">
         <button

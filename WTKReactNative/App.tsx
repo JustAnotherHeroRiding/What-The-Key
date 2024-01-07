@@ -3,13 +3,22 @@ import { ActivityIndicator, ImageBackground, StyleSheet, View } from "react-nati
 import colors from "./assets/colors";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import HomeScreen from "./screens/home";
 import LibraryScreen from "./screens/library";
 import DeletedScreen from "./screens/deleted";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AuthScreen from "./screens/auth";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import LoadingSpinner from "./UiComponents/LoadingSpinner";
+
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "transparent"
+  }
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -33,14 +42,17 @@ export default function App() {
   if (!fontsLoaded) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" />
+        <LoadingSpinner />
       </View>
     );
   }
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={StyleSheet.absoluteFill}>
-          <NavigationContainer>
+      <ImageBackground source={require('./assets/images/background.png')}
+        style={StyleSheet.absoluteFill}
+      >
+        <SafeAreaView style={StyleSheet.absoluteFill}>
+          <NavigationContainer theme={navTheme}>
             <Tab.Navigator
               screenOptions={{
                 tabBarLabelStyle: styles.navText,
@@ -50,6 +62,7 @@ export default function App() {
                   backgroundColor: "black",
                 },
                 headerShown: false,
+                tabBarHideOnKeyboard: true
               }}
             >
               <Tab.Screen name="Home" component={HomeScreen} />
@@ -58,7 +71,8 @@ export default function App() {
               <Tab.Screen name="Log In" component={AuthScreen} />
             </Tab.Navigator>
           </NavigationContainer>
-      </SafeAreaView>
+        </SafeAreaView>
+      </ImageBackground>
     </SafeAreaProvider >
   );
 }
@@ -66,7 +80,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",

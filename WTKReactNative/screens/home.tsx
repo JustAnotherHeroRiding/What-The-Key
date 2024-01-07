@@ -55,9 +55,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   };
 
   return (
-  <ImageBackground source={require('../assets/images/background.png')}
-    style={StyleSheet.absoluteFill}
-  >
+
     <ScrollView
       contentContainerStyle={styles.contentContainer}
     >
@@ -82,7 +80,6 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
 
       {randomTrack && <ResultCard trackData={randomTrack} />}
     </ScrollView>
-  </ImageBackground>
   );
 }
 

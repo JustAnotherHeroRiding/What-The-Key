@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AuthScreen from "./screens/auth";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinner from "./UiComponents/LoadingSpinner";
+import tw from "./utils/tailwindRN";
 
 const navTheme = {
   ...DefaultTheme,
@@ -41,7 +42,7 @@ export default function App() {
 
   if (!fontsLoaded) {
     return (
-      <View style={styles.container}>
+      <View className="flex flex-1 items-center justify-center flex-col overflow-auto">
         <LoadingSpinner />
       </View>
     );
@@ -77,7 +78,7 @@ export default function App() {
                   let label;
                   let customStyle: StyleProp<TextStyle> = {
                     color: focused ? colors.beigeCustom : colors.slate300,
-                    fontFamily: focused ? 'figtree-black' : 'figtree-regular', 
+                    fontFamily: focused ? 'figtree-bold' : 'figtree-regular',
                   };
 
                   if (route.name === 'Home') {
@@ -92,7 +93,6 @@ export default function App() {
 
                   return <Text style={customStyle}>{label}</Text>;
                 },
-                tabBarLabelStyle: styles.navText,
                 tabBarActiveTintColor: colors.beigeCustom,
                 tabBarInactiveTintColor: "gray",
                 tabBarStyle: {
@@ -114,16 +114,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    overflow: "scroll",
-  },
-  navText: {
-    color: colors.cream,
-    fontSize: 16,
-  },
-});

@@ -12,6 +12,11 @@ module.exports = {
         cream: "#f4eae0",
         creamLight: "#faf6f0",
         beigeDarker: "#e0dcd6",
+        artistGray: "#b3b3b3",
+      },
+      fontFamily: {
+        figtreeBlack: ["figtree-black", "sans-serif"],
+        figtreeBold: ["figtree-bold", "sans-serif"],
       },
     },
   },

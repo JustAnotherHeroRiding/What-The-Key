@@ -12,7 +12,7 @@ function DeletedScreen({
 }) {
   return (
     <ScrollView contentContainerStyle={tw`flex items-center justify-center flex-1 flex-col`} >
-      <Text className="bg-black text-white px-4">Deleted</Text>
+      <Text className="bg-black text-white p-4 rounded-lg">Deleted</Text>
     </ScrollView>
   );
 }

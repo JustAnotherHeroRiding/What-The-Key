@@ -10,6 +10,7 @@ import {
 import { getNoteName } from "../utils/note-key";
 import { TrackData } from "../utils/spotify-types";
 import colors from "../assets/colors";
+import tw from "../utils/tailwindRN";
 
 interface ResultCardProps {
   trackData: TrackData;
@@ -20,101 +21,41 @@ const imageSize = screen.width * 0.85; // 90% of screen width
 const ResultCard = ({ trackData }: ResultCardProps) => {
   if (!trackData) {
     return (
-      <View style={styles.card}>
+      <View className="p-3 border border-cream bg-black text-white rounded-lg justify-center items-center mb-auto mt-16" >
         <Text>No data available</Text>
       </View>
     );
   }
 
-
   return (
-    <View style={styles.card}>
-      <Text style={styles.cardText}>{trackData.track.name}</Text>
-      <Text style={styles.artistNameText}>
+    <View style={tw`p-3 border text-center border-cream bg-black text-white rounded-lg justify-center items-center mb-auto my-4 shadow-lg`} >
+      <Text style={tw`max-w-[85%] text-white mb-3 font-bold text-2xl text-center`}>{trackData.track.name}</Text>
+      <Text style={tw`max-w-[80%] text-artistGray font-bold mb-3 text-xl text-center`}>
         {trackData.track.artists[0].name}
       </Text>
       {trackData.track.album.images[0] && (
         <Image
           source={{ uri: trackData.track.album.images[0].url }}
-          style={styles.albumImage}
+          style={tw.style(`mb-4 w-[${imageSize}px] max-w-[${imageSize}px] h-[300px] rounded-md border border-cream`, { objectFit: 'contain' })}
           alt={trackData.track.name}
         />
       )}
-      <Text style={styles.cardText}>
+      <Text style={tw`max-w-[85%]  text-white mb-3 text-xl`}>
         Key: {getNoteName(trackData.audioFeatures.key)} {trackData.audioFeatures.mode === 1 ? "Major" : "Minor"}
       </Text>
-      <Text style={styles.cardText}>BPM: {trackData.audioFeatures.tempo}</Text>
-      <Text style={styles.cardText}>
+      <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>BPM: {trackData.audioFeatures.tempo}</Text>
+      <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>
         Year: {new Date(trackData.track.album.release_date).getFullYear()}
       </Text>
       <TouchableOpacity
-        style={styles.btnSave}
+        style={tw`px-4 py-3 border border-black rounded-xl text-2xl bg-cream font-800 shadow-lg mt-auto ml-auto`}
       //       onPress={() => onSave(trackData.uri.split(":")[2])}
       >
-        <Text style={styles.btnText}>Save</Text>
+        <Text style={tw.style(``, { fontFamily: "figtree-black" })}>Save</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  card: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: colors.cream,
-    backgroundColor: "black",
-    color: "white",
-    borderRadius: 10,
-    // React Native does not support boxShadow, but elevation works for Android
-    elevation: 3,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: "auto",
-    marginTop: 16,
-  },
-  albumImage: {
-    maxWidth: imageSize,
-    width: imageSize,
-    height: 300,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: colors.cream, // Replace with the hex value of --cream
-    marginBottom: 16,
-    objectFit: "contain",
-  },
-  cardText: {
-    maxWidth: 160, // 10em (assuming 1em = 16 for simplicity)
-    textAlign: "center",
-    color: "white",
-    fontFamily: "figtree-bold",
-    marginBottom: 10,
-    fontSize: 16,
-  },
-
-  artistNameText: {
-    maxWidth: 160, // 10em (assuming 1em = 16 for simplicity)
-    textAlign: "center",
-    color: colors.artistGray,
-    fontFamily: "figtree-bold",
-    marginBottom: 10,
-    fontSize: 16,
-  },
-  btnSave: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 15,
-    fontSize: 20, // 1.3em (assuming 1em = 15 for simplicity)
-    backgroundColor: colors.cream, // Replace with the hex value of --cream
-    fontWeight: "800",
-    elevation: 3, // For shadow in Android
-    marginTop: "auto",
-    marginLeft: "auto",
-  },
-  btnText: {
-    fontFamily: "figtree-black",
-  },
-});
 
 export default ResultCard;

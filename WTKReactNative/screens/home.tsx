@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,11 +15,25 @@ import { TrackData } from "../utils/spotify-types";
 import ResultCard from "../UiComponents/Reusable/TrackResultCard";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import tw from "../utils/tailwindRN";
+import _ from 'lodash'
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const [randomTrack, setRandomTrack] = useState<TrackData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [query, setQuery] = useState("");
 
+  const search = (searchQuery: string) => {
+    // Make a call to the api to search for tracks
+    console.log(`Searching for: ${searchQuery}`)
+  }
+  const debouncedSearch = useCallback(_.debounce(search, 500), []);
+
+  useEffect(() => {
+    if (query) {
+      debouncedSearch(query)
+    }
+    return () => debouncedSearch.cancel()
+  }, [query, debouncedSearch])
 
   const fetchRandomTrack = async () => {
     setIsLoading(true);
@@ -65,6 +79,9 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
           style={styles.searchInput}
           placeholder="Search"
           placeholderTextColor="gray"
+          value={query}
+          onChangeText={(text) => setQuery(text)
+          }
         />
         <View style={styles.flexRow}>
           <TouchableOpacity style={styles.btnRandom} onPress={fetchRandomTrack}>

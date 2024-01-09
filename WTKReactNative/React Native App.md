@@ -10,6 +10,8 @@ We need to implement the same 4 pages with full feature parity
 
 ## Home page
 - Get random track #DONE 
+- Debounce the input and only make a request after 300 ms have passed of no changes to the query
+##### [Custom debounce](https://sugandsingh5566.medium.com/mastering-throttle-and-debounce-functions-in-react-native-with-javascript-a03965240829) or we will use lodash. For now i am thinking using lodash
 - Search spotify tracks
 - Add tracks to library
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../utils/supabase'
-import { StyleSheet, View, Alert, Image, Button } from 'react-native'
+import { View, Alert, Image } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker';
 import { CustomButton } from '../../Reusable/CustomButtom';
 import tw from '../../../utils/tailwindRN';
@@ -8,10 +8,11 @@ import tw from '../../../utils/tailwindRN';
 interface Props {
     size: number
     url: string | null
-    onUpload: (filePath: string) => void
+    onUpload?: (filePath: string) => void,
+    location: 'nav' | 'profile'
 }
 
-export default function Avatar({ url, size = 150, onUpload }: Props) {
+export default function Avatar({ url, size = 150, onUpload, location }: Props) {
     const [uploading, setUploading] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
     const avatarSize = { height: size, width: size }
@@ -49,8 +50,6 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
                 copyToCacheDirectory: true, // Copies picked files to app's cache directory
             });
 
-            console.log(file)
-
             // Check if the file picking was cancelled
             if (file.canceled) {
                 setUploading(false);
@@ -81,14 +80,14 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
             const { error } = await supabase.storage.from('avatars').upload(filePath, formData);
 
             if (error) {
-                console.log(error)
                 throw error;
             }
 
-            onUpload(filePath);
+            if (onUpload) {
+                onUpload(filePath);
+            }
         } catch (error) {
             if (error instanceof Error) {
-                console.log(error)
                 Alert.alert(error.message);
             } else {
                 throw error;
@@ -103,17 +102,20 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
                 <Image
                     source={{ uri: avatarUrl }}
                     accessibilityLabel="Avatar"
-                    style={[avatarSize, tw`rounded-full overflow-hidden max-w-full pt-0 border-2 border-beigeCustom`, { objectFit: 'cover' }]}
+                    style={[avatarSize, tw`rounded-full overflow-hidden max-w-full pt-0 ${location === 'nav' ? 'border -mb-1' : 'border-2'} border-beigeCustom`, { objectFit: 'cover' }]}
                 />
             ) : (
                 <View style={[avatarSize, tw`rounded-full overflow-hidden max-w-full bg-gray-700 border border-cream`]} />
             )}
-            <View style={tw`mt-4`}>
-                <CustomButton title={uploading ? 'Uploading ...' : 'Upload'}
-                    onPress={uploadAvatar}
-                    disabled={uploading} btnStyle={tw`bg-beigeCustom`} />
+            {location === 'profile' && (
 
-            </View>
+                <View style={tw`mt-4`}>
+                    <CustomButton title={uploading ? 'Uploading ...' : 'Upload'}
+                        onPress={uploadAvatar}
+                        disabled={uploading} btnStyle={tw`bg-beigeCustom`} />
+
+                </View>
+            )}
         </View>
     )
 }

@@ -5,11 +5,11 @@ import colors from "../assets/colors";
 import DeletedScreen from "../screens/deleted";
 import HomeScreen from "../screens/home";
 import LibraryScreen from "../screens/library";
-import Auth from "./Pages/Auth/Auth";
-import { useContext } from "react";
-import { SessionContext } from "../utils/Session-Context/SessionContext";
+import { useContext, useEffect } from "react";
+import { SessionContext } from "../utils/Context/Session/SessionContext";
 import AuthScreen from "../screens/AuthScreen";
-
+import { ProfilePicContext } from "../utils/Context/Profile/ProfileProvider";
+import Avatar from "./Pages/Auth/Avatar";
 const navTheme = {
     ...DefaultTheme,
     colors: {
@@ -24,6 +24,8 @@ const Tab = createBottomTabNavigator();
 export default function BottomNav() {
 
     const session = useContext(SessionContext)
+
+    const { profilePicUrl, setProfilePicUrl } = useContext(ProfilePicContext);
 
 
 
@@ -45,8 +47,14 @@ export default function BottomNav() {
                             imageSource =
                                 require('../assets/images/deleted.png')
                         } else if (route.name === 'Auth') {
-                            imageSource =
-                                require('../assets/images/default-user.png')
+                            if (profilePicUrl) {
+                                return <Avatar
+                                size={25}
+                                url={profilePicUrl}
+                                location='nav'
+                              />
+                            }
+                            imageSource = require('../assets/images/default-user.png')
                         }
 
                         return <Image source={imageSource} style={{ width: 25, height: 25, borderRadius: 40, marginTop: 8 }} />;

@@ -5,8 +5,9 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinner from "./UiComponents/Reusable/LoadingSpinner";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "./utils/supabase";
-import { SessionProvider } from "./utils/Session-Context/SessionProvider";
+import { SessionProvider } from "./utils/Context/Session/SessionProvider";
 import BottomNav from "./UiComponents/BottomNav";
+import { ProfilePicProvider } from "./utils/Context/Profile/ProfileProvider";
 
 
 
@@ -46,16 +47,18 @@ export default function App() {
 
   return (
     <SessionProvider>
+      <ProfilePicProvider>
 
-      <SafeAreaProvider>
-        <ImageBackground source={require('./assets/images/background.png')}
-          style={StyleSheet.absoluteFill}
-        >
-          <SafeAreaView style={StyleSheet.absoluteFill}>
-            <BottomNav />
-          </SafeAreaView>
-        </ImageBackground>
-      </SafeAreaProvider >
+        <SafeAreaProvider>
+          <ImageBackground source={require('./assets/images/background.png')}
+            style={StyleSheet.absoluteFill}
+          >
+            <SafeAreaView style={StyleSheet.absoluteFill}>
+              <BottomNav />
+            </SafeAreaView>
+          </ImageBackground>
+        </SafeAreaProvider >
+      </ProfilePicProvider>
     </SessionProvider>
 
   );

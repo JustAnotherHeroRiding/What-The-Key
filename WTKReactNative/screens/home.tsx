@@ -7,8 +7,6 @@ import {
   TextInput,
   Alert,
   ScrollView,
-  ImageBackground,
-  Image
 } from "react-native";
 import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
@@ -16,6 +14,7 @@ import { HomeScreenNavigationProp } from "../utils/types";
 import { TrackData } from "../utils/spotify-types";
 import ResultCard from "../UiComponents/Reusable/TrackResultCard";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
+import tw from "../utils/tailwindRN";
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const [randomTrack, setRandomTrack] = useState<TrackData | null>(null);
@@ -61,7 +60,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
     >
       <StatusBar style="auto" />
 
-      <View style={styles.blackContainer}>
+      <View style={tw.style(`border border-cream`, styles.blackContainer)}>
         <TextInput
           style={styles.searchInput}
           placeholder="Search"

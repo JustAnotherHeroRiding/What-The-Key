@@ -5,7 +5,7 @@ import colors from "../assets/colors";
 import DeletedScreen from "../screens/deleted";
 import HomeScreen from "../screens/home";
 import LibraryScreen from "../screens/library";
-import Auth from "./Pages/Auth";
+import Auth from "./Pages/Auth/Auth";
 import { useContext } from "react";
 import { SessionContext } from "../utils/Session-Context/SessionContext";
 import AuthScreen from "../screens/AuthScreen";

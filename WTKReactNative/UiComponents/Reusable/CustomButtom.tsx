@@ -1,5 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet, GestureResponderEvent, StyleProp, TextStyle, ViewStyle } from "react-native";
 import tw from "../../utils/tailwindRN";
+import colors from "../../assets/colors";
 
 interface CustomButtonProps {
     onPress?: (event: GestureResponderEvent) => void,
@@ -34,13 +35,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: 'blue', // Default color, can be overridden
+        backgroundColor: colors.cream, // Default color, can be overridden
     },
     buttonText: {
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
-        color: 'white',
+        color: 'black',
     },
 });

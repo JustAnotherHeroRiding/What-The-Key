@@ -24,6 +24,14 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "scheme": "com.supabase"
+    "scheme": "com.supabase",
+    "plugins": [
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ]
+    ]
   }
 }

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, Button, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import colors from "../../assets/colors";
-import { StatusBar } from "expo-status-bar";
+import colors from "../../../assets/colors";
 import * as WebBrowser from "expo-web-browser";
-import { AuthScreenNavigationProp } from "../../utils/types";
-import tw from "../../utils/tailwindRN";
-import { supabase } from "../../utils/supabase";
+import tw from "../../../utils/tailwindRN";
+import { supabase } from "../../../utils/supabase";
 import { Input } from "react-native-elements";
 import { makeRedirectUri } from "expo-auth-session";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
+import { CustomButton } from "../../Reusable/CustomButtom";
 
 WebBrowser.maybeCompleteAuthSession(); // required for web only
 const redirectTo = makeRedirectUri();
@@ -137,10 +136,11 @@ export default function Auth() {
         />
       </View>
       <View style={tw.style(`py-4 mt-4 self-stretch`)}>
-        <Button title="Sign in" disabled={loading} onPress={() => signInWithEmail()} />
+        <CustomButton title="Sign In" onPress={() => signInWithEmail()} txtStyle={tw`text-black`} btnStyle={tw`bg-cream`} />
+
       </View>
       <View style={tw.style(`self-stretch`)}>
-        <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
+        <CustomButton title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} txtStyle={tw`text-black`} btnStyle={tw`bg-beigeCustom`} />
       </View>
     </View>
   )

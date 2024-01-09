@@ -1,28 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, ImageBackground, StyleSheet, View, Image, Text, StyleProp, TextStyle } from "react-native";
-import colors from "./assets/colors";
+import { ImageBackground, StyleSheet, View, TextStyle } from "react-native";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import HomeScreen from "./screens/home";
-import LibraryScreen from "./screens/library";
-import DeletedScreen from "./screens/deleted";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AuthScreen from "./screens/auth";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinner from "./UiComponents/LoadingSpinner";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "./utils/supabase";
+import { SessionProvider } from "./utils/Session-Context/SessionProvider";
+import BottomNav from "./UiComponents/BottomNav";
 
-const navTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: "transparent"
-  }
-};
 
-const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -59,75 +45,19 @@ export default function App() {
 
 
   return (
-    <SafeAreaProvider>
-      <ImageBackground source={require('./assets/images/background.png')}
-        style={StyleSheet.absoluteFill}
-      >
-        <SafeAreaView style={StyleSheet.absoluteFill}>
-          <NavigationContainer theme={navTheme}>
-            <Tab.Navigator
-              key={session ? 'logged-in' : 'logged-out'} // Add this line
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused }) => {
-                  let imageSource;
+    <SessionProvider>
 
-                  if (route.name === 'Home') {
-                    imageSource =
-                      require('./assets/images/home.png')
-                  } else if (route.name === 'Library') {
-                    imageSource =
-                      require('./assets/images/library.png')
-                  } else if (route.name === 'Deleted') {
-                    imageSource =
-                      require('./assets/images/deleted.png')
-                  } else if (route.name === 'Auth') {
-                    imageSource =
-                      require('./assets/images/default-user.png')
-                  }
+      <SafeAreaProvider>
+        <ImageBackground source={require('./assets/images/background.png')}
+          style={StyleSheet.absoluteFill}
+        >
+          <SafeAreaView style={StyleSheet.absoluteFill}>
+            <BottomNav />
+          </SafeAreaView>
+        </ImageBackground>
+      </SafeAreaProvider >
+    </SessionProvider>
 
-                  return <Image source={imageSource} style={{ width: 25, height: 25, borderRadius: 40, marginTop: 8 }} />;
-                }, tabBarLabel: ({ focused, color }) => {
-                  let label;
-                  let customStyle: StyleProp<TextStyle> = {
-                    color: focused ? colors.beigeCustom : colors.slate300,
-                    fontFamily: focused ? 'figtree-bold' : 'figtree-regular',
-                  };
-
-                  if (route.name === 'Home') {
-                    label = 'Home';
-                  } else if (route.name === 'Library') {
-                    label = 'Library';
-                  } else if (route.name === 'Deleted') {
-                    label = 'Deleted';
-                  } else if (route.name === 'Auth') {
-                    label = session ? "Profile" : "Log In";
-                  }
-
-                  return <Text style={customStyle}>{label}</Text>;
-                },
-                tabBarActiveTintColor: colors.beigeCustom,
-                tabBarInactiveTintColor: "gray",
-                tabBarStyle: {
-                  backgroundColor: "black",
-                },
-                headerShown: false,
-                tabBarHideOnKeyboard: true
-              })}
-            >
-              <Tab.Screen name="Home" component={HomeScreen} />
-              {session && (
-                <>
-                  <Tab.Screen name="Library" component={LibraryScreen} />
-                  <Tab.Screen name="Deleted" component={DeletedScreen} />
-                </>
-              )}
-              <Tab.Screen name="Auth"
-                component={AuthScreen} />
-            </Tab.Navigator>
-          </NavigationContainer>
-        </SafeAreaView>
-      </ImageBackground>
-    </SafeAreaProvider >
   );
 }
 

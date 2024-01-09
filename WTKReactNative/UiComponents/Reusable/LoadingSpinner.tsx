@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import colors from '../assets/colors';
+import colors from '../../assets/colors';
 
 const LoadingSpinner = () => {
     return (

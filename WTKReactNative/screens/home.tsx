@@ -14,8 +14,8 @@ import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
 import { HomeScreenNavigationProp } from "../utils/types";
 import { TrackData } from "../utils/spotify-types";
-import ResultCard from "../UiComponents/TrackResultCard";
-import LoadingSpinner from "../UiComponents/LoadingSpinner";
+import ResultCard from "../UiComponents/Reusable/TrackResultCard";
+import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const [randomTrack, setRandomTrack] = useState<TrackData | null>(null);

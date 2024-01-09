@@ -7,10 +7,10 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import { getNoteName } from "../utils/note-key";
-import { TrackData } from "../utils/spotify-types";
-import colors from "../assets/colors";
-import tw from "../utils/tailwindRN";
+import { getNoteName } from "../../utils/note-key";
+import { TrackData } from "../../utils/spotify-types";
+import colors from "../../assets/colors";
+import tw from "../../utils/tailwindRN";
 
 interface ResultCardProps {
   trackData: TrackData;

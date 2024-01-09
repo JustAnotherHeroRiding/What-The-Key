@@ -5,9 +5,10 @@ import colors from "../assets/colors";
 import DeletedScreen from "../screens/deleted";
 import HomeScreen from "../screens/home";
 import LibraryScreen from "../screens/library";
-import Auth from "./Auth";
+import Auth from "./Pages/Auth";
 import { useContext } from "react";
 import { SessionContext } from "../utils/Session-Context/SessionContext";
+import AuthScreen from "../screens/AuthScreen";
 
 const navTheme = {
     ...DefaultTheme,
@@ -85,7 +86,7 @@ export default function BottomNav() {
                     </>
                 )}
                 <Tab.Screen name="Auth"
-                    component={Auth} />
+                    component={AuthScreen} />
             </Tab.Navigator>
         </NavigationContainer>
     )

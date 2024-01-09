@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
-import { supabase } from "../utils/supabase"
+import { supabase } from "../../utils/supabase"
 import { StyleSheet, View, Alert } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import { Session } from '@supabase/supabase-js'
+import tw from '../../utils/tailwindRN'
+import { CustomButton } from '../Reusable/CustomButtom'
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true)
@@ -78,43 +80,28 @@ export default function Account({ session }: { session: Session }) {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
+    <View style={tw.style(`flex flex-col justify-center items-center
+     bg-black text-white mx-4 p-4 rounded-md my-auto border border-cream`)}>
+      <View style={tw.style(`py-4 self-stretch`)}>
+        <Input style={tw.style(`text-white`)} label="Email" value={session?.user?.email} disabled />
       </View>
-      <View style={styles.verticallySpaced}>
-        <Input label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
+      <View style={tw.style(`py-4 self-stretch`)}>
+        <Input style={tw.style(`text-white`)} label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
       </View>
-      <View style={styles.verticallySpaced}>
-        <Input label="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
-      </View>
-
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title={loading ? 'Loading ...' : 'Update'}
-          onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
-          disabled={loading}
-        />
+      <View style={tw.style(`py-4 self-stretch`)}>
+        <Input style={tw.style(`text-white`)} label="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
       </View>
 
-      <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
+      <View style={tw.style(`self-stretch py-4 mt-4`)}>
+        <CustomButton title={loading ? 'Loading ...' : 'Update'} onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
+          txtStyle={tw`text-black`} btnStyle={tw`bg-cream`} disabled={loading} />
+
+      </View>
+
+      <View style={tw.style(`self-stretch`)}>
+        <CustomButton title="Sign Out" onPress={() => supabase.auth.signOut()} txtStyle={tw`text-black`} btnStyle={tw`bg-cream`} />
       </View>
     </View>
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    padding: 12,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: 'stretch',
-  },
-  mt20: {
-    marginTop: 20,
-  },
-})

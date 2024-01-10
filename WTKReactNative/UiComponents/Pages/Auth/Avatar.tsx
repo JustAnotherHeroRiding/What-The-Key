@@ -102,7 +102,7 @@ export default function Avatar({ url, size = 150, onUpload, location }: Props) {
                 <Image
                     source={{ uri: avatarUrl }}
                     accessibilityLabel="Avatar"
-                    style={[avatarSize, tw`rounded-full overflow-hidden max-w-full pt-0 ${location === 'nav' ? 'border -mb-1' : 'border-2'} border-beigeCustom`, { objectFit: 'cover' }]}
+                    style={[avatarSize, tw`rounded-full overflow-hidden max-w-full pt-0 ${location === 'nav' ? 'border mt-2' : 'border-2'} border-beigeCustom`, { objectFit: 'cover' }]}
                 />
             ) : (
                 <View style={[avatarSize, tw`rounded-full overflow-hidden max-w-full bg-gray-700 border border-cream`]} />

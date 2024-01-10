@@ -11,6 +11,7 @@ import { getNoteName } from "../../utils/note-key";
 import { TrackData } from "../../utils/spotify-types";
 import colors from "../../assets/colors";
 import tw from "../../utils/tailwindRN";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface ResultCardProps {
   trackData: TrackData;
@@ -28,7 +29,10 @@ const ResultCard = ({ trackData }: ResultCardProps) => {
   }
 
   return (
-    <View style={tw`p-3 border text-center border-cream bg-black text-white rounded-lg justify-center items-center mb-auto my-4 shadow-lg`} >
+    <LinearGradient
+      colors={["#111827", "#18181b", "#1c1917"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }} style={tw`p-3 border text-center border-cream text-white rounded-lg justify-center items-center mb-auto my-4 shadow-lg`} >
       <Text style={tw`max-w-[85%] text-white mb-3 font-bold text-2xl text-center`}>{trackData.track.name}</Text>
       <Text style={tw`max-w-[80%] text-artistGray font-bold mb-3 text-xl text-center`}>
         {trackData.track.artists[0].name}
@@ -53,7 +57,7 @@ const ResultCard = ({ trackData }: ResultCardProps) => {
       >
         <Text style={tw.style(``, { fontFamily: "figtree-black" })}>Save</Text>
       </TouchableOpacity>
-    </View>
+    </LinearGradient>
   );
 };
 

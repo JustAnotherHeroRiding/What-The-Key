@@ -16,6 +16,8 @@ import ResultCard from "../UiComponents/Reusable/TrackResultCard";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import tw from "../utils/tailwindRN";
 import _ from 'lodash'
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const [randomTrack, setRandomTrack] = useState<TrackData | null>(null);
@@ -67,85 +69,52 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
     }
   };
 
+
+  const styles = StyleSheet.create({
+
+
+
+
+  });
+
   return (
 
     <ScrollView
-      contentContainerStyle={styles.contentContainer}
+      contentContainerStyle={tw.style(`flex justify-center items-center`)}
     >
       <StatusBar style="auto" />
 
-      <View style={tw.style(`border border-cream`, styles.blackContainer)}>
+
+      <LinearGradient
+        colors={["#111827", "#18181b", "#1c1917"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={tw.style(`border border-cream p-5 rounded-lg items-center w-[80%] mt-[3%]`)}>
         <TextInput
-          style={styles.searchInput}
+          style={tw.style(`bg-[#fff] w-full rounded-2xl p-3 mb-5 text-black`)}
           placeholder="Search"
           placeholderTextColor="gray"
           value={query}
           onChangeText={(text) => setQuery(text)
           }
         />
-        <View style={styles.flexRow}>
-          <TouchableOpacity style={styles.btnRandom} onPress={fetchRandomTrack}>
-            <Text style={styles.btnText}>Random Track</Text>
+        <View style={tw.style(`flex flex-row justify-between w-full content-center`)}>
+          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg`)} onPress={fetchRandomTrack}>
+            <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Random Track</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.searchButton}>
-            <Text style={styles.btnText}>Search</Text>
+          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg`)}>
+            <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Search</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </LinearGradient>
       {isLoading && <LoadingSpinner />}
 
       {randomTrack && <ResultCard trackData={randomTrack} />}
-    </ScrollView>
+    </ScrollView >
   );
 }
 
-const styles = StyleSheet.create({
 
-  contentContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  blackContainer: {
-    backgroundColor: "black",
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-    width: "80%",
-    marginTop: "3%"
-  },
-  btnRandom: {
-    backgroundColor: colors.beigeCustom,
-    padding: 10,
-    borderRadius: 10,
-  },
-  searchInput: {
-    backgroundColor: "#fff",
-    width: "100%",
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 20, // Spacing between elements
-    color: "black", // Text color
-  },
-  searchButton: {
-    backgroundColor: colors.beigeCustom,
-    padding: 10,
-    borderRadius: 10,
-  },
-  btnText: {
-    fontFamily: "figtree-bold",
-    color: "black",
-    fontSize: 16,
-    textAlign: "center", // Center the text in the button
-  },
-  flexRow: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    alignContent: "center",
-  },
-});
 
 export default HomeScreen;

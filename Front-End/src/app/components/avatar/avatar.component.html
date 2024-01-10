@@ -1,22 +1,22 @@
 <div class="container">
-    <img
-      [src]="_avatarUrl ? _avatarUrl : '../assets/default-user.png'"
-      alt="Avatar"
-      class="profile-picture"
-      [ngClass]="position"
-    />
-  </div>
-  <div *ngIf="!_avatarUrl" class="" style=""></div>
-  <div *ngIf="position !== 'navbar'" style="width: 150px">
-    <label class="button primary block" for="single">
-      {{ uploading ? 'Uploading ...' : 'Upload' }}
-    </label>
-    <input
-      style="visibility: hidden;position: absolute"
-      type="file"
-      id="single"
-      accept="image/*"
-      (change)="uploadAvatar($event)"
-      [disabled]="uploading"
-    />
-  </div>
+  <img
+    [src]="_avatarUrl ? _avatarUrl : '../assets/default-user.png'"
+    alt="Avatar"
+    class="profile-picture"
+    [ngClass]="position"
+  />
+</div>
+<div *ngIf="!_avatarUrl" class="" style=""></div>
+<div class="upload-container" *ngIf="position !== 'navbar'" style="width: 150px">
+  <label class="button primary block upload-profile" for="single">
+    {{ uploading ? "Uploading ..." : "Upload" }}
+  </label>
+  <input
+    style="visibility: hidden; position: absolute"
+    type="file"
+    id="single"
+    accept="image/*"
+    (change)="uploadAvatar($event)"
+    [disabled]="uploading"
+  />
+</div>

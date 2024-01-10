@@ -1,6 +1,6 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator, BottomTabBar, BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
-import { StyleProp, TextStyle, Image, Text } from "react-native";
+import { StyleProp, TextStyle, Image, Text, View } from "react-native";
 import colors from "../assets/colors";
 import DeletedScreen from "../screens/deleted";
 import HomeScreen from "../screens/home";
@@ -10,6 +10,9 @@ import { SessionContext } from "../utils/Context/Session/SessionContext";
 import AuthScreen from "../screens/AuthScreen";
 import { ProfilePicContext } from "../utils/Context/Profile/ProfileProvider";
 import Avatar from "./Pages/Auth/Avatar";
+import { BlurView } from "expo-blur";
+import tw from "../utils/tailwindRN";
+
 const navTheme = {
     ...DefaultTheme,
     colors: {
@@ -19,6 +22,17 @@ const navTheme = {
 };
 
 const Tab = createBottomTabNavigator();
+
+const BlurBottomTab = (props: BottomTabBarProps) => {
+    return (
+        <BlurView
+            style={tw.style(`absolute bottom-0 w-full`)}
+            intensity={50} tint="light"
+        >
+            <BottomTabBar {...props} />
+        </BlurView>
+    );
+};
 
 
 export default function BottomNav() {
@@ -49,10 +63,10 @@ export default function BottomNav() {
                         } else if (route.name === 'Auth') {
                             if (profilePicUrl) {
                                 return <Avatar
-                                size={25}
-                                url={profilePicUrl}
-                                location='nav'
-                              />
+                                    size={25}
+                                    url={profilePicUrl}
+                                    location='nav'
+                                />
                             }
                             imageSource = require('../assets/images/default-user.png')
                         }
@@ -96,6 +110,6 @@ export default function BottomNav() {
                 <Tab.Screen name="Auth"
                     component={AuthScreen} />
             </Tab.Navigator>
-        </NavigationContainer>
+        </NavigationContainer >
     )
 }

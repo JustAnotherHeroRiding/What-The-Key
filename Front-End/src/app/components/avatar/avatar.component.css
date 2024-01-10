@@ -21,3 +21,21 @@
   align-items: center;
   justify-content: center;
 }
+
+.upload-container {
+  margin-top: 0.5em;
+}
+
+.upload-profile {
+  padding: 0.4em 0.8em;
+  background-color: var(--cream);
+  color: black;
+  border-radius: 20px;
+  font-size:medium;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.upload-profile:hover {
+  opacity: 0.8;
+}

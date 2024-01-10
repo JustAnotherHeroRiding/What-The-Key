@@ -11,24 +11,48 @@ import {
 import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
 import { HomeScreenNavigationProp } from "../utils/types";
-import { TrackData } from "../utils/spotify-types";
+import { SpotifyTracksSearchResult, TrackData } from "../utils/spotify-types";
 import ResultCard from "../UiComponents/Reusable/TrackResultCard";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import tw from "../utils/tailwindRN";
 import _ from 'lodash'
 import { LinearGradient } from 'expo-linear-gradient';
+import SearchResults from "../UiComponents/Reusable/SearchResult";
 
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const [randomTrack, setRandomTrack] = useState<TrackData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery] = useState("");
 
-  const search = (searchQuery: string) => {
-    // Make a call to the api to search for tracks
-    console.log(`Searching for: ${searchQuery}`)
+  const [query, setQuery] = useState("");
+  const [searchResults, setSearchResuls] = useState<SpotifyTracksSearchResult | null>(null)
+
+
+
+
+  const searchTracks = async (searchQuery: string) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `https://what-the-key.vercel.app/api/spotify/search?query=${searchQuery}`
+      );
+
+      const data = await response.json()
+
+      setSearchResuls(data);
+
+
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert("Error", error.message);
+      } else {
+        Alert.alert("Error", "An unknown error occured")
+      }
+    } finally {
+      setIsLoading(false);
+    }
   }
-  const debouncedSearch = useCallback(_.debounce(search, 500), []);
+  const debouncedSearch = useCallback(_.debounce(searchTracks, 500), []);
 
   useEffect(() => {
     if (query) {
@@ -70,12 +94,6 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   };
 
 
-  const styles = StyleSheet.create({
-
-
-
-
-  });
 
   return (
 
@@ -110,7 +128,20 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       </LinearGradient>
       {isLoading && <LoadingSpinner />}
 
-      {randomTrack && <ResultCard trackData={randomTrack} />}
+      {randomTrack && (
+        <>
+          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg absolute top-[20%] z-50 right-4`)}
+            onPress={() => {
+              setRandomTrack(null)
+            }} >
+            <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Close</Text>
+          </TouchableOpacity>
+          < ResultCard trackData={randomTrack} />
+        </>
+      )}
+      {searchResults && (
+        <SearchResults results={searchResults} />
+      )}
     </ScrollView >
   );
 }

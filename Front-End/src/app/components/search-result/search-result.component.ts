@@ -8,7 +8,7 @@ import { SpotifyTracksSearchResult } from '../../utils/spotify-types';
 export class SearchResultComponent implements OnInit {
   @Input() searchResults: SpotifyTracksSearchResult | null = null;
   @Output() trackSelected = new EventEmitter<string>();
-  @Output() trackSaved = new EventEmitter<string>(); 
+  @Output() trackSaved = new EventEmitter<string>();
 
   selectTrack(trackId: string) {
     this.trackSelected.emit(trackId);

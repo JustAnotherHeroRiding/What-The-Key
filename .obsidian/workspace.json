@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "WTKReactNative/React Native App.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "WTKReactNative/React Native App.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "WTKReactNative/React Native App.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "WTKReactNative/React Native App.md"
               }
             }
           }
@@ -146,8 +146,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3158cc49a0d6232d",
+  "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "README.md",
+    "WTKReactNative/UiComponents/Reusable/SearchResult.tsx",
     "back-end-wtk/dist/app.module.d.ts",
     "back-end-wtk/node_modules/swagger-ui-dist/absolute-path.js",
     "back-end-wtk/dist/tsconfig.build.tsbuildinfo",
@@ -157,10 +159,7 @@
     "back-end-wtk/dist/app.module.js",
     "back-end-wtk/dist/app.module.js.map",
     "back-end-wtk/dist/spotify/spotify.service.js.map",
-    "back-end-wtk/dist/spotify/spotify.service.js",
-    "back-end-wtk/dist/spotify/spotify.service.d.ts",
     "Song Key.md",
-    "README.md",
     "WTKReactNative/React Native App.md",
     "Front-End/README.md",
     "back-end-wtk/README.md",

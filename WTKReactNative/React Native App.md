@@ -4,7 +4,6 @@
 Instead of using Kotlin to create a native android app, let's use React native to create a multi platform app.
 We need to implement the same 4 pages with full feature parity
 
-
 ## Navigation
 - Navigate between the pages, using the same logos and look from the website #DONE 
 
@@ -14,6 +13,10 @@ We need to implement the same 4 pages with full feature parity
 ##### [Custom debounce](https://sugandsingh5566.medium.com/mastering-throttle-and-debounce-functions-in-react-native-with-javascript-a03965240829) or we will use lodash. For now i am thinking using lodash
 - Search spotify tracks
 - Add tracks to library
+
+
+##### Image Distortion
+- Currently the left and right sides of the image are being distorted in the result card due to the image being stretched. Make sure that the image does not lose quality and is preserved
 
 ## Library
 - See all tracks in the user's library

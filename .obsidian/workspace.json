@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "WTKReactNative/React Native App.md",
+                "file": "Song Key.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "WTKReactNative/React Native App.md",
+                "file": "Song Key.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "WTKReactNative/React Native App.md",
+                "file": "Song Key.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "WTKReactNative/React Native App.md"
+                "file": "Song Key.md"
               }
             }
           }
@@ -148,17 +148,22 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
-    "WTKReactNative/%ProgramData%/Microsoft/Windows/UUS/State/_active.uusver",
-    "WTKReactNative/%ProgramData%/Microsoft/Windows/UUS/State",
-    "WTKReactNative/%ProgramData%/Microsoft/Windows/UUS",
-    "WTKReactNative/%ProgramData%/Microsoft/Windows",
-    "WTKReactNative/%ProgramData%/Microsoft",
-    "WTKReactNative/%ProgramData%",
-    "WTKReactNative/node_modules/@types/lodash/package.json",
-    "WTKReactNative/node_modules/expo-blur/ios/ExpoBlur.podspec",
-    "WTKReactNative/node_modules/expo-blur/ios/BlurViewModule.swift",
-    "WTKReactNative/node_modules/expo-blur/ios/BlurView.swift",
-    "WTKReactNative/node_modules/expo-blur/ios/BlurEffectView.swift",
+    "back-end-wtk/dist/utils/spotify-types.js.map",
+    "back-end-wtk/dist/utils/spotify-types.js",
+    "back-end-wtk/dist/utils/spotify-types.d.ts",
+    "back-end-wtk/dist/tracks/tracks.controller.js",
+    "back-end-wtk/dist/tracks/tracks.controller.js.map",
+    "back-end-wtk/dist/tracks/tracks.controller.d.ts",
+    "back-end-wtk/dist/tracks/track.service.js.map",
+    "back-end-wtk/dist/tracks/track.service.js",
+    "back-end-wtk/dist/tracks/track.service.d.ts",
+    "back-end-wtk/dist/services/prisma.service.js.map",
+    "back-end-wtk/dist/services/prisma.service.js",
+    "README.md",
+    "WTKReactNative/React Native App.md",
+    "Song Key.md",
+    "Front-End/README.md",
+    "back-end-wtk/README.md",
     "WTKReactNative/node_modules/@types/lodash/README.md",
     "WTKReactNative/node_modules/expo-auth-session/README.md",
     "WTKReactNative/node_modules/expo-auth-session/CHANGELOG.md",
@@ -179,11 +184,6 @@
     "WTKReactNative/node_modules/@supabase/storage-js/README.md",
     "WTKReactNative/node_modules/@supabase/realtime-js/README.md",
     "WTKReactNative/node_modules/@supabase/realtime-js/LICENSE.md",
-    "WTKReactNative/node_modules/@supabase/postgrest-js/README.md",
-    "WTKReactNative/node_modules/@supabase/node-fetch/README.md",
-    "WTKReactNative/node_modules/@supabase/gotrue-js/README.md",
-    "WTKReactNative/node_modules/@supabase/node-fetch/LICENSE.md",
-    "WTKReactNative/node_modules/@supabase/functions-js/README.md",
     "WTKReactNative/assets/images/default-user.png",
     "WTKReactNative/assets/images/background.png",
     "WTKReactNative/assets/images/logo.png",

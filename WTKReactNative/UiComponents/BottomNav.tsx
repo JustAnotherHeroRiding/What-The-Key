@@ -1,6 +1,6 @@
 import { createBottomTabNavigator, BottomTabBar, BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
-import { StyleProp, TextStyle, Image, Text, View } from "react-native";
+import { StyleProp, TextStyle, Image, Text, View, StyleSheet } from "react-native";
 import colors from "../assets/colors";
 import DeletedScreen from "../screens/deleted";
 import HomeScreen from "../screens/home";
@@ -23,17 +23,6 @@ const navTheme = {
 
 const Tab = createBottomTabNavigator();
 
-const BlurBottomTab = (props: BottomTabBarProps) => {
-    return (
-        <BlurView
-            style={tw.style(`absolute bottom-0 w-full`)}
-            intensity={50} tint="light"
-        >
-            <BottomTabBar {...props} />
-        </BlurView>
-    );
-};
-
 
 export default function BottomNav() {
 
@@ -48,6 +37,10 @@ export default function BottomNav() {
             <Tab.Navigator
                 key={session ? 'logged-in' : 'logged-out'} // Add this line
                 screenOptions={({ route }) => ({
+                    tabBarBackground: () => {
+                        return <BlurView intensity={60} style={tw.style(`opacity-60
+                        rounded-t-full bg-stone-900`, { ...StyleSheet.absoluteFillObject })} />
+                    },
                     tabBarIcon: ({ focused }) => {
                         let imageSource;
 
@@ -94,10 +87,19 @@ export default function BottomNav() {
                     tabBarActiveTintColor: colors.beigeCustom,
                     tabBarInactiveTintColor: "gray",
                     tabBarStyle: {
-                        backgroundColor: "black",
+                        backgroundColor: "transparent",
+                        position: "absolute",
+                        borderTopWidth: 0,
+                        elevation: 0, // Removes shadow on Android
+                        shadowOpacity: 0, // Removes shadow on iOS
+                        borderTopLeftRadius: 9999,
+                        borderTopRightRadius: 9999,
+                        overflow: "hidden",
+
                     },
                     headerShown: false,
-                    tabBarHideOnKeyboard: true
+                    tabBarHideOnKeyboard: true,
+
                 })}
             >
                 <Tab.Screen name="Home" component={HomeScreen} />

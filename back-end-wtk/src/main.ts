@@ -16,7 +16,17 @@ async function bootstrap() {
   /* When navigating to localhost:3000/docs it will show the automatically
    generated swagger documentation. When opening localhost:3000/docs-json it will
    show the routes in the JSON format. */
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('docs', app, document, {
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.0/swagger-ui-bundle.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.0/swagger-ui-standalone-preset.min.js',
+    ],
+    customCssUrl: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.0/swagger-ui.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.0/swagger-ui-standalone-preset.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.0/swagger-ui.css',
+    ],
+  });
   app.setGlobalPrefix('api');
   app.enableCors({
     origin: ['http://localhost:4200', 'http://10.0.2.2'],

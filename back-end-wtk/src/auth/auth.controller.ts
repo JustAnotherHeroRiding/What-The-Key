@@ -1,9 +1,26 @@
 import { Controller, Get, Req, UnauthorizedException } from '@nestjs/common';
 import { supabaseAdmin } from '../supabase.service';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('user') // Group these endpoints under 'user' tag in Swagger UI
 @Controller('user')
 export class UserController {
   @Get('checkSession')
+  @ApiBearerAuth() // Indicate that this endpoint requires Bearer token authorization
+  @ApiOperation({
+    summary: 'Check User Session',
+    description: 'Checks the session of the user based on the provided token.',
+  })
+  @ApiResponse({ status: 200, description: 'User session details' })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized if the token is invalid or not provided',
+  })
   async getSession(@Req() request) {
     const token = request.headers.authorization?.split(' ')[1];
     if (!token) throw new UnauthorizedException('No token provided');
@@ -18,6 +35,16 @@ export class UserController {
   }
 
   @Get('getAllUsers')
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Get All Users',
+    description: 'Retrieves a list of all users.',
+  })
+  @ApiResponse({ status: 200, description: 'List of all users' })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized if the token is invalid',
+  })
   async getAllUsers() {
     const { data, error } = await supabaseAdmin.auth.admin.listUsers();
 

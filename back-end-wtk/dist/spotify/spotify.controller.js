@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SpotifyController = void 0;
 const common_1 = require("@nestjs/common");
 const spotify_service_1 = require("./spotify.service");
+const swagger_1 = require("@nestjs/swagger");
 let SpotifyController = class SpotifyController {
     constructor(spotifyService) {
         this.spotifyService = spotifyService;
@@ -63,6 +64,18 @@ let SpotifyController = class SpotifyController {
 exports.SpotifyController = SpotifyController;
 __decorate([
     (0, common_1.Get)('tracks'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Fetch Multiple Tracks',
+        description: 'Fetches multiple tracks from Spotify based on provided track IDs.',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'ids',
+        type: String,
+        required: true,
+        description: 'Comma-separated list of Spotify track IDs',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of tracks' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Query)('ids')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -70,6 +83,18 @@ __decorate([
 ], SpotifyController.prototype, "fetchMultipleTracks", null);
 __decorate([
     (0, common_1.Get)('track/:id'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Fetch a Single Track',
+        description: 'Fetches a single track from Spotify based on its ID.',
+    }),
+    (0, swagger_1.ApiParam)({
+        name: 'id',
+        type: String,
+        required: true,
+        description: 'Spotify track ID',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Track details' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -77,6 +102,18 @@ __decorate([
 ], SpotifyController.prototype, "fetchTrack", null);
 __decorate([
     (0, common_1.Get)('search'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Search Tracks',
+        description: 'Searches for tracks in Spotify based on a query.',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'query',
+        type: String,
+        required: true,
+        description: 'Search query',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Search results' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Query)('query')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -84,17 +121,30 @@ __decorate([
 ], SpotifyController.prototype, "searchTracks", null);
 __decorate([
     (0, common_1.Get)('random-guitar-track'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Get Random Guitar Track',
+        description: 'Fetches a random guitar track from Spotify.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Random guitar track details' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SpotifyController.prototype, "getRandomGuitarTrack", null);
 __decorate([
     (0, common_1.Get)('genres'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Get Genres',
+        description: 'Fetches a list of music genres from Spotify.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of genres' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], SpotifyController.prototype, "getGenres", null);
 exports.SpotifyController = SpotifyController = __decorate([
+    (0, swagger_1.ApiTags)('Spotify'),
     (0, common_1.Controller)('spotify'),
     __metadata("design:paramtypes", [spotify_service_1.SpotifyService])
 ], SpotifyController);

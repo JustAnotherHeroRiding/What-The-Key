@@ -16,6 +16,8 @@ exports.TrackController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("../auth/user.service");
 const track_service_1 = require("./track.service");
+const swagger_1 = require("@nestjs/swagger");
+const dto_1 = require("./dto");
 let TrackController = class TrackController {
     constructor(userService, trackService) {
         this.userService = userService;
@@ -81,6 +83,24 @@ let TrackController = class TrackController {
 exports.TrackController = TrackController;
 __decorate([
     (0, common_1.Get)('getTracks'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Get Tracks',
+        description: 'Get tracks for a user from either the library or recycle bin.',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'userId',
+        type: String,
+        required: true,
+        description: 'User ID',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'source',
+        enum: ['library', 'recycleBin'],
+        required: true,
+        description: 'Source of the tracks',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of tracks' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Query)('userId')),
     __param(1, (0, common_1.Query)('source')),
     __param(2, (0, common_1.Res)()),
@@ -90,6 +110,14 @@ __decorate([
 ], TrackController.prototype, "getTracks", null);
 __decorate([
     (0, common_1.Post)('addTrack'),
+    (0, common_1.Post)('addTrack'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Add Track',
+        description: "Add a track to the user's library or recycle bin.",
+    }),
+    (0, swagger_1.ApiBody)({ type: dto_1.AddTrackDto }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Track added' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Body)('userId')),
     __param(1, (0, common_1.Body)('trackId')),
     __param(2, (0, common_1.Body)('source')),
@@ -100,6 +128,13 @@ __decorate([
 ], TrackController.prototype, "addTrack", null);
 __decorate([
     (0, common_1.Post)('deleteTrack'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Delete Track',
+        description: 'Permanently delete a track.',
+    }),
+    (0, swagger_1.ApiBody)({ type: dto_1.DeleteTrackDto }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Track deleted' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Body)('userId')),
     __param(1, (0, common_1.Body)('trackId')),
     __param(2, (0, common_1.Res)()),
@@ -109,6 +144,10 @@ __decorate([
 ], TrackController.prototype, "deleteTrack", null);
 __decorate([
     (0, common_1.Post)('addTabs'),
+    (0, swagger_1.ApiOperation)({ summary: 'Add Tabs', description: 'Add tabs to a track.' }),
+    (0, swagger_1.ApiBody)({ type: dto_1.AddTabsDto }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Tabs added to track' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Body)('trackId')),
     __param(1, (0, common_1.Body)('userId')),
     __param(2, (0, common_1.Body)('tabUrl')),
@@ -119,6 +158,24 @@ __decorate([
 ], TrackController.prototype, "addTabs", null);
 __decorate([
     (0, common_1.Get)('getTabs'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Get Tabs',
+        description: 'Get tabs for a specific track.',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'trackId',
+        type: String,
+        required: true,
+        description: 'Track ID',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'userId',
+        type: String,
+        required: true,
+        description: 'User ID',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of tabs for the track' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Query)('trackId')),
     __param(1, (0, common_1.Query)('userId')),
     __param(2, (0, common_1.Res)()),
@@ -127,6 +184,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "getTabs", null);
 exports.TrackController = TrackController = __decorate([
+    (0, swagger_1.ApiTags)('track'),
     (0, common_1.Controller)('track'),
     __metadata("design:paramtypes", [user_service_1.UserService,
         track_service_1.TrackService])

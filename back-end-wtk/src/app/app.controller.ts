@@ -1,6 +1,5 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { UserService } from '../auth/user.service';
-import { Track as TrackModel } from '@prisma/client';
 import { TrackService } from '../tracks/track.service';
 
 @Controller()
@@ -10,7 +9,7 @@ export class AppController {
     private readonly trackService: TrackService,
   ) {}
 
-  @Get('nest/api/track/:id')
+  /*   @Get('nest/api/track/:id')
   async getPostById(@Param('id') id: string): Promise<TrackModel> {
     return this.trackService.track({ id: id });
   }
@@ -18,5 +17,5 @@ export class AppController {
   @Get('hello')
   getHello(): string {
     return 'Hello World';
-  }
+  } */
 }

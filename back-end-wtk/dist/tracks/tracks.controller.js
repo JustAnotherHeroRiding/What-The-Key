@@ -184,7 +184,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "getTabs", null);
 exports.TrackController = TrackController = __decorate([
-    (0, swagger_1.ApiTags)('track'),
+    (0, swagger_1.ApiTags)('Track'),
     (0, common_1.Controller)('track'),
     __metadata("design:paramtypes", [user_service_1.UserService,
         track_service_1.TrackService])

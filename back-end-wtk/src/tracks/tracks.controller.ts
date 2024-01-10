@@ -19,7 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { AddTabsDto, AddTrackDto, DeleteTrackDto } from './dto';
 
-@ApiTags('track')
+@ApiTags('Track')
 @Controller('track')
 export class TrackController {
   constructor(
@@ -97,7 +97,7 @@ export class TrackController {
     summary: 'Delete Track',
     description: 'Permanently delete a track.',
   })
-  @ApiBody({ type: DeleteTrackDto }) // Assuming DeleteTrackDto exists
+  @ApiBody({ type: DeleteTrackDto })
   @ApiResponse({ status: 200, description: 'Track deleted' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async deleteTrack(
@@ -120,7 +120,7 @@ export class TrackController {
 
   @Post('addTabs')
   @ApiOperation({ summary: 'Add Tabs', description: 'Add tabs to a track.' })
-  @ApiBody({ type: AddTabsDto }) // Assuming AddTabsDto exists
+  @ApiBody({ type: AddTabsDto })
   @ApiResponse({ status: 200, description: 'Tabs added to track' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async addTabs(

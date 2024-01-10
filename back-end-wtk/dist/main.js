@@ -7,6 +7,7 @@ const app_module_1 = require("./app.module");
 const swagger_1 = require("@nestjs/swagger");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.setGlobalPrefix('api');
     const config = new swagger_1.DocumentBuilder()
         .setTitle('What The Key')
         .setDescription('Api for my what the key app.')
@@ -23,7 +24,6 @@ async function bootstrap() {
             'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.0/swagger-ui.min.css',
         ],
     });
-    app.setGlobalPrefix('api');
     app.enableCors({
         origin: ['http://localhost:4200', 'http://10.0.2.2'],
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',

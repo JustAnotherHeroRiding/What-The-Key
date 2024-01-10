@@ -7,7 +7,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-@ApiTags('user') // Group these endpoints under 'user' tag in Swagger UI
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   @Get('checkSession')

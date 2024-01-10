@@ -148,12 +148,12 @@
   },
   "active": "3158cc49a0d6232d",
   "lastOpenFiles": [
+    "back-end-wtk/dist/app.module.d.ts",
     "back-end-wtk/node_modules/swagger-ui-dist/absolute-path.js",
     "back-end-wtk/dist/tsconfig.build.tsbuildinfo",
     "back-end-wtk/dist/main.d.ts",
     "back-end-wtk/dist/main.js",
     "back-end-wtk/dist/main.js.map",
-    "back-end-wtk/dist/app.module.d.ts",
     "back-end-wtk/dist/app.module.js",
     "back-end-wtk/dist/app.module.js.map",
     "back-end-wtk/dist/spotify/spotify.service.js.map",

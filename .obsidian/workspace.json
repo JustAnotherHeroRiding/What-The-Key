@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Song Key.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Song Key.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Song Key.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Song Key.md"
+                "file": "README.md"
               }
             }
           }
@@ -146,22 +146,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b7cc62dce9733f31",
+  "active": "3158cc49a0d6232d",
   "lastOpenFiles": [
+    "back-end-wtk/dist/app.module.d.ts",
+    "back-end-wtk/node_modules/@nestjs/swagger/index.d.ts",
+    "back-end-wtk/node_modules/@nestjs/swagger/package.json",
+    "WTKReactNative/node_modules/expo-linear-gradient/package.json",
+    "Song Key.md",
     "back-end-wtk/dist/tsconfig.build.tsbuildinfo",
     "back-end-wtk/dist/main.d.ts",
     "back-end-wtk/dist/main.js",
     "back-end-wtk/dist/main.js.map",
-    "back-end-wtk/dist/app.module.d.ts",
     "back-end-wtk/dist/app.module.js",
     "back-end-wtk/dist/app.module.js.map",
     "back-end-wtk/dist/spotify/spotify.service.js.map",
-    "back-end-wtk/dist/spotify/spotify.service.js",
-    "back-end-wtk/dist/spotify/spotify.controller.js.map",
-    "back-end-wtk/dist/spotify/spotify.service.d.ts",
     "README.md",
     "WTKReactNative/React Native App.md",
-    "Song Key.md",
     "Front-End/README.md",
     "back-end-wtk/README.md",
     "WTKReactNative/node_modules/@types/lodash/README.md",

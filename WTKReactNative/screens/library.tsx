@@ -93,17 +93,22 @@ function LibraryScreen({
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
         style={tw.style(`mx-auto flex my-4 w-full`)}>
-        <Text style={tw.style(`text-white font-figtreeBold text-3xl 
-        border-b-2 border-slate-500 py-4 text-center`)}>Library</Text>
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          library.map((track, index) => (
-            <Track key={index} track={track} location="library" />
-          ))
-        )
-        }
+        {/* This is weird here as without this scroll view here the tracks do not scroll
+        Also I cant get it to have margins above the bottom nav tab */}
+        <ScrollView>
 
+          <Text style={tw.style(`text-white font-figtreeBold text-3xl 
+        border-b-2 border-slate-500 py-4 text-center`)}>Library</Text>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            library.map((track, index) => (
+              <Track key={index} track={track} location="library" />
+            ))
+          )
+          }
+
+        </ScrollView>
       </LinearGradient>
     </ScrollView>
   );

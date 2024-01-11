@@ -11,6 +11,7 @@
 ## Api Docs
 Let's write docs for my nest.js back end to simplify making calls to our api. Swagger seems to be the the recommended solution and seems people say that it works well with Nest.js. Let's check it out. The goal is to never have to open the code to look at the controllers and services in order to use an endpoint.
 - Used swagger to generate the docs, currently available at /docs or /docs-json for the json object #DONE 
+- Add example data responses for each endpoint
 
 ## Provide sample chord progressions and scales
 - Let's try using the openai api to do this, after providing the song name, album, genre and other relevant song data besides the key and bpm

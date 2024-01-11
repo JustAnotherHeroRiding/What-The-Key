@@ -28,7 +28,7 @@ export default function BottomNav() {
 
     const session = useContext(SessionContext)
 
-    const { profilePicUrl, setProfilePicUrl } = useContext(ProfilePicContext);
+    const { profilePicUrl } = useContext(ProfilePicContext);
 
 
 

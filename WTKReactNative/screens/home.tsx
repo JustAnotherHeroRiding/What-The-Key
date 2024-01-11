@@ -17,7 +17,7 @@ import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import tw from "../utils/tailwindRN";
 import _ from 'lodash'
 import { LinearGradient } from 'expo-linear-gradient';
-import SearchResults from "../UiComponents/Reusable/SearchResult";
+import SearchResults from "../UiComponents/Reusable/SearchResults";
 
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {

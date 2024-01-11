@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
 import { SessionContext } from "../../utils/Context/Session/SessionContext";
 import Toast from "react-native-root-toast"
+import { useNavigation } from "@react-navigation/native";
 
 
 
@@ -29,6 +30,7 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const session = useContext(SessionContext)
+    const navigation = useNavigation()
 
     const handleContextMenu = (action: ContextActions) => {
         switch (action) {
@@ -112,18 +114,31 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
                     style={tw.style(`text-artistGray font-bold`)}> {track.artists[0].name}</Text>
             </View>
             {showcontextMenu && (
-                <View style={tw.style(`flex flex-col gap-2 items-center absolute right-12 
+
+                session ? (
+
+                    <View style={tw.style(`flex flex-col gap-2 items-center absolute right-12 
+                    -top-20 bg-beigeCustom p-2 rounded-lg z-5`)}>
+                        <TouchableOpacity onPress={() => addToLibrary()}
+                            style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}>
+                            <MaterialIcons name="library-add" size={24} color="black" />
+                            <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Add to Library</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
+                            <MaterialIcons name="audiotrack" size={24} color="black" />
+                            <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Open Details</Text>
+                        </TouchableOpacity>
+                    </View>
+                )
+                    :
+                    <View style={tw.style(`flex flex-col gap-2 items-center absolute right-12 
                 -top-20 bg-beigeCustom p-2 rounded-lg z-5`)}>
-                    <TouchableOpacity onPress={() => addToLibrary()}
-                        style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}>
-                        <MaterialIcons name="library-add" size={24} color="black" />
-                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Add to Library</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
-                        <MaterialIcons name="audiotrack" size={24} color="black" />
-                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Open Details</Text>
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity onPress={() => navigation.navigate('Auth')}
+                            style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}>
+                            <MaterialIcons name="login" size={24} color="black" />
+                            <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Log in to interact</Text>
+                        </TouchableOpacity>
+                    </View>
             )}
             <TouchableOpacity onPress={() => setShowContextMenu(!showcontextMenu)}>
                 <Entypo name="dots-three-vertical" size={28} color="white" />

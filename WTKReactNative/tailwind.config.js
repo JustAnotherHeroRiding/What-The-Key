@@ -17,6 +17,7 @@ module.exports = {
       fontFamily: {
         figtreeBlack: ["figtree-black", "sans-serif"],
         figtreeBold: ["figtree-bold", "sans-serif"],
+        figtreeRegular: ["figtree-regular", "sans-serif"],
       },
     },
   },

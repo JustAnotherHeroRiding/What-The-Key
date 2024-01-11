@@ -78,6 +78,7 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
                 hideOnPress: true,
                 delay: 0,
             });
+            setShowContextMenu(false)
 
         } catch (error) {
             if (error instanceof Error) {

@@ -40,6 +40,13 @@ We need to implement the same 4 pages with full feature parity
 - Display tabs button
 - Restore tracks to library or delete them permanently
 
+## Drag and drop
+- Allow users to reorder the tracks in the library/Bin
+
+## Adding tracks and cache
+- Adding a track works but there was a bug where no toast was displayed yet the track was added
+- Also the context menu should also close
+
 ## Auth
 - Log in and manage the library of tracks using the same database as the website #DONE 
 - Use the supabase tutorial to set up the auth flow [Link](https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native) #DONE 

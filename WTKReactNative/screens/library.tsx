@@ -9,6 +9,7 @@ import Toast from "react-native-root-toast";
 import { TrackData } from "../utils/spotify-types";
 import { LinearGradient } from "expo-linear-gradient";
 import Track from "../UiComponents/Reusable/Track";
+import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 
 
 function LibraryScreen({
@@ -94,9 +95,15 @@ function LibraryScreen({
         style={tw.style(`mx-auto flex my-4 w-full`)}>
         <Text style={tw.style(`text-white font-figtreeBold text-3xl 
         border-b-2 border-slate-500 py-4 text-center`)}>Library</Text>
-        {library.map((track, index) => (
-          <Track key={index} track={track} location="library" />
-        ))}
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          library.map((track, index) => (
+            <Track key={index} track={track} location="library" />
+          ))
+        )
+        }
+
       </LinearGradient>
     </ScrollView>
   );

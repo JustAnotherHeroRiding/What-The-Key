@@ -1,4 +1,7 @@
 # [Api Docs](https://what-the-key.vercel.app/docs)
+# [Icons](https://icons.expo.fyi/Index)
+
+
 ## Multi platform App
 
 Instead of using Kotlin to create a native android app, let's use React native to create a multi platform app.
@@ -9,10 +12,13 @@ We need to implement the same 4 pages with full feature parity
 
 ## Home page
 - Get random track #DONE 
-- Debounce the input and only make a request after 300 ms have passed of no changes to the query
+- Debounce the input and only make a request after 300 ms have passed of no changes to the query #DONE 
 ##### [Custom debounce](https://sugandsingh5566.medium.com/mastering-throttle-and-debounce-functions-in-react-native-with-javascript-a03965240829) or we will use lodash. For now i am thinking using lodash
-- Search spotify tracks
-- Add tracks to library
+- Search spotify tracks #DONE 
+- Style the search results
+- Add the close single result button inside of the component itself
+- Add tracks to library from the search results or random track
+- Search results will be styled similar to spotify, no one big screen but it will be small rows
 
 
 ##### Image Distortion

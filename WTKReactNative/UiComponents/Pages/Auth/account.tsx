@@ -7,6 +7,7 @@ import tw from '../../../utils/tailwindRN'
 import { CustomButton } from '../../Reusable/CustomButtom'
 import Avatar from './Avatar'
 import { ProfilePicContext } from '../../../utils/Context/Profile/ProfileProvider'
+import { LinearGradient } from 'expo-linear-gradient'
 export interface Profile {
   id?: string;
   username: string;
@@ -104,8 +105,12 @@ export default function Account({ session }: { session: Session }) {
   }
 
   return (
-    <View style={tw.style(`flex flex-col justify-center items-center
-     bg-black text-white mx-4 p-4 rounded-md my-auto border border-cream`)}>
+    <LinearGradient
+      colors={["#27272a", "#52525b"]}
+      start={{ x: 1, y: 0 }}
+      end={{ x: 0, y: 0 }}
+      style={tw.style(`flex flex-col justify-center items-center
+     bg-black text-white mx-4 p-4 rounded-md my-auto border border-cream mb-16`)}>
       <View style={tw.style(`py-2 flex justify-center items-center`)}>
         <Avatar
           size={200}
@@ -119,16 +124,16 @@ export default function Account({ session }: { session: Session }) {
         />
       </View>
       <View style={tw.style(`self-stretch`)}>
-        <Input style={tw.style(`text-white`)} label="Email" value={session?.user?.email} disabled />
+        <Input style={tw.style(`text-white`)} labelStyle={tw.style(`text-slate-300`)} label="Email" value={session?.user?.email} disabled />
       </View>
       <View style={tw.style(`self-stretch`)}>
-        <Input style={tw.style(`text-white`)} label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
+        <Input style={tw.style(`text-white`)} labelStyle={tw.style(`text-slate-300`)} label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
       </View>
       <View style={tw.style(`self-stretch`)}>
-        <Input style={tw.style(`text-white`)} label="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
+        <Input style={tw.style(`text-white`)} labelStyle={tw.style(`text-slate-300`)} label="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
       </View>
       <View style={tw.style(`self-stretch`)}>
-        <Input style={tw.style(`text-white`)} label="Full Name" value={fullName || ''} onChangeText={(text) => setFullName(text)} />
+        <Input style={tw.style(`text-white`)} labelStyle={tw.style(`text-slate-300`)} label="Full Name" value={fullName || ''} onChangeText={(text) => setFullName(text)} />
       </View>
       <View style={tw.style(`self-stretch py-4 mt-4`)}>
         <CustomButton title={loading ? 'Loading ...' : 'Update'} onPress={() => updateProfile({ username, website, avatar_url: avatarUrl, full_name: fullName })}
@@ -137,7 +142,7 @@ export default function Account({ session }: { session: Session }) {
       <View style={tw.style(`self-stretch`)}>
         <CustomButton title="Sign Out" onPress={() => supabase.auth.signOut()} txtStyle={tw`text-black`} btnStyle={tw`bg-cream`} />
       </View>
-    </View>
+    </LinearGradient>
   )
 }
 

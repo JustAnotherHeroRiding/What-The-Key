@@ -9,17 +9,19 @@ import {
 } from "react-native";
 import { getNoteName } from "../../utils/note-key";
 import { TrackData } from "../../utils/spotify-types";
-import colors from "../../assets/colors";
 import tw from "../../utils/tailwindRN";
 import { LinearGradient } from "expo-linear-gradient";
+import { Entypo } from '@expo/vector-icons'
+
 
 interface ResultCardProps {
   trackData: TrackData;
+  setRandomTrack: React.Dispatch<React.SetStateAction<TrackData | null>>
 }
 const screen = Dimensions.get("window");
 const imageSize = screen.width * 0.85; // 90% of screen width
 
-const ResultCard = ({ trackData }: ResultCardProps) => {
+const ResultCard = ({ trackData, setRandomTrack }: ResultCardProps) => {
   if (!trackData) {
     return (
       <View className="p-3 border border-cream bg-black text-white rounded-lg justify-center items-center mb-auto mt-16" >
@@ -30,10 +32,18 @@ const ResultCard = ({ trackData }: ResultCardProps) => {
 
   return (
     <LinearGradient
-      colors={["#111827", "#18181b", "#1c1917"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }} style={tw`p-3 border text-center border-cream text-white rounded-lg justify-center items-center mb-auto my-4 shadow-lg`} >
-      <Text style={tw`max-w-[85%] text-white mb-3 font-bold text-2xl text-center`}>{trackData.track.name}</Text>
+      colors={["#27272a", "#52525b"]}
+      start={{ x: 1, y: 0 }}
+                    end={{ x: 0, y: 0 }} 
+      style={tw`p-3 border text-center relative border-cream text-white rounded-lg justify-center items-center mb-auto my-4 shadow-lg`} >
+      <TouchableOpacity style={tw.style(`border border-cream flex 
+          justify-center rounded-full absolute top-2 z-50 right-2`)}
+        onPress={() => {
+          setRandomTrack(null)
+        }} >
+        <Entypo name="cross" size={24} color="white" />
+      </TouchableOpacity>
+      <Text style={tw`max-w-[85%] text-white mb-3 font-extrabold text-2xl text-center`}>{trackData.track.name}</Text>
       <Text style={tw`max-w-[80%] text-artistGray font-bold mb-3 text-xl text-center`}>
         {trackData.track.artists[0].name}
       </Text>

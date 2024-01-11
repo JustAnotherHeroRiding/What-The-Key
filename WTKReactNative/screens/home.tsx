@@ -24,6 +24,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const [randomTrack, setRandomTrack] = useState<TrackData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResuls] = useState<SpotifyTracksSearchResult | null>(null)
 
@@ -98,15 +99,15 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   return (
 
     <ScrollView
-      contentContainerStyle={tw.style(`flex justify-center items-center`)}
+      contentContainerStyle={tw.style(`flex justify-center items-center pb-16`)}
     >
       <StatusBar style="auto" />
 
 
       <LinearGradient
-        colors={["#111827", "#18181b", "#1c1917"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+        colors={["#27272a", "#52525b"]}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 0 }}
         style={tw.style(`border border-cream p-5 rounded-lg items-center w-[80%] mt-[3%]`)}>
         <TextInput
           style={tw.style(`bg-[#fff] w-full rounded-2xl p-3 mb-5 text-black`)}
@@ -121,7 +122,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Random Track</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg`)}>
+          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg`)} onPress={() => searchTracks(query)}>
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Search</Text>
           </TouchableOpacity>
         </View>
@@ -129,15 +130,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       {isLoading && <LoadingSpinner />}
 
       {randomTrack && (
-        <>
-          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg absolute top-[20%] z-50 right-4`)}
-            onPress={() => {
-              setRandomTrack(null)
-            }} >
-            <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Close</Text>
-          </TouchableOpacity>
-          < ResultCard trackData={randomTrack} />
-        </>
+        < ResultCard trackData={randomTrack} setRandomTrack={setRandomTrack} />
       )}
       {searchResults && (
         <SearchResults results={searchResults} />

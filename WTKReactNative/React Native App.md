@@ -17,19 +17,27 @@ We need to implement the same 4 pages with full feature parity
 - Search spotify tracks #DONE 
 - Style the search results
 - Add the close single result button inside of the component itself #DONE 
-- Add tracks to library from the search results or random track
-- Search results will be styled similar to spotify, small rows with small images of containers
+- Add tracks to library from the search results #DONE 
+- Search results will be styled similar to spotify, small rows with small images of containers #DONE  
+- Add track option from the random track 
+
 
 ##### Image Distortion
 - Currently the left and right sides of the image are being distorted in the result card due to the image being stretched. Make sure that the image does not lose quality and is preserved
 
+## Track component
+- Create a separate track component that will be used in the library and bin
+- equip it with all options like delete/restore, permanent delete, show/add tabs and open the spotify link
+- Manage context menu boolean in each component separately
 ## Library
-- See all tracks in the user's library
+- See all tracks in the user's library #DONE 
+- Display tabs button
 - Delete the tracks to send them to the recycle bin
 
 
 ## Deleted 
-- See all tracks added to the recycle bin
+- See all tracks added to the recycle bin #DONE 
+- Display tabs button
 - Restore tracks to library or delete them permanently
 
 ## Auth

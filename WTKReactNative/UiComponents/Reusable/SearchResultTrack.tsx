@@ -7,6 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { SessionContext } from "../../utils/Context/Session/SessionContext";
 import Toast from "react-native-root-toast"
 import { useNavigation } from "@react-navigation/native";
+import { AuthScreenNavigationProp } from "../../utils/types";
 
 
 
@@ -30,7 +31,7 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const session = useContext(SessionContext)
-    const navigation = useNavigation()
+    const navigation = useNavigation<AuthScreenNavigationProp>()
 
     const handleContextMenu = (action: ContextActions) => {
         switch (action) {

@@ -148,6 +148,9 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/node_modules/react-native-root-toast/index.d.ts",
+    "WTKReactNative/node_modules/react-native-root-toast/package.json",
+    "WTKReactNative/UiComponents/Reusable/Track.tsx",
     "Song Key.md",
     "WTKReactNative/React Native App.md",
     "WTKReactNative/UiComponents/Reusable/SearchResults.tsx",
@@ -162,8 +165,6 @@
     "WTKReactNative/node_modules/react-native-root-toast/Example/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
     "WTKReactNative/node_modules/react-native-root-toast/Example/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
     "WTKReactNative/node_modules/react-native-root-toast/Example/android/app/src/main/java/com/reactnativeroottoast",
-    "WTKReactNative/node_modules/react-native-root-toast/Example/android/app/src/main/res/values",
-    "WTKReactNative/node_modules/react-native-root-toast/Example/android/app/src/main/res/mipmap-xxhdpi",
     "WTKReactNative/node_modules/react-native-root-toast/Example/screen-shoots.gif",
     "README.md",
     "Front-End/README.md",

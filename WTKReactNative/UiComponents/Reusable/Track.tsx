@@ -25,11 +25,11 @@ const Track = ({ track, location }: TrackProps) => {
                 <Text
                     numberOfLines={1}
                     ellipsizeMode="tail"
-                    style={tw.style('text-white font-figtreeBold text-2xl text-center')}>{track.track.name}</Text>
+                    style={tw.style('text-white font-figtreeBold')}>{track.track.name}</Text>
                 <Text
                     numberOfLines={1}
                     ellipsizeMode="tail"
-                    style={tw.style('font-figtreeBold text-2xl text-artistGray')}>{track.track.artists[0].name}</Text>
+                    style={tw.style('font-figtreeBold text-artistGray')}>{track.track.artists[0].name}</Text>
             </View>
             {showcontextMenu && (
                 <View style={tw.style(`flex flex-col gap-2 items-center absolute right-12 

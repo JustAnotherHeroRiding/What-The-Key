@@ -109,11 +109,11 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
                 <Text
                     numberOfLines={1}
                     ellipsizeMode="tail"
-                    style={tw.style(`text-white font-bold`)}>{track.name}</Text>
+                    style={tw.style(`text-white font-figtreeBold`)}>{track.name}</Text>
                 <Text
                     numberOfLines={1}
                     ellipsizeMode="tail"
-                    style={tw.style(`text-artistGray font-bold`)}> {track.artists[0].name}</Text>
+                    style={tw.style(`text-artistGray font-figtreeBold`)}> {track.artists[0].name}</Text>
             </View>
             {showcontextMenu && (
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,15 +12,18 @@ import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
 import { HomeScreenNavigationProp } from "../utils/types";
 import { SpotifyTracksSearchResult, TrackData } from "../utils/spotify-types";
-import ResultCard from "../UiComponents/Reusable/TrackResultCard";
+import ResultCard from "../UiComponents/Reusable/RandomTrack";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import tw from "../utils/tailwindRN";
 import _ from 'lodash'
 import { LinearGradient } from 'expo-linear-gradient';
 import SearchResults from "../UiComponents/Reusable/SearchResults";
+import { SessionContext } from "../utils/Context/Session/SessionContext";
+import RandomTrack from "../UiComponents/Reusable/RandomTrack";
 
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
+  const session = useContext(SessionContext)
   const [randomTrack, setRandomTrack] = useState<TrackData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -122,7 +125,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Random Track</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg`)} onPress={() => searchTracks(query)}>
+          <TouchableOpacity disabled={!query} style={tw.style(`bg-beigeCustom p-3 rounded-lg ${!query && "opacity-70"}`)} onPress={() => searchTracks(query)}>
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Search</Text>
           </TouchableOpacity>
         </View>
@@ -130,7 +133,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       {isLoading && <LoadingSpinner />}
 
       {randomTrack && (
-        < ResultCard trackData={randomTrack} setRandomTrack={setRandomTrack} />
+        <RandomTrack trackData={randomTrack} setRandomTrack={setRandomTrack} userId={session?.user.id} />
       )}
       {searchResults && (
         <SearchResults results={searchResults} />

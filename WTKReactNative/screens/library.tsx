@@ -24,6 +24,7 @@ function LibraryScreen({
   const [library, setLibrary] = useState<TrackData[] | []>([])
 
   const fetchLibraryTracks = async () => {
+    setIsLoading(true)
     try {
       const queryParams = new URLSearchParams({
         userId: session?.user.id ?? "no user",
@@ -78,48 +79,36 @@ function LibraryScreen({
   }
 
   useEffect(() => {
-    fetchLibraryTracks()
+    //fetchLibraryTracks()
 
   }, [])
 
 
   return (
-    <ScrollView contentContainerStyle={tw.style(`flex-1 flex-col items-center`)}>
-      <StatusBar style="auto" />
-
-      <LinearGradient
-        colors={["#27272a", "#52525b"]}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 0 }}
-        style={tw.style(`mx-auto flex mt-4 w-full`)}>
-        {/* This is weird here as without this scroll view here the tracks do not scroll
-        Also I cant get it to have margins above the bottom nav tab */}
-        <ScrollView>
-          <View className="flex flex-row border-b-2 items-center justify-between px-8 border-slate-500">
-            <Text style={tw.style(`text-white font-figtreeBold text-3xl 
-         py-4 text-center`)}>Library</Text>
-            <TouchableOpacity onPress={() => fetchLibraryTracks()} style={tw.style(``)}>
-              <Text style={tw.style(`text-black px-2 py-1 rounded-md bg-beigeCustom font-figtreeBold text-sm 
-        0py-4 text-center`)}>Refresh</Text>
-
-            </TouchableOpacity>
-          </View>
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            <FlatList
-              style={tw.style(`mb-20`)}
-              data={library}
-              renderItem={({ item, index }) => <Track key={index} track={item} location="library" />}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          )
-          }
-
-        </ScrollView>
-      </LinearGradient>
-    </ScrollView>
+    <LinearGradient
+      colors={["#27272a", "#52525b"]}
+      start={{ x: 1, y: 0 }}
+      end={{ x: 0, y: 0 }}
+      style={tw.style(`flex-grow w-full`)}>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <FlatList
+          style={tw.style(`flex-grow`)}
+          contentContainerStyle={tw.style(`pb-20`)}
+          data={library}
+          renderItem={({ item }) => <Track track={item} location="library" />}
+          keyExtractor={(item, index) => index.toString()}
+          ListHeaderComponent={() => (
+            <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Library</Text>
+          )}
+          refreshing={isLoading}
+          onRefresh={() => fetchLibraryTracks()}
+        />
+      )}
+    </LinearGradient>
   );
+
 }
 
 export default LibraryScreen;

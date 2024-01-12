@@ -19,18 +19,23 @@ We need to implement the same 4 pages with full feature parity
 - Add the close single result button inside of the component itself #DONE 
 - Add tracks to library from the search results #DONE 
 - Search results will be styled similar to spotify, small rows with small images of containers #DONE  
-- Add track option from the random track 
+- Add track option from the random track #DONE 
 
+## Services
+- To reduce code repetition, let's store all of the api calls into a single service
 
 ##### Image Distortion
 - Currently the left and right sides of the image are being distorted in the result card due to the image being stretched. Make sure that the image does not lose quality and is preserved
 
 ## Track component
-- Create a separate track component that will be used in the library and bin
+- Create a separate track component that will be used in the library and bin #DONE 
 - equip it with all options like delete/restore, permanent delete, show/add tabs and open the spotify link
-- Manage context menu boolean in each component separately
+- Manage context menu boolean in each component separately #DONE 
 ## Library
 - See all tracks in the user's library #DONE 
+- Flatlist to render the tracks #DONE 
+- Pull to refresh to make another request #DONE 
+	- Infinite scroll for tracks
 - Display tabs button
 - Delete the tracks to send them to the recycle bin
 
@@ -46,6 +51,7 @@ We need to implement the same 4 pages with full feature parity
 ## Adding tracks and cache
 - Adding a track works but there was a bug where no toast was displayed yet the track was added
 - Also the context menu should also close
+- The cache needs to be invalidated, it seems to be autocached
 
 ## Auth
 - Log in and manage the library of tracks using the same database as the website #DONE 

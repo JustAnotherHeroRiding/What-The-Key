@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, Button, TouchableOpacity, Image, ScrollView, Alert } from "react-native";
-import colors from "../assets/colors";
+import { View, Text, Button, TouchableOpacity, Image, ScrollView, Alert, FlatList } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { LibraryScreenNavigationProp } from "../utils/types";
 import tw from "../utils/tailwindRN";
@@ -20,6 +19,7 @@ function DeletedScreen({
   const [isLoading, setIsLoading] = useState(false);
   const session = useContext(SessionContext)
 
+  const [showcontextMenu, setShowContextMenu] = useState(false);
 
   const [recycleBin, setRecycleBin] = useState<TrackData[] | []>([])
 
@@ -91,17 +91,32 @@ function DeletedScreen({
         colors={["#27272a", "#52525b"]}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`mx-auto flex my-4 w-full`)}>
-        <Text style={tw.style(`text-white font-figtreeBold text-3xl 
-        border-b-2 border-slate-500 py-4 text-center`)}>Recycle Bin</Text>
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          recycleBin.map((track, index) => (
-            <Track key={index} track={track} location="library" />
-          ))
-        )
-        }
+        style={tw.style(`mx-auto flex mt-4 w-full`)}>
+        {/* This is weird here as without this scroll view here the tracks do not scroll
+        Also I cant get it to have margins above the bottom nav tab */}
+        <ScrollView>
+          <View className="flex flex-row border-b-2 items-center justify-between px-8 border-slate-500">
+            <Text style={tw.style(`text-white font-figtreeBold text-3xl 
+         py-4 text-center`)}>Deleted</Text>
+            <TouchableOpacity onPress={() => fetchDeletedTracks()} style={tw.style(``)}>
+              <Text style={tw.style(`text-black px-2 py-1 rounded-md bg-beigeCustom font-figtreeBold text-sm 
+        0py-4 text-center`)}>Refresh</Text>
+
+            </TouchableOpacity>
+          </View>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <FlatList
+              style={tw.style(`mb-20`)}
+              data={recycleBin}
+              renderItem={({ item, index }) => <Track key={index} track={item} location="deleted" />}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          )
+          }
+
+        </ScrollView>
       </LinearGradient>
     </ScrollView>
   );

@@ -33,20 +33,6 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
     const session = useContext(SessionContext)
     const navigation = useNavigation<AuthScreenNavigationProp>()
 
-    const handleContextMenu = (action: ContextActions) => {
-        switch (action) {
-            case ContextActions.LIBRARY:
-                addToLibrary();
-                break;
-            case ContextActions.DETAILS:
-                // Open details
-                break;
-            default:
-                break;
-        }
-        setShowContextMenu(false); // Close the context menu
-    }
-
 
     const addToLibrary = async () => {
         try {
@@ -81,11 +67,6 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
             setShowContextMenu(false)
 
         } catch (error) {
-            if (error instanceof Error) {
-                Alert.alert("Error", error.message);
-            } else {
-                Alert.alert("Error", "An unknown error occurred");
-            }
             Toast.show(error instanceof Error ? error.message : "An Unknown error occured.", {
                 duration: Toast.durations.LONG,
                 position: Toast.positions.BOTTOM,

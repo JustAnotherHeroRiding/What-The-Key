@@ -8,6 +8,7 @@ import { supabase } from "./utils/supabase";
 import { SessionProvider } from "./utils/Context/Session/SessionProvider";
 import BottomNav from "./UiComponents/BottomNav";
 import { ProfilePicProvider } from "./utils/Context/Profile/ProfileProvider";
+import { StatusBar } from "expo-status-bar";
 
 
 
@@ -54,6 +55,8 @@ export default function App() {
             style={StyleSheet.absoluteFill}
           >
             <SafeAreaView style={StyleSheet.absoluteFill}>
+              <StatusBar style="auto" />
+
               <BottomNav />
             </SafeAreaView>
           </ImageBackground>

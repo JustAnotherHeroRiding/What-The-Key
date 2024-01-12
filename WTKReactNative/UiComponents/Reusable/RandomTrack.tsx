@@ -103,7 +103,7 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
       {trackData.track.album.images[0] && (
         <Image
           source={{ uri: trackData.track.album.images[0].url }}
-          style={tw.style(`mb-4 w-[${imageSize}px] max-w-[${imageSize}px] h-[300px] rounded-md border border-cream`, { objectFit: 'contain' })}
+          style={tw.style(`mb-4 w-[300px] max-w-[${imageSize}px] h-[300px] rounded-md border border-cream`, { objectFit: 'contain' })}
           alt={trackData.track.name}
         />
       )}

@@ -125,7 +125,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Random Track</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity disabled={!query} style={tw.style(`bg-beigeCustom p-3 rounded-lg ${!query && "opacity-70"}`)} onPress={() => searchTracks(query)}>
+          <TouchableOpacity disabled={!query} style={tw.style(`bg-beigeCustom p-3 rounded-lg ${!query ? "opacity-70" : ""}`)} onPress={() => searchTracks(query)}>
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Search</Text>
           </TouchableOpacity>
         </View>

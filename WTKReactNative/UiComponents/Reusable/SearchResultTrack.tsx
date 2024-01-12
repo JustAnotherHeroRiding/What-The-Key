@@ -8,6 +8,7 @@ import { SessionContext } from "../../utils/Context/Session/SessionContext";
 import Toast from "react-native-root-toast"
 import { useNavigation } from "@react-navigation/native";
 import { AuthScreenNavigationProp } from "../../utils/types";
+import useTrackService from "../../services/TrackService";
 
 
 
@@ -33,52 +34,14 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
     const session = useContext(SessionContext)
     const navigation = useNavigation<AuthScreenNavigationProp>()
 
+    const { addTrackMut } = useTrackService()
 
-    const addToLibrary = async () => {
-        try {
-            const response = await fetch(
-                "https://what-the-key.vercel.app/api/track/addTrack", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    userId: session?.user.id,
-                    trackId: track.id,
-                    source: "library"
-                })
-            }
-            );
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.message || "Error fetching track");
-            }
-
-
-            // Display success toast
-            Toast.show('Track successfully added to the library', {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-            });
-            setShowContextMenu(false)
-
-        } catch (error) {
-            Toast.show(error instanceof Error ? error.message : "An Unknown error occured.", {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0,
-                backgroundColor: 'red'
-            });
-        } finally {
-            setIsLoading(false);
-        }
+    const addToLib = async () => {
+        addTrackMut({ trackId: track.id, source: "library" }, {
+            onSuccess: () => {
+                setShowContextMenu(false)
+            },
+        })
     }
 
     return (
@@ -102,7 +65,7 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
 
                     <View style={tw.style(`flex flex-col gap-2 items-center absolute right-12 
                     -top-20 bg-beigeCustom p-2 rounded-lg z-5`)}>
-                        <TouchableOpacity onPress={() => addToLibrary()}
+                        <TouchableOpacity onPress={() => addToLib()}
                             style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}>
                             <MaterialIcons name="library-add" size={24} color="black" />
                             <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Add to Library</Text>

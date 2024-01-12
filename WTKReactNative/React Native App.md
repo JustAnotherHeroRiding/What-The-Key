@@ -22,7 +22,17 @@ We need to implement the same 4 pages with full feature parity
 - Add track option from the random track #DONE 
 
 ## Services
-- To reduce code repetition, let's store all of the api calls into a single service
+To reduce code repetition, let's store all of the api calls into a single service 
+- Create a track service #DONE 
+- Move the add to library function to the service #DONE 
+- Inject the service in all components where we do track related calls(Track, SearchResultTrack, RandomTrack)
+
+## React query
+Implement react query to simplify all the data management
+- The add track mutation is throwing a type error despite the fetch call being correctly type
+
+## Zustand
+- If react query is not enough, use zustand
 
 ##### Image Distortion
 - Currently the left and right sides of the image are being distorted in the result card due to the image being stretched. Make sure that the image does not lose quality and is preserved
@@ -35,7 +45,7 @@ We need to implement the same 4 pages with full feature parity
 - See all tracks in the user's library #DONE 
 - Flatlist to render the tracks #DONE 
 - Pull to refresh to make another request #DONE 
-	- Infinite scroll for tracks
+- Infinite scroll for tracks
 - Display tabs button
 - Delete the tracks to send them to the recycle bin
 
@@ -49,8 +59,8 @@ We need to implement the same 4 pages with full feature parity
 - Allow users to reorder the tracks in the library/Bin
 
 ## Adding tracks and cache
-- Adding a track works but there was a bug where no toast was displayed yet the track was added
-- Also the context menu should also close
+- Adding a track works but there was a bug where no toast was displayed yet the track was added #Bug
+- Also the context menu should also close #DONE 
 - The cache needs to be invalidated, it seems to be autocached
 
 ## Auth

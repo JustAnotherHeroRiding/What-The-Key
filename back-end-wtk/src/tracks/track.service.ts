@@ -2,6 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma.service';
 import { Track, Prisma, User, TrackTab } from '@prisma/client';
 
+export interface TrackConnection {
+  id: string;
+  libraryUserId: number;
+  recycleBinUserId: number;
+}
+
 @Injectable()
 export class TrackService {
   constructor(private prisma: PrismaService) {}
@@ -73,7 +79,9 @@ export class TrackService {
       throw new Error('User not found, track will not be added.');
     }
 
-    let track = await this.prisma.track.findUnique({ where: { id: trackId } });
+    let track: TrackConnection = await this.prisma.track.findUnique({
+      where: { id: trackId },
+    });
     if (!track) {
       track = await this.prisma.track.create({
         data: {

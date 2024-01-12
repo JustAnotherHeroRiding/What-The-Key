@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Get,
   Query,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { UserService } from '../auth/user.service';
 import { TrackService } from './track.service';
@@ -63,7 +64,6 @@ export class TrackController {
   }
 
   @Post('addTrack')
-  @Post('addTrack')
   @ApiOperation({
     summary: 'Add Track',
     description: "Add a track to the user's library or recycle bin.",
@@ -75,7 +75,6 @@ export class TrackController {
     @Body('userId') userId: string,
     @Body('trackId') trackId: string,
     @Body('source') source: 'library' | 'recycleBin',
-    @Res() response: Response,
   ) {
     try {
       const track = await this.trackService.addTrackToUserLibraryOrBin(
@@ -83,12 +82,10 @@ export class TrackController {
         userId,
         source,
       );
-      response.status(HttpStatus.OK).json(track);
+      return track;
+      //response.status(HttpStatus.OK).json(track);
     } catch (error) {
-      console.log(error);
-      response
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.message });
+      throw new InternalServerErrorException(error.message);
     }
   }
 

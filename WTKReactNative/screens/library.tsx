@@ -79,7 +79,7 @@ function LibraryScreen({
   }
 
   useEffect(() => {
-    //fetchLibraryTracks()
+    fetchLibraryTracks()
 
   }, [])
 

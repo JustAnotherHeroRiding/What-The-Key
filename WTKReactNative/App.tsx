@@ -9,8 +9,9 @@ import { SessionProvider } from "./utils/Context/Session/SessionProvider";
 import BottomNav from "./UiComponents/BottomNav";
 import { ProfilePicProvider } from "./utils/Context/Profile/ProfileProvider";
 import { StatusBar } from "expo-status-bar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-
+const queryClient = new QueryClient()
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -47,22 +48,25 @@ export default function App() {
 
 
   return (
-    <SessionProvider>
-      <ProfilePicProvider>
+    <QueryClientProvider client={queryClient}>
 
-        <SafeAreaProvider>
-          <ImageBackground source={require('./assets/images/background.png')}
-            style={StyleSheet.absoluteFill}
-          >
-            <SafeAreaView style={StyleSheet.absoluteFill}>
-              <StatusBar style="auto" />
+      <SessionProvider>
+        <ProfilePicProvider>
 
-              <BottomNav />
-            </SafeAreaView>
-          </ImageBackground>
-        </SafeAreaProvider >
-      </ProfilePicProvider>
-    </SessionProvider>
+          <SafeAreaProvider>
+            <ImageBackground source={require('./assets/images/background.png')}
+              style={StyleSheet.absoluteFill}
+            >
+              <SafeAreaView style={StyleSheet.absoluteFill}>
+                <StatusBar style="auto" />
+
+                <BottomNav />
+              </SafeAreaView>
+            </ImageBackground>
+          </SafeAreaProvider >
+        </ProfilePicProvider>
+      </SessionProvider>
+    </QueryClientProvider>
 
   );
 }

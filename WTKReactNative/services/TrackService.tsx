@@ -16,6 +16,10 @@ export interface getTracksProps {
     location: dataSource
 }
 
+export interface deleteTrackProps {
+    trackId: string;
+}
+
 export interface TrackConnection {
     id: string;
     libraryUserId: number;
@@ -53,6 +57,12 @@ const useTrackService = () => {
         mutationFn: addTrack,
         onSuccess: (_, variables) => {
 
+
+            /* This needs another look
+            If a user is adding a track from the home page to the lib, then only the library should be invalidated
+            If a user is adding a track to the bin or restoring it back to the library then both need to be updated
+            I should add another optional param to the addTrack func 
+             */
             queryClient.invalidateQueries({ queryKey: ['library'] })
             queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
             Toast.show(`Track successfully added to the ${variables.source === 'recycleBin' ? "Deleted Tracks" : "Library"}`, {
@@ -112,35 +122,64 @@ const useTrackService = () => {
     }
 
 
-    const deleteTrack = async (trackId: string) => {
-        const queryParams = new URLSearchParams({
+    const deleteTrack = async ({ trackId }: deleteTrackProps) => {
+        const requestBody = {
             userId: session?.user.id ?? "no user",
             trackId: trackId,
-        }).toString();
+        }
 
         const responseTrackIds = await fetch(
-            `https://what-the-key.vercel.app/api/track/deleteTrack?${queryParams}`, {
-            method: "GET",
+            `https://what-the-key.vercel.app/api/track/deleteTrack`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            body: JSON.stringify(requestBody)
         }
         );
         const removedTrack = await responseTrackIds.json();
-
         if (!responseTrackIds.ok) {
-            throw new Error(trackIds.message || "Error fetching track ids from database");
+            throw new Error(removedTrack.message || "Error fetching track ids from database");
         }
 
         return removedTrack
 
     };
 
+    const { mutate: deleteTrackMut, isPending: isDeletingTrack } = useMutation({
+        mutationFn: deleteTrack,
+        onSuccess: (_, variables) => {
+            queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
+            Toast.show(`Track has been successfully deleted.`
+                , {
+                    duration: Toast.durations.LONG,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                });
+        },
+        onError: (error: Error) => {
+            // Handle error
+            Toast.show(error instanceof Error ? "Track could not be deleted, please try again" : "An Unknown error occured.", {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+                backgroundColor: 'red'
+            });
+        }
+    })
+
 
     return {
         addTrackMut,
         getTracks,
-        deleteTrack,
+        deleteTrackMut,
+        isDeletingTrack,
         isAddingTrack
         // Export other functions
     };

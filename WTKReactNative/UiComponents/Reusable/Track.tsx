@@ -21,18 +21,25 @@ const AddTrackTarget: { [key: string]: 'library' | 'recycleBin' } = {
 const Track = ({ track, location }: TrackProps) => {
     const [showcontextMenu, setShowContextMenu] = useState(false);
 
-    const { addTrackMut } = useTrackService()
+    const { addTrackMut, deleteTrackMut, isDeletingTrack, isAddingTrack } = useTrackService()
 
     const AddToBinOrRestore = async () => {
         addTrackMut({ trackId: track.track.id, source: AddTrackTarget[location] }, {
             onSuccess: () => {
                 setShowContextMenu(false)
-            },
-            onError: (error) => {
-                console.log(error)
             }
         })
     }
+
+    const deleteTrackPermamently = async () => {
+        deleteTrackMut({ trackId: track.track.id }, {
+            onSuccess: () => {
+                setShowContextMenu(false)
+            }
+        })
+    }
+
+
 
     return (
         <View
@@ -57,12 +64,23 @@ const Track = ({ track, location }: TrackProps) => {
                         onPress={() => AddToBinOrRestore()}
                         style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}>
                         <MaterialIcons name="library-add" size={24} color="black" />
-                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>{location === "library" ? "Delete Track" : "Restore Track"}</Text>
+                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>
+                            {location === "library" ? isAddingTrack ? "Deleting.." : "Delete Track" :
+                                isAddingTrack ? "Restoring..." : "Restore Track"}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
                         <MaterialIcons name="audiotrack" size={24} color="black" />
                         <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Open Details</Text>
                     </TouchableOpacity>
+                    {location === "recycleBin" && (
+
+                        <TouchableOpacity
+                            onPress={() => deleteTrackPermamently()}
+                            style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
+                            <MaterialIcons name="delete" size={24} color="black" />
+                            <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Permanenty Delete</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
             )}
             <TouchableOpacity onPress={() => setShowContextMenu(!showcontextMenu)}>

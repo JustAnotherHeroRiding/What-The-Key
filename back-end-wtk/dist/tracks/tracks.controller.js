@@ -23,15 +23,13 @@ let TrackController = class TrackController {
         this.userService = userService;
         this.trackService = trackService;
     }
-    async getTracks(userId, source, response) {
+    async getTracks(userId, source) {
         try {
             const tracks = await this.trackService.getUserTracks(userId, source);
-            response.status(common_1.HttpStatus.OK).json(tracks);
+            return tracks;
         }
         catch (error) {
-            response
-                .status(common_1.HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({ message: error.message });
+            throw new common_1.InternalServerErrorException(error.message);
         }
     }
     async addTrack(userId, trackId, source) {
@@ -98,9 +96,8 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Query)('userId')),
     __param(1, (0, common_1.Query)('source')),
-    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, Object]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "getTracks", null);
 __decorate([

@@ -52,7 +52,7 @@ function LibraryScreen({
         <FlatList
           style={tw.style(`flex-grow`)}
           contentContainerStyle={tw.style(`pb-20`)}
-          data={library}
+          data={library as TrackData[]}
           renderItem={({ item }) => <Track track={item} location="library" />}
           keyExtractor={(item, index) => index.toString()}
           ListHeaderComponent={() => (

@@ -5,7 +5,11 @@ export declare class TrackController {
     private readonly userService;
     private readonly trackService;
     constructor(userService: UserService, trackService: TrackService);
-    getTracks(userId: string, source: 'library' | 'recycleBin', response: Response): Promise<void>;
+    getTracks(userId: string, source: 'library' | 'recycleBin'): Promise<{
+        id: string;
+        libraryUserId: number;
+        recycleBinUserId: number;
+    }[]>;
     addTrack(userId: string, trackId: string, source: 'library' | 'recycleBin'): Promise<{
         id: string;
         libraryUserId: number;

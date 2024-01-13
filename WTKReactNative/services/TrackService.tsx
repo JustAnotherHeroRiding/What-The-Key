@@ -88,7 +88,7 @@ const useTrackService = () => {
         }
     })
 
-    const getTracks = async ({ location }: getTracksProps): Promise<TrackData[]> => {
+    const getTracks = async ({ location }: getTracksProps): Promise<TrackData[] | Error> => {
         const queryParams = new URLSearchParams({
             userId: session?.user.id ?? "no user",
             source: location
@@ -137,21 +137,21 @@ const useTrackService = () => {
             body: JSON.stringify(requestBody)
         }
         );
-        const removedTrack = await deleteRequest.json();
-        console.log(removedTrack)
         if (!deleteRequest.ok) {
-            throw new Error(removedTrack.message || "Error fetching track ids from database");
+            // Handle error response
+            const errorResponse = await deleteRequest.json();
+            throw new Error(errorResponse.message || "Error in deleting the track");
         }
 
-        return removedTrack
+        // Parse the JSON response if the request was successful
+        const deletedTrackInfo = await deleteRequest.json();
+        return deletedTrackInfo;
 
     };
 
     const { mutate: deleteTrackMut, isPending: isDeletingTrack } = useMutation({
         mutationFn: deleteTrack,
         onSuccess: (_, variables) => {
-            queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
-            console.log("deleting track")
             Toast.show(`Track has been successfully deleted.`
                 , {
                     duration: Toast.durations.LONG,
@@ -161,10 +161,10 @@ const useTrackService = () => {
                     hideOnPress: true,
                     delay: 0,
                 });
+            queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
         },
         onError: (error: Error) => {
             // Handle error
-            console.log(error)
             Toast.show(error instanceof Error ? `Track could not be deleted, please try again` : "An Unknown error occured.", {
                 duration: Toast.durations.LONG,
                 position: Toast.positions.BOTTOM,

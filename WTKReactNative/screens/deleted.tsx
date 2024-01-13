@@ -40,7 +40,7 @@ function DeletedScreen({
     });
   }
 
-
+  console.log(deleted)
   return (
     <LinearGradient
       colors={["#27272a", "#52525b"]}
@@ -50,18 +50,25 @@ function DeletedScreen({
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <FlatList
-          style={tw.style(`flex-grow`)}
-          contentContainerStyle={tw.style(`pb-20`)}
-          data={deleted}
-          renderItem={({ item }) => <Track track={item} location="recycleBin" />}
-          keyExtractor={(item, index) => index.toString()}
-          ListHeaderComponent={() => (
+        deleted?.statusCode === 500 ? (
+          <>
             <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Deleted</Text>
-          )}
-          refreshing={isLoading}
-          onRefresh={() => refetch()}
-        />
+            <Text style={tw.style(`text-white font-figtreeBold text-3xl py-4 text-center`)}>There are no deleted tracks</Text>
+          </>
+        ) : (
+          <FlatList
+            style={tw.style(`flex-grow`)}
+            contentContainerStyle={tw.style(`pb-20`)}
+            data={deleted as TrackData[]}
+            renderItem={({ item }) => <Track track={item} location="recycleBin" />}
+            keyExtractor={(item, index) => index.toString()}
+            ListHeaderComponent={() => (
+              <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Deleted</Text>
+            )}
+            refreshing={isLoading}
+            onRefresh={() => refetch()}
+          />
+        )
       )}
     </LinearGradient>
   );

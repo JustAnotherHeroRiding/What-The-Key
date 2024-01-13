@@ -51,15 +51,12 @@ export class TrackController {
   async getTracks(
     @Query('userId') userId: string,
     @Query('source') source: 'library' | 'recycleBin',
-    @Res() response: Response,
   ) {
     try {
       const tracks = await this.trackService.getUserTracks(userId, source);
-      response.status(HttpStatus.OK).json(tracks);
+      return tracks;
     } catch (error) {
-      response
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.message });
+      throw new InternalServerErrorException(error.message);
     }
   }
 

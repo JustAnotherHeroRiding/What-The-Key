@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -18,9 +18,10 @@ import Toast from "react-native-root-toast";
 
 interface RandomTrackProps {
   trackData: TrackData;
-  setRandomTrack: React.Dispatch<React.SetStateAction<TrackData | null>>
+  setRandomTrack: () => void; // Updated type
   userId?: string
 }
+
 const screen = Dimensions.get("window");
 const imageSize = screen.width * 0.85; // 90% of screen width
 
@@ -71,7 +72,7 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
       <TouchableOpacity style={tw.style(`border border-cream flex 
           justify-center rounded-full absolute top-2 z-50 right-2`)}
         onPress={() => {
-          setRandomTrack(null)
+          setRandomTrack()
         }} >
         <Entypo name="cross" size={24} color="white" />
       </TouchableOpacity>

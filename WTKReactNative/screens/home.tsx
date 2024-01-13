@@ -12,7 +12,6 @@ import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
 import { HomeScreenNavigationProp } from "../utils/types";
 import { SpotifyTracksSearchResult, TrackData } from "../utils/spotify-types";
-import ResultCard from "../UiComponents/Reusable/RandomTrack";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import tw from "../utils/tailwindRN";
 import _ from 'lodash'
@@ -21,7 +20,7 @@ import SearchResults from "../UiComponents/Reusable/SearchResults";
 import { SessionContext } from "../utils/Context/Session/SessionContext";
 import RandomTrack from "../UiComponents/Reusable/RandomTrack";
 import useSpotifyService from "../services/SpotifyService";
-import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { useQueryClient, useQuery, keepPreviousData } from "@tanstack/react-query";
 
 
 
@@ -35,40 +34,40 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const { searchTracks, fetchRandomTrack } = useSpotifyService();
   const queryClient = useQueryClient();
 
-  const { data: randomTrack, isLoading: isRandomTrackLoading, error: randomTrackError, refetch: GetRandomTrack } = useQuery(
+  const { data: randomTrack, isFetching: isRandomTrackLoading, error: randomTrackError, refetch: GetRandomTrack } = useQuery(
     {
       queryKey: ['randomTrack'],
       queryFn: () => fetchRandomTrack(),
-      enabled: false
+      enabled: false,
     }
   );
 
-  const { data: searchResults, isLoading: isSearchLoading, error: searchError } = useQuery({
+  const { data: searchResults, isFetching: isSearchLoading, error: searchError, refetch: getSearchResults } = useQuery({
     queryKey: ['searchTracks', query],
     queryFn: () => searchTracks({ queryString: query }),
-    enabled: query.length > 0,
+    enabled: false,
+    staleTime: 1000,
+    placeholderData: keepPreviousData
+
   },
   );
-  console.log(randomTrack)
 
-  const debouncedSearch = useCallback(_.debounce((newQuery) => {
-    queryClient.refetchQueries(['searchTracks', newQuery]);
+  const debouncedSearch = useCallback(_.debounce(() => {
+    getSearchResults()
   }, 500), [queryClient]);
 
   useEffect(() => {
     if (query) {
-      debouncedSearch(query);
+      debouncedSearch();
+    } else {
+      queryClient.setQueryData(['searchTracks', query], null);
     }
     return () => debouncedSearch.cancel();
   }, [query, debouncedSearch]);
 
-  // Handle Loading and Error States
-  if (isRandomTrackLoading || isSearchLoading) {
-    return <LoadingSpinner />;
-  }
 
   if (randomTrackError || searchError) {
-    return <div>Error: {(randomTrackError || searchError)?.message}</div>;
+    return <View>Error: {(randomTrackError || searchError)?.message}</View>;
   }
 
 
@@ -98,21 +97,23 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Random Track</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity disabled={!query} style={tw.style(`bg-beigeCustom p-3 rounded-lg ${!query ? "opacity-70" : ""}`)} onPress={() => searchTracks({ queryString: query })}>
+          <TouchableOpacity disabled={!query}
+            style={tw.style(`bg-beigeCustom p-3 rounded-lg ${!query ? "opacity-70" : ""}`)} onPress={() => getSearchResults()}>
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Search</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
-      {isLoading && <LoadingSpinner />}
+      {(isRandomTrackLoading || isSearchLoading) && <LoadingSpinner />}
 
       {randomTrack && (
         <RandomTrack trackData={randomTrack}
-         setRandomTrack={() => queryClient.setQueryData(['randomTrack'], null)}
+          setRandomTrack={() => queryClient.setQueryData<TrackData | null>(['randomTrack'], null)}
+
           userId={session?.user.id} />
       )}
-      {/*  {searchResults && (
+      {searchResults && (
         <SearchResults results={searchResults as SpotifyTracksSearchResult} />
-      )} */}
+      )}
     </ScrollView >
   );
 }

@@ -27,7 +27,8 @@ To reduce code repetition, let's store all of the api calls into a single servic
 - Move the add to library function to the service #DONE 
 - Inject the service in all components where we do track related calls(Track, SearchResultTrack, RandomTrack) #DONE 
 - Create a service for the spotify endpoint requests #DONE 
-- Create two queries for searching tracks and getting a random track
+- Create two queries for searching tracks and getting a random track #DONE 
+- Implement the functions from the service in the home page #DONE 
 
 ## React query
 Implement react query to simplify all the data management

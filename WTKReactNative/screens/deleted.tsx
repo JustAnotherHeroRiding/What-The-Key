@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, Button, TouchableOpacity, Image, ScrollView, Alert, FlatList } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { DeletedScreenNavigationProp, LibraryScreenNavigationProp } from "../utils/types";
+import { DeletedScreenNavigationProp } from "../utils/types";
 import tw from "../utils/tailwindRN";
 import { SessionContext } from "../utils/Context/Session/SessionContext";
 import Toast from "react-native-root-toast";
@@ -11,6 +10,10 @@ import Track from "../UiComponents/Reusable/Track";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import useTrackService from "../services/TrackService";
 import { useQuery } from "@tanstack/react-query";
+import { MaterialIcons } from '@expo/vector-icons';
+import colors from "../assets/colors";
+import { isApiErrorResponse } from "../utils/typeGuards";
+
 
 
 function DeletedScreen({
@@ -28,6 +31,14 @@ function DeletedScreen({
   const { data: deleted, isLoading, error, refetch } =
     useQuery({ queryKey: ["recycleBin"], queryFn: () => getTracks({ location: "recycleBin" }) })
 
+  const [isRefetching, setIsRefetching] = useState(false);
+
+  const handleRefetch = async () => {
+    setIsRefetching(true)
+    await refetch()
+    setIsRefetching(false)
+  }
+
   if (error) {
     Toast.show(error instanceof Error ? error.message : "An Unknown error occured.", {
       duration: Toast.durations.LONG,
@@ -40,7 +51,6 @@ function DeletedScreen({
     });
   }
 
-  console.log(deleted)
   return (
     <LinearGradient
       colors={["#27272a", "#52525b"]}
@@ -50,11 +60,25 @@ function DeletedScreen({
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        deleted?.statusCode === 500 ? (
-          <>
+        isApiErrorResponse(deleted) ? (
+          <View>
             <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Deleted</Text>
             <Text style={tw.style(`text-white font-figtreeBold text-3xl py-4 text-center`)}>There are no deleted tracks</Text>
-          </>
+
+            <TouchableOpacity
+              onPress={() => handleRefetch()}
+              style={tw.style(`py-3 px-3 rounded-md gap-1 border-cream border flex items-center flex-row mx-auto`)}>
+              <MaterialIcons name="refresh" size={24} color={colors.beigeCustom} />
+              <Text style={tw.style(`text-white text-xl`, { fontFamily: "figtree-bold" })}>Refresh</Text>
+            </TouchableOpacity>
+            {isRefetching &&
+              <>
+                <Text style={tw.style(`text-white text-center`, { fontFamily: "figtree-bold" })}>Refreshing...</Text>
+                <LoadingSpinner />
+              </>
+            }
+
+          </View>
         ) : (
           <FlatList
             style={tw.style(`flex-grow`)}

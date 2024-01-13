@@ -148,6 +148,8 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/utils/typeGuards.ts",
+    "WTKReactNative/utils/typeGuard.ts",
     "back-end-wtk/dist/main.d.ts",
     "back-end-wtk/dist/main.js",
     "back-end-wtk/dist/main.js.map",
@@ -157,8 +159,6 @@
     "back-end-wtk/dist/utils/spotify-types.js.map",
     "back-end-wtk/dist/utils/spotify-types.d.ts",
     "back-end-wtk/dist/utils/spotify-types.js",
-    "back-end-wtk/dist/utils",
-    "back-end-wtk/dist/spotify/spotify.service.js.map",
     "WTKReactNative/node_modules/eslint/README.md",
     "WTKReactNative/node_modules/@typescript-eslint/typescript-estree/README.md",
     "WTKReactNative/node_modules/ajv/lib/dotjs/README.md",

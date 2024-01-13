@@ -26,6 +26,11 @@ export interface TrackConnection {
     recycleBinUserId: number;
 }
 
+
+export interface ApiErrorResponse {
+    message: string;
+    statusCode: number
+}
 const useTrackService = () => {
     const session = useContext(SessionContext);
     const queryClient = useQueryClient()
@@ -88,7 +93,7 @@ const useTrackService = () => {
         }
     })
 
-    const getTracks = async ({ location }: getTracksProps): Promise<TrackData[] | Error> => {
+    const getTracks = async ({ location }: getTracksProps): Promise<TrackData[] | ApiErrorResponse> => {
         const queryParams = new URLSearchParams({
             userId: session?.user.id ?? "no user",
             source: location

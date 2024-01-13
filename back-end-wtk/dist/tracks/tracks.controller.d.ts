@@ -11,7 +11,7 @@ export declare class TrackController {
         libraryUserId: number;
         recycleBinUserId: number;
     }>;
-    deleteTrack(userId: string, trackId: string): Promise<void>;
+    deleteTrack(userId: string, trackId: string): Promise<import(".prisma/client").Prisma.BatchPayload>;
     addTabs(trackId: string, userId: string, tabUrl: string, response: Response): Promise<void>;
     getTabs(trackId: string, userId: string, response: Response): Promise<void>;
 }

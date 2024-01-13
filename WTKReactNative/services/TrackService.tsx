@@ -128,7 +128,7 @@ const useTrackService = () => {
             trackId: trackId,
         }
 
-        const responseTrackIds = await fetch(
+        const deleteRequest = await fetch(
             `https://what-the-key.vercel.app/api/track/deleteTrack`, {
             method: "POST",
             headers: {
@@ -137,8 +137,9 @@ const useTrackService = () => {
             body: JSON.stringify(requestBody)
         }
         );
-        const removedTrack = await responseTrackIds.json();
-        if (!responseTrackIds.ok) {
+        const removedTrack = await deleteRequest.json();
+        console.log(removedTrack)
+        if (!deleteRequest.ok) {
             throw new Error(removedTrack.message || "Error fetching track ids from database");
         }
 
@@ -150,6 +151,7 @@ const useTrackService = () => {
         mutationFn: deleteTrack,
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
+            console.log("deleting track")
             Toast.show(`Track has been successfully deleted.`
                 , {
                     duration: Toast.durations.LONG,
@@ -162,7 +164,8 @@ const useTrackService = () => {
         },
         onError: (error: Error) => {
             // Handle error
-            Toast.show(error instanceof Error ? "Track could not be deleted, please try again" : "An Unknown error occured.", {
+            console.log(error)
+            Toast.show(error instanceof Error ? `Track could not be deleted, please try again` : "An Unknown error occured.", {
                 duration: Toast.durations.LONG,
                 position: Toast.positions.BOTTOM,
                 shadow: true,

@@ -69,9 +69,10 @@ let TrackService = class TrackService {
         if (!user) {
             throw new Error('User not found, cannot delete track.');
         }
-        await this.prisma.recycleBinTrack.deleteMany({
+        const deletedTrack = await this.prisma.recycleBinTrack.deleteMany({
             where: { trackId: trackId, userId: user.id },
         });
+        return deletedTrack;
     }
     async getUserTracks(userId, source) {
         const user = await this.ensureUserExists(userId);

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma.service';
-import { Track, User, TrackTab } from '@prisma/client';
+import { Track, User, TrackTab, Prisma } from '@prisma/client';
 
 export interface TrackConnection {
   id: string;
@@ -72,16 +72,21 @@ export class TrackService {
     return track;
   }
 
-  async deleteTrackPermanently(trackId: string, userId: string): Promise<void> {
+  async deleteTrackPermanently(
+    trackId: string,
+    userId: string,
+  ): Promise<Prisma.BatchPayload> {
     const user = await this.ensureUserExists(userId);
 
     if (!user) {
       throw new Error('User not found, cannot delete track.');
     }
 
-    await this.prisma.recycleBinTrack.deleteMany({
+    const deletedTrack = await this.prisma.recycleBinTrack.deleteMany({
       where: { trackId: trackId, userId: user.id },
     });
+
+    return deletedTrack;
 
     //If I want to delete the tab when the user removed the track.
     //It's nice that if a user adds the track again, the tab will remain.

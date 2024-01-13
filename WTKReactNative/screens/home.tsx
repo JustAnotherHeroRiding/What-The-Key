@@ -20,83 +20,56 @@ import { LinearGradient } from 'expo-linear-gradient';
 import SearchResults from "../UiComponents/Reusable/SearchResults";
 import { SessionContext } from "../utils/Context/Session/SessionContext";
 import RandomTrack from "../UiComponents/Reusable/RandomTrack";
+import useSpotifyService from "../services/SpotifyService";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
+
 
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const session = useContext(SessionContext)
-  const [randomTrack, setRandomTrack] = useState<TrackData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
 
   const [query, setQuery] = useState("");
-  const [searchResults, setSearchResuls] = useState<SpotifyTracksSearchResult | null>(null)
 
+  const { searchTracks, fetchRandomTrack } = useSpotifyService();
+  const queryClient = useQueryClient();
 
-
-
-  const searchTracks = async (searchQuery: string) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        `https://what-the-key.vercel.app/api/spotify/search?query=${searchQuery}`
-      );
-
-      const data = await response.json()
-
-      setSearchResuls(data);
-
-
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert("Error", error.message);
-      } else {
-        Alert.alert("Error", "An unknown error occured")
-      }
-    } finally {
-      setIsLoading(false);
+  const { data: randomTrack, isLoading: isRandomTrackLoading, error: randomTrackError, refetch: GetRandomTrack } = useQuery(
+    {
+      queryKey: ['randomTrack'],
+      queryFn: () => fetchRandomTrack(),
+      enabled: false
     }
-  }
-  const debouncedSearch = useCallback(_.debounce(searchTracks, 500), []);
+  );
+
+  const { data: searchResults, isLoading: isSearchLoading, error: searchError } = useQuery({
+    queryKey: ['searchTracks', query],
+    queryFn: () => searchTracks({ queryString: query }),
+    enabled: query.length > 0,
+  },
+  );
+  console.log(randomTrack)
+
+  const debouncedSearch = useCallback(_.debounce((newQuery) => {
+    queryClient.refetchQueries(['searchTracks', newQuery]);
+  }, 500), [queryClient]);
 
   useEffect(() => {
     if (query) {
-      debouncedSearch(query)
+      debouncedSearch(query);
     }
-    return () => debouncedSearch.cancel()
-  }, [query, debouncedSearch])
+    return () => debouncedSearch.cancel();
+  }, [query, debouncedSearch]);
 
-  const fetchRandomTrack = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        "https://what-the-key.vercel.app/api/spotify/random-guitar-track"
-      );
-      const data = await response.json();
+  // Handle Loading and Error States
+  if (isRandomTrackLoading || isSearchLoading) {
+    return <LoadingSpinner />;
+  }
 
-      if (!response.ok) {
-        throw new Error(data.message || "Error fetching track");
-      }
-      const responseExtended = await fetch(
-        `https://what-the-key.vercel.app/api/spotify/track/${data.tracks[0].id}`
-      );
-      const dataExtended = await responseExtended.json();
-
-      if (!responseExtended.ok) {
-        throw new Error(dataExtended.message || "Error fetching track");
-      }
-
-      setRandomTrack(dataExtended);
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert("Error", error.message);
-      } else {
-        Alert.alert("Error", "An unknown error occurred");
-      }
-    } finally {
-      setIsLoading(false); // End loading
-    }
-  };
-
+  if (randomTrackError || searchError) {
+    return <div>Error: {(randomTrackError || searchError)?.message}</div>;
+  }
 
 
   return (
@@ -121,11 +94,11 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
           }
         />
         <View style={tw.style(`flex flex-row justify-between w-full content-center`)}>
-          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg`)} onPress={fetchRandomTrack}>
+          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg`)} onPress={() => GetRandomTrack()}>
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Random Track</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity disabled={!query} style={tw.style(`bg-beigeCustom p-3 rounded-lg ${!query ? "opacity-70" : ""}`)} onPress={() => searchTracks(query)}>
+          <TouchableOpacity disabled={!query} style={tw.style(`bg-beigeCustom p-3 rounded-lg ${!query ? "opacity-70" : ""}`)} onPress={() => searchTracks({ queryString: query })}>
             <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Search</Text>
           </TouchableOpacity>
         </View>
@@ -133,11 +106,13 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       {isLoading && <LoadingSpinner />}
 
       {randomTrack && (
-        <RandomTrack trackData={randomTrack} setRandomTrack={setRandomTrack} userId={session?.user.id} />
+        <RandomTrack trackData={randomTrack}
+         setRandomTrack={() => queryClient.setQueryData(['randomTrack'], null)}
+          userId={session?.user.id} />
       )}
-      {searchResults && (
-        <SearchResults results={searchResults} />
-      )}
+      {/*  {searchResults && (
+        <SearchResults results={searchResults as SpotifyTracksSearchResult} />
+      )} */}
     </ScrollView >
   );
 }

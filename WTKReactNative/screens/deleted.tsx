@@ -21,10 +21,6 @@ function DeletedScreen({
 }: {
   navigation: DeletedScreenNavigationProp;
 }) {
-  const session = useContext(SessionContext)
-
-  const [showcontextMenu, setShowContextMenu] = useState(false);
-
 
   const { getTracks } = useTrackService()
 

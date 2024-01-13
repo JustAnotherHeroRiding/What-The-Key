@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Button, TouchableOpacity, Image, ScrollView, Alert, FlatList } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import { LibraryScreenNavigationProp } from "../utils/types";
 import tw from "../utils/tailwindRN";
 import { SessionContext } from "../utils/Context/Session/SessionContext";
@@ -11,6 +10,7 @@ import Track from "../UiComponents/Reusable/Track";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import useTrackService from "../services/TrackService";
 import { useQuery } from "@tanstack/react-query";
+import { isApiErrorResponse } from "../utils/typeGuards";
 
 
 function LibraryScreen({
@@ -18,10 +18,6 @@ function LibraryScreen({
 }: {
   navigation: LibraryScreenNavigationProp;
 }) {
-  const session = useContext(SessionContext)
-
-  const [showcontextMenu, setShowContextMenu] = useState(false);
-
 
   const { getTracks } = useTrackService()
 
@@ -49,18 +45,26 @@ function LibraryScreen({
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <FlatList
-          style={tw.style(`flex-grow`)}
-          contentContainerStyle={tw.style(`pb-20`)}
-          data={library as TrackData[]}
-          renderItem={({ item }) => <Track track={item} location="library" />}
-          keyExtractor={(item, index) => index.toString()}
-          ListHeaderComponent={() => (
+        isApiErrorResponse(library) ? (
+          <View>
             <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Library</Text>
-          )}
-          refreshing={isLoading}
-          onRefresh={() => refetch()}
-        />
+            <Text style={tw.style(`text-white font-figtreeBold text-3xl py-4 text-center`)}>Your library is empty</Text>
+
+          </View>
+        ) : (
+          <FlatList
+            style={tw.style(`flex-grow`)}
+            contentContainerStyle={tw.style(`pb-20`)}
+            data={library as TrackData[]}
+            renderItem={({ item }) => <Track track={item} location="recycleBin" />}
+            keyExtractor={(item, index) => index.toString()}
+            ListHeaderComponent={() => (
+              <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Deleted</Text>
+            )}
+            refreshing={isLoading}
+            onRefresh={() => refetch()}
+          />
+        )
       )}
     </LinearGradient>
   );

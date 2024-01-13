@@ -25,11 +25,19 @@ We need to implement the same 4 pages with full feature parity
 To reduce code repetition, let's store all of the api calls into a single service 
 - Create a track service #DONE 
 - Move the add to library function to the service #DONE 
-- Inject the service in all components where we do track related calls(Track, SearchResultTrack, RandomTrack)
+- Inject the service in all components where we do track related calls(Track, SearchResultTrack, RandomTrack) #DONE 
+- Create a service for the spotify endpoint requests #DONE 
+- Create two queries for searching tracks and getting a random track
 
 ## React query
 Implement react query to simplify all the data management
-- The add track mutation is throwing a type error despite the fetch call being correctly type
+- The add track mutation is throwing a type error despite the fetch call being correctly type #DONE 
+- Get tracks query #DONE 
+- Permanently delete track mutation #DONE 
+
+
+## Rate Limiting
+- Currently users can spam the refresh button, limit it so that this is not possible
 
 ## Zustand
 - If react query is not enough, use zustand
@@ -45,15 +53,21 @@ Implement react query to simplify all the data management
 - See all tracks in the user's library #DONE 
 - Flatlist to render the tracks #DONE 
 - Pull to refresh to make another request #DONE 
+- Delete the tracks to send them to the recycle bin #DONE 
 - Infinite scroll for tracks
-- Display tabs button
-- Delete the tracks to send them to the recycle bin
+- Display tabs in the context menu
+
+## Single track page
+- This will have to be a new screen
+- Additional option in the context menu on tracks in the library
+- Here we will display much more info about a track than before, for motivation let's use the notes in the main file
 
 
 ## Deleted 
 - See all tracks added to the recycle bin #DONE 
-- Display tabs button
-- Restore tracks to library or delete them permanently
+- Restore tracks to library or delete them permanently #DONE 
+- Display tabs in the context menu
+
 
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin
@@ -61,7 +75,7 @@ Implement react query to simplify all the data management
 ## Adding tracks and cache
 - Adding a track works but there was a bug where no toast was displayed yet the track was added #Bug
 - Also the context menu should also close #DONE 
-- The cache needs to be invalidated, it seems to be autocached
+- The cache needs to be invalidated, it seems to be autocached #DONE #ReactQuery
 
 ## Auth
 - Log in and manage the library of tracks using the same database as the website #DONE 

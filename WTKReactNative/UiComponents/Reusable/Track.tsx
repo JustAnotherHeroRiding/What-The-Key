@@ -57,7 +57,7 @@ const Track = ({ track, location }: TrackProps) => {
                         onPress={() => AddToBinOrRestore()}
                         style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}>
                         <MaterialIcons name="library-add" size={24} color="black" />
-                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>{location === "library" ? "Delete Track" : "Restore"}</Text>
+                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>{location === "library" ? "Delete Track" : "Restore Track"}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
                         <MaterialIcons name="audiotrack" size={24} color="black" />

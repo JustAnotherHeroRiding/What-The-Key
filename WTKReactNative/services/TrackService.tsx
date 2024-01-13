@@ -52,18 +52,9 @@ const useTrackService = () => {
     const { mutate: addTrackMut, isPending: isAddingTrack } = useMutation({
         mutationFn: addTrack,
         onSuccess: (_, variables) => {
-            let keysToInvalidate = [];
 
-            if (variables.source === "recycleBin") {
-                // If added to recycleBin, invalidate recycleBin and library as both lists need to be updated
-                keysToInvalidate = ["recycleBin", "library"];
-            } else {
-                // If added elsewhere (like library), invalidate that specific cache
-                keysToInvalidate = [variables.source];
-            }
-            keysToInvalidate.forEach(key => {
-                queryClient.invalidateQueries({ queryKey: [key] });
-            });
+            queryClient.invalidateQueries({ queryKey: ['library'] })
+            queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
             Toast.show(`Track successfully added to the ${variables.source === 'recycleBin' ? "Deleted Tracks" : "Library"}`, {
                 duration: Toast.durations.LONG,
                 position: Toast.positions.BOTTOM,

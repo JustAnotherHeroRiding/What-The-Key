@@ -54,7 +54,7 @@ function DeletedScreen({
           style={tw.style(`flex-grow`)}
           contentContainerStyle={tw.style(`pb-20`)}
           data={deleted}
-          renderItem={({ item }) => <Track track={item} location="library" />}
+          renderItem={({ item }) => <Track track={item} location="recycleBin" />}
           keyExtractor={(item, index) => index.toString()}
           ListHeaderComponent={() => (
             <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Deleted</Text>

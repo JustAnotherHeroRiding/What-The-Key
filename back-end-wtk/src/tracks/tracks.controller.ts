@@ -100,18 +100,15 @@ export class TrackController {
   async deleteTrack(
     @Body('userId') userId: string,
     @Body('trackId') trackId: string,
-    @Res() response: Response,
   ) {
     try {
       const track = await this.trackService.deleteTrackPermanently(
         trackId,
         userId,
       );
-      response.status(HttpStatus.OK).json(track);
+      return track;
     } catch (error) {
-      response
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.message });
+      throw new InternalServerErrorException(error.message);
     }
   }
 

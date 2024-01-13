@@ -5,15 +5,34 @@ import tw from "../../utils/tailwindRN";
 import { useState } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import useTrackService from "../../services/TrackService";
 
 
 interface TrackProps {
     track: TrackData;
-    location: 'library' | 'deleted';
+    location: 'library' | 'recycleBin';
 }
+
+const AddTrackTarget: { [key: string]: 'library' | 'recycleBin' } = {
+    library: 'recycleBin',
+    recycleBin: 'library'
+};
 
 const Track = ({ track, location }: TrackProps) => {
     const [showcontextMenu, setShowContextMenu] = useState(false);
+
+    const { addTrackMut } = useTrackService()
+
+    const AddToBinOrRestore = async () => {
+        addTrackMut({ trackId: track.track.id, source: AddTrackTarget[location] }, {
+            onSuccess: () => {
+                setShowContextMenu(false)
+            },
+            onError: (error) => {
+                console.log(error)
+            }
+        })
+    }
 
     return (
         <View
@@ -35,9 +54,10 @@ const Track = ({ track, location }: TrackProps) => {
                 <View style={tw.style(`flex flex-col gap-2 items-center absolute right-12 
                 -top-20 bg-beigeCustom p-2 rounded-lg z-5`)}>
                     <TouchableOpacity
+                        onPress={() => AddToBinOrRestore()}
                         style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}>
                         <MaterialIcons name="library-add" size={24} color="black" />
-                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Add to Library</Text>
+                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>{location === "library" ? "Delete Track" : "Restore"}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
                         <MaterialIcons name="audiotrack" size={24} color="black" />

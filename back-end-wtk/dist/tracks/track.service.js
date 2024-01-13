@@ -16,33 +16,6 @@ let TrackService = class TrackService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async track(trackWhereUniqueInput) {
-        return this.prisma.track.findUnique({
-            where: trackWhereUniqueInput,
-        });
-    }
-    async tracks(params) {
-        const { skip, take, cursor, where, orderBy } = params;
-        return this.prisma.track.findMany({
-            skip,
-            take,
-            cursor,
-            where,
-            orderBy,
-        });
-    }
-    async createTrack(data) {
-        return this.prisma.track.create({
-            data,
-        });
-    }
-    async updateTrack(params) {
-        const { data, where } = params;
-        return this.prisma.track.update({
-            data,
-            where,
-        });
-    }
     async ensureUserExists(profileId) {
         let user = await this.prisma.user.findUnique({
             where: { profileId: profileId },
@@ -59,7 +32,9 @@ let TrackService = class TrackService {
         if (!user) {
             throw new Error('User not found, track will not be added.');
         }
-        let track = await this.prisma.track.findUnique({ where: { id: trackId } });
+        let track = await this.prisma.track.findUnique({
+            where: { id: trackId },
+        });
         if (!track) {
             track = await this.prisma.track.create({
                 data: {

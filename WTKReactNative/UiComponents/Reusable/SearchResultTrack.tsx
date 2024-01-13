@@ -16,16 +16,6 @@ interface SearchResultTrackProps {
     track: SpotifyItem
 }
 
-interface AddTrackBody {
-    userId: string;
-    trackId: string;
-    source: 'library' | 'recycleBin'
-}
-
-enum ContextActions {
-    LIBRARY = "addToLibrary",
-    DETAILS = "openDetails"
-}
 
 const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
     const [showcontextMenu, setShowContextMenu] = useState(false);

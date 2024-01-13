@@ -9,6 +9,8 @@ import { TrackData } from "../utils/spotify-types";
 import { LinearGradient } from "expo-linear-gradient";
 import Track from "../UiComponents/Reusable/Track";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
+import useTrackService from "../services/TrackService";
+import { useQuery } from "@tanstack/react-query";
 
 
 function LibraryScreen({
@@ -16,72 +18,26 @@ function LibraryScreen({
 }: {
   navigation: LibraryScreenNavigationProp;
 }) {
-  const [isLoading, setIsLoading] = useState(false);
   const session = useContext(SessionContext)
 
   const [showcontextMenu, setShowContextMenu] = useState(false);
 
-  const [library, setLibrary] = useState<TrackData[] | []>([])
 
-  const fetchLibraryTracks = async () => {
-    setIsLoading(true)
-    try {
-      const queryParams = new URLSearchParams({
-        userId: session?.user.id ?? "no user",
-        source: "library"
-      }).toString();
+  const { getTracks } = useTrackService()
 
-      const responseTrackIds = await fetch(
-        `https://what-the-key.vercel.app/api/track/getTracks?${queryParams}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-      );
-      const trackIds = await responseTrackIds.json();
+  const { data: library, isLoading, error, refetch } = useQuery({ queryKey: ["library"], queryFn: () => getTracks({ location: "library" }) })
 
-      if (!responseTrackIds.ok) {
-        throw new Error(trackIds.message || "Error fetching track ids from database");
-      }
-
-      const trackIdsJoined = trackIds.map((track: { id: any; }) => track.id).join(',');
-
-      const spotifyResponse = await fetch(`https://what-the-key.vercel.app/api/spotify/tracks?ids=${trackIdsJoined}
-      `, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      const libraryData = await spotifyResponse.json()
-      setLibrary(libraryData);
-
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert("Error", error.message);
-      } else {
-        Alert.alert("Error", "An unknown error occurred");
-      }
-
-      Toast.show(error instanceof Error ? error.message : "An Unknown error occured.", {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-        backgroundColor: 'red'
-      });
-    } finally {
-      setIsLoading(false);
-    }
+  if (error) {
+    Toast.show(error instanceof Error ? error.message : "An Unknown error occured.", {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+      backgroundColor: 'red'
+    });
   }
-
-  useEffect(() => {
-    fetchLibraryTracks()
-
-  }, [])
 
 
   return (
@@ -103,7 +59,7 @@ function LibraryScreen({
             <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Library</Text>
           )}
           refreshing={isLoading}
-          onRefresh={() => fetchLibraryTracks()}
+          onRefresh={() => refetch()}
         />
       )}
     </LinearGradient>

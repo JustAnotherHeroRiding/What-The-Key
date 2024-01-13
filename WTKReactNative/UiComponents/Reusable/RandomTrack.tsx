@@ -13,8 +13,8 @@ import { TrackData } from "../../utils/spotify-types";
 import tw from "../../utils/tailwindRN";
 import { LinearGradient } from "expo-linear-gradient";
 import { Entypo } from '@expo/vector-icons'
+import useTrackService from "../../services/TrackService";
 import Toast from "react-native-root-toast";
-
 
 interface RandomTrackProps {
   trackData: TrackData;
@@ -26,7 +26,6 @@ const imageSize = screen.width * 0.85; // 90% of screen width
 
 const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) => {
 
-  const [isLoading, setIsLoading] = useState(false)
 
   if (!trackData) {
     return (
@@ -35,52 +34,32 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
       </View>
     );
   }
+  const { addTrackMut, isAddingTrack } = useTrackService()
 
-  const addToLibrary = async () => {
-    setIsLoading(true)
-    try {
-      const response = await fetch(
-        "https://what-the-key.vercel.app/api/track/addTrack", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          userId: userId,
-          trackId: trackData.track.id,
-          source: "library"
-        })
+  const addToLib = async () => {
+    addTrackMut({ trackId: trackData.track.id, source: "library" }, {
+      onSuccess: (_, variables) => {
+        Toast.show(`Track successfully added to the ${variables.source === 'recycleBin' ? "Deleted Tracks" : "Library"}`, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+        });
+      },
+      onError: (error: Error) => {
+        Toast.show(error instanceof Error ? "Track could not be added, are you logged in?" : "An Unknown error occured.", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+          backgroundColor: 'red'
+        });
       }
-      );
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || "Error fetching track");
-      }
-
-      Toast.show('Track successfully added to the library', {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
-
-    } catch (error) {
-      Toast.show(error instanceof Error ?
-        "Track could not be added. Make sure you are logged in and it is not a duplicate"
-        : "An Unknown error occured.", {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-        backgroundColor: 'red'
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    })
   }
 
   return (
@@ -116,9 +95,9 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
       </Text>
       <TouchableOpacity
         style={tw`px-4 py-3 border border-black rounded-xl text-2xl bg-cream font-800 shadow-lg mt-auto ml-auto`}
-        onPress={() => addToLibrary()}
+        onPress={() => addToLib()}
       >
-        <Text style={tw.style(``, { fontFamily: "figtree-black" })}>{isLoading ? "Adding..." : "Save"}</Text>
+        <Text style={tw.style(``, { fontFamily: "figtree-black" })}>{isAddingTrack ? "Adding..." : "Save"}</Text>
       </TouchableOpacity>
     </LinearGradient>
   );

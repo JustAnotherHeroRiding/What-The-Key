@@ -34,27 +34,22 @@ let TrackController = class TrackController {
                 .json({ message: error.message });
         }
     }
-    async addTrack(userId, trackId, source, response) {
+    async addTrack(userId, trackId, source) {
         try {
             const track = await this.trackService.addTrackToUserLibraryOrBin(trackId, userId, source);
-            response.status(common_1.HttpStatus.OK).json(track);
+            return track;
         }
         catch (error) {
-            console.log(error);
-            response
-                .status(common_1.HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({ message: error.message });
+            throw new common_1.InternalServerErrorException(error.message);
         }
     }
-    async deleteTrack(userId, trackId, response) {
+    async deleteTrack(userId, trackId) {
         try {
             const track = await this.trackService.deleteTrackPermanently(trackId, userId);
-            response.status(common_1.HttpStatus.OK).json(track);
+            return track;
         }
         catch (error) {
-            response
-                .status(common_1.HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({ message: error.message });
+            throw new common_1.InternalServerErrorException(error.message);
         }
     }
     async addTabs(trackId, userId, tabUrl, response) {
@@ -110,7 +105,6 @@ __decorate([
 ], TrackController.prototype, "getTracks", null);
 __decorate([
     (0, common_1.Post)('addTrack'),
-    (0, common_1.Post)('addTrack'),
     (0, swagger_1.ApiOperation)({
         summary: 'Add Track',
         description: "Add a track to the user's library or recycle bin.",
@@ -121,9 +115,8 @@ __decorate([
     __param(0, (0, common_1.Body)('userId')),
     __param(1, (0, common_1.Body)('trackId')),
     __param(2, (0, common_1.Body)('source')),
-    __param(3, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, Object]),
+    __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "addTrack", null);
 __decorate([
@@ -137,9 +130,8 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Body)('userId')),
     __param(1, (0, common_1.Body)('trackId')),
-    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, Object]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "deleteTrack", null);
 __decorate([

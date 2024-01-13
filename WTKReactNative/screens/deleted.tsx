@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Button, TouchableOpacity, Image, ScrollView, Alert, FlatList } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { LibraryScreenNavigationProp } from "../utils/types";
+import { DeletedScreenNavigationProp, LibraryScreenNavigationProp } from "../utils/types";
 import tw from "../utils/tailwindRN";
 import { SessionContext } from "../utils/Context/Session/SessionContext";
 import Toast from "react-native-root-toast";
@@ -9,117 +9,63 @@ import { TrackData } from "../utils/spotify-types";
 import { LinearGradient } from "expo-linear-gradient";
 import Track from "../UiComponents/Reusable/Track";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
+import useTrackService from "../services/TrackService";
+import { useQuery } from "@tanstack/react-query";
 
 
 function DeletedScreen({
   navigation,
 }: {
-  navigation: LibraryScreenNavigationProp;
+  navigation: DeletedScreenNavigationProp;
 }) {
-  const [isLoading, setIsLoading] = useState(false);
   const session = useContext(SessionContext)
 
   const [showcontextMenu, setShowContextMenu] = useState(false);
 
-  const [recycleBin, setRecycleBin] = useState<TrackData[] | []>([])
 
-  const fetchDeletedTracks = async () => {
-    try {
-      const queryParams = new URLSearchParams({
-        userId: session?.user.id ?? "no user",
-        source: "recycleBin"
-      }).toString();
+  const { getTracks } = useTrackService()
 
-      const responseTrackIds = await fetch(
-        `https://what-the-key.vercel.app/api/track/getTracks?${queryParams}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-      );
-      const trackIds = await responseTrackIds.json();
+  const { data: deleted, isLoading, error, refetch } =
+    useQuery({ queryKey: ["recycleBin"], queryFn: () => getTracks({ location: "recycleBin" }) })
 
-      if (!responseTrackIds.ok) {
-        throw new Error(trackIds.message || "Error fetching track ids from database");
-      }
-
-      const trackIdsJoined = trackIds.map((track: { id: any; }) => track.id).join(',');
-
-      const spotifyResponse = await fetch(`https://what-the-key.vercel.app/api/spotify/tracks?ids=${trackIdsJoined}
-      `, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      const libraryData = await spotifyResponse.json()
-      setRecycleBin(libraryData);
-
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert("Error", error.message);
-      } else {
-        Alert.alert("Error", "An unknown error occurred");
-      }
-
-      Toast.show(error instanceof Error ? error.message : "An Unknown error occured.", {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-        backgroundColor: 'red'
-      });
-    } finally {
-      setIsLoading(false);
-    }
+  if (error) {
+    Toast.show(error instanceof Error ? error.message : "An Unknown error occured.", {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+      backgroundColor: 'red'
+    });
   }
-
-  useEffect(() => {
-    fetchDeletedTracks()
-
-  }, [])
 
 
   return (
-    <ScrollView contentContainerStyle={tw.style(`flex-1 flex-col items-center`)}>
-      <StatusBar style="auto" />
-
-      <LinearGradient
-        colors={["#27272a", "#52525b"]}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 0 }}
-        style={tw.style(`mx-auto flex mt-4 w-full`)}>
-        {/* This is weird here as without this scroll view here the tracks do not scroll
-        Also I cant get it to have margins above the bottom nav tab */}
-        <ScrollView>
-          <View className="flex flex-row border-b-2 items-center justify-between px-8 border-slate-500">
-            <Text style={tw.style(`text-white font-figtreeBold text-3xl 
-         py-4 text-center`)}>Deleted</Text>
-            <TouchableOpacity onPress={() => fetchDeletedTracks()} style={tw.style(``)}>
-              <Text style={tw.style(`text-black px-2 py-1 rounded-md bg-beigeCustom font-figtreeBold text-sm 
-        0py-4 text-center`)}>Refresh</Text>
-
-            </TouchableOpacity>
-          </View>
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            <FlatList
-              style={tw.style(`mb-20`)}
-              data={recycleBin}
-              renderItem={({ item, index }) => <Track key={index} track={item} location="deleted" />}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          )
-          }
-
-        </ScrollView>
-      </LinearGradient>
-    </ScrollView>
+    <LinearGradient
+      colors={["#27272a", "#52525b"]}
+      start={{ x: 1, y: 0 }}
+      end={{ x: 0, y: 0 }}
+      style={tw.style(`flex-grow w-full`)}>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <FlatList
+          style={tw.style(`flex-grow`)}
+          contentContainerStyle={tw.style(`pb-20`)}
+          data={deleted}
+          renderItem={({ item }) => <Track track={item} location="library" />}
+          keyExtractor={(item, index) => index.toString()}
+          ListHeaderComponent={() => (
+            <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Deleted</Text>
+          )}
+          refreshing={isLoading}
+          onRefresh={() => refetch()}
+        />
+      )}
+    </LinearGradient>
   );
+
 }
 
 export default DeletedScreen;

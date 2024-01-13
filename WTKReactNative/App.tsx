@@ -49,17 +49,13 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-
       <SessionProvider>
         <ProfilePicProvider>
-
           <SafeAreaProvider>
             <ImageBackground source={require('./assets/images/background.png')}
-              style={StyleSheet.absoluteFill}
-            >
+              style={StyleSheet.absoluteFill}>
               <SafeAreaView style={StyleSheet.absoluteFill}>
                 <StatusBar style="auto" />
-
                 <BottomNav />
               </SafeAreaView>
             </ImageBackground>

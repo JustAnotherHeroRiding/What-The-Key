@@ -20,6 +20,9 @@ We need to implement the same 4 pages with full feature parity
 - Add tracks to library from the search results #DONE 
 - Search results will be styled similar to spotify, small rows with small images of containers #DONE  
 - Add track option from the random track #DONE 
+- Responsive context menu when adding track #DONE 
+- When adding a track, we should check that it is both not in the library or the recycle bin #Maybe 
+#### Currently if i try to add a track that is is in the trash to the library, it will be moved which is actually not bad
 
 ## Services
 To reduce code repetition, let's store all of the api calls into a single service 
@@ -41,10 +44,11 @@ Implement react query to simplify all the data management
 - Currently users can spam the refresh button, limit it so that this is not possible
 
 ## Zustand
-- If react query is not enough, use zustand
+- If react query is not enough, use zustand to manage global state
 
 ##### Image Distortion
-- Currently the left and right sides of the image are being distorted in the result card due to the image being stretched. Make sure that the image does not lose quality and is preserved
+- Currently the left and right sides of the image are being distorted in the result card due to the image being stretched. Make sure that the image does not lose quality and is preserved #DONE 
+#### For now I set the width and height to be the same to keep the aspect ratio, object-contain was distorting the edges
 
 ## Track component
 - Create a separate track component that will be used in the library and bin #DONE 
@@ -72,6 +76,9 @@ Implement react query to simplify all the data management
 
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin
+
+## Animations
+- When search results change, random track is closed there should be a smooth animation
 
 ## Adding tracks and cache
 - Adding a track works but there was a bug where no toast was displayed yet the track was added #Bug

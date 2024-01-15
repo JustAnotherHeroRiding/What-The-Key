@@ -81,7 +81,7 @@ const useTrackService = () => {
         },
         onError: (error: Error) => {
             // Handle error
-            Toast.show(error instanceof Error ? "Track could not be added, are you logged in?" : "An Unknown error occured.", {
+            Toast.show(error instanceof Error ? "Track could not be added, are you logged in or have you already added this track?" : "An Unknown error occured.", {
                 duration: Toast.durations.LONG,
                 position: Toast.positions.BOTTOM,
                 shadow: true,

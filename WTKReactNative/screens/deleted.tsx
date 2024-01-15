@@ -2,14 +2,13 @@ import React, { useContext, useState } from "react";
 import { View, Text, Button, TouchableOpacity, Image, ScrollView, Alert, FlatList } from "react-native";
 import { DeletedScreenNavigationProp } from "../utils/types";
 import tw from "../utils/tailwindRN";
-import { SessionContext } from "../utils/Context/Session/SessionContext";
 import Toast from "react-native-root-toast";
 import { TrackData } from "../utils/spotify-types";
 import { LinearGradient } from "expo-linear-gradient";
 import Track from "../UiComponents/Reusable/Track";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import useTrackService from "../services/TrackService";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { MaterialIcons } from '@expo/vector-icons';
 import colors from "../assets/colors";
 import { isApiErrorResponse } from "../utils/typeGuards";
@@ -24,16 +23,13 @@ function DeletedScreen({
 
   const { getTracks } = useTrackService()
 
-  const { data: deleted, isLoading, error, refetch } =
-    useQuery({ queryKey: ["recycleBin"], queryFn: () => getTracks({ location: "recycleBin" }) })
+  const { data: deleted, isFetching, error, refetch, isLoading } =
+    useQuery({
+      queryKey: ["recycleBin"], queryFn: () => getTracks({ location: "recycleBin" }),
+      staleTime: 500,
+      placeholderData: keepPreviousData
+    })
 
-  const [isRefetching, setIsRefetching] = useState(false);
-
-  const handleRefetch = async () => {
-    setIsRefetching(true)
-    await refetch()
-    setIsRefetching(false)
-  }
 
   if (error) {
     Toast.show(error instanceof Error ? error.message : "An Unknown error occured.", {
@@ -47,6 +43,7 @@ function DeletedScreen({
     });
   }
 
+
   return (
     <LinearGradient
       colors={["#27272a", "#52525b"]}
@@ -54,7 +51,10 @@ function DeletedScreen({
       end={{ x: 0, y: 0 }}
       style={tw.style(`flex-grow w-full`)}>
       {isLoading ? (
-        <LoadingSpinner />
+        <View style={tw.style(`flex items-center justify-center my-auto`)}>
+          <Text style={tw.style(`text-white text-center`, { fontFamily: "figtree-bold" })}>Picking up the trash...</Text>
+          <LoadingSpinner />
+        </View>
       ) : (
         isApiErrorResponse(deleted) ? (
           <View>
@@ -62,17 +62,12 @@ function DeletedScreen({
             <Text style={tw.style(`text-white font-figtreeBold text-3xl py-4 text-center`)}>There are no deleted tracks</Text>
 
             <TouchableOpacity
-              onPress={() => handleRefetch()}
+              disabled={isFetching || isLoading}
               style={tw.style(`py-3 px-3 rounded-md gap-1 border-cream border flex items-center flex-row mx-auto`)}>
               <MaterialIcons name="refresh" size={24} color={colors.beigeCustom} />
               <Text style={tw.style(`text-white text-xl`, { fontFamily: "figtree-bold" })}>Refresh</Text>
             </TouchableOpacity>
-            {isRefetching &&
-              <>
-                <Text style={tw.style(`text-white text-center`, { fontFamily: "figtree-bold" })}>Refreshing...</Text>
-                <LoadingSpinner />
-              </>
-            }
+
 
           </View>
         ) : (
@@ -85,11 +80,17 @@ function DeletedScreen({
             ListHeaderComponent={() => (
               <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtreeBold text-3xl py-4 text-center`)}>Deleted</Text>
             )}
-            refreshing={isLoading}
+            refreshing={isFetching}
             onRefresh={() => refetch()}
           />
         )
       )}
+      {isFetching && !isLoading &&
+        <>
+          <Text style={tw.style(`text-white text-center`, { fontFamily: "figtree-bold" })}>Refreshing...</Text>
+          <LoadingSpinner />
+        </>
+      }
     </LinearGradient>
   );
 

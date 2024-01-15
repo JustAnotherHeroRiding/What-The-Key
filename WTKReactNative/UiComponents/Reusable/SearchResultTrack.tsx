@@ -24,13 +24,13 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
     const session = useContext(SessionContext)
     const navigation = useNavigation<AuthScreenNavigationProp>()
 
-    const { addTrackMut } = useTrackService()
+    const { addTrackMut, isAddingTrack } = useTrackService()
 
     const addToLib = async () => {
         addTrackMut({ trackId: track.id, source: "library" }, {
             onSuccess: () => {
                 setShowContextMenu(false)
-            },
+            }
         })
     }
 
@@ -58,7 +58,7 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
                         <TouchableOpacity onPress={() => addToLib()}
                             style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}>
                             <MaterialIcons name="library-add" size={24} color="black" />
-                            <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Add to Library</Text>
+                            <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>{isAddingTrack ? "Adding Track..." : "Add to Library"} </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
                             <MaterialIcons name="audiotrack" size={24} color="black" />

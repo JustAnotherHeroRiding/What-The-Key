@@ -1,6 +1,5 @@
 import { UserService } from '../auth/user.service';
 import { TrackService } from './track.service';
-import { Response } from 'express';
 export declare class TrackController {
     private readonly userService;
     private readonly trackService;
@@ -16,6 +15,16 @@ export declare class TrackController {
         recycleBinUserId: number;
     }>;
     deleteTrack(userId: string, trackId: string): Promise<import(".prisma/client").Prisma.BatchPayload>;
-    addTabs(trackId: string, userId: string, tabUrl: string, response: Response): Promise<void>;
-    getTabs(trackId: string, userId: string, response: Response): Promise<void>;
+    addTabs(trackId: string, userId: string, tabUrl: string): Promise<{
+        id: number;
+        userId: number;
+        trackId: string;
+        tabUrl: string;
+    }>;
+    getTabs(trackId: string, userId: string): Promise<{
+        id: number;
+        userId: number;
+        trackId: string;
+        tabUrl: string;
+    }[]>;
 }

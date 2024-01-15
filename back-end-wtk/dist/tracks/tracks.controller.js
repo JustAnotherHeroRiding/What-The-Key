@@ -50,26 +50,22 @@ let TrackController = class TrackController {
             throw new common_1.InternalServerErrorException(error.message);
         }
     }
-    async addTabs(trackId, userId, tabUrl, response) {
+    async addTabs(trackId, userId, tabUrl) {
         try {
             const track = await this.trackService.addTabToTrack(trackId, userId, tabUrl);
-            response.status(common_1.HttpStatus.OK).json(track);
+            return track;
         }
         catch (error) {
-            response
-                .status(common_1.HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({ message: error.message });
+            throw new common_1.InternalServerErrorException(error.message);
         }
     }
-    async getTabs(trackId, userId, response) {
+    async getTabs(trackId, userId) {
         try {
             const tabs = await this.trackService.getTabsForTrack(trackId, userId);
-            response.status(common_1.HttpStatus.OK).json(tabs);
+            return tabs;
         }
         catch (error) {
-            response
-                .status(common_1.HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({ message: error.message });
+            throw new common_1.InternalServerErrorException(error.message);
         }
     }
 };
@@ -140,9 +136,8 @@ __decorate([
     __param(0, (0, common_1.Body)('trackId')),
     __param(1, (0, common_1.Body)('userId')),
     __param(2, (0, common_1.Body)('tabUrl')),
-    __param(3, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, Object]),
+    __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "addTabs", null);
 __decorate([
@@ -167,9 +162,8 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Query)('trackId')),
     __param(1, (0, common_1.Query)('userId')),
-    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, Object]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "getTabs", null);
 exports.TrackController = TrackController = __decorate([

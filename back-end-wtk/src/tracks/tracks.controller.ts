@@ -2,15 +2,12 @@ import {
   Controller,
   Post,
   Body,
-  Res,
-  HttpStatus,
   Get,
   Query,
   InternalServerErrorException,
 } from '@nestjs/common';
 import { UserService } from '../auth/user.service';
 import { TrackService } from './track.service';
-import { Response } from 'express';
 import {
   ApiBody,
   ApiOperation,
@@ -118,7 +115,6 @@ export class TrackController {
     @Body('trackId') trackId: string,
     @Body('userId') userId: string,
     @Body('tabUrl') tabUrl: string,
-    @Res() response: Response,
   ) {
     try {
       const track = await this.trackService.addTabToTrack(
@@ -126,11 +122,9 @@ export class TrackController {
         userId,
         tabUrl,
       );
-      response.status(HttpStatus.OK).json(track);
+      return track;
     } catch (error) {
-      response
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.message });
+      throw new InternalServerErrorException(error.message);
     }
   }
 
@@ -156,15 +150,12 @@ export class TrackController {
   async getTabs(
     @Query('trackId') trackId: string,
     @Query('userId') userId: string,
-    @Res() response: Response,
   ) {
     try {
       const tabs = await this.trackService.getTabsForTrack(trackId, userId);
-      response.status(HttpStatus.OK).json(tabs);
+      return tabs;
     } catch (error) {
-      response
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.message });
+      throw new InternalServerErrorException(error.message);
     }
   }
 }

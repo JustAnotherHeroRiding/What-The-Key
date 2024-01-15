@@ -85,12 +85,6 @@ function DeletedScreen({
           />
         )
       )}
-      {isFetching && !isLoading &&
-        <>
-          <Text style={tw.style(`text-white text-center`, { fontFamily: "figtree-bold" })}>Refreshing...</Text>
-          <LoadingSpinner />
-        </>
-      }
     </LinearGradient>
   );
 

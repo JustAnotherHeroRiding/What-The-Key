@@ -26,7 +26,6 @@ import { useQueryClient, useQuery, keepPreviousData } from "@tanstack/react-quer
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const session = useContext(SessionContext)
-  const [isLoading, setIsLoading] = useState(false);
 
 
   const [query, setQuery] = useState("");

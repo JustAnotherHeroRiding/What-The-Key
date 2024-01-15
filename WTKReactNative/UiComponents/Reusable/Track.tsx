@@ -1,9 +1,9 @@
 import React from "react";
-import { View, TouchableOpacity, Image, Text } from "react-native";
+import { View, TouchableOpacity, Image, Text, TextInput } from "react-native";
 import { TrackData } from "../../utils/spotify-types";
 import tw from "../../utils/tailwindRN";
 import { useState } from "react";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import useTrackService from "../../services/TrackService";
 
@@ -11,6 +11,7 @@ import useTrackService from "../../services/TrackService";
 interface TrackProps {
     track: TrackData;
     location: 'library' | 'recycleBin';
+    openTabsModal: (trackData: TrackData) => void
 }
 
 const AddTrackTarget: { [key: string]: 'library' | 'recycleBin' } = {
@@ -18,7 +19,7 @@ const AddTrackTarget: { [key: string]: 'library' | 'recycleBin' } = {
     recycleBin: 'library'
 };
 
-const Track = ({ track, location }: TrackProps) => {
+const Track = ({ track, location, openTabsModal }: TrackProps) => {
     const [showcontextMenu, setShowContextMenu] = useState(false);
 
     const { addTrackMut, deleteTrackMut, isDeletingTrack, isAddingTrack } = useTrackService()
@@ -46,7 +47,7 @@ const Track = ({ track, location }: TrackProps) => {
             style={tw.style(`flex flex-row justify-between gap-2 items-center px-2 py-1 border-b border-slate-400`)}>
             <Image source={{ uri: track.track.album.images[0].url }}
                 style={tw.style(`w-14 h-14 rounded-lg border-cream border`)} />
-            <View style={tw.style(`flex-1 items-end ml-4 justify-center`)}>
+            <View style={tw.style(`flex-1 items-start ml-1 justify-center`)}>
 
                 <Text
                     numberOfLines={1}
@@ -72,12 +73,20 @@ const Track = ({ track, location }: TrackProps) => {
                         <MaterialIcons name="audiotrack" size={24} color="black" />
                         <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Open Details</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        setShowContextMenu(false)
+                        openTabsModal(track)
+                    }}
+                        style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
+                        <MaterialCommunityIcons name="guitar-pick-outline" size={24} color="black" />
+                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Add Tabs</Text>
+                    </TouchableOpacity>
                     {location === "recycleBin" && (
 
                         <TouchableOpacity
                             onPress={() => deleteTrackPermamently()}
                             style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
-                            <MaterialIcons name="delete" size={24} color="black" />
+                            <MaterialIcons name="delete" size={24} color="white" />
                             <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Permanenty Delete</Text>
                         </TouchableOpacity>
                     )}
@@ -86,7 +95,7 @@ const Track = ({ track, location }: TrackProps) => {
             <TouchableOpacity onPress={() => setShowContextMenu(!showcontextMenu)}>
                 <Entypo name="dots-three-vertical" size={28} color="white" />
             </TouchableOpacity>
-        </View>
+        </View >
     )
 }
 export default Track;

@@ -39,7 +39,7 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
             style={tw.style(`flex flex-row justify-between gap-2 items-center px-2 py-1 border-b border-slate-400`)}>
             <Image source={{ uri: track.album.images[0].url }}
                 style={tw.style(`w-14 h-14 rounded-lg border-cream border`)} />
-            <View style={tw.style(`flex-1 items-end ml-4 justify-center`)}>
+            <View style={tw.style(`flex-1 items-start ml-1 justify-center`)}>
                 <Text
                     numberOfLines={1}
                     ellipsizeMode="tail"

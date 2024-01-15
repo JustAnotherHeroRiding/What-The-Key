@@ -4,9 +4,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  StyleSheet,
   Dimensions,
-  Alert,
 } from "react-native";
 import { getNoteName } from "../../utils/note-key";
 import { TrackData } from "../../utils/spotify-types";
@@ -14,7 +12,6 @@ import tw from "../../utils/tailwindRN";
 import { LinearGradient } from "expo-linear-gradient";
 import { Entypo } from '@expo/vector-icons'
 import useTrackService from "../../services/TrackService";
-import Toast from "react-native-root-toast";
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated'
 
 interface RandomTrackProps {

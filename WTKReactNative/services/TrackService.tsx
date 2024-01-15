@@ -72,7 +72,8 @@ const useTrackService = () => {
             queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
             Toast.show(`Track successfully added to the ${variables.source === 'recycleBin' ? "Deleted Tracks" : "Library"}`, {
                 duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
+                position: - 40
+                ,
                 shadow: true,
                 animation: true,
                 hideOnPress: true,
@@ -83,7 +84,7 @@ const useTrackService = () => {
             // Handle error
             Toast.show(error instanceof Error ? "Track could not be added, are you logged in or have you already added this track?" : "An Unknown error occured.", {
                 duration: Toast.durations.LONG,
-                position: Toast.positions.BOTTOM,
+                position: -40,
                 shadow: true,
                 animation: true,
                 hideOnPress: true,

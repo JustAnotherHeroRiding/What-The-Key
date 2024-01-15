@@ -46,6 +46,11 @@ Implement react query to simplify all the data management
 ## Zustand
 - If react query is not enough, use zustand to manage global state
 
+## Toasts
+###### Bug alert
+- Sometimes toasts are not showing up when adding tracks, even thought they should always be triggered from the mutation
+Let's push the toast a bit higher as it is blocking the menu
+
 ##### Image Distortion
 - Currently the left and right sides of the image are being distorted in the result card due to the image being stretched. Make sure that the image does not lose quality and is preserved #DONE 
 #### For now I set the width and height to be the same to keep the aspect ratio, object-contain was distorting the edges
@@ -61,6 +66,11 @@ Implement react query to simplify all the data management
 - Delete the tracks to send them to the recycle bin #DONE 
 - Infinite scroll for tracks
 - Display tabs in the context menu
+## Deleted 
+- See all tracks added to the recycle bin #DONE 
+- Restore tracks to library or delete them permanently #DONE 
+- Display tabs in the context menu
+
 
 ## Single track page
 - This will have to be a new screen
@@ -68,17 +78,14 @@ Implement react query to simplify all the data management
 - Here we will display much more info about a track than before, for motivation let's use the notes in the main file
 
 
-## Deleted 
-- See all tracks added to the recycle bin #DONE 
-- Restore tracks to library or delete them permanently #DONE 
-- Display tabs in the context menu
 
 
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin
 
 ## Animations
-- When search results change, random track is closed there should be a smooth animation, similar to the balloon effect in the webapp
+- When the Random track is closed or opened there should be a smooth animation, similar to the balloon effect in the webapp #DONE 
+	- See where we can implement animation in other places. I think adding and removing tracks are obvious candidates but they should not mess with the cache refreshes from react query
 
 ## Adding tracks and cache
 - Adding a track works but there was a bug where no toast was displayed yet the track was added #Bug

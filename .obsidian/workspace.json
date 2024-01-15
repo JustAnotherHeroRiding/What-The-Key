@@ -148,6 +148,8 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/utils/track-service-types.ts",
+    "WTKReactNative/utils/track-service-types",
     "back-end-wtk/dist/tsconfig.build.tsbuildinfo",
     "back-end-wtk/dist/main.d.ts",
     "back-end-wtk/dist/main.js",
@@ -157,8 +159,6 @@
     "back-end-wtk/dist/app.module.js.map",
     "back-end-wtk/dist/spotify/spotify.controller.d.ts",
     "back-end-wtk/dist/spotify/spotify.controller.js",
-    "back-end-wtk/dist/spotify/spotify.controller.js.map",
-    "back-end-wtk/dist/spotify/spotify.service.d.ts",
     "WTKReactNative/node_modules/react-native-reanimated/Common/cpp/ReanimatedRuntime/RuntimeInitialization.md",
     "WTKReactNative/node_modules/@babel/plugin-transform-object-assign/README.md",
     "WTKReactNative/node_modules/eslint/README.md",

@@ -34,5 +34,5 @@ export class AddTabsDto {
     example: 'tabs.com/adayinthelife',
     description: 'ID of the tabs',
   })
-  tabsUrl: string;
+  tabUrl: string;
 }

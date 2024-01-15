@@ -4,33 +4,10 @@ import { SessionContext } from '../utils/Context/Session/SessionContext';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Toast from 'react-native-root-toast';
 import { TrackData } from '../utils/spotify-types';
+import { addTrackProps, TrackConnection, getTracksProps, ApiErrorResponse, deleteTrackProps, addTabProps, getTabProps, Tab } from '../utils/track-service-types';
 
 
-export type dataSource = "library" | "recycleBin";
-export interface addTrackProps {
-    trackId: string;
-    source: dataSource
-}
 
-export interface getTracksProps {
-    location: dataSource
-}
-
-export interface deleteTrackProps {
-    trackId: string;
-}
-
-export interface TrackConnection {
-    id: string;
-    libraryUserId: number;
-    recycleBinUserId: number;
-}
-
-
-export interface ApiErrorResponse {
-    message: string;
-    statusCode: number
-}
 const useTrackService = () => {
     const session = useContext(SessionContext);
     const queryClient = useQueryClient()
@@ -184,17 +161,17 @@ const useTrackService = () => {
     })
 
 
-    const addTab = async ({ trackId, source }: addTrackProps): Promise<TrackConnection> => {
+    const addTab = async ({ trackId, tabUrl, }: addTabProps): Promise<TrackConnection> => {
         const response = await fetch(
-            "https://what-the-key.vercel.app/api/track/addTrack", {
+            "https://what-the-key.vercel.app/api/track/addTabs", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                userId: session?.user.id,
                 trackId,
-                source
+                userId: session?.user.id,
+                tabUrl
             })
         }
         );
@@ -207,14 +184,72 @@ const useTrackService = () => {
         return response.json();
     };
 
+    const { mutate: addTabMut, isPending: isAddingTab } = useMutation({
+        mutationFn: addTab,
+        onSuccess: (_, variables) => {
+
+            queryClient.invalidateQueries({ queryKey: ['singleTrack', variables.trackId] })
+            // Which cache should be invalidated here? I think just the single track cache with the track id, or maybe the url
+            Toast.show(`Tab url sccessfully added!}`, {
+                duration: Toast.durations.LONG,
+                position: - 40
+                ,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
+        },
+        onError: (error: Error) => {
+            // Handle error
+            Toast.show(error instanceof Error ? "Tab could not be added, are you logged in?" : "An Unknown error occured.", {
+                duration: Toast.durations.LONG,
+                position: -40,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+                backgroundColor: 'red'
+            });
+        }
+    })
+
+    const getTabs = async ({ trackId }: getTabProps): Promise<Tab | ApiErrorResponse> => {
+        const queryParams = new URLSearchParams({
+            userId: session?.user.id ?? "no user",
+            trackId: trackId
+        }).toString();
+
+        const tabRes = await fetch(
+            `https://what-the-key.vercel.app/api/track/getTabs?${queryParams}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        );
+        const tab = await tabRes.json();
+
+        if (!tab.ok) {
+            throw new Error(tab.message || "Error fetching track ids from database");
+        }
+
+        return tab;
+    }
+
 
     return {
         addTrackMut,
         getTracks,
         deleteTrackMut,
+        addTabMut,
+        getTabs,
+        isAddingTab,
         isDeletingTrack,
-        isAddingTrack
+        isAddingTrack,
     };
+
+
 };
 
 export default useTrackService;

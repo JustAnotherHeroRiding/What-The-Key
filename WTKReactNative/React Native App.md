@@ -32,6 +32,7 @@ To reduce code repetition, let's store all of the api calls into a single servic
 - Create a service for the spotify endpoint requests #DONE 
 - Create two queries for searching tracks and getting a random track #DONE 
 - Implement the functions from the service in the home page #DONE 
+  - Add and get tab functions #DONE 
 
 ## React query
 Implement react query to simplify all the data management
@@ -49,7 +50,7 @@ Implement react query to simplify all the data management
 ## Toasts
 ###### Bug alert
 - Sometimes toasts are not showing up when adding tracks, even thought they should always be triggered from the mutation
-Let's push the toast a bit higher as it is blocking the menu
+Let's push the toast a bit higher as it is blocking the menu #DONE 
 
 ##### Image Distortion
 - Currently the left and right sides of the image are being distorted in the result card due to the image being stretched. Make sure that the image does not lose quality and is preserved #DONE 
@@ -59,17 +60,22 @@ Let's push the toast a bit higher as it is blocking the menu
 - Create a separate track component that will be used in the library and bin #DONE 
 - equip it with all options like delete/restore, permanent delete, show/add tabs and open the spotify link
 - Manage context menu boolean in each component separately #DONE 
+- Adding and getting the tabs
+
+## Combining Library and Deleted into one component
+- The logic is the same, the only difference is the source being passed to the fetch location and the track component. Since there difference is only one variables, I can maybe pass it as a prop from the nav menu
+
 ## Library
 - See all tracks in the user's library #DONE 
 - Flatlist to render the tracks #DONE 
 - Pull to refresh to make another request #DONE 
 - Delete the tracks to send them to the recycle bin #DONE 
 - Infinite scroll for tracks
-- Display tabs in the context menu
+- Display tabs in the context menu #DONE 
 ## Deleted 
 - See all tracks added to the recycle bin #DONE 
 - Restore tracks to library or delete them permanently #DONE 
-- Display tabs in the context menu
+- Display tabs in the context menu #DONE 
 
 
 ## Single track page

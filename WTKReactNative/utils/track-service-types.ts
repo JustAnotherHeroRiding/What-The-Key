@@ -5,13 +5,11 @@ export interface addTrackProps {
 }
 
 export interface addTabProps {
-  userId: string;
   trackId: string;
   tabUrl: string;
 }
 
 export interface getTabProps {
-  userId: string;
   trackId: string;
 }
 

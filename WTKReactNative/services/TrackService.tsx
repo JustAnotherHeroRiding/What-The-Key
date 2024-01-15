@@ -190,7 +190,7 @@ const useTrackService = () => {
 
             queryClient.invalidateQueries({ queryKey: ['singleTrack', variables.trackId] })
             // Which cache should be invalidated here? I think just the single track cache with the track id, or maybe the url
-            Toast.show(`Tab url sccessfully added!}`, {
+            Toast.show(`Tab sccessfully added!}`, {
                 duration: Toast.durations.LONG,
                 position: - 40
                 ,
@@ -202,7 +202,7 @@ const useTrackService = () => {
         },
         onError: (error: Error) => {
             // Handle error
-            Toast.show(error instanceof Error ? "Tab could not be added, are you logged in?" : "An Unknown error occured.", {
+            Toast.show(error instanceof Error ? "Tab could not be added, please try again?" : "An Unknown error occured.", {
                 duration: Toast.durations.LONG,
                 position: -40,
                 shadow: true,

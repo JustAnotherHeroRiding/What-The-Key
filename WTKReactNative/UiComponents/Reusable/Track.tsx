@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, TouchableOpacity, Image, Text, TextInput } from "react-native";
 import { TrackData } from "../../utils/spotify-types";
 import tw from "../../utils/tailwindRN";
@@ -6,6 +6,7 @@ import { useState } from "react";
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import useTrackService from "../../services/TrackService";
+import { SessionContext } from "../../utils/Context/Session/SessionContext";
 
 
 interface TrackProps {
@@ -21,6 +22,7 @@ const AddTrackTarget: { [key: string]: 'library' | 'recycleBin' } = {
 
 const Track = ({ track, location, openTabsModal }: TrackProps) => {
     const [showcontextMenu, setShowContextMenu] = useState(false);
+    const session = useContext(SessionContext)
 
     const { addTrackMut, deleteTrackMut, isDeletingTrack, isAddingTrack } = useTrackService()
 
@@ -73,14 +75,17 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
                         <MaterialIcons name="audiotrack" size={24} color="black" />
                         <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Open Details</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {
-                        setShowContextMenu(false)
-                        openTabsModal(track)
-                    }}
-                        style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
-                        <MaterialCommunityIcons name="guitar-pick-outline" size={24} color="black" />
-                        <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Add Tabs</Text>
-                    </TouchableOpacity>
+                    {session && (
+
+                        <TouchableOpacity onPress={() => {
+                            setShowContextMenu(false)
+                            openTabsModal(track)
+                        }}
+                            style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
+                            <MaterialCommunityIcons name="guitar-pick-outline" size={24} color="black" />
+                            <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Add Tabs</Text>
+                        </TouchableOpacity>
+                    )}
                     {location === "recycleBin" && (
 
                         <TouchableOpacity

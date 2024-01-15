@@ -1,14 +1,14 @@
 import { View, Image, Text, TouchableOpacity, Alert } from "react-native"
-import { SpotifyItem } from "../../utils/spotify-types"
-import tw from "../../utils/tailwindRN"
+import { SpotifyItem } from "../../../utils/spotify-types"
+import tw from "../../../utils/tailwindRN"
 import { Entypo } from '@expo/vector-icons';
 import { useContext, useState } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
-import { SessionContext } from "../../utils/Context/Session/SessionContext";
+import { SessionContext } from "../../../utils/Context/Session/SessionContext";
 import Toast from "react-native-root-toast"
 import { useNavigation } from "@react-navigation/native";
-import { AuthScreenNavigationProp } from "../../utils/types";
-import useTrackService from "../../services/TrackService";
+import { AuthScreenNavigationProp } from "../../../utils/types";
+import useTrackService from "../../../services/TrackService";
 
 
 

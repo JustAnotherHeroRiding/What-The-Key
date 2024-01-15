@@ -18,7 +18,7 @@ import _ from 'lodash'
 import { LinearGradient } from 'expo-linear-gradient';
 import SearchResults from "../UiComponents/Reusable/SearchResults";
 import { SessionContext } from "../utils/Context/Session/SessionContext";
-import RandomTrack from "../UiComponents/Reusable/RandomTrack";
+import RandomTrack from "../UiComponents/Reusable/Track/RandomTrack";
 import useSpotifyService from "../services/SpotifyService";
 import { useQueryClient, useQuery, keepPreviousData } from "@tanstack/react-query";
 

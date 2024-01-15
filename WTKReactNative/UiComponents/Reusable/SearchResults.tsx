@@ -2,7 +2,7 @@ import { Text, View, Image } from "react-native";
 import { SpotifyTracksSearchResult } from "../../utils/spotify-types"
 import tw from "../../utils/tailwindRN";
 import { LinearGradient } from "expo-linear-gradient";
-import SearchResultTrack from "./SearchResultTrack";
+import SearchResultTrack from "./Track/SearchResultTrack";
 
 
 interface SearchResultsProps {

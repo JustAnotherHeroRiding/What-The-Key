@@ -5,12 +5,12 @@ import tw from "../utils/tailwindRN";
 import Toast from "react-native-root-toast";
 import { TrackData } from "../utils/spotify-types";
 import { LinearGradient } from "expo-linear-gradient";
-import Track from "../UiComponents/Reusable/Track";
+import Track from "../UiComponents/Reusable/Track/Track";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import useTrackService from "../services/TrackService";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { isApiErrorResponse } from "../utils/typeGuards";
-import { Entypo } from '@expo/vector-icons';
+import TrackTabModal from "../UiComponents/Reusable/TrackTabModal";
 
 
 function LibraryScreen({
@@ -22,23 +22,12 @@ function LibraryScreen({
 
   const [isTabsModalVisible, setIsTabsModalVisible] = useState(false);
   const [currentTrackForModal, setCurrentTrackForModal] = useState<TrackData | null>(null);
-  const [tabUrlInput, setTabUrlInput] = useState("");
 
-  const { getTracks, getTabs, addTabMut, isAddingTab } = useTrackService()
+  const { getTracks, isAddingTab } = useTrackService()
 
-  const { data: currentTab, isFetching: isFetchingTabs, error: tabsError, refetch: refetchTabs } = useQuery({
-    queryKey: ["currentTab", currentTrackForModal?.track.id || ""], queryFn: () => getTabs({ trackId: currentTrackForModal?.track.id || "" }),
-    staleTime: 500,
-    placeholderData: keepPreviousData,
-    enabled: !!currentTrackForModal?.track.id
-  })
 
-  const addTabs = async (tabUrl: string) => {
-    addTabMut({
-      trackId: currentTrackForModal?.track.id || "",
-      tabUrl: ""
-    })
-  }
+
+
   const openTabsModal = (trackData: TrackData) => {
     setCurrentTrackForModal(trackData);
     setIsTabsModalVisible(true);
@@ -102,41 +91,11 @@ function LibraryScreen({
           onRefresh={() => refetch()}
         />
       )}
-      {isTabsModalVisible && (
-        <View style={tw.style(`bg-opacity-30 bg-white absolute inset-0 flex justify-center items-center z-10`)}>
-          <View style={tw.style(`w-[80%] border-cream flex items-center gap-4 
-          shadow-xl shadow-slate-200 border-2 bg-slate-800 p-4 rounded-lg`, { elevation: 3 })}>
-            <TouchableOpacity
-              style={tw.style(`border border-cream flex justify-center rounded-full absolute top-2 z-50 right-2`)}
-
-              onPress={() => closeTabsModal()}>
-              <Entypo name="cross" size={24} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={tw.style(`border border-cream px-4 py-2 mr-auto flex justify-center rounded-lg`)}>
-              <Text style={tw.style(`text-white`)}> Tabs</Text>
-            </TouchableOpacity>
-            <Text style={tw.style(`text-white text-center`, { fontFamily: "figtree-bold" })}>Add Tabs for</Text>
-            <Text style={tw.style(`text-white text-center`, { fontFamily: "figtree-bold" })}>{currentTrackForModal?.track.name}</Text>
-            <Text style={tw.style(`text-white text-center`, { fontFamily: "figtree-bold" })}>{currentTrackForModal?.track.artists[0].name}</Text>
-            <Image source={{ uri: currentTrackForModal?.track.album.images[0].url }}
-              style={tw.style(`w-40 h-40 rounded-lg border-cream border`)} />
-
-            <TextInput
-              style={tw.style(`bg-[#fff] w-full rounded-2xl px-4 py-2 mb-5 text-black`)}
-              placeholder="Search"
-              placeholderTextColor="gray"
-              value={tabUrlInput}
-              onChangeText={(text) => setTabUrlInput(text)}
-            />
-            <TouchableOpacity
-              onPress={() => addTabs(tabUrlInput)}
-              style={tw.style(`border border-cream px-4 py-2 w-full flex justify-center rounded-lg`)}>
-              <Text style={tw.style(`text-white text-center`)}> Add</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
+      {isTabsModalVisible && currentTrackForModal &&
+        <TrackTabModal
+          currentTrack={currentTrackForModal}
+          closeTabsModal={closeTabsModal}
+          isAddingTab={isAddingTab} />}
     </LinearGradient>
   );
 

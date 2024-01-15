@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { getNoteName } from "../../utils/note-key";
-import { TrackData } from "../../utils/spotify-types";
-import tw from "../../utils/tailwindRN";
+import { getNoteName } from "../../../utils/note-key";
+import { TrackData } from "../../../utils/spotify-types";
+import tw from "../../../utils/tailwindRN";
 import { LinearGradient } from "expo-linear-gradient";
 import { Entypo } from '@expo/vector-icons'
-import useTrackService from "../../services/TrackService";
+import useTrackService from "../../../services/TrackService";
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated'
 
 interface RandomTrackProps {
@@ -102,10 +102,10 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
           Year: {new Date(trackData.track.album.release_date).getFullYear()}
         </Text>
         <TouchableOpacity
-          style={tw`px-4 py-3 border border-black rounded-xl text-2xl bg-cream font-800 shadow-lg mt-auto ml-auto`}
+          style={tw`px-4 py-3 border border-black rounded-xl text-2xl bg-cream font-800 shadow-lg mt-auto  w-full`}
           onPress={() => addToLib()}
         >
-          <Text style={tw.style(``, { fontFamily: "figtree-black" })}>{isAddingTrack ? "Adding..." : "Save"}</Text>
+          <Text style={tw.style(`text-center`, { fontFamily: "figtree-bold" })}>{isAddingTrack ? "Adding..." : "Save"}</Text>
         </TouchableOpacity>
       </LinearGradient>
     </Animated.View >

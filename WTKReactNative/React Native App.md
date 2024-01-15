@@ -60,10 +60,12 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 - Create a separate track component that will be used in the library and bin #DONE 
 - equip it with all options like delete/restore, permanent delete, show/add tabs and open the spotify link
 - Manage context menu boolean in each component separately #DONE 
-- Adding and getting the tabs
+- Adding and getting the tabs #DONE 
+- Displaying tabs if they have been added
 
 ## Combining Library and Deleted into one component
 - The logic is the same, the only difference is the source being passed to the fetch location and the track component. Since there difference is only one variables, I can maybe pass it as a prop from the nav menu
+- While we're at it, let's move the tab modal into a component as it only needs the track as a prop
 
 ## Library
 - See all tracks in the user's library #DONE 

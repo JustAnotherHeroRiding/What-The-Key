@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { View, TouchableOpacity, Image, Text, TextInput } from "react-native";
-import { TrackData } from "../../utils/spotify-types";
-import tw from "../../utils/tailwindRN";
+import { TrackData } from "../../../utils/spotify-types";
+import tw from "../../../utils/tailwindRN";
 import { useState } from "react";
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import useTrackService from "../../services/TrackService";
-import { SessionContext } from "../../utils/Context/Session/SessionContext";
+import useTrackService from "../../../services/TrackService";
+import { SessionContext } from "../../../utils/Context/Session/SessionContext";
 
 
 interface TrackProps {

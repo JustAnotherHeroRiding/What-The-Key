@@ -190,7 +190,7 @@ const useTrackService = () => {
 
             queryClient.invalidateQueries({ queryKey: ['singleTrack', variables.trackId] })
             // Which cache should be invalidated here? I think just the single track cache with the track id, or maybe the url
-            Toast.show(`Tab sccessfully added!}`, {
+            Toast.show(`Tab successfully added!`, {
                 duration: Toast.durations.LONG,
                 position: - 40
                 ,
@@ -214,7 +214,7 @@ const useTrackService = () => {
         }
     })
 
-    const getTabs = async ({ trackId }: getTabProps): Promise<Tab | ApiErrorResponse> => {
+    const getTabs = async ({ trackId }: getTabProps): Promise<Tab[]> => {
         const queryParams = new URLSearchParams({
             userId: session?.user.id ?? "no user",
             trackId: trackId
@@ -230,10 +230,9 @@ const useTrackService = () => {
         );
         const tab = await tabRes.json();
 
-        if (!tab.ok) {
+        if (!tabRes.ok) {
             throw new Error(tab.message || "Error fetching track ids from database");
         }
-
         return tab;
     }
 

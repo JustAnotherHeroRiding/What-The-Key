@@ -184,6 +184,30 @@ const useTrackService = () => {
     })
 
 
+    const addTab = async ({ trackId, source }: addTrackProps): Promise<TrackConnection> => {
+        const response = await fetch(
+            "https://what-the-key.vercel.app/api/track/addTrack", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: session?.user.id,
+                trackId,
+                source
+            })
+        }
+        );
+
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.message || "Error adding track to library");
+        }
+
+        return response.json();
+    };
+
+
     return {
         addTrackMut,
         getTracks,

@@ -10,5 +10,5 @@ export declare class DeleteTrackDto {
 export declare class AddTabsDto {
     userId: string;
     trackId: string;
-    tabsId: string;
+    tabsUrl: string;
 }

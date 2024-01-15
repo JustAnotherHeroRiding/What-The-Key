@@ -53,7 +53,10 @@ __decorate([
     __metadata("design:type", String)
 ], AddTabsDto.prototype, "trackId", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'tabs789', description: 'ID of the tabs' }),
+    (0, swagger_1.ApiProperty)({
+        example: 'tabs.com/adayinthelife',
+        description: 'ID of the tabs',
+    }),
     __metadata("design:type", String)
-], AddTabsDto.prototype, "tabsId", void 0);
+], AddTabsDto.prototype, "tabsUrl", void 0);
 //# sourceMappingURL=dto.js.map

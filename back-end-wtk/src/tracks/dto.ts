@@ -30,6 +30,9 @@ export class AddTabsDto {
   @ApiProperty({ example: 'track456', description: 'ID of the track' })
   trackId: string;
 
-  @ApiProperty({ example: 'tabs789', description: 'ID of the tabs' })
-  tabsId: string;
+  @ApiProperty({
+    example: 'tabs.com/adayinthelife',
+    description: 'ID of the tabs',
+  })
+  tabsUrl: string;
 }

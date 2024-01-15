@@ -78,7 +78,7 @@ Implement react query to simplify all the data management
 - Allow users to reorder the tracks in the library/Bin
 
 ## Animations
-- When search results change, random track is closed there should be a smooth animation
+- When search results change, random track is closed there should be a smooth animation, similar to the balloon effect in the webapp
 
 ## Adding tracks and cache
 - Adding a track works but there was a bug where no toast was displayed yet the track was added #Bug

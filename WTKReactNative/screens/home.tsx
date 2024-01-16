@@ -3,9 +3,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
   TextInput,
-  Alert,
   ScrollView,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";

@@ -67,19 +67,32 @@ function TrackTabModal({ currentTrack, closeTabsModal, isAddingTab }: TrackTabMo
           >
             <Entypo name='cross' size={24} color='white' />
           </TouchableOpacity>
-          <TouchableOpacity
-            disabled={!currentTab}
-            onPress={() => {
-              if (currentTab && currentTab?.length > 0) {
-                const url = currentTab![0].tabUrl
-                Linking.openURL(url).catch(err => console.error(err))
-              }
-            }}
-            style={tw.style(`border border-cream px-4 py-2 mr-auto 
-                    flex justify-center rounded-lg ${!currentTab ? 'opacity-70' : ''}`)}
-          >
-            <Text style={tw.style(`text-white`)}> Tabs</Text>
-          </TouchableOpacity>
+          {currentTab && currentTab?.length > 0 ? (
+            <TouchableOpacity
+              disabled={!currentTab}
+              onPress={() => {
+                if (currentTab && currentTab?.length > 0) {
+                  const url = currentTab![0].tabUrl
+                  Linking.openURL(url).catch(err => console.error(err))
+                }
+              }}
+              style={tw.style(`border border-cream px-4 py-2 mr-auto 
+            flex justify-center rounded-lg ${!currentTab ? 'opacity-70' : ''}`)}
+            >
+              <Text style={tw.style(`text-white`)}> Tabs</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
+                const searchUrl = `https://www.google.com/search?q=${currentTrack?.track.name}+${currentTrack.track.artists[0].name}+guitar+tabs`
+                Linking.openURL(searchUrl).catch(err => console.error(err))
+              }}
+              style={tw.style(`border border-cream px-4 py-2 mr-auto 
+            flex justify-center rounded-lg`)}
+            >
+              <Text style={tw.style(`text-white`)}> Search for tabs</Text>
+            </TouchableOpacity>
+          )}
           <Text style={tw.style(`text-white text-2xl text-center`, { fontFamily: 'figtree-bold' })}>Add Tabs for</Text>
           <Text style={tw.style(`text-white text-3xl text-center`, { fontFamily: 'figtree-bold' })}>
             {currentTrack?.track.name}
@@ -94,7 +107,7 @@ function TrackTabModal({ currentTrack, closeTabsModal, isAddingTab }: TrackTabMo
 
           <TextInput
             style={tw.style(`bg-[#fff] w-full rounded-2xl px-4 py-2 mb-5 text-black`)}
-            placeholder='Search'
+            placeholder='Enter a Tab Url...'
             placeholderTextColor='gray'
             value={tabUrlInput}
             onChangeText={text => setTabUrlInput(text)}

@@ -100,7 +100,7 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 ## Tab url and context menu
 - When the context menu of the first track reaches the second, the text of the second track has a higher z-index. Perhaps I will have to sent the context menu to the parent just like the tab modal. Or maybe it does not have to be absolute #DONE 
 - Create a new component for the context menu #DONE 
-- Style the tab modal, the slate background color does not look good
+- Style the tab modal, the slate background color does not look good #DONE 
 - Currently to find a url we have to leave the app and open a browser manually. Let's embed a link to the system browser/search engine to search for tabs and then go back
 
 ## Single track page

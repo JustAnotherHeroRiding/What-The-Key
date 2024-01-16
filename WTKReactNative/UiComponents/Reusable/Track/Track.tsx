@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, TouchableOpacity, Image, Text, TextInput } from "react-native";
+import { View, TouchableOpacity, Image, Text, LayoutAnimation, Platform, UIManager } from "react-native";
 import { TrackData } from "../../../utils/spotify-types";
 import tw from "../../../utils/tailwindRN";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import useTrackService from "../../../services/TrackService";
 import { SessionContext } from "../../../utils/Context/Session/SessionContext";
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated'
+import { LayoutAnimationConfig } from "../../../utils/animation-config";
 
 
 
@@ -27,6 +28,11 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
     const session = useContext(SessionContext)
 
     const { addTrackMut, deleteTrackMut, isDeletingTrack, isAddingTrack } = useTrackService()
+
+    if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+
 
     const scale = useSharedValue(0);
 
@@ -53,6 +59,7 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
         } else {
             shrink();
             setTimeout(() => {
+                LayoutAnimation.configureNext(LayoutAnimationConfig);
                 setShowContextMenu(false)
             }, 300)
         }

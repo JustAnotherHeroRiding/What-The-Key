@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
-import { HomeScreenNavigationProp } from "../utils/types";
+import { HomeScreenNavigationProp } from "../utils/nav-types";
 import { SpotifyTracksSearchResult, TrackData } from "../utils/spotify-types";
 import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
 import tw from "../utils/tailwindRN";

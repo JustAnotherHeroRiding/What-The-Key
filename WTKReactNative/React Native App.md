@@ -15,7 +15,7 @@ We need to implement the same 4 pages with full feature parity
 - Debounce the input and only make a request after 300 ms have passed of no changes to the query #DONE 
 ##### [Custom debounce](https://sugandsingh5566.medium.com/mastering-throttle-and-debounce-functions-in-react-native-with-javascript-a03965240829) or we will use lodash. For now i am thinking using lodash
 - Search spotify tracks #DONE 
-- Style the search results
+- Style the search results #DONE 
 - Add the close single result button inside of the component itself #DONE 
 - Add tracks to library from the search results #DONE 
 - Search results will be styled similar to spotify, small rows with small images of containers #DONE  
@@ -40,13 +40,6 @@ Implement react query to simplify all the data management
 - Get tracks query #DONE 
 - Permanently delete track mutation #DONE 
 
-
-## Rate Limiting
-- Currently users can spam the refresh button, limit it so that this is not possible
-
-## Zustand
-- If react query is not enough, use zustand to manage global state
-
 ## Toasts
 ###### Bug alert
 - Sometimes toasts are not showing up when adding tracks, even thought they should always be triggered from the mutation
@@ -61,11 +54,7 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 - equip it with all options like delete/restore, permanent delete, show/add tabs and open the spotify link
 - Manage context menu boolean in each component separately #DONE 
 - Adding and getting the tabs #DONE 
-- Displaying tabs if they have been added
-
-## Combining Library and Deleted into one component
-- The logic is the same, the only difference is the source being passed to the fetch location and the track component. Since there difference is only one variables, I can maybe pass it as a prop from the nav menu
-- While we're at it, let's move the tab modal into a component as it only needs the track as a prop
+- Displaying tabs if they have been added #DONE 
 
 ## Library
 - See all tracks in the user's library #DONE 
@@ -78,18 +67,6 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 - See all tracks added to the recycle bin #DONE 
 - Restore tracks to library or delete them permanently #DONE 
 - Display tabs in the context menu #DONE 
-
-
-## Single track page
-- This will have to be a new screen
-- Additional option in the context menu on tracks in the library
-- Here we will display much more info about a track than before, for motivation let's use the notes in the main file
-
-
-
-
-## Drag and drop
-- Allow users to reorder the tracks in the library/Bin
 
 ## Animations
 - When the Random track is closed or opened there should be a smooth animation, similar to the balloon effect in the webapp #DONE 
@@ -109,3 +86,23 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 - The profile picture changes on the client, but it does not get updated in the db #DONE 
 ##### In the sql functions i did not add my url and service key when copying them from the guide. After that i had single and double quotes around the url. Uploading correctly updates the profile now.
 - Implement deep linking for verifying the email [Deep linking Guide](https://supabase.com/docs/guides/auth/native-mobile-deep-linking?platform=react-native)
+
+## Ui Motivation
+- Have a look at the Spotify and ChatGPT apps for possible improvements to my UI
+
+## Tab url
+- Currently to find a url we have to leave the app and open a browser manually. Let's embed a link to the system browser/search engine to search for tabs and then go back
+## Combining Library and Deleted into one component
+- The logic is the same, the only difference is the source being passed to the fetch location and the track component. Since there difference is only one variables, I can maybe pass it as a prop from the nav menu
+- While we're at it, let's move the tab modal into a component as it only needs the track as a prop
+## Single track page
+- This will have to be a new screen
+- Additional option in the context menu on tracks in the library
+- Here we will display much more info about a track than before, for motivation let's use the notes in the main file
+## Drag and drop
+- Allow users to reorder the tracks in the library/Bin
+## Rate Limiting
+- Currently users can spam the refresh button, limit it so that this is not possible
+
+## Zustand
+- If react query is not enough, use zustand to manage global state

@@ -91,7 +91,7 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
                         <TouchableOpacity
                             onPress={() => deleteTrackPermamently()}
                             style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
-                            <MaterialIcons name="delete" size={24} color="white" />
+                            <MaterialIcons name="delete" size={24} color="black" />
                             <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Permanenty Delete</Text>
                         </TouchableOpacity>
                     )}

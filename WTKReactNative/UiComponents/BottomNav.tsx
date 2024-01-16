@@ -2,9 +2,7 @@ import { createBottomTabNavigator, BottomTabBar, BottomTabBarProps } from "@reac
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { StyleProp, TextStyle, Image, Text, View, StyleSheet } from "react-native";
 import colors from "../assets/colors";
-import DeletedScreen from "../screens/deleted";
 import HomeScreen from "../screens/home";
-import LibraryScreen from "../screens/library";
 import { useContext, useEffect } from "react";
 import { SessionContext } from "../utils/Context/Session/SessionContext";
 import AuthScreen from "../screens/AuthScreen";
@@ -12,6 +10,7 @@ import { ProfilePicContext } from "../utils/Context/Profile/ProfileProvider";
 import Avatar from "./Pages/Auth/Avatar";
 import { BlurView } from "expo-blur";
 import tw from "../utils/tailwindRN";
+import LibraryOrDeletedScreen from "../screens/LibraryOrDeleted";
 
 const navTheme = {
     ...DefaultTheme,
@@ -105,8 +104,12 @@ export default function BottomNav() {
                 <Tab.Screen name="Home" component={HomeScreen} />
                 {session && (
                     <>
-                        <Tab.Screen name="Library" component={LibraryScreen} />
-                        <Tab.Screen name="Deleted" component={DeletedScreen} />
+                        <Tab.Screen name="Library" component={LibraryOrDeletedScreen}
+                            initialParams={{ type: "library" }} options={{ title: 'Library' }}
+                        />
+                        <Tab.Screen name="Deleted" component={LibraryOrDeletedScreen}
+                            initialParams={{ type: "recycleBin" }} options={{ title: 'Deleted' }}
+                        />
                     </>
                 )}
                 <Tab.Screen name="Auth"

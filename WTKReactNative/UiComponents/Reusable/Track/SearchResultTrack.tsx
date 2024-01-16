@@ -7,7 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { SessionContext } from "../../../utils/Context/Session/SessionContext";
 import Toast from "react-native-root-toast"
 import { useNavigation } from "@react-navigation/native";
-import { AuthScreenNavigationProp } from "../../../utils/types";
+import { AuthScreenNavigationProp } from "../../../utils/nav-types";
 import useTrackService from "../../../services/TrackService";
 
 

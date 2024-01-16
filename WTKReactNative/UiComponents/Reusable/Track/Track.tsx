@@ -3,12 +3,12 @@ import { View, TouchableOpacity, Image, Text, LayoutAnimation, Platform, UIManag
 import { TrackData } from "../../../utils/spotify-types";
 import tw from "../../../utils/tailwindRN";
 import { useState } from "react";
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import useTrackService from "../../../services/TrackService";
 import { SessionContext } from "../../../utils/Context/Session/SessionContext";
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated'
+import { useSharedValue, withTiming } from 'react-native-reanimated'
 import { LayoutAnimationConfig } from "../../../utils/animation-config";
+import ContextMenu from "../ContextMenu";
 
 
 
@@ -25,7 +25,6 @@ const AddTrackTarget: { [key: string]: 'library' | 'recycleBin' } = {
 
 const Track = ({ track, location, openTabsModal }: TrackProps) => {
     const [showcontextMenu, setShowContextMenu] = useState(false);
-    const session = useContext(SessionContext)
 
     const { addTrackMut, deleteTrackMut, isDeletingTrack, isAddingTrack } = useTrackService()
 
@@ -36,12 +35,6 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
 
     const scale = useSharedValue(0);
 
-    const animatedStyles = useAnimatedStyle(() => {
-        return {
-            transform: [{ scale: scale.value }],
-        };
-
-    });
 
     const grow = () => {
         scale.value = withTiming(1, { duration: 300 });
@@ -63,6 +56,12 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
                 setShowContextMenu(false)
             }, 300)
         }
+    }
+
+    const handleTabClick = () => {
+        openTabsModal(track)
+        contextMenuClick()
+
     }
 
 
@@ -106,44 +105,10 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
                     <Entypo name="dots-three-vertical" size={28} color="white" />
                 </TouchableOpacity>
             </View >
-            {showcontextMenu && (
-                <Animated.View style={animatedStyles}>
-                    <View style={tw.style(`flex flex-col gap-2 items-center  
-             bg-beigeCustom p-2 rounded-lg z-10`)}>
-                        <TouchableOpacity
-                            onPress={() => AddToBinOrRestore()}
-                            style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}>
-                            <MaterialIcons name="library-add" size={24} color="black" />
-                            <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>
-                                {location === "library" ? isAddingTrack ? "Deleting.." : "Delete Track" :
-                                    isAddingTrack ? "Restoring..." : "Restore Track"}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
-                            <MaterialIcons name="audiotrack" size={24} color="black" />
-                            <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Open Details</Text>
-                        </TouchableOpacity>
-                        {session && (
-
-                            <TouchableOpacity onPress={() => {
-                                setShowContextMenu(false)
-                                openTabsModal(track)
-                            }}
-                                style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
-                                <MaterialCommunityIcons name="guitar-pick-outline" size={24} color="black" />
-                                <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Add Tabs</Text>
-                            </TouchableOpacity>
-                        )}
-                        {location === "recycleBin" && (
-
-                            <TouchableOpacity
-                                onPress={() => deleteTrackPermamently()}
-                                style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
-                                <MaterialIcons name="delete" size={24} color="black" />
-                                <Text style={tw.style(`text-black`, { fontFamily: "figtree-bold" })}>Permanenty Delete</Text>
-                            </TouchableOpacity>
-                        )}
-                    </View>
-                </Animated.View>)}
+            {showcontextMenu && <ContextMenu
+                location={location} scale={scale}
+                AddToBinOrRestore={AddToBinOrRestore}
+                deleteTrackPermamently={deleteTrackPermamently} isAddingTrack={isAddingTrack} handleTabClick={handleTabClick} />}
         </>
     )
 }

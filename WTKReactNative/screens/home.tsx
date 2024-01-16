@@ -9,7 +9,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { HomeScreenNavigationProp } from "../utils/nav-types";
 import { SpotifyTracksSearchResult, TrackData } from "../utils/spotify-types";
-import LoadingSpinner from "../UiComponents/Reusable/LoadingSpinner";
+import LoadingSpinner from "../UiComponents/Reusable/Common/LoadingSpinner";
 import tw from "../utils/tailwindRN";
 import _ from 'lodash'
 import { LinearGradient } from 'expo-linear-gradient';

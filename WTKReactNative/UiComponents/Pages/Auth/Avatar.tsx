@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../../utils/supabase'
 import { View, Alert, Image } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker'
-import { CustomButton } from '../../Reusable/CustomButtom'
+import { CustomButton } from '../../Reusable/Common/CustomButtom'
 import tw from '../../../utils/tailwindRN'
 
 interface Props {

@@ -2,7 +2,7 @@ import { ImageBackground, StyleSheet, View, TextStyle } from "react-native";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import LoadingSpinner from "./UiComponents/Reusable/LoadingSpinner";
+import LoadingSpinner from "./UiComponents/Reusable/Common/LoadingSpinner";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "./utils/supabase";
 import { SessionProvider } from "./utils/Context/Session/SessionProvider";

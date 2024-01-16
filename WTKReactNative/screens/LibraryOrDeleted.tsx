@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, TextInput, FlatList, Image } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { LibraryOrDeletedScreenNavigationProp, RootStackParamList } from '../utils/nav-types'
 import tw from '../utils/tailwindRN'
 import Toast from 'react-native-root-toast'
 import { TrackData } from '../utils/spotify-types'
 import { LinearGradient } from 'expo-linear-gradient'
 import Track from '../UiComponents/Reusable/Track/Track'
-import LoadingSpinner from '../UiComponents/Reusable/LoadingSpinner'
+import LoadingSpinner from '../UiComponents/Reusable/Common/LoadingSpinner'
 import useTrackService from '../services/TrackService'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { isApiErrorResponse } from '../utils/typeGuards'
-import TrackTabModal from '../UiComponents/Reusable/TrackTabModal'
+import TrackTabModal from '../UiComponents/Reusable/TrackAdjacent/TrackTabModal'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import colors from '../assets/colors'
-import NotFoundComponent from '../UiComponents/Reusable/NotFound'
+import NotFoundComponent from '../UiComponents/Reusable/Common/NotFound'
 
 const TitleCaseMap: { [key: string]: 'Library' | 'Deleted' } = {
   library: 'Library',
@@ -82,7 +82,7 @@ function LibraryOrDeletedScreen({ navigation }: { navigation: LibraryOrDeletedSc
                 fontFamily: 'figtree-bold',
               })}
             >
-              Building your {TitleCaseMap[type]}...
+              Building your {TitleCaseMap[type] === 'Library' ? 'Library' : 'recycleBin'}...
             </Text>
             <LoadingSpinner />
           </View>
@@ -121,11 +121,9 @@ function LibraryOrDeletedScreen({ navigation }: { navigation: LibraryOrDeletedSc
             keyExtractor={(item, index) => index.toString()}
             ListHeaderComponent={() => (
               <Text
-                style={tw.style(
-                  `text-white border-slate-500 border-b-2
-  Bold text-3xl py-4 text-center`,
-                  { fontFamily: 'figtree-bold' },
-                )}
+                style={tw.style(`text-white border-slate-500 border-b-2 text-3xl py-4 text-center`, {
+                  fontFamily: 'figtree-bold',
+                })}
               >
                 {TitleCaseMap[type]}
               </Text>

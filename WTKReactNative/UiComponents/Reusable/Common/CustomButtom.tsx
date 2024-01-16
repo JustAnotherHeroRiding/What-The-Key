@@ -7,8 +7,8 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native'
-import tw from '../../utils/tailwindRN'
-import colors from '../../assets/colors'
+import tw from '../../../utils/tailwindRN'
+import colors from '../../../assets/colors'
 
 interface CustomButtonProps {
   onPress?: (event: GestureResponderEvent) => void

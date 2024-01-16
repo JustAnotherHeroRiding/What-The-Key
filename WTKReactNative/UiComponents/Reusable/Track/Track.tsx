@@ -7,7 +7,7 @@ import { Entypo } from '@expo/vector-icons'
 import useTrackService from '../../../services/TrackService'
 import { useSharedValue, withTiming } from 'react-native-reanimated'
 import { LayoutAnimationConfig } from '../../../utils/animation-config'
-import ContextMenu from '../ContextMenu'
+import ContextMenu from '../TrackAdjacent/ContextMenu'
 
 interface TrackProps {
   track: TrackData
@@ -54,7 +54,6 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
 
   const handleTabClick = () => {
     openTabsModal(track)
-    contextMenuClick()
   }
 
   const AddToBinOrRestore = async () => {

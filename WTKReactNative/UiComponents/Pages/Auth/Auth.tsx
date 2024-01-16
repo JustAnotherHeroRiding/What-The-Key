@@ -7,7 +7,7 @@ import { supabase } from '../../../utils/supabase'
 import { Input } from 'react-native-elements'
 import { makeRedirectUri } from 'expo-auth-session'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
-import { CustomButton } from '../../Reusable/CustomButtom'
+import { CustomButton } from '../../Reusable/Common/CustomButtom'
 
 WebBrowser.maybeCompleteAuthSession() // required for web only
 const redirectTo = makeRedirectUri()

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import Animated, { SharedValue, useAnimatedStyle } from 'react-native-reanimated'
-import tw from '../../utils/tailwindRN'
+import tw from '../../../utils/tailwindRN'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { SessionContext } from '../../utils/Context/Session/SessionContext'
+import { SessionContext } from '../../../utils/Context/Session/SessionContext'
 
 interface ContextMenuProps {
   location: string

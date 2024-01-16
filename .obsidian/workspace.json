@@ -148,6 +148,7 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/screens/deleted.tsx",
     "WTKReactNative/UiComponents/Reusable/NotFound.tsx",
     "WTKReactNative/screens/LibraryOrDeleted.tsx",
     "WTKReactNative/utils/nav-types.tsx",
@@ -158,7 +159,6 @@
     "WTKReactNative/UiComponents/Reusable/Track/SearchResultTrack.tsx",
     "WTKReactNative/node_modules/react-native-reanimated/src/reanimated2/layoutReanimation/sharedTransitions/index.ts",
     "WTKReactNative/node_modules/react-native-reanimated/src/reanimated2/layoutReanimation/defaultTransitions/SequencedTransition.ts",
-    "WTKReactNative/node_modules/react-native-reanimated/src/reanimated2/layoutReanimation/defaultTransitions/LinearTransition.ts",
     "WTKReactNative/node_modules/react-native-reanimated/Common/cpp/ReanimatedRuntime/RuntimeInitialization.md",
     "WTKReactNative/node_modules/@babel/plugin-transform-object-assign/README.md",
     "WTKReactNative/node_modules/eslint/README.md",

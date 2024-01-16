@@ -8,7 +8,6 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-import colors from "../assets/colors";
 import { StatusBar } from "expo-status-bar";
 import { HomeScreenNavigationProp } from "../utils/nav-types";
 import { SpotifyTracksSearchResult, TrackData } from "../utils/spotify-types";

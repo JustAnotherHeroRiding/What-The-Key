@@ -87,14 +87,16 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 ##### In the sql functions i did not add my url and service key when copying them from the guide. After that i had single and double quotes around the url. Uploading correctly updates the profile now.
 - Implement deep linking for verifying the email [Deep linking Guide](https://supabase.com/docs/guides/auth/native-mobile-deep-linking?platform=react-native)
 
+## Combining Library and Deleted into one component
+- The logic is the same, the only difference is the source being passed to the fetch location and the track component. Since there difference is only one variables, I can maybe pass it as a prop from the nav menu #DONE 
+- While we're at it, let's move the tab modal into a component as it only needs the track as a prop #DONE 
+
 ## Ui Motivation
 - Have a look at the Spotify and ChatGPT apps for possible improvements to my UI
-
-## Tab url
+## Tab url and context menu
 - Currently to find a url we have to leave the app and open a browser manually. Let's embed a link to the system browser/search engine to search for tabs and then go back
-## Combining Library and Deleted into one component
-- The logic is the same, the only difference is the source being passed to the fetch location and the track component. Since there difference is only one variables, I can maybe pass it as a prop from the nav menu
-- While we're at it, let's move the tab modal into a component as it only needs the track as a prop
+- When the context menu of the first track reaches the second, the text of the second track has a higher z-index. Perhaps I will have to sent the context menu to the parent just like the tab modal. Or maybe it does not have to be absolute
+- Create a new component for the context menu
 ## Single track page
 - This will have to be a new screen
 - Additional option in the context menu on tracks in the library

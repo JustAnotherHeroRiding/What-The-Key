@@ -111,8 +111,8 @@ function LibraryOrDeletedScreen({
             renderItem={({ item }) => <Track track={item} location={type} openTabsModal={() => openTabsModal(item)} />}
             keyExtractor={(item, index) => index.toString()}
             ListHeaderComponent={() => (
-              <Text style={tw.style(`text-white border-slate-500 border-b-2 font-figtree
-  Bold text-3xl py-4 text-center`)}>{TitleCaseMap[type]}</Text>
+              <Text style={tw.style(`text-white border-slate-500 border-b-2
+  Bold text-3xl py-4 text-center`, { fontFamily: "figtree-bold" })}>{TitleCaseMap[type]}</Text>
             )}
             refreshing={isFetching}
             onRefresh={() => refetch()}

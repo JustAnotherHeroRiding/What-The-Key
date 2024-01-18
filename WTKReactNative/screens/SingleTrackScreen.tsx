@@ -1,21 +1,18 @@
 import { useRoute } from '@react-navigation/native'
 import { SingleTrackScreenNavigationProp } from '../utils/nav-types'
-import { View, Text, Image, Dimensions } from 'react-native'
+import { View, Text, Image, Dimensions, BackHandler, ScrollView } from 'react-native'
 import useSpotifyService from '../services/SpotifyService'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import tw from '../utils/tailwindRN'
 import LoadingSpinner from '../UiComponents/Reusable/Common/LoadingSpinner'
 import { LinearGradient } from 'expo-linear-gradient'
-import { useEffect } from 'react'
-import BottomNav from '../UiComponents/BottomNav'
 import NotFoundComponent from '../UiComponents/Reusable/Common/NotFound'
+import { useEffect } from 'react'
 
 const screen = Dimensions.get('window')
 const imageSize = screen.width * 0.85
 
 function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNavigationProp }) {
-  const queryClient = useQueryClient()
-
   const route = useRoute()
   const { trackId } = route.params as { trackId: string }
 
@@ -32,10 +29,16 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
   })
 
   useEffect(() => {
-    return () => {
-      queryClient.removeQueries(['SingleTrack', trackId])
-    }
-  }, [trackId, queryClient])
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress)
+
+    return () => backHandler.remove()
+  }, [navigation])
+
+  const handleBackPress = () => {
+    navigation.goBack()
+    return true
+  }
+
   return (
     <LinearGradient
       colors={['#27272a', '#52525b']}
@@ -46,7 +49,7 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
       {isFetching ? (
         <LoadingSpinner />
       ) : track ? (
-        <View style={tw.style(`flex justify-center items-center gap-2 p-4`)}>
+        <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
           <Text style={tw.style(`text-white text-2xl`, { fontFamily: 'figtree-bold' })}>{track?.track.name}</Text>
           <Text style={tw.style(`text-white text-2xl`, { fontFamily: 'figtree-bold' })}>
             {track?.track.artists[0].name}
@@ -58,7 +61,7 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
             })}
             alt={track.track.name}
           />
-        </View>
+        </ScrollView>
       ) : (
         <NotFoundComponent />
       )}

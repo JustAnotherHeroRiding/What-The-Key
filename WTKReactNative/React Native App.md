@@ -111,6 +111,7 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 - This api endpoint will be a new spotify endpoint in our spotify controller #DONE 
 - Figure out why the single track page does not have a 100% opacity
 - Single track page details do not load on the first open, only after the second time
+##### The single track page is proving to be problematic, It might have something to do with the fact that it is a separate stack. The transparent nav theme seems to be affecting it. When I go back using the header, it works.
 Here we will display much more info about a track than before, for motivation let's use the notes in the main file
 
 

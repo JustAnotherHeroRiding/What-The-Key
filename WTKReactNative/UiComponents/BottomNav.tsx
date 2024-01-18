@@ -1,6 +1,6 @@
 import { createBottomTabNavigator, BottomTabBar, BottomTabBarProps } from '@react-navigation/bottom-tabs'
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
-import { StyleProp, TextStyle, Image, Text, View, StyleSheet } from 'react-native'
+import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native'
+import { StyleProp, TextStyle, Image, Text, View, StyleSheet, Touchable, TouchableOpacity } from 'react-native'
 import colors from '../assets/colors'
 import HomeScreen from '../screens/home'
 import { useContext, useEffect } from 'react'
@@ -14,6 +14,8 @@ import LibraryOrDeletedScreen from '../screens/LibraryOrDeleted'
 import SingleTrackScreen from '../screens/SingleTrackScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../utils/nav-types'
+import { AntDesign } from '@expo/vector-icons'
+import { HeaderBackButton } from '@react-navigation/elements'
 
 const navTheme = {
   ...DefaultTheme,
@@ -21,6 +23,18 @@ const navTheme = {
     ...DefaultTheme.colors,
     background: 'transparent',
   },
+}
+
+export const CustomHeader = ({ title }: { title: string }) => {
+  const navigation = useNavigation()
+  return (
+    <View style={tw.style(`h-12 bg-beigeCustom flex items-center justify-center flex-row`)}>
+      <TouchableOpacity style={tw.style(`absolute left-2`)} onPress={() => navigation.goBack()}>
+        <AntDesign name='arrowleft' size={24} color='black' />
+      </TouchableOpacity>
+      <Text style={tw.style(`text-black text-center text-xl`, { fontFamily: 'figtree-bold' })}>{title}</Text>
+    </View>
+  )
 }
 
 const Tab = createBottomTabNavigator()
@@ -31,7 +45,25 @@ export default function BottomNav() {
     <NavigationContainer theme={navTheme}>
       <Stack.Navigator>
         <Stack.Screen name='MainTab' component={BottomTab} options={{ headerShown: false }} />
-        <Stack.Screen name='SingleTrack' component={SingleTrackScreen} options={{ headerShown: false }} />
+        <Stack.Screen
+          name='SingleTrack'
+          component={SingleTrackScreen}
+          options={{
+            headerShown: true,
+            headerTitle: 'Play',
+            headerBackTitleVisible: false,
+            headerTintColor: 'white',
+            headerStyle: {
+              backgroundColor: '#27272a',
+            },
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontSize: 30,
+              fontFamily: 'figtree-bold',
+            },
+            presentation: 'modal',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )

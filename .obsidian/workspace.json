@@ -148,6 +148,7 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/node_modules/lightningcss-darwin-arm64",
     "back-end-wtk/dist/tsconfig.build.tsbuildinfo",
     "back-end-wtk/dist/app/app.service.js.map",
     "back-end-wtk/dist/app/app.service.d.ts",
@@ -158,7 +159,6 @@
     "back-end-wtk/dist/app/app.controller.d.ts",
     "back-end-wtk/dist/utils/spotify-types.js",
     "back-end-wtk/dist/utils/spotify-types.d.ts",
-    "back-end-wtk/dist/tracks/tracks.controller.js.map",
     "Song Key.md",
     "Front-End/README.md",
     "WTKReactNative/React Native App.md",

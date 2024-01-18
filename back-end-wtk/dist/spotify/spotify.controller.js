@@ -36,6 +36,14 @@ let SpotifyController = class SpotifyController {
             throw new common_1.HttpException('Error fetching track', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async fetchTrackDetailed(trackId) {
+        try {
+            return await this.spotifyService.fetchTrackDetailed(trackId);
+        }
+        catch (error) {
+            throw new common_1.HttpException('Error fetching track', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     async searchTracks(searchQuery) {
         try {
             return await this.spotifyService.searchTracks(searchQuery);
@@ -100,6 +108,25 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], SpotifyController.prototype, "fetchTrack", null);
+__decorate([
+    (0, common_1.Get)('trackDetailed/:id'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Fetch a Single Track',
+        description: 'Fetches a single track from Spotify based on its ID, including the audio analysis.',
+    }),
+    (0, swagger_1.ApiParam)({
+        name: 'id',
+        type: String,
+        required: true,
+        description: 'Spotify track ID',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Track details' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], SpotifyController.prototype, "fetchTrackDetailed", null);
 __decorate([
     (0, common_1.Get)('search'),
     (0, swagger_1.ApiOperation)({

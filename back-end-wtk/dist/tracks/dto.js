@@ -58,5 +58,5 @@ __decorate([
         description: 'ID of the tabs',
     }),
     __metadata("design:type", String)
-], AddTabsDto.prototype, "tabsUrl", void 0);
+], AddTabsDto.prototype, "tabUrl", void 0);
 //# sourceMappingURL=dto.js.map

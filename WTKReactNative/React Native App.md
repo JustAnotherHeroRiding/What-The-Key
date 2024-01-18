@@ -103,10 +103,12 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 - Currently to find a url we have to leave the app and open a browser manually. Let's embed a link to the system browser/search engine to search for tabs and then go back #DONE  
 
 ## Single track page
-- This will have to be a new screen
-- Users can access this page from the search results, random track or 
-- Additional option in the context menu on tracks in the library
-- Here we will display much more info about a track than before, for motivation let's use the notes in the main file
+- This will have to be a new screen #DONE 
+- Users can click on the context menu open details option to access it #DONE 
+- Additional option in the context menu on tracks in the library #DONE 
+- Users can also access this page from the search results or the random track
+- The screen should make a call to the audio analysis spotify endpoint that will give more data to work with. This api endpoint will be a new spotify endpoint in our spotify controller
+Here we will display much more info about a track than before, for motivation let's use the notes in the main file
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin
 ## Filters and search

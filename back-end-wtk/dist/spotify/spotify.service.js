@@ -91,6 +91,16 @@ let SpotifyService = class SpotifyService {
             audioFeatures: audioFeaturesResponse.data,
         };
     }
+    async fetchTrackDetailed(trackId) {
+        await this.getAuthToken();
+        const headers = this.createHeaders();
+        const trackResponse = await axios_1.default.get(`https://api.spotify.com/v1/tracks/${trackId}`, { headers });
+        const audioFeaturesResponse = await axios_1.default.get(`https://api.spotify.com/v1/audio-analysis/${trackId}`, { headers });
+        return {
+            track: trackResponse.data,
+            audioFeatures: audioFeaturesResponse.data,
+        };
+    }
     async searchTracks(searchQuery) {
         await this.getAuthToken();
         const headers = this.createHeaders();

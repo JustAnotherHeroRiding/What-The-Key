@@ -117,6 +117,24 @@ export class SpotifyService {
     };
   }
 
+  async fetchTrackDetailed(trackId: string): Promise<TrackData> {
+    await this.getAuthToken();
+
+    const headers = this.createHeaders();
+    const trackResponse = await axios.get(
+      `https://api.spotify.com/v1/tracks/${trackId}`,
+      { headers },
+    );
+    const audioFeaturesResponse = await axios.get(
+      `https://api.spotify.com/v1/audio-analysis/${trackId}`,
+      { headers },
+    );
+    return {
+      track: trackResponse.data,
+      audioFeatures: audioFeaturesResponse.data,
+    };
+  }
+
   async searchTracks(searchQuery: string): Promise<SpotifyTracksSearchResult> {
     await this.getAuthToken();
 

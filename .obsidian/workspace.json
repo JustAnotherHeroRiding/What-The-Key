@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#DONE",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,8 +65,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -147,21 +146,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "fc29fae24287e3d0",
+  "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "back-end-wtk/dist/tsconfig.build.tsbuildinfo",
+    "back-end-wtk/dist/main.d.ts",
+    "back-end-wtk/dist/main.js",
+    "back-end-wtk/dist/main.js.map",
+    "back-end-wtk/dist/app.module.d.ts",
+    "back-end-wtk/dist/app.module.js",
+    "back-end-wtk/dist/app.module.js.map",
+    "back-end-wtk/dist/spotify/spotify.controller.d.ts",
+    "back-end-wtk/dist/spotify/spotify.controller.js",
+    "back-end-wtk/dist/spotify/spotify.controller.js.map",
+    "back-end-wtk/dist/spotify/spotify.service.d.ts",
     "Song Key.md",
     "Front-End/README.md",
     "WTKReactNative/React Native App.md",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/data/match-path-data.ts",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/tsconfig-named.json",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/tsconfig-loader.test.ts",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/try-path.test.ts",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/match-path-sync.test.ts",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/match-path-async.test.ts",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/mapping-entry.test.ts",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/filesystem.test.ts",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/data",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/config-loader.test.ts",
     "WTKReactNative/node_modules/is-weakset/README.md",
     "WTKReactNative/node_modules/is-weakset/CHANGELOG.md",
     "WTKReactNative/node_modules/is-weakref/README.md",
@@ -184,7 +184,6 @@
     "WTKReactNative/node_modules/is-callable/CHANGELOG.md",
     "WTKReactNative/node_modules/is-boolean-object/README.md",
     "WTKReactNative/node_modules/is-boolean-object/CHANGELOG.md",
-    "WTKReactNative/node_modules/is-bigint/README.md",
     "WTKReactNative/node_modules/@tanstack/react-query/build/codemods/coverage/sort-arrow-sprite.png",
     "WTKReactNative/node_modules/@tanstack/react-query/build/codemods/coverage/favicon.png",
     "WTKReactNative/node_modules/react-native-root-toast/Example/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",

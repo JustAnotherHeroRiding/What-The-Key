@@ -68,6 +68,31 @@ export class SpotifyController {
     }
   }
 
+  @Get('trackDetailed/:id')
+  @ApiOperation({
+    summary: 'Fetch a Single Track',
+    description:
+      'Fetches a single track from Spotify based on its ID, including the audio analysis.',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+    required: true,
+    description: 'Spotify track ID',
+  })
+  @ApiResponse({ status: 200, description: 'Track details' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  async fetchTrackDetailed(@Param('id') trackId: string) {
+    try {
+      return await this.spotifyService.fetchTrackDetailed(trackId);
+    } catch (error) {
+      throw new HttpException(
+        'Error fetching track',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Get('search')
   @ApiOperation({
     summary: 'Search Tracks',

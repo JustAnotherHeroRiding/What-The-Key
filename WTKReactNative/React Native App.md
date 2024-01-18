@@ -95,20 +95,26 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 - The formatter is barely doing anything, why is that?  #DONE 
 #### It was because prettier was not set as the default formatter
 
-## Ui Motivation
-- Have a look at the Spotify and ChatGPT apps for possible improvements to my UI
 ## Tab url and context menu
 - When the context menu of the first track reaches the second, the text of the second track has a higher z-index. Perhaps I will have to sent the context menu to the parent just like the tab modal. Or maybe it does not have to be absolute #DONE 
 - Create a new component for the context menu #DONE 
 - Style the tab modal, the slate background color does not look good #DONE 
-- Currently to find a url we have to leave the app and open a browser manually. Let's embed a link to the system browser/search engine to search for tabs and then go back
+- Text input extends beyond the screen width #DONE 
+- Currently to find a url we have to leave the app and open a browser manually. Let's embed a link to the system browser/search engine to search for tabs and then go back #DONE  
 
 ## Single track page
 - This will have to be a new screen
+- Users can access this page from the search results, random track or 
 - Additional option in the context menu on tracks in the library
 - Here we will display much more info about a track than before, for motivation let's use the notes in the main file
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin
+## Filters and search
+- When in the Lib/Bin screen, users can apply filters or search tracks in the library
+- This will be local until I implement an infinite query, after which it will make a db call
+## Ui Motivation
+- Have a look at the Spotify and ChatGPT apps for possible improvements to my UI
+
 ## Rate Limiting
 - Currently users can spam the refresh button, limit it so that this is not possible
 

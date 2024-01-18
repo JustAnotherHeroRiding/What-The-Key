@@ -82,7 +82,7 @@ function LibraryOrDeletedScreen({ navigation }: { navigation: LibraryOrDeletedSc
                 fontFamily: 'figtree-bold',
               })}
             >
-              Building your {TitleCaseMap[type] === 'Library' ? 'Library' : 'recycleBin'}...
+              Building your {TitleCaseMap[type] === 'Library' ? 'Library' : 'Recycle Bin'}...
             </Text>
             <LoadingSpinner />
           </View>

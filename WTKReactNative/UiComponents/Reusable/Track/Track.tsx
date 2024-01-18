@@ -8,6 +8,7 @@ import useTrackService from '../../../services/TrackService'
 import { useSharedValue, withTiming } from 'react-native-reanimated'
 import { LayoutAnimationConfig } from '../../../utils/animation-config'
 import ContextMenu from '../TrackAdjacent/ContextMenu'
+import { useNavigation } from '@react-navigation/native'
 
 interface TrackProps {
   track: TrackData
@@ -106,6 +107,7 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
           deleteTrackPermamently={deleteTrackPermamently}
           isAddingTrack={isAddingTrack}
           handleTabClick={handleTabClick}
+          trackId={track.track.id}
         />
       )}
     </>

@@ -11,6 +11,9 @@ import Avatar from './Pages/Auth/Avatar'
 import { BlurView } from 'expo-blur'
 import tw from '../utils/tailwindRN'
 import LibraryOrDeletedScreen from '../screens/LibraryOrDeleted'
+import SingleTrackScreen from '../screens/SingleTrackScreen'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../utils/nav-types'
 
 const navTheme = {
   ...DefaultTheme,
@@ -21,101 +24,110 @@ const navTheme = {
 }
 
 const Tab = createBottomTabNavigator()
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export default function BottomNav() {
-  const session = useContext(SessionContext)
+  return (
+    <NavigationContainer theme={navTheme}>
+      <Stack.Navigator>
+        <Stack.Screen name='MainTab' component={BottomTab} options={{ headerShown: false }} />
+        <Stack.Screen name='SingleTrack' component={SingleTrackScreen} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
 
+const BottomTab = () => {
+  const session = useContext(SessionContext)
   const { profilePicUrl } = useContext(ProfilePicContext)
 
   return (
-    <NavigationContainer theme={navTheme}>
-      <Tab.Navigator
-        key={session ? 'logged-in' : 'logged-out'} // Add this line
-        screenOptions={({ route }) => ({
-          tabBarBackground: () => {
-            return (
-              <BlurView
-                intensity={60}
-                style={tw.style(
-                  `opacity-60
+    <Tab.Navigator
+      key={session ? 'logged-in' : 'logged-out'} // Add this line
+      screenOptions={({ route }) => ({
+        tabBarBackground: () => {
+          return (
+            <BlurView
+              intensity={60}
+              style={tw.style(
+                `opacity-60
                         rounded-t-full bg-stone-900`,
-                  { ...StyleSheet.absoluteFillObject },
-                )}
-              />
-            )
-          },
-          tabBarIcon: ({ focused }) => {
-            let imageSource
-
-            if (route.name === 'Home') {
-              imageSource = require('../assets/images/home.png')
-            } else if (route.name === 'Library') {
-              imageSource = require('../assets/images/library.png')
-            } else if (route.name === 'Deleted') {
-              imageSource = require('../assets/images/deleted.png')
-            } else if (route.name === 'Auth') {
-              if (profilePicUrl) {
-                return <Avatar size={25} url={profilePicUrl} location='nav' />
-              }
-              imageSource = require('../assets/images/default-user.png')
-            }
-
-            return <Image source={imageSource} style={{ width: 25, height: 25, borderRadius: 40, marginTop: 8 }} />
-          },
-          tabBarLabel: ({ focused, color }) => {
-            let label
-            let customStyle: StyleProp<TextStyle> = {
-              color: focused ? colors.beigeCustom : colors.slate300,
-              fontFamily: focused ? 'figtree-bold' : 'figtree-regular',
-            }
-
-            if (route.name === 'Home') {
-              label = 'Home'
-            } else if (route.name === 'Library') {
-              label = 'Library'
-            } else if (route.name === 'Deleted') {
-              label = 'Deleted'
-            } else if (route.name === 'Auth') {
-              label = session ? 'Profile' : 'Log In'
-            }
-
-            return <Text style={customStyle}>{label}</Text>
-          },
-          tabBarActiveTintColor: colors.beigeCustom,
-          tabBarInactiveTintColor: 'gray',
-          tabBarStyle: {
-            backgroundColor: 'transparent',
-            position: 'absolute',
-            borderTopWidth: 0,
-            elevation: 0, // Removes shadow on Android
-            shadowOpacity: 0, // Removes shadow on iOS
-            borderTopLeftRadius: 9999,
-            borderTopRightRadius: 9999,
-            overflow: 'hidden',
-          },
-          headerShown: false,
-          tabBarHideOnKeyboard: true,
-        })}
-      >
-        <Tab.Screen name='Home' component={HomeScreen} />
-        {session && (
-          <>
-            <Tab.Screen
-              name='Library'
-              component={LibraryOrDeletedScreen}
-              initialParams={{ type: 'library' }}
-              options={{ title: 'Library' }}
+                { ...StyleSheet.absoluteFillObject },
+              )}
             />
-            <Tab.Screen
-              name='Deleted'
-              component={LibraryOrDeletedScreen}
-              initialParams={{ type: 'recycleBin' }}
-              options={{ title: 'Deleted' }}
-            />
-          </>
-        )}
-        <Tab.Screen name='Auth' component={AuthScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+          )
+        },
+        tabBarIcon: ({ focused }) => {
+          let imageSource
+
+          if (route.name === 'Home') {
+            imageSource = require('../assets/images/home.png')
+          } else if (route.name === 'Library') {
+            imageSource = require('../assets/images/library.png')
+          } else if (route.name === 'Deleted') {
+            imageSource = require('../assets/images/deleted.png')
+          } else if (route.name === 'Auth') {
+            if (profilePicUrl) {
+              return <Avatar size={25} url={profilePicUrl} location='nav' />
+            }
+            imageSource = require('../assets/images/default-user.png')
+          }
+
+          return <Image source={imageSource} style={{ width: 25, height: 25, borderRadius: 40, marginTop: 8 }} />
+        },
+        tabBarLabel: ({ focused, color }) => {
+          let label
+          let customStyle: StyleProp<TextStyle> = {
+            color: focused ? colors.beigeCustom : colors.slate300,
+            fontFamily: focused ? 'figtree-bold' : 'figtree-regular',
+          }
+
+          if (route.name === 'Home') {
+            label = 'Home'
+          } else if (route.name === 'Library') {
+            label = 'Library'
+          } else if (route.name === 'Deleted') {
+            label = 'Deleted'
+          } else if (route.name === 'Auth') {
+            label = session ? 'Profile' : 'Log In'
+          }
+
+          return <Text style={customStyle}>{label}</Text>
+        },
+        tabBarActiveTintColor: colors.beigeCustom,
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: {
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          borderTopWidth: 0,
+          elevation: 0, // Removes shadow on Android
+          shadowOpacity: 0, // Removes shadow on iOS
+          borderTopLeftRadius: 9999,
+          borderTopRightRadius: 9999,
+          overflow: 'hidden',
+        },
+        headerShown: false,
+        tabBarHideOnKeyboard: true,
+      })}
+    >
+      <Tab.Screen name='Home' component={HomeScreen} />
+      {session && (
+        <>
+          <Tab.Screen
+            name='Library'
+            component={LibraryOrDeletedScreen}
+            initialParams={{ type: 'library' }}
+            options={{ title: 'Library' }}
+          />
+          <Tab.Screen
+            name='Deleted'
+            component={LibraryOrDeletedScreen}
+            initialParams={{ type: 'recycleBin' }}
+            options={{ title: 'Deleted' }}
+          />
+        </>
+      )}
+      <Tab.Screen name='Auth' component={AuthScreen} />
+    </Tab.Navigator>
   )
 }

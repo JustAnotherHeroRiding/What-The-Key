@@ -106,7 +106,7 @@ function TrackTabModal({ currentTrack, closeTabsModal, isAddingTab }: TrackTabMo
           />
 
           <TextInput
-            style={tw.style(`bg-[#fff] w-full rounded-2xl px-4 py-2 mb-5 text-black`)}
+            style={tw.style(`bg-[#fff] max-w-full rounded-2xl px-4 py-2 mb-5 text-black`)}
             placeholder='Enter a Tab Url...'
             placeholderTextColor='gray'
             value={tabUrlInput}

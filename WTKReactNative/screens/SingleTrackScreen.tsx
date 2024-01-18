@@ -8,3 +8,5 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
 
   return <Text>{trackId}</Text>
 }
+
+export default SingleTrackScreen

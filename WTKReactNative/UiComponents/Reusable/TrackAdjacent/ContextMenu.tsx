@@ -4,6 +4,9 @@ import Animated, { SharedValue, useAnimatedStyle } from 'react-native-reanimated
 import tw from '../../../utils/tailwindRN'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { SessionContext } from '../../../utils/Context/Session/SessionContext'
+import { Link, useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../../../utils/nav-types'
 
 interface ContextMenuProps {
   location: string
@@ -12,6 +15,7 @@ interface ContextMenuProps {
   deleteTrackPermamently: () => Promise<void>
   isAddingTrack: boolean
   handleTabClick: () => void
+  trackId: string
 }
 
 const ContextMenu = ({
@@ -21,6 +25,7 @@ const ContextMenu = ({
   deleteTrackPermamently,
   isAddingTrack,
   handleTabClick,
+  trackId,
 }: ContextMenuProps) => {
   const session = useContext(SessionContext)
 
@@ -29,6 +34,7 @@ const ContextMenu = ({
       transform: [{ scale: scale.value }],
     }
   })
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
   return (
     <Animated.View style={animatedStyles}>
@@ -51,7 +57,10 @@ const ContextMenu = ({
                 : 'Restore Track'}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SingleTrack', { trackId: trackId })}
+          style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}
+        >
           <MaterialIcons name='audiotrack' size={24} color='black' />
           <Text style={tw.style(`text-black`, { fontFamily: 'figtree-bold' })}>Open Details</Text>
         </TouchableOpacity>

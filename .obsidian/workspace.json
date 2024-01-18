@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#DONE",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,7 +65,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -146,8 +147,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b7cc62dce9733f31",
+  "active": "fc29fae24287e3d0",
   "lastOpenFiles": [
+    "Song Key.md",
+    "Front-End/README.md",
+    "WTKReactNative/React Native App.md",
     "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/data/match-path-data.ts",
     "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/tsconfig-named.json",
     "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/tsconfig-loader.test.ts",
@@ -158,7 +162,6 @@
     "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/filesystem.test.ts",
     "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/data",
     "WTKReactNative/node_modules/tsconfig-paths/src/__tests__/config-loader.test.ts",
-    "WTKReactNative/node_modules/tsconfig-paths/src/__tests__",
     "WTKReactNative/node_modules/is-weakset/README.md",
     "WTKReactNative/node_modules/is-weakset/CHANGELOG.md",
     "WTKReactNative/node_modules/is-weakref/README.md",
@@ -182,8 +185,6 @@
     "WTKReactNative/node_modules/is-boolean-object/README.md",
     "WTKReactNative/node_modules/is-boolean-object/CHANGELOG.md",
     "WTKReactNative/node_modules/is-bigint/README.md",
-    "WTKReactNative/node_modules/is-bigint/CHANGELOG.md",
-    "WTKReactNative/node_modules/is-async-function/README.md",
     "WTKReactNative/node_modules/@tanstack/react-query/build/codemods/coverage/sort-arrow-sprite.png",
     "WTKReactNative/node_modules/@tanstack/react-query/build/codemods/coverage/favicon.png",
     "WTKReactNative/node_modules/react-native-root-toast/Example/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",

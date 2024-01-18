@@ -16,6 +16,7 @@ interface ContextMenuProps {
   isAddingTrack: boolean
   handleTabClick: () => void
   trackId: string
+  setShowContextMenu: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ContextMenu = ({
@@ -26,6 +27,7 @@ const ContextMenu = ({
   isAddingTrack,
   handleTabClick,
   trackId,
+  setShowContextMenu,
 }: ContextMenuProps) => {
   const session = useContext(SessionContext)
 
@@ -58,7 +60,10 @@ const ContextMenu = ({
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('SingleTrack', { trackId: trackId })}
+          onPress={() => {
+            setShowContextMenu(false)
+            navigation.navigate('SingleTrack', { trackId: trackId })
+          }}
           style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}
         >
           <MaterialIcons name='audiotrack' size={24} color='black' />

@@ -107,8 +107,15 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 - Users can click on the context menu open details option to access it #DONE 
 - Additional option in the context menu on tracks in the library #DONE 
 - Users can also access this page from the search results or the random track
-- The screen should make a call to the audio analysis spotify endpoint that will give more data to work with. This api endpoint will be a new spotify endpoint in our spotify controller
+- The screen should make a call to the audio analysis spotify endpoint that will give more data to work with.  #DONE 
+- This api endpoint will be a new spotify endpoint in our spotify controller #DONE 
+- Figure out why the single track page does not have a 100% opacity
+- Single track page details do not load on the first open, only after the second time
 Here we will display much more info about a track than before, for motivation let's use the notes in the main file
+
+
+##### Loading spinner size prop
+- Let's make the spinner more customizable instead of having a fixed size
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin
 ## Filters and search

@@ -22,7 +22,7 @@ const TitleCaseMap: { [key: string]: 'Library' | 'Deleted' } = {
 }
 
 function LibraryOrDeletedScreen({ navigation }: { navigation: LibraryOrDeletedScreenNavigationProp }) {
-  const router = useRoute<RouteProp<RootStackParamList, 'LibraryOrDeleted'>>()
+  const router = useRoute<RouteProp<RootStackParamList['MainTab'], 'LibraryOrDeleted'>>()
 
   const type = router.params?.type ?? ''
 

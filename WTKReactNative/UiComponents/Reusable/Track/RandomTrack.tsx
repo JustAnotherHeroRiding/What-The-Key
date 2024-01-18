@@ -15,7 +15,7 @@ interface RandomTrackProps {
 }
 
 const screen = Dimensions.get('window')
-const imageSize = screen.width * 0.85 // 90% of screen width
+const imageSize = screen.width * 0.85
 
 const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) => {
   const scale = useSharedValue(0)
@@ -88,9 +88,10 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
           />
         )}
         <Text style={tw`max-w-[85%]  text-white mb-3 text-xl`}>
-          Key: {getNoteName(trackData.audioFeatures.key)} {trackData.audioFeatures.mode === 1 ? 'Major' : 'Minor'}
+          Key: {getNoteName(trackData.audioFeatures?.key ?? -1)}
+          {trackData.audioFeatures?.mode === 1 ? 'Major' : 'Minor'}
         </Text>
-        <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>BPM: {trackData.audioFeatures.tempo}</Text>
+        <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>BPM: {trackData.audioFeatures?.tempo}</Text>
         <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>
           Year: {new Date(trackData.track.album.release_date).getFullYear()}
         </Text>

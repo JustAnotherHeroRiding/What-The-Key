@@ -8,6 +8,7 @@ import useTrackService from '../../../services/TrackService'
 import { Tab } from 'react-native-elements/dist/tab/Tab'
 import { LinearGradient } from 'expo-linear-gradient'
 import { style } from 'twrnc'
+import LoadingSpinner from '../Common/LoadingSpinner'
 
 interface TrackTabModal {
   currentTrack: TrackData
@@ -67,7 +68,11 @@ function TrackTabModal({ currentTrack, closeTabsModal, isAddingTab }: TrackTabMo
           >
             <Entypo name='cross' size={24} color='white' />
           </TouchableOpacity>
-          {currentTab && currentTab?.length > 0 ? (
+          {isFetchingTabs ? (
+            <View style={tw.style(`mr-auto`)}>
+              <LoadingSpinner />
+            </View>
+          ) : currentTab && currentTab?.length > 0 ? (
             <TouchableOpacity
               disabled={!currentTab}
               onPress={() => {
@@ -106,7 +111,7 @@ function TrackTabModal({ currentTrack, closeTabsModal, isAddingTab }: TrackTabMo
           />
 
           <TextInput
-            style={tw.style(`bg-[#fff] max-w-full rounded-2xl px-4 py-2 mb-5 text-black`)}
+            style={tw.style(`bg-[#fff] w-full max-w-[${imageSize}] rounded-2xl px-4 py-2 mb-5 text-black`)}
             placeholder='Enter a Tab Url...'
             placeholderTextColor='gray'
             value={tabUrlInput}

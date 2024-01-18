@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
-import { LibraryOrDeletedScreenNavigationProp, RootStackParamList } from '../utils/nav-types'
+import { DeletedScreenNavigationProp, LibraryScreenNavigationProp, RootStackParamList } from '../utils/nav-types'
 import tw from '../utils/tailwindRN'
 import Toast from 'react-native-root-toast'
 import { TrackData } from '../utils/spotify-types'
@@ -15,15 +15,19 @@ import { RouteProp, useRoute } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import colors from '../assets/colors'
 import NotFoundComponent from '../UiComponents/Reusable/Common/NotFound'
+import { dataSource } from '../utils/track-service-types'
 
 const TitleCaseMap: { [key: string]: 'Library' | 'Deleted' } = {
   library: 'Library',
   recycleBin: 'Deleted',
 }
 
-function LibraryOrDeletedScreen({ navigation }: { navigation: LibraryOrDeletedScreenNavigationProp }) {
-  const router = useRoute<RouteProp<RootStackParamList['MainTab'], 'LibraryOrDeleted'>>()
-
+function LibraryOrDeletedScreen({
+  navigation,
+}: {
+  navigation: LibraryScreenNavigationProp | DeletedScreenNavigationProp
+}) {
+  const router = useRoute<RouteProp<RootStackParamList['MainTab']>>()
   const type = router.params?.type ?? ''
 
   const isValidType = type === 'library' || type === 'recycleBin'
@@ -50,7 +54,7 @@ function LibraryOrDeletedScreen({ navigation }: { navigation: LibraryOrDeletedSc
     isLoading,
   } = useQuery({
     queryKey: [type],
-    queryFn: () => getTracks({ location: type }),
+    queryFn: () => getTracks({ location: type as dataSource }),
     staleTime: 500,
     placeholderData: keepPreviousData,
   })

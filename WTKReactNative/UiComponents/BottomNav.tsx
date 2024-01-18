@@ -15,7 +15,6 @@ import SingleTrackScreen from '../screens/SingleTrackScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../utils/nav-types'
 import { AntDesign } from '@expo/vector-icons'
-import { HeaderBackButton } from '@react-navigation/elements'
 
 const navTheme = {
   ...DefaultTheme,
@@ -37,7 +36,7 @@ export const CustomHeader = ({ title }: { title: string }) => {
   )
 }
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator<RootStackParamList["MainTab"]>()
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export default function BottomNav() {
@@ -49,7 +48,6 @@ export default function BottomNav() {
           name='SingleTrack'
           component={SingleTrackScreen}
           options={{
-            headerShown: true,
             headerTitle: 'Play',
             headerBackTitleVisible: false,
             headerTintColor: 'white',

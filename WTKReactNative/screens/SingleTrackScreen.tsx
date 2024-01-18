@@ -18,6 +18,7 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
 
   const { getTrackAnalysis } = useSpotifyService()
 
+
   const {
     data: track,
     error,

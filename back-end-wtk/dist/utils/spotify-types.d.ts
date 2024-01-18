@@ -80,10 +80,11 @@ export interface SpotifyFollowers {
     total: number;
 }
 export interface TrackData {
-    audioFeatures: AudioFeatures | TrackDataDetailed;
+    audioFeatures?: AudioFeatures;
     track: SpotifyItem;
+    audioAnalysis?: TrackDataAnalysis;
 }
-export interface TrackDataDetailed {
+export interface TrackDataAnalysis {
     meta: {
         analyzer_version: string;
         platform: string;

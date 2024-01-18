@@ -5,6 +5,7 @@ import {
   AudioFeatures,
   SpotifyTracksSearchResult,
   TrackData,
+  TrackDataAnalysis,
 } from '../utils/spotify-types';
 @Injectable()
 export class SpotifyService {
@@ -125,13 +126,13 @@ export class SpotifyService {
       `https://api.spotify.com/v1/tracks/${trackId}`,
       { headers },
     );
-    const audioFeaturesResponse = await axios.get(
+    const audioFeaturesResponse: { data: TrackDataAnalysis } = await axios.get(
       `https://api.spotify.com/v1/audio-analysis/${trackId}`,
       { headers },
     );
     return {
       track: trackResponse.data,
-      audioFeatures: audioFeaturesResponse.data,
+      audioAnalysis: audioFeaturesResponse.data,
     };
   }
 

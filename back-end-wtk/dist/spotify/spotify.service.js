@@ -98,7 +98,7 @@ let SpotifyService = class SpotifyService {
         const audioFeaturesResponse = await axios_1.default.get(`https://api.spotify.com/v1/audio-analysis/${trackId}`, { headers });
         return {
             track: trackResponse.data,
-            audioFeatures: audioFeaturesResponse.data,
+            audioAnalysis: audioFeaturesResponse.data,
         };
     }
     async searchTracks(searchQuery) {

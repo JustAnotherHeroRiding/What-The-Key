@@ -24,19 +24,7 @@ const navTheme = {
   },
 }
 
-export const CustomHeader = ({ title }: { title: string }) => {
-  const navigation = useNavigation()
-  return (
-    <View style={tw.style(`h-12 bg-beigeCustom flex items-center justify-center flex-row`)}>
-      <TouchableOpacity style={tw.style(`absolute left-2`)} onPress={() => navigation.goBack()}>
-        <AntDesign name='arrowleft' size={24} color='black' />
-      </TouchableOpacity>
-      <Text style={tw.style(`text-black text-center text-xl`, { fontFamily: 'figtree-bold' })}>{title}</Text>
-    </View>
-  )
-}
-
-const Tab = createBottomTabNavigator<RootStackParamList["MainTab"]>()
+const Tab = createBottomTabNavigator<RootStackParamList['MainTab']>()
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export default function BottomNav() {
@@ -49,7 +37,6 @@ export default function BottomNav() {
           component={SingleTrackScreen}
           options={{
             headerTitle: 'Play',
-            headerBackTitleVisible: false,
             headerTintColor: 'white',
             headerStyle: {
               backgroundColor: '#27272a',
@@ -59,7 +46,6 @@ export default function BottomNav() {
               fontSize: 30,
               fontFamily: 'figtree-bold',
             },
-            presentation: 'modal',
           }}
         />
       </Stack.Navigator>

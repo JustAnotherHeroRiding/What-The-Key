@@ -7,6 +7,9 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { Entypo } from '@expo/vector-icons'
 import useTrackService from '../../../services/TrackService'
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../../../utils/nav-types'
 
 interface RandomTrackProps {
   trackData: TrackData
@@ -20,6 +23,7 @@ const imageSize = screen.width * 0.85
 const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) => {
   const scale = useSharedValue(0)
 
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const animatedStyles = useAnimatedStyle(() => {
     return {
       transform: [{ scale: scale.value }],
@@ -60,7 +64,7 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw`p-3 border text-center relative border-cream text-white rounded-lg justify-center items-center mb-auto my-4 shadow-lg`}
+        style={tw`p-4 border text-center relative border-cream text-white rounded-lg justify-center items-center mb-auto my-4 shadow-lg`}
       >
         <TouchableOpacity
           style={tw.style(`border border-cream flex 
@@ -95,14 +99,24 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
         <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>
           Year: {new Date(trackData.track.album.release_date).getFullYear()}
         </Text>
-        <TouchableOpacity
-          style={tw`px-4 py-3 border border-black rounded-xl text-2xl bg-cream font-800 shadow-lg mt-auto  w-full`}
-          onPress={() => addToLib()}
-        >
-          <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>
-            {isAddingTrack ? 'Adding...' : 'Save'}
-          </Text>
-        </TouchableOpacity>
+        <View style={tw.style(`flex gap-2 w-full`)}>
+          <TouchableOpacity
+            style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg mt-auto  w-full`}
+            onPress={() => addToLib()}
+          >
+            <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>
+              {isAddingTrack ? 'Adding...' : 'Save'}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw.style(
+              `px-4 py-3 border border-black mb-2 rounded-xl text-2xl bg-beigeCustom  shadow-lg mt-auto  w-full`,
+            )}
+            onPress={() => navigation.navigate('SingleTrack', { trackId: trackData.track.id })}
+          >
+            <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>See More</Text>
+          </TouchableOpacity>
+        </View>
       </LinearGradient>
     </Animated.View>
   )

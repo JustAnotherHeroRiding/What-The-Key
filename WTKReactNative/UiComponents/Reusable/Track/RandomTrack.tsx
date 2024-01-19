@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native'
-import { getNoteName } from '../../../utils/note-key'
+import { getNoteName } from '../../../utils/track-formating'
 import { TrackData } from '../../../utils/spotify-types'
 import tw from '../../../utils/tailwindRN'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -82,15 +82,14 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
         <Text style={tw`max-w-[80%] text-artistGray font-bold mb-3 text-xl text-center`}>
           {trackData.track.artists[0].name}
         </Text>
-        {trackData.track.album.images[0] && (
-          <Image
-            source={{ uri: trackData.track.album.images[0].url }}
-            style={tw.style(`mb-4 w-[300px] max-w-[${imageSize}px] h-[300px] rounded-md border border-cream`, {
-              objectFit: 'contain',
-            })}
-            alt={trackData.track.name}
-          />
-        )}
+        <Image
+          source={{ uri: trackData.track.album.images[0].url }}
+          style={tw.style(`mb-4 w-[300px] max-w-[${imageSize}px] h-[300px] rounded-md border border-cream`, {
+            objectFit: 'contain',
+          })}
+          alt={trackData.track.name}
+        />
+
         <Text style={tw`max-w-[85%]  text-white mb-3 text-xl`}>
           Key: {getNoteName(trackData.audioFeatures?.key ?? -1)}
           {trackData.audioFeatures?.mode === 1 ? 'Major' : 'Minor'}

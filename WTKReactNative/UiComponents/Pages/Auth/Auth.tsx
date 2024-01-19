@@ -61,7 +61,12 @@ const sendMagicLink = async () => {
 export default function Auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordVisible, setPasswordVisible] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible)
+  }
 
   async function signInWithEmail() {
     setLoading(true)
@@ -122,16 +127,22 @@ export default function Auth() {
           autoCapitalize={'none'}
         />
       </View>
-      <View style={tw.style(`py-4 self-stretch`)}>
+      <View style={tw`py-4 self-stretch`}>
         <Input
           className='text-white'
           label='Password'
           leftIcon={{ type: 'font-awesome', name: 'lock' }}
-          onChangeText={text => setPassword(text)}
+          rightIcon={{
+            type: 'font-awesome',
+            name: passwordVisible ? 'eye-slash' : 'eye',
+            color: 'gray',
+            onPress: togglePasswordVisibility,
+          }}
+          onChangeText={setPassword}
           value={password}
-          secureTextEntry={true}
+          secureTextEntry={!passwordVisible}
           placeholder='Password'
-          autoCapitalize={'none'}
+          autoCapitalize='none'
         />
       </View>
       <View style={tw.style(`py-4 mt-4 self-stretch`)}>

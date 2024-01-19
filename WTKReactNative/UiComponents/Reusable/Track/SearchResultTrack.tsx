@@ -5,10 +5,10 @@ import { Entypo } from '@expo/vector-icons'
 import { useContext, useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import { SessionContext } from '../../../utils/Context/Session/SessionContext'
-import Toast from 'react-native-root-toast'
 import { useNavigation } from '@react-navigation/native'
-import { AuthScreenNavigationProp } from '../../../utils/nav-types'
+import { RootStackParamList } from '../../../utils/nav-types'
 import useTrackService from '../../../services/TrackService'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 interface SearchResultTrackProps {
   track: SpotifyItem
@@ -19,7 +19,7 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const session = useContext(SessionContext)
-  const navigation = useNavigation<AuthScreenNavigationProp>()
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
   const { addTrackMut, isAddingTrack } = useTrackService()
 
@@ -58,7 +58,10 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
                 {isAddingTrack ? 'Adding Track...' : 'Add to Library'}{' '}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}>
+            <TouchableOpacity
+              style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}
+              onPress={() => navigation.navigate('SingleTrack', { trackId: track.id })}
+            >
               <MaterialIcons name='audiotrack' size={24} color='black' />
               <Text style={tw.style(`text-black`, { fontFamily: 'figtree-bold' })}>Open Details</Text>
             </TouchableOpacity>
@@ -69,7 +72,11 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
                 -top-20 bg-beigeCustom p-2 rounded-lg z-5`)}
           >
             <TouchableOpacity
-              onPress={() => navigation.navigate('Auth')}
+              onPress={() => {
+                setShowContextMenu(false)
+                //@ts-ignore
+                navigation.navigate('Auth')
+              }}
               style={tw.style(`py-2 gap-1 w-full justify-between flex-row`)}
             >
               <MaterialIcons name='login' size={24} color='black' />

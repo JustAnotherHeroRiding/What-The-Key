@@ -58,6 +58,7 @@ const TrackDetailed = ({ track }: TrackProps) => {
         <InfoColumn label='BPM' value={track.audioAnalysis?.track.tempo as number} />
         <InfoColumn label='Year' value={new Date(track.track.album.release_date).getFullYear()} />
         <InfoColumn label='Length' value={formatDuration(track.track.duration_ms)} />
+        <InfoColumn label='Time' value={`${track.audioAnalysis?.track.time_signature as number}/4`} />
       </View>
 
       <View style={tw.style(`flex flex-wrap items-center justify-center flex-row gap-2`)}>

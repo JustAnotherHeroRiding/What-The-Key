@@ -42,7 +42,7 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
       colors={['#27272a', '#52525b']}
       start={{ x: 1, y: 0 }}
       end={{ x: 0, y: 0 }}
-      style={tw.style(`flex-grow w-full`)}
+      style={tw.style(`flex-grow w-full opacity-100`)}
     >
       {isFetching ? <LoadingSpinner /> : track ? <TrackDetailed track={track} /> : <NotFoundComponent />}
     </LinearGradient>

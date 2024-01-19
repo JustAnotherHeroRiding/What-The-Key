@@ -1,6 +1,6 @@
-import { createBottomTabNavigator, BottomTabBar, BottomTabBarProps } from '@react-navigation/bottom-tabs'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native'
-import { StyleProp, TextStyle, Image, Text, View, StyleSheet, Touchable, TouchableOpacity } from 'react-native'
+import { StyleProp, TextStyle, Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import colors from '../assets/colors'
 import HomeScreen from '../screens/home'
 import { useContext, useEffect } from 'react'
@@ -24,13 +24,25 @@ const navTheme = {
   },
 }
 
+export const CustomHeader = ({ title }: { title: string }) => {
+  const navigation = useNavigation()
+  return (
+    <View style={tw.style(`h-12 bg-zinc-800 flex items-center justify-center flex-row border-b-2 border-beigeCustom`)}>
+      <TouchableOpacity style={tw.style(`absolute left-2 `)} onPress={() => navigation.goBack()}>
+        <AntDesign name='arrowleft' size={24} color='white' />
+      </TouchableOpacity>
+      <Text style={tw.style(`text-white text-center text-2xl`, { fontFamily: 'figtree-bold' })}>{title}</Text>
+    </View>
+  )
+}
+
 const Tab = createBottomTabNavigator<RootStackParamList['MainTab']>()
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export default function BottomNav() {
   return (
     <NavigationContainer theme={navTheme}>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ animation: 'none' }}>
         <Stack.Screen name='MainTab' component={BottomTab} options={{ headerShown: false }} />
         <Stack.Screen
           name='SingleTrack'
@@ -42,10 +54,7 @@ export default function BottomNav() {
               backgroundColor: '#27272a',
             },
             headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontSize: 30,
-              fontFamily: 'figtree-bold',
-            },
+            header: () => <CustomHeader title='Play' />,
           }}
         />
       </Stack.Navigator>

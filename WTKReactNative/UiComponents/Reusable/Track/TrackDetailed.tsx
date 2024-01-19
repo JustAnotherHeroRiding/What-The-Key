@@ -3,7 +3,7 @@ import { Image, Text, ScrollView, TouchableOpacity, View, StyleProp, TextStyle }
 import { TrackData } from '../../../utils/spotify-types'
 import tw from '../../../utils/tailwindRN'
 import { Dimensions } from 'react-native'
-import { formatDuration, getNoteName } from '../../../utils/track-formating'
+import { formatDuration, formatTimeSignature, getNoteName } from '../../../utils/track-formating'
 import useTrackService from '../../../services/TrackService'
 
 interface TrackProps {
@@ -58,9 +58,17 @@ const TrackDetailed = ({ track }: TrackProps) => {
         <InfoColumn label='BPM' value={track.audioAnalysis?.track.tempo as number} />
         <InfoColumn label='Year' value={new Date(track.track.album.release_date).getFullYear()} />
         <InfoColumn label='Length' value={formatDuration(track.track.duration_ms)} />
-        <InfoColumn label='Time' value={`${track.audioAnalysis?.track.time_signature as number}/4`} />
+        <InfoColumn
+          label='Time'
+          value={`${formatTimeSignature(track.audioAnalysis?.track.time_signature as number)}/4`}
+        />
       </View>
-
+      <TouchableOpacity
+        style={tw`px-4 py-3 border  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
+        // Start the Play modes
+      >
+        <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>Play</Text>
+      </TouchableOpacity>
       <View style={tw.style(`flex flex-wrap items-center justify-center flex-row gap-2`)}>
         <TouchableOpacity
           style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}

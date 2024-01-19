@@ -16,3 +16,11 @@ export function formatDuration(durationMs: number) {
 
   return `${minutes}:${formattedSeconds}`
 }
+
+export function formatTimeSignature(time: number) {
+  if (time === 1) {
+    return 4
+  } else {
+    return time
+  }
+}

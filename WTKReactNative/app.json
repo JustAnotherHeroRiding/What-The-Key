@@ -1,17 +1,19 @@
 {
   "expo": {
-    "name": "WTKReactNative",
+    "name": "WhatTheKey",
     "slug": "WTKReactNative",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -19,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.justanotherheroriding.WTKReactNative"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -32,6 +35,11 @@
           "iCloudContainerEnvironment": "Production"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "af11d910-f02c-4039-9d8a-8e660b72c08b"
+      }
+    }
   }
 }

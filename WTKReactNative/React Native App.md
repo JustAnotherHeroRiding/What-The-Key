@@ -114,8 +114,28 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 ##### The single track page is proving to be problematic, It might have something to do with the fact that it is a separate stack. The transparent nav theme seems to be affecting it. When I go back using the header, it works.
 ###### Turns out that the animation of the Stack.Navigator was causing the issue as the transition is problematic. I disabled it as there is no mention of this issue anywhere.
 - Display the basic information #DONE 
-- Add a metronome using the tempo data of each section
 Here we will display much more info about a track than before, for motivation let's use the notes in the main file
+
+
+## Intermission - Installing it
+- Generate an APK that we can install locally #DONE 
+ [APK_URL](https://expo.dev/artifacts/eas/3VCd3Fy9B9vJ3d25BKYKaJ.apk)
+- Install it and see how it feels to use it
+
+
+## Play mode
+When we click play, we start the play along experience
+- Use the bars and add some sort of indicator to show the progress
+- Add a tick on each beat, play a sound if the users wants to function as a metronome
+- We can loop over all of the beats
+- Sections can be used to change the track info displayed
+- Each section will display  the tempo, key , mode, time-signature
+- For segments, try to use the pitch and timbre, but learn first what they represent
+- For tatums, as they are less than a beat, we can have some sort of visual indicator but no sound or progress on the bar
+- Scale schematics and chords will display in the middle of the image while track is playing
+- Let's try to play it using a the user's own spotify account
+- The image, name and artist will shift to the bottom
+- Allow user to mute the track and only use the metronome, or just hear the track to play along
 
 
 
@@ -124,6 +144,11 @@ Here we will display much more info about a track than before, for motivation le
 - Reset password
 - Loading indicators when logging in
 - Add the Oauth providers(spotify and github)
+
+## Redesign the library/deleted split
+- Library should be for songs I am learning to play
+- Deleted should be for songs I have already learned or stopped learning
+- Maybe add a tag and have many sections so that users can filter them more effectively
 
 
 ##### Loading spinner size prop

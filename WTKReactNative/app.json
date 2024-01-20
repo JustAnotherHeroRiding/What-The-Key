@@ -4,7 +4,7 @@
     "slug": "WTKReactNative",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.png",
+    "icon": "./assets/images/background.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/splash.png",

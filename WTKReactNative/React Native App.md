@@ -120,9 +120,15 @@ Here we will display much more info about a track than before, for motivation le
 ## Intermission - Installing it
 - Generate an APK that we can install locally #DONE 
  [APK_URL](https://expo.dev/artifacts/eas/3VCd3Fy9B9vJ3d25BKYKaJ.apk)
-- Install it and see how it feels to use it
+- Install it and see how it feels to use it #DONE 
+- Change icon, name and splash screen #DONE 
 
-
+## Sign In/up Experience
+- Show password button
+- Reset password
+- Loading indicators when logging in
+- Add the Oauth providers(spotify and github)
+- Signing seems to be kind of buggy and is not refreshing or responsive at all even though the user will get signed in, maybe redirect on success
 ## Play mode
 When we click play, we start the play along experience
 - Use the bars and add some sort of indicator to show the progress
@@ -139,11 +145,6 @@ When we click play, we start the play along experience
 
 
 
-## Sign In/up Experience
-- Show password button
-- Reset password
-- Loading indicators when logging in
-- Add the Oauth providers(spotify and github)
 
 ## Redesign the library/deleted split
 - Library should be for songs I am learning to play
@@ -157,6 +158,7 @@ When we click play, we start the play along experience
 - Allow users to reorder the tracks in the library/Bin
 ## Filters and search
 - When in the Lib/Bin screen, users can apply filters or search tracks in the library
+- The search bar can be somewhere on top in the header, with the title on the left edge
 - This will be local until I implement an infinite query, after which it will make a db call
 ## Ui Motivation
 - Have a look at the Spotify and ChatGPT apps for possible improvements to my UI

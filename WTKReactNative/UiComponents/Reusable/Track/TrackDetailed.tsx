@@ -90,6 +90,19 @@ const TrackDetailed = ({ track }: TrackProps) => {
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Chords</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
+          // Show the triads from the key/chords in the song's key
+        >
+          <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Triads</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
+          // Chord Progressions
+        >
+          <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Chord Progressions</Text>
+        </TouchableOpacity>
+        
       </View>
     </ScrollView>
   )

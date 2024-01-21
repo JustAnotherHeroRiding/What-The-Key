@@ -144,12 +144,14 @@ When we click play, we start the play along experience
 - Allow user to mute the track and only use the metronome, or just hear the track to play along
 
 
-
-
 ## Redesign the library/deleted split
 - Library should be for songs I am learning to play
 - Deleted should be for songs I have already learned or stopped learning
 - Maybe add a tag and have many sections so that users can filter them more effectively
+
+## Shazam integration
+- Activate the mic to detect a song
+- Afterwards search for that song and open the track details page
 
 
 ##### Loading spinner size prop

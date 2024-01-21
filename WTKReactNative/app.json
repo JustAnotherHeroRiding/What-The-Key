@@ -1,14 +1,15 @@
 {
   "expo": {
+    "scheme": "WhatTheKeyNative.app",
     "name": "WhatTheKey",
     "slug": "WTKReactNative",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/background.png",
+    "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/images/background.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -19,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.justanotherheroriding.WTKReactNative"
@@ -27,7 +28,6 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "scheme": "com.supabase",
     "plugins": [
       [
         "expo-document-picker",

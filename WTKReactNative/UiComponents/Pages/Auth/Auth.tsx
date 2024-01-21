@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Button, TouchableOpacity, StyleSheet, Alert } from 'react-native'
-import colors from '../../../assets/colors'
+import { View, Alert } from 'react-native'
 import * as WebBrowser from 'expo-web-browser'
 import tw from '../../../utils/tailwindRN'
 import { supabase } from '../../../utils/supabase'
@@ -8,11 +7,14 @@ import { Input } from 'react-native-elements'
 import { makeRedirectUri } from 'expo-auth-session'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
 import { CustomButton } from '../../Reusable/Common/CustomButtom'
+import * as Linking from 'expo-linking'
 
 WebBrowser.maybeCompleteAuthSession() // required for web only
 const redirectTo = makeRedirectUri()
+console.log({ redirectTo })
 
 const createSessionFromUrl = async (url: string) => {
+  console.log("Creating session")
   const { params, errorCode } = QueryParams.getQueryParams(url)
 
   if (errorCode) throw new Error(errorCode)
@@ -28,27 +30,31 @@ const createSessionFromUrl = async (url: string) => {
   return data.session
 }
 
-const performOAuth = async () => {
+const signInWithOAuth = async (provider: 'spotify' | 'github') => {
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'github',
+    provider: provider,
     options: {
       redirectTo,
       skipBrowserRedirect: true,
     },
   })
+  console.log(data)
   if (error) throw error
 
-  const res = await WebBrowser.openAuthSessionAsync(data?.url ?? '', redirectTo)
+  const res = await WebBrowser.openAuthSessionAsync(data.url, redirectTo)
+
+  console.log(res)
 
   if (res.type === 'success') {
     const { url } = res
+    console.log('SuccessUrl', { url })
     await createSessionFromUrl(url)
   }
 }
 
-const sendMagicLink = async () => {
-  const { error } = await supabase.auth.signInWithOtp({
-    email: 'example@email.com',
+const sendMagicLink = async (email: string) => {
+  const { data, error } = await supabase.auth.signInWithOtp({
+    email: email,
     options: {
       emailRedirectTo: redirectTo,
     },
@@ -59,6 +65,10 @@ const sendMagicLink = async () => {
 }
 
 export default function Auth() {
+  const url = Linking.useURL()
+  console.log('Url:', { url })
+  if (url) createSessionFromUrl(url)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -100,16 +110,6 @@ export default function Auth() {
     if (!session) Alert.alert('Please check your inbox for email verification!')
     setLoading(false)
   }
-  const styles = StyleSheet.create({
-    verticallySpaced: {
-      paddingTop: 4,
-      paddingBottom: 4,
-      alignSelf: 'stretch',
-    },
-    mt20: {
-      marginTop: 20,
-    },
-  })
   return (
     <View
       style={tw.style(
@@ -145,12 +145,32 @@ export default function Auth() {
           autoCapitalize='none'
         />
       </View>
-      <View style={tw.style(`py-4 mt-4 self-stretch`)}>
+      <View style={tw.style(`flex-row gap-4 py-4 mt-4 self-stretch`)}>
+        <CustomButton
+          title='Spotify'
+          onPress={() => signInWithOAuth('spotify')}
+          txtStyle={tw`text-black`}
+          btnStyle={tw`bg-cream flex-1`}
+        />
+        <CustomButton
+          title='Github'
+          onPress={() => signInWithOAuth('github')}
+          txtStyle={tw`text-black`}
+          btnStyle={tw`bg-cream flex-1`}
+        />
+      </View>
+      <View style={tw.style(`flex-row gap-4 py-4 mt-4 self-stretch`)}>
         <CustomButton
           title='Sign In'
           onPress={() => signInWithEmail()}
           txtStyle={tw`text-black`}
-          btnStyle={tw`bg-cream`}
+          btnStyle={tw`bg-cream flex-1`}
+        />
+        <CustomButton
+          title='Magic Link'
+          onPress={() => sendMagicLink(email)}
+          txtStyle={tw`text-black`}
+          btnStyle={tw`bg-cream flex-1`}
         />
       </View>
       <View style={tw.style(`self-stretch`)}>

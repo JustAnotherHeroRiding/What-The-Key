@@ -1,6 +1,6 @@
 {
   "expo": {
-    "scheme": "WhatTheKeyNative.app",
+    "scheme": "whatthekey.app",
     "name": "WhatTheKey",
     "slug": "WTKReactNative",
     "version": "1.0.0",

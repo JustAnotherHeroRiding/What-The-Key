@@ -132,9 +132,18 @@ Here we will display much more info about a track than before, for motivation le
 - Signing seems to be kind of buggy and is not refreshing or responsive at all even though the user will get signed in, maybe redirect on success #DONE 
 - Icons for the provider log in #DONE 
 - Reset password #DONE 
-- Input validation to make sure that the email is valid before the buttons will make a request
-- Loading indicators when logging in
-- Show a message when requesting a magic link
+- Input validation to make sure that the email is valid before the buttons will make a request #DONE 
+- Loading indicators when logging in #DONE 
+- Show a message when requesting a magic link #DONE 
+
+## Supabase emails Design
+Style the emails that supabase sends for email confirmation/reset password and everything else that we will use
+###### It seems that Css is not being applied in the email being sent
+###### After using the Figma plugin Marka, it generated a template that was rendered as intended on gmail. I have added a template for the forgot password, email but it needs a lot of work.
+#### [Figma Email Templates](https://www.figma.com/file/aBU8v75k4laGQ5Qg7MaDod/Mail-design-system-for-Marka-Plugin-(Community)-(Copy)?type=design&node-id=0-1&mode=design&t=Oj8jOeNboUIQeaaV-0)
+- Working email styles #DONE 
+- Personalize the forgot password email using Figma to style the email
+- Use a similar looking template for sign up and magic link emails
 
 ## Play mode
 When we click play, we start the play along experience
@@ -159,10 +168,6 @@ When we click play, we start the play along experience
 ## Shazam integration
 - Activate the mic to detect a song
 - Afterwards search for that song and open the track details page
-
-## Supabase emails Design
-- Style the emails that supabase sends for email confirmation/reset password and everything else that we will use
-
 
 ##### Loading spinner size prop
 - Let's make the spinner more customizable instead of having a fixed size

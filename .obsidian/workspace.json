@@ -148,6 +148,7 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/utils/config/auth-email-template.html",
     "WTKReactNative/utils/toasts.tsx",
     "WTKReactNative/utils/config/tailwindRN.ts",
     "WTKReactNative/utils/config/animation-config.ts",
@@ -158,7 +159,6 @@
     "WTKReactNative/utils/types/spotify-types.ts",
     "WTKReactNative/utils/types/nav-types.tsx",
     "WTKReactNative/utils/types",
-    "WTKReactNative/android/app/build/intermediates/incremental/debug/mergeDebugResources/merged.dir/values-zu/values-zu.xml",
     "WTKReactNative/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png",
     "WTKReactNative/node_modules/expo-splash-screen/android/src/main/res/drawable/splashscreen_image.png",
     "WTKReactNative/node_modules/expo-splash-screen/README.md",

@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../../utils/supabase'
-import { StyleSheet, View, Alert, Text } from 'react-native'
-import { Button, Input } from 'react-native-elements'
+import { View, Alert } from 'react-native'
+import { Input } from 'react-native-elements'
 import { Session } from '@supabase/supabase-js'
 import tw from '../../../utils/tailwindRN'
 import { CustomButton } from '../../Reusable/Common/CustomButtom'
@@ -171,7 +171,10 @@ export default function Account({ session }: { session: Session }) {
       <View style={tw.style(`self-stretch`)}>
         <CustomButton
           title='Sign Out'
-          onPress={() => supabase.auth.signOut()}
+          onPress={() => {
+            setProfilePicUrl(null)
+            supabase.auth.signOut()
+          }}
           txtStyle={tw`text-black`}
           btnStyle={tw`bg-cream`}
         />

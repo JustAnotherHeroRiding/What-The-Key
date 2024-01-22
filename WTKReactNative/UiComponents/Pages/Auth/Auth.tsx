@@ -8,13 +8,12 @@ import { makeRedirectUri } from 'expo-auth-session'
 import * as QueryParams from 'expo-auth-session/build/QueryParams'
 import { CustomButton } from '../../Reusable/Common/CustomButtom'
 import * as Linking from 'expo-linking'
+import { LinearGradient } from 'expo-linear-gradient'
 
 WebBrowser.maybeCompleteAuthSession() // required for web only
 const redirectTo = makeRedirectUri()
-console.log({ redirectTo })
 
 const createSessionFromUrl = async (url: string) => {
-  console.log("Creating session")
   const { params, errorCode } = QueryParams.getQueryParams(url)
 
   if (errorCode) throw new Error(errorCode)
@@ -38,16 +37,12 @@ const signInWithOAuth = async (provider: 'spotify' | 'github') => {
       skipBrowserRedirect: true,
     },
   })
-  console.log(data)
   if (error) throw error
 
   const res = await WebBrowser.openAuthSessionAsync(data.url, redirectTo)
 
-  console.log(res)
-
   if (res.type === 'success') {
     const { url } = res
-    console.log('SuccessUrl', { url })
     await createSessionFromUrl(url)
   }
 }
@@ -66,7 +61,6 @@ const sendMagicLink = async (email: string) => {
 
 export default function Auth() {
   const url = Linking.useURL()
-  console.log('Url:', { url })
   if (url) createSessionFromUrl(url)
 
   const [email, setEmail] = useState('')
@@ -111,7 +105,10 @@ export default function Auth() {
     setLoading(false)
   }
   return (
-    <View
+    <LinearGradient
+      colors={['#27272a', '#52525b']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
       style={tw.style(
         `p-4 flex flex-col justify-center items-center bg-black mx-4 rounded-md my-auto border border-cream`,
       )}
@@ -120,7 +117,7 @@ export default function Auth() {
         <Input
           className='text-white'
           label='Email'
-          leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+          leftIcon={{ type: 'font-awesome', name: 'envelope', color: '#ffffff' }}
           onChangeText={text => setEmail(text)}
           value={email}
           placeholder='email@address.com'
@@ -131,7 +128,7 @@ export default function Auth() {
         <Input
           className='text-white'
           label='Password'
-          leftIcon={{ type: 'font-awesome', name: 'lock' }}
+          leftIcon={{ type: 'font-awesome', name: 'lock', color: '#ffffff' }}
           rightIcon={{
             type: 'font-awesome',
             name: passwordVisible ? 'eye-slash' : 'eye',
@@ -151,37 +148,37 @@ export default function Auth() {
           onPress={() => signInWithOAuth('spotify')}
           txtStyle={tw`text-black`}
           btnStyle={tw`bg-cream flex-1`}
+          iconName='spotify'
         />
         <CustomButton
           title='Github'
           onPress={() => signInWithOAuth('github')}
           txtStyle={tw`text-black`}
           btnStyle={tw`bg-cream flex-1`}
+          iconName='github'
         />
       </View>
-      <View style={tw.style(`flex-row gap-4 py-4 mt-4 self-stretch`)}>
+      <CustomButton
+        title='Sign In'
+        onPress={() => signInWithEmail()}
+        txtStyle={tw`text-black`}
+        btnStyle={tw`bg-cream flex-1 mb-4 w-1/2`}
+      />
+      <View style={tw.style(`self-stretch mx-auto gap-4`)}>
         <CustomButton
-          title='Sign In'
-          onPress={() => signInWithEmail()}
-          txtStyle={tw`text-black`}
-          btnStyle={tw`bg-cream flex-1`}
-        />
-        <CustomButton
-          title='Magic Link'
+          title='Log in without password'
           onPress={() => sendMagicLink(email)}
-          txtStyle={tw`text-black`}
-          btnStyle={tw`bg-cream flex-1`}
+          txtStyle={tw`text-white text-xs text-center`}
+          btnStyle={tw`bg-transparent shadow-none border border-slate-300 flex-1 rounded-3xl`}
         />
-      </View>
-      <View style={tw.style(`self-stretch`)}>
         <CustomButton
           title='Sign up'
           disabled={loading}
           onPress={() => signUpWithEmail()}
           txtStyle={tw`text-black`}
-          btnStyle={tw`bg-beigeCustom`}
+          btnStyle={tw`bg-beigeCustom flex-1`}
         />
       </View>
-    </View>
+    </LinearGradient>
   )
 }

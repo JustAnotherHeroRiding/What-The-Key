@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.justanotherheroriding.WTKReactNative"
+      "package": "com.justanotherheroriding.wtkreactnative"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

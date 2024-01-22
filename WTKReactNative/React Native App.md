@@ -124,11 +124,16 @@ Here we will display much more info about a track than before, for motivation le
 - Change icon, name and splash screen #DONE 
 
 ## Sign In/up Experience
-- Show password button
+- Show password button #DONE 
+- Show error if the email is not valid
+- DEEP LINKS #DONE 
+##### When signing out the profile image should be reset #DONE 
+- Add the Oauth providers(spotify and github) #DONE 
+- Signing seems to be kind of buggy and is not refreshing or responsive at all even though the user will get signed in, maybe redirect on success #DONE 
 - Reset password
 - Loading indicators when logging in
-- Add the Oauth providers(spotify and github)
-- Signing seems to be kind of buggy and is not refreshing or responsive at all even though the user will get signed in, maybe redirect on success
+- Show a message when requesting a magic link
+- Icons for the provider log in
 ## Play mode
 When we click play, we start the play along experience
 - Use the bars and add some sort of indicator to show the progress

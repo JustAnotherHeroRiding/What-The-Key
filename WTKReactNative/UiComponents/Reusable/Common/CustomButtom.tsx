@@ -7,8 +7,10 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native'
-import tw from '../../../utils/tailwindRN'
+import React from 'react'
 import colors from '../../../assets/colors'
+import { Entypo } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 
 interface CustomButtonProps {
   onPress?: (event: GestureResponderEvent) => void
@@ -17,12 +19,30 @@ interface CustomButtonProps {
   disabled?: boolean
   btnStyle?: StyleProp<ViewStyle> // Add this line for custom styles
   txtStyle?: StyleProp<TextStyle> // Add this line for custom styles
+  iconName?: 'github' | 'spotify'
+}
+
+const btnIconMap: {
+  spotify: React.JSX.Element
+  github: React.JSX.Element
+} = {
+  spotify: <Entypo name='spotify' size={24} color='green' />,
+  github: <AntDesign name='github' size={24} color='black' />,
 }
 
 // Custom Button Component
-export const CustomButton = ({ onPress, title, loading, disabled, btnStyle, txtStyle }: CustomButtonProps) => {
+export const CustomButton = ({
+  onPress,
+  title,
+  loading,
+  disabled,
+  btnStyle,
+  txtStyle,
+  iconName,
+}: CustomButtonProps) => {
   return (
     <TouchableOpacity style={[styles.button, btnStyle]} onPress={onPress} disabled={loading || disabled}>
+      {iconName && btnIconMap[iconName]}
       <Text style={[styles.buttonText, txtStyle]}>{loading ? 'Loading ...' : title}</Text>
     </TouchableOpacity>
   )
@@ -38,6 +58,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     backgroundColor: colors.cream, // Default color, can be overridden
+    flexDirection: 'row',
+    gap: 4,
   },
   buttonText: {
     fontSize: 16,

@@ -7,12 +7,13 @@ import tw from '../utils/config/tailwindRN'
 import LoadingSpinner from '../UiComponents/Reusable/Common/LoadingSpinner'
 import { LinearGradient } from 'expo-linear-gradient'
 import NotFoundComponent from '../UiComponents/Reusable/Common/NotFound'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import TrackDetailed from '../UiComponents/Reusable/Track/TrackDetailed'
+import { Sources } from '../utils/types/track-service-types'
 
 function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNavigationProp }) {
   const route = useRoute()
-  const { trackId } = route.params as { trackId: string }
+  const { trackId, src } = route.params as { trackId: string; src: Sources }
 
   const { getTrackAnalysis } = useSpotifyService()
 
@@ -44,7 +45,7 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
       end={{ x: 0, y: 0 }}
       style={tw.style(`flex-grow w-full opacity-100`)}
     >
-      {isFetching ? <LoadingSpinner /> : track ? <TrackDetailed track={track} /> : <NotFoundComponent />}
+      {isFetching ? <LoadingSpinner /> : track ? <TrackDetailed track={track} src={src} /> : <NotFoundComponent />}
     </LinearGradient>
   )
 }

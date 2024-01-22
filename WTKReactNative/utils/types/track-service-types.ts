@@ -1,40 +1,42 @@
-export type dataSource = "library" | "recycleBin";
+export type dataSource = 'library' | 'recycleBin'
 export interface addTrackProps {
-  trackId: string;
-  source: dataSource;
+  trackId: string
+  source: dataSource
 }
 
 export interface addTabProps {
-  trackId: string;
-  tabUrl: string;
+  trackId: string
+  tabUrl: string
 }
 
 export interface getTabProps {
-  trackId: string;
+  trackId: string
 }
 
 export interface getTracksProps {
-  location: dataSource;
+  location: dataSource
 }
 
 export interface deleteTrackProps {
-  trackId: string;
+  trackId: string
 }
 
 export interface TrackConnection {
-  id: string;
-  libraryUserId: number;
-  recycleBinUserId: number;
+  id: string
+  libraryUserId: number
+  recycleBinUserId: number
 }
 
 export interface ApiErrorResponse {
-  message: string;
-  statusCode: number;
+  message: string
+  statusCode: number
 }
 
 export interface Tab {
-  id: number;
-  userId: number;
-  trackId: string;
-  tabUrl: string;
+  id: number
+  userId: number
+  trackId: string
+  tabUrl: string
 }
+
+export type Sources = 'library' | 'recycleBin' | 'home';

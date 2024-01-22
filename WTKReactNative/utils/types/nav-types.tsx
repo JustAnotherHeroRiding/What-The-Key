@@ -1,6 +1,6 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
-import { dataSource } from './track-service-types'
+import { Sources, dataSource } from './track-service-types'
 
 export type RootStackParamList = {
   MainTab: {
@@ -10,13 +10,12 @@ export type RootStackParamList = {
     Auth: undefined
   }
 
-  SingleTrack: { trackId: string }
+  SingleTrack: { trackId: string; src: Sources }
 }
 
 export type HomeScreenNavigationProp = BottomTabNavigationProp<RootStackParamList['MainTab'], 'Home'>
 export type LibraryScreenNavigationProp = BottomTabNavigationProp<RootStackParamList['MainTab'], 'Library'>
 export type DeletedScreenNavigationProp = BottomTabNavigationProp<RootStackParamList['MainTab'], 'Deleted'>
-
 
 export type AuthScreenNavigationProp = BottomTabNavigationProp<RootStackParamList['MainTab'], 'Auth'>
 

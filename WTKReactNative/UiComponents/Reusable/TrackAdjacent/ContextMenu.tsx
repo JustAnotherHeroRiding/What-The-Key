@@ -7,6 +7,7 @@ import { SessionContext } from '../../../utils/Context/Session/SessionContext'
 import { Link, useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
+import { Sources } from '../../../utils/types/track-service-types'
 
 interface ContextMenuProps {
   location: string
@@ -62,7 +63,7 @@ const ContextMenu = ({
         <TouchableOpacity
           onPress={() => {
             setShowContextMenu(false)
-            navigation.navigate('SingleTrack', { trackId: trackId })
+            navigation.navigate('SingleTrack', { trackId: trackId, src: location as Sources })
           }}
           style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}
         >

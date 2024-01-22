@@ -1,4 +1,4 @@
-import { SpotifyTracksSearchResult, TrackData } from '../utils/spotify-types'
+import { SpotifyTracksSearchResult, TrackData } from '../utils/types/spotify-types'
 
 interface SearchProps {
   queryString: string

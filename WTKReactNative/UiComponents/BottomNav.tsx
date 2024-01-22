@@ -9,11 +9,11 @@ import AuthScreen from '../screens/AuthScreen'
 import { ProfilePicContext } from '../utils/Context/Profile/ProfileProvider'
 import Avatar from './Pages/Auth/Avatar'
 import { BlurView } from 'expo-blur'
-import tw from '../utils/tailwindRN'
+import tw from '../utils/config/tailwindRN'
 import LibraryOrDeletedScreen from '../screens/LibraryOrDeleted'
 import SingleTrackScreen from '../screens/SingleTrackScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../utils/nav-types'
+import { RootStackParamList } from '../utils/types/nav-types'
 import { AntDesign } from '@expo/vector-icons'
 
 const navTheme = {

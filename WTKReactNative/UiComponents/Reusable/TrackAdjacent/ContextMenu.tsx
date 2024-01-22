@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import Animated, { SharedValue, useAnimatedStyle } from 'react-native-reanimated'
-import tw from '../../../utils/tailwindRN'
+import tw from '../../../utils/config/tailwindRN'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { SessionContext } from '../../../utils/Context/Session/SessionContext'
 import { Link, useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../../utils/nav-types'
+import { RootStackParamList } from '../../../utils/types/nav-types'
 
 interface ContextMenuProps {
   location: string

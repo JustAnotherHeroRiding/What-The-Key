@@ -130,10 +130,12 @@ Here we will display much more info about a track than before, for motivation le
 ##### When signing out the profile image should be reset #DONE 
 - Add the Oauth providers(spotify and github) #DONE 
 - Signing seems to be kind of buggy and is not refreshing or responsive at all even though the user will get signed in, maybe redirect on success #DONE 
-- Reset password
+- Icons for the provider log in #DONE 
+- Reset password #DONE 
+- Input validation to make sure that the email is valid before the buttons will make a request
 - Loading indicators when logging in
 - Show a message when requesting a magic link
-- Icons for the provider log in
+
 ## Play mode
 When we click play, we start the play along experience
 - Use the bars and add some sort of indicator to show the progress
@@ -157,6 +159,9 @@ When we click play, we start the play along experience
 ## Shazam integration
 - Activate the mic to detect a song
 - Afterwards search for that song and open the track details page
+
+## Supabase emails Design
+- Style the emails that supabase sends for email confirmation/reset password and everything else that we will use
 
 
 ##### Loading spinner size prop

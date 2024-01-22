@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { SessionContext } from '../Session/SessionContext';
-import { supabase } from '../../supabase';
+import { supabase } from '../../config/supabase';
 
 interface ProfilePicContextType {
     profilePicUrl: string | null;

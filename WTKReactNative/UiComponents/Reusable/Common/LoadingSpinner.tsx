@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import colors from '../../../assets/colors'
-import tw from '../../../utils/tailwindRN'
+import tw from '../../../utils/config/tailwindRN'
 
 const LoadingSpinner = () => {
   return (

@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import tw from '../../../utils/tailwindRN'
+import tw from '../../../utils/config/tailwindRN'
 
 const NotFoundComponent = () => {
   return (

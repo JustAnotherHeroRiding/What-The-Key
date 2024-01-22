@@ -1,6 +1,6 @@
 import { Text, View, Image } from 'react-native'
-import { SpotifyTracksSearchResult } from '../../utils/spotify-types'
-import tw from '../../utils/tailwindRN'
+import { SpotifyTracksSearchResult } from '../../utils/types/spotify-types'
+import tw from '../../utils/config/tailwindRN'
 import { LinearGradient } from 'expo-linear-gradient'
 import SearchResultTrack from './Track/SearchResultTrack'
 

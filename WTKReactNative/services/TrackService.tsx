@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { SessionContext } from '../utils/Context/Session/SessionContext'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Toast from 'react-native-root-toast'
-import { TrackData } from '../utils/spotify-types'
+import { TrackData } from '../utils/types/spotify-types'
 import {
   addTrackProps,
   TrackConnection,
@@ -13,7 +13,7 @@ import {
   addTabProps,
   getTabProps,
   Tab,
-} from '../utils/track-service-types'
+} from '../utils/types/track-service-types'
 
 const useTrackService = () => {
   const session = useContext(SessionContext)

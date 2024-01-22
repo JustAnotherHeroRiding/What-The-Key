@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import LoadingSpinner from './UiComponents/Reusable/Common/LoadingSpinner'
 import { Session } from '@supabase/supabase-js'
-import { supabase } from './utils/supabase'
+import { supabase } from './utils/config/supabase'
 import { SessionProvider } from './utils/Context/Session/SessionProvider'
 import BottomNav from './UiComponents/BottomNav'
 import { ProfilePicProvider } from './utils/Context/Profile/ProfileProvider'
@@ -34,7 +34,16 @@ export default function App() {
       setSession(session)
     })
 
-    supabase.auth.onAuthStateChange((_event, session) => {
+    supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (_event == 'PASSWORD_RECOVERY') {
+        const newPassword = prompt('What would you like your new password to be?')
+        if (newPassword) {
+          const { data, error } = await supabase.auth.updateUser({ password: newPassword })
+          if (data) alert('Password updated!')
+          if (error) alert(error.message)
+        }
+      }
+
       setSession(session)
     })
     loadFonts()

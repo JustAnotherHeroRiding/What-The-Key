@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, TouchableOpacity, Image, Text, LayoutAnimation, Platform, UIManager } from 'react-native'
-import { TrackData } from '../../../utils/spotify-types'
-import tw from '../../../utils/tailwindRN'
+import { TrackData } from '../../../utils/types/spotify-types'
+import tw from '../../../utils/config/tailwindRN'
 import { useState } from 'react'
 import { Entypo } from '@expo/vector-icons'
 import useTrackService from '../../../services/TrackService'
 import { useSharedValue, withTiming } from 'react-native-reanimated'
-import { LayoutAnimationConfig } from '../../../utils/animation-config'
+import { LayoutAnimationConfig } from '../../../utils/config/animation-config'
 import ContextMenu from '../TrackAdjacent/ContextMenu'
 
 interface TrackProps {

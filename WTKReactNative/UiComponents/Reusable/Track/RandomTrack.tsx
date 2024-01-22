@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native'
 import { getNoteName } from '../../../utils/track-formating'
-import { TrackData } from '../../../utils/spotify-types'
-import tw from '../../../utils/tailwindRN'
+import { TrackData } from '../../../utils/types/spotify-types'
+import tw from '../../../utils/config/tailwindRN'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Entypo } from '@expo/vector-icons'
 import useTrackService from '../../../services/TrackService'
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } from 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../../utils/nav-types'
+import { RootStackParamList } from '../../../utils/types/nav-types'
 
 interface RandomTrackProps {
   trackData: TrackData

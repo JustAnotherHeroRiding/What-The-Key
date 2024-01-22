@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import Auth from '../UiComponents/Pages/Auth/Auth'
 import Account from '../UiComponents/Pages/Auth/account'
 import { ScrollView } from 'react-native'
-import { AuthScreenNavigationProp } from '../utils/nav-types'
+import { AuthScreenNavigationProp } from '../utils/types/nav-types'
 import { SessionContext } from '../utils/Context/Session/SessionContext'
 import React from 'react'
 

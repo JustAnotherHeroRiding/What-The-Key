@@ -149,6 +149,14 @@ Style the emails that supabase sends for email confirmation/reset password and e
 ## Consistent Context menu design
 - On the home page the context menu is still absolute, let's make it a dropdown like in lib/bin
 
+## Shazam integration
+- Activate the mic to detect a song
+- Afterwards search for that song and open the track details page
+Possible APIs: [Audd](https://audd.io/) or [AcrCloud](https://www.acrcloud.com/) We need to use the recorded audio from the mic to make a call to an api/service to detect the song
+
+##### Loading spinner size prop
+- Let's make the spinner more customizable instead of having a fixed size
+
 ## Music Theory Help
 ###### On the Detailed Track page, we have buttons for Scales, chords, triads and chord progressions. When the user clicks on these buttons they should get diagrams and info on what will sound good in the key of the song.
 - For chords we can display each interval of the I chord and some common voicings(With an expand button to display all voicings)
@@ -176,13 +184,8 @@ When we click play, we start the play along experience
 - Library should be for songs I am learning to play
 - Deleted should be for songs I have already learned or stopped learning
 - Maybe add a tag and have many sections so that users can filter them more effectively
+- Perhaps limit the number of tracks in the library to encourage focus on a couple of songs
 
-## Shazam integration
-- Activate the mic to detect a song
-- Afterwards search for that song and open the track details page
-
-##### Loading spinner size prop
-- Let's make the spinner more customizable instead of having a fixed size
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin
 ## Filters and search

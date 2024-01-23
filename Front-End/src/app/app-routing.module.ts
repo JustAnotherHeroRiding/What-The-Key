@@ -15,7 +15,7 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
-      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+      import('./pages/auth/auth.module'),
   },
 
   { path: 'api-playground', component: ApiPlaygroundComponent },

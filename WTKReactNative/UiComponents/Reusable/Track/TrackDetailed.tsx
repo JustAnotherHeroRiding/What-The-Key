@@ -55,7 +55,7 @@ const TrackDetailed = ({ track, src }: TrackProps) => {
       <View style={tw.style(`flex flex-row justify-center items-center flex-wrap gap-2`)}>
         <InfoColumn
           label='Key'
-          value={`${getNoteName(track.audioAnalysis?.track.key ?? -1)}${track.audioFeatures?.mode === 1 ? ' Major' : ' Minor'}`}
+          value={`${getNoteName(track.audioAnalysis?.track.key ?? -1)}${track.audioAnalysis?.track.mode === 1 ? ' Major' : ' Minor'}`}
         />
         <InfoColumn label='BPM' value={track.audioAnalysis?.track.tempo as number} />
         <InfoColumn label='Year' value={new Date(track.track.album.release_date).getFullYear()} />

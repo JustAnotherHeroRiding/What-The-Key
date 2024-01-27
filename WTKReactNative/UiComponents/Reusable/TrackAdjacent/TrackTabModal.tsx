@@ -49,6 +49,20 @@ function TrackTabModal({ currentTrack, closeTabsModal, isAddingTab }: TrackTabMo
     queryFn: () => getTabs({ trackId: currentTrack?.track.id }),
   })
 
+  function refineSearchQuery(trackName: string, artistName: string) {
+    let parts = trackName.split(' - ')
+
+    // Check if the split parts are too short, indicating an important use of the dash
+    if (parts.length > 1 && parts[0].length < 5) {
+      parts = [trackName] // Use the original trackName if the first part is too short
+    } else {
+      parts = [parts[0]] // Otherwise, use only the first part
+    }
+
+    const refinedTrackName = parts.join(' - ') // Rejoin the parts if necessary
+    return `https://www.google.com/search?q=${encodeURIComponent(refinedTrackName)}+${encodeURIComponent(artistName)}+guitar+tabs`
+  }
+
   return (
     <View style={tw.style(`bg-opacity-30 bg-white absolute inset-0 flex justify-center items-center z-10 pt-4 pb-16`)}>
       <ScrollView contentContainerStyle={tw.style(`bg-transparent`)}>
@@ -89,7 +103,7 @@ function TrackTabModal({ currentTrack, closeTabsModal, isAddingTab }: TrackTabMo
           ) : (
             <TouchableOpacity
               onPress={() => {
-                const searchUrl = `https://www.google.com/search?q=${currentTrack?.track.name}+${currentTrack.track.artists[0].name}+guitar+tabs`
+                const searchUrl = refineSearchQuery(currentTrack.track.name, currentTrack.track.artists[0].name)
                 Linking.openURL(searchUrl).catch(err => console.error(err))
               }}
               style={tw.style(`border border-cream px-4 py-2 mr-auto 

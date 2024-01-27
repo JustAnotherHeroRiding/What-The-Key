@@ -92,7 +92,7 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
 
         <Text style={tw`max-w-[85%]  text-white mb-3 text-xl`}>
           Key: {getNoteName(trackData.audioFeatures?.key ?? -1)}
-          {trackData.audioFeatures?.mode === 1 ? 'Major' : 'Minor'}
+          {trackData.audioFeatures?.mode === 1 ? ' Major' : ' Minor'}
         </Text>
         <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>BPM: {trackData.audioFeatures?.tempo}</Text>
         <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>

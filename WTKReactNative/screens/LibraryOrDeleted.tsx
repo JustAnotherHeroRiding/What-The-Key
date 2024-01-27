@@ -100,7 +100,7 @@ function LibraryOrDeletedScreen({
               {TitleCaseMap[type]}
             </Text>
             <Text style={tw.style(`text-white font-figtreeBold text-3xl py-4 text-center`)}>
-              Your {TitleCaseMap[type]} is empty
+               {TitleCaseMap[type] === 'Library' ? 'Your library is empty :(, add some tracks!' : 'You have not deleted anything.'}
             </Text>
             <TouchableOpacity
               disabled={isFetching || isLoading}

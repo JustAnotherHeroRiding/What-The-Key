@@ -2,7 +2,7 @@ import { View, Image, Text, TouchableOpacity, Alert } from 'react-native'
 import { SpotifyItem } from '../../../utils/types/spotify-types'
 import tw from '../../../utils/config/tailwindRN'
 import { Entypo } from '@expo/vector-icons'
-import { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import { SessionContext } from '../../../utils/Context/Session/SessionContext'
 import { useNavigation } from '@react-navigation/native'
@@ -60,7 +60,10 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}
-              onPress={() => navigation.navigate('SingleTrack', { trackId: track.id })}
+              onPress={() => {
+                setShowContextMenu(false)
+                navigation.navigate('SingleTrack', { trackId: track.id, src: 'home' })
+              }}
             >
               <MaterialIcons name='audiotrack' size={24} color='black' />
               <Text style={tw.style(`text-black`, { fontFamily: 'figtree-bold' })}>Open Details</Text>

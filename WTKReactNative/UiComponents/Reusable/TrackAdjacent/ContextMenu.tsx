@@ -10,7 +10,7 @@ import { RootStackParamList } from '../../../utils/types/nav-types'
 import { Sources } from '../../../utils/types/track-service-types'
 
 interface ContextMenuProps {
-  location: string
+  location: Sources
   scale: SharedValue<number>
   AddToBinOrRestore: () => Promise<void>
   deleteTrackPermamently: () => Promise<void>

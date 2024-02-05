@@ -68,6 +68,15 @@ let TrackController = class TrackController {
             throw new common_1.InternalServerErrorException(error.message);
         }
     }
+    async isTrackAdded(trackId, userId) {
+        try {
+            const isTrackAdded = await this.trackService.isTrackAdded(trackId, userId);
+            return isTrackAdded;
+        }
+        catch (error) {
+            throw new common_1.InternalServerErrorException(error.message);
+        }
+    }
 };
 exports.TrackController = TrackController;
 __decorate([
@@ -166,6 +175,35 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "getTabs", null);
+__decorate([
+    (0, common_1.Get)('isTrackAdded'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Is the Track added',
+        description: 'Checks if the user added the track to his library or bin.',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'trackId',
+        type: String,
+        required: true,
+        description: 'Track ID',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'userId',
+        type: String,
+        required: true,
+        description: 'User ID',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'A boolean value showing if the track has been found or not',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
+    __param(0, (0, common_1.Query)('trackId')),
+    __param(1, (0, common_1.Query)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], TrackController.prototype, "isTrackAdded", null);
 exports.TrackController = TrackController = __decorate([
     (0, swagger_1.ApiTags)('Track'),
     (0, common_1.Controller)('track'),

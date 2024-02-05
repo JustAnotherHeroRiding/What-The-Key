@@ -180,4 +180,38 @@ export class TrackService {
       },
     });
   }
+
+  async isTrackAdded(
+    trackId: string,
+    userId: string,
+  ): Promise<{ isInLibrary: boolean; isInRecycleBin: boolean }> {
+    const user = await this.ensureUserExists(userId);
+
+    if (!user) {
+      throw new Error('User not found, cannot check if track is added.');
+    }
+
+    const trackInLibrary = await this.prisma.libraryTrack.findUnique({
+      where: {
+        trackId_userId: {
+          trackId: trackId,
+          userId: user.id,
+        },
+      },
+    });
+
+    const trackInRecycleBin = await this.prisma.recycleBinTrack.findUnique({
+      where: {
+        trackId_userId: {
+          trackId: trackId,
+          userId: user.id,
+        },
+      },
+    });
+
+    return {
+      isInLibrary: !!trackInLibrary,
+      isInRecycleBin: !!trackInRecycleBin,
+    };
+  }
 }

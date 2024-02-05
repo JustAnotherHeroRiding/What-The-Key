@@ -27,4 +27,8 @@ export declare class TrackController {
         trackId: string;
         tabUrl: string;
     }[]>;
+    isTrackAdded(trackId: string, userId: string): Promise<{
+        isInLibrary: boolean;
+        isInRecycleBin: boolean;
+    }>;
 }

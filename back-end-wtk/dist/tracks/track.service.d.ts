@@ -14,4 +14,8 @@ export declare class TrackService {
     getUserTracks(userId: string, source: 'library' | 'recycleBin'): Promise<Track[]>;
     addTabToTrack(trackId: string, userId: string, tabUrl: string): Promise<TrackTab>;
     getTabsForTrack(trackId: string, userId: string): Promise<TrackTab[]>;
+    isTrackAdded(trackId: string, userId: string): Promise<{
+        isInLibrary: boolean;
+        isInRecycleBin: boolean;
+    }>;
 }

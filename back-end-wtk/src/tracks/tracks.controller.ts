@@ -158,4 +158,41 @@ export class TrackController {
       throw new InternalServerErrorException(error.message);
     }
   }
+
+  @Get('isTrackAdded')
+  @ApiOperation({
+    summary: 'Is the Track added',
+    description: 'Checks if the user added the track to his library or bin.',
+  })
+  @ApiQuery({
+    name: 'trackId',
+    type: String,
+    required: true,
+    description: 'Track ID',
+  })
+  @ApiQuery({
+    name: 'userId',
+    type: String,
+    required: true,
+    description: 'User ID',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'A boolean value showing if the track has been found or not',
+  })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  async isTrackAdded(
+    @Query('trackId') trackId: string,
+    @Query('userId') userId: string,
+  ) {
+    try {
+      const isTrackAdded = await this.trackService.isTrackAdded(
+        trackId,
+        userId,
+      );
+      return isTrackAdded;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
 }

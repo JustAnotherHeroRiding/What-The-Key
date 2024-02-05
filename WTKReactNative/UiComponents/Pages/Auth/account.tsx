@@ -11,7 +11,6 @@ import { LinearGradient } from 'expo-linear-gradient'
 export interface Profile {
   id?: string
   username: string
-  website: string
   avatar_url: string
   full_name: string
   updated_at: Date
@@ -20,7 +19,6 @@ export interface Profile {
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState('')
-  const [website, setWebsite] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
   const [fullName, setFullName] = useState('')
 
@@ -37,7 +35,7 @@ export default function Account({ session }: { session: Session }) {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, website, avatar_url, full_name`)
+        .select(`username, avatar_url, full_name`)
         .eq('id', session?.user.id)
         .single()
       if (error && status !== 406) {
@@ -46,7 +44,6 @@ export default function Account({ session }: { session: Session }) {
 
       if (data) {
         setUsername(data.username)
-        setWebsite(data.website)
         setAvatarUrl(data.avatar_url)
         setFullName(data.full_name)
       }
@@ -61,12 +58,10 @@ export default function Account({ session }: { session: Session }) {
 
   async function updateProfile({
     username,
-    website,
     avatar_url,
     full_name,
   }: {
     username: string
-    website: string
     avatar_url: string
     full_name: string
   }) {
@@ -77,7 +72,6 @@ export default function Account({ session }: { session: Session }) {
       const updates: Profile = {
         id: session?.user.id,
         username,
-        website,
         avatar_url,
         full_name,
         updated_at: new Date(),
@@ -118,7 +112,7 @@ export default function Account({ session }: { session: Session }) {
           onUpload={(url: string) => {
             setAvatarUrl(url)
             setProfilePicUrl(url)
-            updateProfile({ username, website, avatar_url: url, full_name: fullName })
+            updateProfile({ username, avatar_url: url, full_name: fullName })
           }}
           location='profile'
         />
@@ -145,15 +139,6 @@ export default function Account({ session }: { session: Session }) {
         <Input
           style={tw.style(`text-white`)}
           labelStyle={tw.style(`text-slate-300`)}
-          label='Website'
-          value={website || ''}
-          onChangeText={text => setWebsite(text)}
-        />
-      </View>
-      <View style={tw.style(`self-stretch`)}>
-        <Input
-          style={tw.style(`text-white`)}
-          labelStyle={tw.style(`text-slate-300`)}
           label='Full Name'
           value={fullName || ''}
           onChangeText={text => setFullName(text)}
@@ -162,7 +147,7 @@ export default function Account({ session }: { session: Session }) {
       <View style={tw.style(`self-stretch py-4 mt-4`)}>
         <CustomButton
           title={loading ? 'Loading ...' : 'Update'}
-          onPress={() => updateProfile({ username, website, avatar_url: avatarUrl, full_name: fullName })}
+          onPress={() => updateProfile({ username, avatar_url: avatarUrl, full_name: fullName })}
           txtStyle={tw`text-black`}
           btnStyle={tw`bg-cream`}
           disabled={loading}

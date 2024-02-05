@@ -8,6 +8,10 @@ import useTrackService from '../../../services/TrackService'
 import { useSharedValue, withTiming } from 'react-native-reanimated'
 import { LayoutAnimationConfig } from '../../../utils/config/animation-config'
 import ContextMenu from '../TrackAdjacent/ContextMenu'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../../../utils/types/nav-types'
+import { Sources } from '../../../utils/types/track-service-types'
 
 interface TrackProps {
   track: TrackData
@@ -22,6 +26,8 @@ const AddTrackTarget: { [key: string]: 'library' | 'recycleBin' } = {
 
 const Track = ({ track, location, openTabsModal }: TrackProps) => {
   const [showcontextMenu, setShowContextMenu] = useState(false)
+
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
   const { addTrackMut, deleteTrackMut, isDeletingTrack, isAddingTrack } = useTrackService()
 
@@ -80,7 +86,10 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
 
   return (
     <>
-      <View style={tw.style(`flex flex-row justify-between gap-2 items-center px-2 py-1 border-b border-slate-400`)}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('SingleTrack', { trackId: track.track.id, src: location as Sources })}
+        style={tw.style(`flex flex-row justify-between gap-2 items-center px-2 py-1 border-b border-slate-400`)}
+      >
         <Image
           source={{ uri: track.track.album.images[0].url }}
           style={tw.style(`w-14 h-14 rounded-lg border-cream border`)}
@@ -97,7 +106,7 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
         <TouchableOpacity onPress={() => contextMenuClick()}>
           <Entypo name='dots-three-vertical' size={28} color='white' />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
       {showcontextMenu && (
         <ContextMenu
           location={location}

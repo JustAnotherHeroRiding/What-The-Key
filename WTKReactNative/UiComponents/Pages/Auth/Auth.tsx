@@ -9,7 +9,6 @@ import * as QueryParams from 'expo-auth-session/build/QueryParams'
 import { CustomButton } from '../../Reusable/Common/CustomButtom'
 import * as Linking from 'expo-linking'
 import { LinearGradient } from 'expo-linear-gradient'
-import Toast from 'react-native-root-toast'
 import { displayToast } from '../../../utils/toasts'
 
 export const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
@@ -101,8 +100,13 @@ export default function Auth() {
       password: password,
     })
 
-    if (error) displayToast({ message: `Sign in failed :( Error:${error.message}` })
-    if (!session) displayToast({ message: 'Check your email for the confirmation link.' })
+    if (error && error.message) {
+      // Sign-in failed, display the error message.
+      displayToast({ message: `Sign in failed :( Error: ${error.message}` })
+    } else if (session) {
+      // Sign-in was successful.
+      displayToast({ message: 'Successfully signed in!' })
+    }
     setLoading(false)
   }
 
@@ -209,7 +213,7 @@ export default function Auth() {
         btnStyle={tw`bg-cream flex-1 mb-4 w-1/2`}
       />
       <CustomButton
-        title='Log in without password'
+        title='Log in without a password'
         onPress={() => sendMagicLink(email)}
         txtStyle={tw`text-white text-xs text-center`}
         btnStyle={tw`bg-transparent shadow-none mb-4 border border-slate-300 flex-1 rounded-3xl`}

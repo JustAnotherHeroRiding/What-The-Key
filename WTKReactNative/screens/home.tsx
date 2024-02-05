@@ -98,6 +98,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       </LinearGradient>
       {(isRandomTrackLoading || isSearchLoading) && <LoadingSpinner />}
 
+      {searchResults && <SearchResults results={searchResults as SpotifyTracksSearchResult} />}
       {randomTrack && (
         <RandomTrack
           trackData={randomTrack}
@@ -105,7 +106,6 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
           userId={session?.user.id}
         />
       )}
-      {searchResults && <SearchResults results={searchResults as SpotifyTracksSearchResult} />}
     </ScrollView>
   )
 }

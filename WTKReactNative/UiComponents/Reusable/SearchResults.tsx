@@ -1,8 +1,9 @@
-import { Text, View, Image } from 'react-native'
+import { Text, View, Image, FlatList } from 'react-native'
 import { SpotifyTracksSearchResult } from '../../utils/types/spotify-types'
 import tw from '../../utils/config/tailwindRN'
 import { LinearGradient } from 'expo-linear-gradient'
 import SearchResultTrack from './Track/SearchResultTrack'
+import React from 'react'
 
 interface SearchResultsProps {
   results: SpotifyTracksSearchResult
@@ -23,9 +24,26 @@ const SearchResults = ({ results }: SearchResultsProps) => {
       >
         Search Results
       </Text>
-      {results.tracks.items.map((track, index) => (
+      <FlatList
+        style={tw.style(`flex-grow`)}
+        contentContainerStyle={tw.style(`pb-20`)}
+        data={results.tracks.items}
+        renderItem={({ item }) => <SearchResultTrack track={item} location='home' />}
+        keyExtractor={(item, index) => index.toString()}
+        ListHeaderComponent={() => (
+          <Text
+            style={tw.style(`text-white border-slate-500 border-b-2 text-3xl py-4 text-center`, {
+              fontFamily: 'figtree-bold',
+            })}
+          >
+            Search Results
+          </Text>
+        )}
+        scrollEnabled={false}
+      />
+      {/* {results.tracks.items.map((track, index) => (
         <SearchResultTrack key={index} track={track} />
-      ))}
+      ))} */}
     </LinearGradient>
   ) : (
     <LinearGradient

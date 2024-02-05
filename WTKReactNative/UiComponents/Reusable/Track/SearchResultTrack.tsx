@@ -9,12 +9,14 @@ import { useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../../../utils/types/nav-types'
 import useTrackService from '../../../services/TrackService'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { Sources } from '../../../utils/types/track-service-types'
 
 interface SearchResultTrackProps {
   track: SpotifyItem
+  location: Sources
 }
 
-const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
+const SearchResultTrack = ({ track, location }: SearchResultTrackProps) => {
   const [showcontextMenu, setShowContextMenu] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -35,7 +37,10 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
   }
 
   return (
-    <View style={tw.style(`flex flex-row justify-between gap-2 items-center px-2 py-1 border-b border-slate-400`)}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('SingleTrack', { trackId: track.id, src: location as Sources })}
+      style={tw.style(`flex flex-row justify-between gap-2 items-center px-2 py-1 border-b border-slate-400`)}
+    >
       <Image source={{ uri: track.album.images[0].url }} style={tw.style(`w-14 h-14 rounded-lg border-cream border`)} />
       <View style={tw.style(`flex-1 items-start ml-1 justify-center`)}>
         <Text numberOfLines={1} ellipsizeMode='tail' style={tw.style(`text-white font-figtreeBold`)}>
@@ -90,7 +95,7 @@ const SearchResultTrack = ({ track }: SearchResultTrackProps) => {
       <TouchableOpacity onPress={() => setShowContextMenu(!showcontextMenu)}>
         <Entypo name='dots-three-vertical' size={28} color='white' />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   )
 }
 

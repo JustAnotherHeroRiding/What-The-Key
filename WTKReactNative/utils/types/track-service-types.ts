@@ -38,5 +38,8 @@ export interface Tab {
   trackId: string
   tabUrl: string
 }
-
-export type Sources = 'library' | 'recycleBin' | 'home';
+export interface isTrackAdded {
+  isInLibrary: boolean
+  isInRecycleBin: boolean
+}
+export type Sources = 'library' | 'recycleBin' | 'home'

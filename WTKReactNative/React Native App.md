@@ -114,6 +114,9 @@ Let's push the toast a bit higher as it is blocking the menu #DONE
 ##### The single track page is proving to be problematic, It might have something to do with the fact that it is a separate stack. The transparent nav theme seems to be affecting it. When I go back using the header, it works.
 ###### Turns out that the animation of the Stack.Navigator was causing the issue as the transition is problematic. I disabled it as there is no mention of this issue anywhere.
 - Display the basic information #DONE 
+- Display the tabs on the single track page for logged in users #DONE 
+- create an endpoint to check if the user has added the track before displaying the tabs on the backend #DONE 
+- Make the check on the front end to see if it was added 
 Here we will display much more info about a track than before, for motivation let's use the notes in the main file
 
 

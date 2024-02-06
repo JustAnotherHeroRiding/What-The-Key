@@ -19,7 +19,7 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
   const { trackId, src } = route.params as { trackId: string; src: Sources }
 
   const { getTrackAnalysis } = useSpotifyService()
-  const { isAddingTab } = useTrackService()
+  const { isAddingTab, isTrackAdded } = useTrackService()
 
   const [isTabsModalVisible, setIsTabsModalVisible] = useState(false)
   const [currentTrackForModal, setCurrentTrackForModal] = useState<TrackData | null>(null)
@@ -35,19 +35,29 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
 
   const {
     data: track,
-    error,
-    isFetching,
+    error: trackError,
+    isFetching: isFetchingTrack,
   } = useQuery({
     queryKey: ['SingleTrack', trackId],
     queryFn: () => getTrackAnalysis(trackId),
     enabled: !!trackId,
   })
 
+  const {
+    data: trackAddedStatus,
+    error: trackStatusError,
+    isFetching: isFetchingTrackStatus,
+  } = useQuery({ queryKey: ['SingleTrackStatus', trackId], queryFn: () => isTrackAdded(trackId), enabled: !!trackId })
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress)
 
     return () => backHandler.remove()
   }, [navigation])
+
+  if (trackError || trackStatusError) {
+    console.error(trackError)
+  }
 
   const handleBackPress = () => {
     navigation.goBack()
@@ -61,10 +71,10 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNaviga
       end={{ x: 0, y: 0 }}
       style={tw.style(`flex-grow w-full opacity-100`)}
     >
-      {isFetching ? (
+      {isFetchingTrack || isFetchingTrackStatus ? (
         <LoadingSpinner />
-      ) : track ? (
-        <TrackDetailed track={track} src={src} openTabsModal={openTabsModal} />
+      ) : track && trackAddedStatus ? (
+        <TrackDetailed track={track} src={src} openTabsModal={openTabsModal} trackAddedStatus={trackAddedStatus} />
       ) : (
         <NotFoundComponent />
       )}

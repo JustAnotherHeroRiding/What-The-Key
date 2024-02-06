@@ -15,6 +15,7 @@ import SingleTrackScreen from '../screens/SingleTrackScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../utils/types/nav-types'
 import { AntDesign } from '@expo/vector-icons'
+import React from 'react'
 
 const navTheme = {
   ...DefaultTheme,
@@ -28,8 +29,8 @@ export const CustomHeader = ({ title }: { title: string }) => {
   const navigation = useNavigation()
   return (
     <View style={tw.style(`h-12 bg-zinc-800 flex items-center justify-center flex-row border-b-2 border-beigeCustom`)}>
-      <TouchableOpacity style={tw.style(`absolute left-2 `)} onPress={() => navigation.goBack()}>
-        <AntDesign name='arrowleft' size={24} color='white' />
+      <TouchableOpacity style={tw.style(`absolute left-0 px-2 py-1`)} onPress={() => navigation.goBack()}>
+        <AntDesign name='arrowleft' size={36} color='white' />
       </TouchableOpacity>
       <Text style={tw.style(`text-white text-center text-2xl`, { fontFamily: 'figtree-bold' })}>{title}</Text>
     </View>

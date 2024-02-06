@@ -13,6 +13,7 @@ import {
   addTabProps,
   getTabProps,
   Tab,
+  isTrackAdded,
 } from '../utils/types/track-service-types'
 
 const useTrackService = () => {
@@ -237,12 +238,33 @@ const useTrackService = () => {
     return tab
   }
 
+  const isTrackAdded = async (trackId: string): Promise<isTrackAdded> => {
+    const queryParams = new URLSearchParams({
+      userId: session?.user.id ?? 'no user',
+      trackId: trackId,
+    }).toString()
+
+    const addedStatusRes = await fetch(`https://what-the-key.vercel.app/api/track/isTrackAdded?${queryParams}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const addedStatus = await addedStatusRes.json()
+
+    if (!addedStatusRes.ok) {
+      throw new Error(addedStatus.message || 'Error fetching track added status from the database.')
+    }
+    return addedStatus as isTrackAdded
+  }
+
   return {
     addTrackMut,
     getTracks,
     deleteTrackMut,
     addTabMut,
     getTabs,
+    isTrackAdded,
     isAddingTab,
     isDeletingTrack,
     isAddingTrack,

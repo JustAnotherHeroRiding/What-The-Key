@@ -5,13 +5,14 @@ import tw from '../../../utils/config/tailwindRN'
 import { Dimensions } from 'react-native'
 import { formatDuration, formatTimeSignature, getNoteName } from '../../../utils/track-formating'
 import useTrackService from '../../../services/TrackService'
-import { Sources } from '../../../utils/types/track-service-types'
+import { Sources, isTrackAdded } from '../../../utils/types/track-service-types'
 import { SessionContext } from '../../../utils/Context/Session/SessionContext'
 
 interface TrackProps {
   track: TrackData
   src: Sources
   openTabsModal: (trackData: TrackData) => void
+  trackAddedStatus: isTrackAdded
 }
 
 type InfoColumnProps = {
@@ -33,7 +34,7 @@ const InfoColumn: React.FC<InfoColumnProps> = ({ label, value, tailwindStyle = '
 const screen = Dimensions.get('window')
 const imageSize = screen.width * 0.85
 
-const TrackDetailed = ({ track, src, openTabsModal }: TrackProps) => {
+const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackProps) => {
   const session = useContext(SessionContext)
   const { addTrackMut, isAddingTrack } = useTrackService()
 
@@ -75,26 +76,26 @@ const TrackDetailed = ({ track, src, openTabsModal }: TrackProps) => {
         >
           <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>Play</Text>
         </TouchableOpacity>
-        {session && (
-          <TouchableOpacity
-            onPress={() => openTabsModal(track)}
-            style={tw`px-4 py-3 border  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
-          >
-            <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>Open Tab</Text>
-          </TouchableOpacity>
-        )}
+        {session &&
+          (trackAddedStatus.isInLibrary || trackAddedStatus.isInRecycleBin ? (
+            <TouchableOpacity
+              onPress={() => openTabsModal(track)}
+              style={tw`px-4 py-3 border  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
+            >
+              <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>Open Tab</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={tw`px-4 py-3 border  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
+              onPress={() => addToLib()}
+            >
+              <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>
+                {isAddingTrack ? 'Adding...' : 'Save'}
+              </Text>
+            </TouchableOpacity>
+          ))}
       </View>
       <View style={tw.style(`flex flex-wrap items-center justify-center flex-row gap-2`)}>
-        {src === 'home' && (
-          <TouchableOpacity
-            style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
-            onPress={() => addToLib()}
-          >
-            <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>
-              {isAddingTrack ? 'Adding...' : 'Save'}
-            </Text>
-          </TouchableOpacity>
-        )}
         <TouchableOpacity
           style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
           // Start displaying suggested scales to plays

@@ -39,6 +39,7 @@ export const CustomHeader = ({ title }: { title: string }) => {
 
 const Tab = createBottomTabNavigator<RootStackParamList['MainTab']>()
 const Stack = createNativeStackNavigator<RootStackParamList>()
+const SingleTrackStack = createNativeStackNavigator<RootStackParamList['SingleTrackNavigator']>()
 
 export default function BottomNav() {
   return (
@@ -46,20 +47,35 @@ export default function BottomNav() {
       <Stack.Navigator screenOptions={{ animation: 'none' }}>
         <Stack.Screen name='MainTab' component={BottomTab} options={{ headerShown: false }} />
         <Stack.Screen
-          name='SingleTrack'
-          component={SingleTrackScreen}
+          name='SingleTrackNavigator'
+          component={SingleTrackNavigator}
           options={{
-            headerTitle: 'Play',
-            headerTintColor: 'white',
-            headerStyle: {
-              backgroundColor: '#27272a',
-            },
-            headerTitleAlign: 'center',
-            header: () => <CustomHeader title='Play' />,
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
     </NavigationContainer>
+  )
+}
+
+const SingleTrackNavigator = () => {
+  return (
+    <SingleTrackStack.Navigator initialRouteName='SingleTrackOverview'>
+      <SingleTrackStack.Screen
+        name='SingleTrackOverview'
+        component={SingleTrackScreen}
+        options={{
+          headerTitle: 'Play',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#27272a',
+          },
+          headerTitleAlign: 'center',
+          header: () => <CustomHeader title='Play' />,
+        }}
+      />
+      {/* <SingleTrackStack.Screen name='Chords' component={ChordsScreen} /> */}
+    </SingleTrackStack.Navigator>
   )
 }
 

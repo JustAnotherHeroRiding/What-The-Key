@@ -111,7 +111,16 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
             style={tw.style(
               `px-4 py-3 border border-black mb-2 rounded-xl text-2xl bg-beigeCustom  shadow-lg mt-auto  w-full`,
             )}
-            onPress={() => navigation.navigate('SingleTrack', { trackId: trackData.track.id, src: 'home' })}
+            onPress={() =>
+              navigation.navigate('SingleTrackNavigator', {
+                /* @ts-ignore */
+                screen: 'SingleTrackOverview',
+                params: {
+                  trackId: trackData.track.id,
+                  src: 'home',
+                },
+              })
+            }
           >
             <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>See More</Text>
           </TouchableOpacity>

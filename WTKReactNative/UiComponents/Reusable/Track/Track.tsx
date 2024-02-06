@@ -87,7 +87,16 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
   return (
     <>
       <TouchableOpacity
-        onPress={() => navigation.navigate('SingleTrack', { trackId: track.track.id, src: location as Sources })}
+        onPress={() =>
+          navigation.navigate('SingleTrackNavigator', {
+            /* @ts-ignore */
+            screen: 'SingleTrackOverview',
+            params: {
+              trackId: track.track.id,
+              src: location as Sources,
+            },
+          })
+        }
         style={tw.style(`flex flex-row justify-between gap-2 items-center px-2 py-1 border-b border-slate-400`)}
       >
         <Image

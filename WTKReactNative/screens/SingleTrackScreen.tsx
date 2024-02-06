@@ -1,5 +1,4 @@
 import { useRoute } from '@react-navigation/native'
-import { SingleTrackScreenNavigationProp } from '../utils/types/nav-types'
 import { BackHandler } from 'react-native'
 import useSpotifyService from '../services/SpotifyService'
 import { useQuery } from '@tanstack/react-query'
@@ -13,8 +12,9 @@ import { Sources } from '../utils/types/track-service-types'
 import { TrackData } from '../utils/types/spotify-types'
 import TrackTabModal from '../UiComponents/Reusable/TrackAdjacent/TrackTabModal'
 import useTrackService from '../services/TrackService'
+import { SingleTrackOverviewNavigationProp } from '../utils/types/nav-types'
 
-function SingleTrackScreen({ navigation }: { navigation: SingleTrackScreenNavigationProp }) {
+function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavigationProp }) {
   const route = useRoute()
   const { trackId, src } = route.params as { trackId: string; src: Sources }
 

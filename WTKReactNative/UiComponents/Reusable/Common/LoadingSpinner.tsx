@@ -4,9 +4,9 @@ import colors from '../../../assets/colors'
 import tw from '../../../utils/config/tailwindRN'
 
 interface LoadingSpinnerProps {
-  size: number | 'small' | 'large' | undefined
-  bgColor: string
-  color: string
+  size?: number | 'small' | 'large' | undefined
+  bgColor?: string
+  color?: string
 }
 
 const LoadingSpinner = ({ size = 'large', bgColor = 'bg-cream', color = colors.amber600 }: LoadingSpinnerProps) => {

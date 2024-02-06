@@ -74,7 +74,16 @@ const SearchResultTrack = ({ track, location }: SearchResultTrackProps) => {
   return (
     <>
       <TouchableOpacity
-        onPress={() => navigation.navigate('SingleTrack', { trackId: track.id, src: location as Sources })}
+        onPress={() =>
+          navigation.navigate('SingleTrackNavigator', {
+            /* @ts-ignore */
+            screen: 'SingleTrackOverview',
+            params: {
+              trackId: track.id,
+              src: location as Sources,
+            },
+          })
+        }
         style={tw.style(`flex flex-row justify-between gap-2 items-center px-2 py-1 border-b border-slate-400`)}
       >
         <Image
@@ -116,7 +125,14 @@ const SearchResultTrack = ({ track, location }: SearchResultTrackProps) => {
                   style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}
                   onPress={() => {
                     setShowContextMenu(false)
-                    navigation.navigate('SingleTrack', { trackId: track.id, src: 'home' })
+                    navigation.navigate('SingleTrackNavigator', {
+                      /* @ts-ignore */
+                      screen: 'SingleTrackOverview',
+                      params: {
+                        trackId: track.id,
+                        src: location as Sources,
+                      },
+                    })
                   }}
                 >
                   <MaterialIcons name='audiotrack' size={24} color='black' />

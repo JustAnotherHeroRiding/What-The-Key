@@ -143,15 +143,18 @@ Here we will display much more info about a track than before, for motivation le
 - On the home page the context menu is still absolute, let's make it a dropdown like in lib/bin #DONE 
 
 ##### Loading spinner size prop
-- Let's make the spinner more customizable instead of having a fixed size
+- Let's make the spinner more customizable instead of having a fixed size #DONE 
 
 ## Music Theory Help
 ###### On the Detailed Track page, we have buttons for Scales, chords, triads and chord progressions. When the user clicks on these buttons they should get diagrams and info on what will sound good in the key of the song.
+Each button will lead to a new child screen of the single page track screen #DONE 
+Correct the type errors when navigation the track page
 - For chords we can display each interval of the I chord and some common voicings(With an expand button to display all voicings)
 - For Scales we can diagrams of scales that will sound good in the current key
 - Same for modes
 - For triads we can show the different positions of each chord, this will not vary much between tracks. I will also need to research what triads are #Research
-- Chord Progressions - This one I'm not too sure. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars
+- Chord Progressions - This one I'm not too sure. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.
+- Twelve bar blues chart in chord progressions to play blues over any song. In the play section we can make it interactive
 
 ## Play mode
 When we click play, we start the play along experience

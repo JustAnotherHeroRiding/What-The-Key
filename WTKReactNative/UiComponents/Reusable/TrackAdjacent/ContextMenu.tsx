@@ -63,7 +63,14 @@ const ContextMenu = ({
         <TouchableOpacity
           onPress={() => {
             setShowContextMenu(false)
-            navigation.navigate('SingleTrack', { trackId: trackId, src: location as Sources })
+            navigation.navigate('SingleTrackNavigator', {
+              /* @ts-ignore */
+              screen: 'SingleTrackOverview',
+              params: {
+                trackId: trackId,
+                src: 'home',
+              },
+            })
           }}
           style={tw.style(`py-2 w-full gap-1 justify-between flex-row`)}
         >

@@ -7,6 +7,9 @@ import { formatDuration, formatTimeSignature, getNoteName } from '../../../utils
 import useTrackService from '../../../services/TrackService'
 import { Sources, isTrackAdded } from '../../../utils/types/track-service-types'
 import { SessionContext } from '../../../utils/Context/Session/SessionContext'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../../../utils/types/nav-types'
 
 interface TrackProps {
   track: TrackData
@@ -41,6 +44,9 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
   const addToLib = async () => {
     addTrackMut({ trackId: track.track.id, source: 'library' })
   }
+
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList['SingleTrackNavigator']>>()
+
   return (
     <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
       <Text style={tw.style(`text-white text-2xl w-[90%] text-center`, { fontFamily: 'figtree-bold' })}>
@@ -97,20 +103,23 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
       </View>
       <View style={tw.style(`flex flex-wrap items-center justify-center flex-row gap-2`)}>
         <TouchableOpacity
+          disabled={true}
           style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
           // Start displaying suggested scales to plays
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Scales</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
+          disabled={true}
+          style={tw`px-4 py-3  border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
           // Start displaying suggested modes to plays
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Modes</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => navigation}
           style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
-          // Show the chords in song
+          // Show the chords in the song
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Chords</Text>
         </TouchableOpacity>

@@ -139,16 +139,6 @@ Here we will display much more info about a track than before, for motivation le
 - Loading indicators when logging in #DONE 
 - Show a message when requesting a magic link #DONE 
 
-## Supabase emails Design
-Style the emails that supabase sends for email confirmation/reset password and everything else that we will use
-###### It seems that Css is not being applied in the email being sent
-###### After using the Figma plugin Marka, it generated a template that was rendered as intended on gmail. I have added a template for the forgot password, email but it needs a lot of work.
-#### [Figma Email Templates](https://www.figma.com/file/aBU8v75k4laGQ5Qg7MaDod/Mail-design-system-for-Marka-Plugin-(Community)-(Copy)?type=design&node-id=0-1&mode=design&t=Oj8jOeNboUIQeaaV-0)
-- Working email styles #DONE 
-- Personalize the forgot password email using Figma to style the email
-- Use a similar looking template for sign up and magic link emails
-
-
 ## Consistent Context menu design
 - On the home page the context menu is still absolute, let's make it a dropdown like in lib/bin
 
@@ -195,6 +185,15 @@ When we click play, we start the play along experience
 - When in the Lib/Bin screen, users can apply filters or search tracks in the library
 - The search bar can be somewhere on top in the header, with the title on the left edge
 - This will be local until I implement an infinite query, after which it will make a db call
+
+## Supabase emails Design
+Style the emails that supabase sends for email confirmation/reset password and everything else that we will use
+###### It seems that Css is not being applied in the email being sent
+###### After using the Figma plugin Marka, it generated a template that was rendered as intended on gmail. I have added a template for the forgot password, email but it needs a lot of work.
+#### [Figma Email Templates](https://www.figma.com/file/aBU8v75k4laGQ5Qg7MaDod/Mail-design-system-for-Marka-Plugin-(Community)-(Copy)?type=design&node-id=0-1&mode=design&t=Oj8jOeNboUIQeaaV-0)
+- Working email styles #DONE 
+- Personalize the forgot password email using Figma to style the email
+- Use a similar looking template for sign up and magic link emails
 ## Ui Motivation
 - Have a look at the Spotify and ChatGPT apps for possible improvements to my UI
 

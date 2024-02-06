@@ -3,11 +3,9 @@ import { View, TouchableOpacity, TextInput, Text, Image, Linking, Dimensions, Sc
 import { TrackData } from '../../../utils/types/spotify-types'
 import tw from '../../../utils/config/tailwindRN'
 import { Entypo } from '@expo/vector-icons'
-import { useQuery, keepPreviousData } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import useTrackService from '../../../services/TrackService'
-import { Tab } from 'react-native-elements/dist/tab/Tab'
 import { LinearGradient } from 'expo-linear-gradient'
-import { style } from 'twrnc'
 import LoadingSpinner from '../Common/LoadingSpinner'
 
 interface TrackTabModal {
@@ -50,16 +48,26 @@ function TrackTabModal({ currentTrack, closeTabsModal, isAddingTab }: TrackTabMo
   })
 
   function refineSearchQuery(trackName: string, artistName: string) {
+    // Split the track name on " - " to potentially remove any suffixes like "live at..."
     let parts = trackName.split(' - ')
 
-    // Check if the split parts are too short, indicating an important use of the dash
-    if (parts.length > 1 && parts[0].length < 5) {
-      parts = [trackName] // Use the original trackName if the first part is too short
-    } else {
-      parts = [parts[0]] // Otherwise, use only the first part
-    }
+    // Define a regular expression that captures the unwanted standalone terms
+    const unwantedTermsRegex = /\b(live|mix|remaster(?:ed)?|rerelease|mono|stereo|demo|edit|version|feat\.?|ft\.?|with)\b/i
 
-    const refinedTrackName = parts.join(' - ') // Rejoin the parts if necessary
+    // Filter each part and remove it if it matches the unwanted standalone terms
+    parts = parts
+      .map(part =>
+        part
+          .split(/\s+/) // Split part into words to check each word individually
+          .filter(word => !unwantedTermsRegex.test(word)) // Filter out unwanted standalone words
+          .join(' '),
+      ) // Rejoin the words back into a part
+      .filter(part => part.trim() !== '') // Ensure we don't keep empty parts
+
+    // Rejoin the parts, if any remain; otherwise, use the original track name
+    let refinedTrackName = parts.length > 0 ? parts.join(' - ') : trackName
+
+    // Construct the search URL with the refined track name and artist name
     return `https://www.google.com/search?q=${encodeURIComponent(refinedTrackName)}+${encodeURIComponent(artistName)}+guitar+tabs`
   }
 

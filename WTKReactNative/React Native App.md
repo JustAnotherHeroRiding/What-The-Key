@@ -140,12 +140,7 @@ Here we will display much more info about a track than before, for motivation le
 - Show a message when requesting a magic link #DONE 
 
 ## Consistent Context menu design
-- On the home page the context menu is still absolute, let's make it a dropdown like in lib/bin
-
-## Shazam integration
-- Activate the mic to detect a song
-- Afterwards search for that song and open the track details page
-Possible APIs: [Audd](https://audd.io/) or [AcrCloud](https://www.acrcloud.com/) We need to use the recorded audio from the mic to make a call to an api/service to detect the song
+- On the home page the context menu is still absolute, let's make it a dropdown like in lib/bin #DONE 
 
 ##### Loading spinner size prop
 - Let's make the spinner more customizable instead of having a fixed size
@@ -185,6 +180,11 @@ When we click play, we start the play along experience
 - When in the Lib/Bin screen, users can apply filters or search tracks in the library
 - The search bar can be somewhere on top in the header, with the title on the left edge
 - This will be local until I implement an infinite query, after which it will make a db call
+
+## Shazam-like integration
+- Activate the mic to detect a song
+- Afterwards search for that song and open the track details page
+Possible APIs: [Audd](https://audd.io/) or [AcrCloud](https://www.acrcloud.com/) We need to use the recorded audio from the mic to make a call to an api/service to detect the song
 
 ## Supabase emails Design
 Style the emails that supabase sends for email confirmation/reset password and everything else that we will use

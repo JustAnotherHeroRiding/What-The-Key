@@ -117,9 +117,8 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Modes</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation}
+          onPress={() => navigation.navigate('Chords', { track: track })}
           style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
-          // Show the chords in the song
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Chords</Text>
         </TouchableOpacity>

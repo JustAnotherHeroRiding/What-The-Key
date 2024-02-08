@@ -17,13 +17,6 @@ const SearchResults = ({ results }: SearchResultsProps) => {
       end={{ x: 0, y: 0 }}
       style={tw.style(`mx-auto flex my-4 w-full`)}
     >
-      <Text
-        style={tw.style('text-white text-center font-extrabold text-2xl border-b-2 py-4  border-slate-500', {
-          fontFamily: 'figtree-bold',
-        })}
-      >
-        Search Results
-      </Text>
       <FlatList
         style={tw.style(`flex-grow`)}
         contentContainerStyle={tw.style(`pb-20`)}
@@ -41,9 +34,6 @@ const SearchResults = ({ results }: SearchResultsProps) => {
         )}
         scrollEnabled={false}
       />
-      {/* {results.tracks.items.map((track, index) => (
-        <SearchResultTrack key={index} track={track} />
-      ))} */}
     </LinearGradient>
   ) : (
     <LinearGradient

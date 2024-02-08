@@ -5,7 +5,7 @@
     "slug": "WTKReactNative",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.png",
+    "icon": "./assets/images/centered-key-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/logo.png",
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.png",
+        "foregroundImage": "./assets/images/centered-key-logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.justanotherheroriding.wtkreactnative"

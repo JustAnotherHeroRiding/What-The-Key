@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { Sources, dataSource } from './track-service-types'
+import { TrackData } from './spotify-types'
 
 export type RootStackParamList = {
   MainTab: {
@@ -11,7 +12,7 @@ export type RootStackParamList = {
   }
   SingleTrackNavigator: {
     SingleTrackOverview: { trackId: string; src: Sources }
-    Chords: { trackId: string; src: Sources }
+    Chords: { track: TrackData }
   }
 }
 

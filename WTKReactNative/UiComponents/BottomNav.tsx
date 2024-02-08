@@ -2,20 +2,21 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native'
 import { StyleProp, TextStyle, Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import colors from '../assets/colors'
-import HomeScreen from '../screens/home'
+import HomeScreen from '../screens/MainTab/home'
 import { useContext, useEffect } from 'react'
 import { SessionContext } from '../utils/Context/Session/SessionContext'
-import AuthScreen from '../screens/AuthScreen'
+import AuthScreen from '../screens/MainTab/AuthScreen'
 import { ProfilePicContext } from '../utils/Context/Profile/ProfileProvider'
 import Avatar from './Pages/Auth/Avatar'
 import { BlurView } from 'expo-blur'
 import tw from '../utils/config/tailwindRN'
-import LibraryOrDeletedScreen from '../screens/LibraryOrDeleted'
-import SingleTrackScreen from '../screens/SingleTrackScreen'
+import LibraryOrDeletedScreen from '../screens/MainTab/LibraryOrDeleted'
+import SingleTrackScreen from '../screens/SingleTrack/SingleTrackScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../utils/types/nav-types'
 import { AntDesign } from '@expo/vector-icons'
 import React from 'react'
+import ChordsScreen from '../screens/SingleTrack/Chords'
 
 const navTheme = {
   ...DefaultTheme,
@@ -65,16 +66,16 @@ const SingleTrackNavigator = () => {
         name='SingleTrackOverview'
         component={SingleTrackScreen}
         options={{
-          headerTitle: 'Play',
-          headerTintColor: 'white',
-          headerStyle: {
-            backgroundColor: '#27272a',
-          },
-          headerTitleAlign: 'center',
           header: () => <CustomHeader title='Play' />,
         }}
       />
-      {/* <SingleTrackStack.Screen name='Chords' component={ChordsScreen} /> */}
+      <SingleTrackStack.Screen
+        name='Chords'
+        component={ChordsScreen}
+        options={{
+          header: () => <CustomHeader title='Chords' />,
+        }}
+      />
     </SingleTrackStack.Navigator>
   )
 }

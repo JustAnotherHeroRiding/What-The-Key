@@ -104,9 +104,8 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
       </View>
       <View style={tw.style(`flex flex-wrap items-center justify-center flex-row gap-2`)}>
         <TouchableOpacity
-          disabled={true}
-          style={tw`px-4 py-3 border opacity-70  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
-          // Start displaying suggested scales to plays
+          onPress={() => navigation.navigate('Scales', { track: track })}
+          style={tw`px-4 py-3 border border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Scales</Text>
         </TouchableOpacity>

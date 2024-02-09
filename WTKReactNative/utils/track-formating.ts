@@ -7,6 +7,7 @@ export type Mode = 'Major' | 'Minor'
 
 const NOTES = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']
 
+// Unused for now, used the short names instead to display more information
 const intervalNames: Record<Mode, string[]> = {
   Major: ['Unison', 'Major 2nd', 'Major 3rd', 'Perfect 4th', 'Perfect 5th', 'Major 6th', 'Major 7th', 'Octave'],
   Minor: ['Unison', 'Major 2nd', 'Minor 3rd', 'Perfect 4th', 'Perfect 5th', 'Minor 6th', 'Minor 7th', 'Octave'],

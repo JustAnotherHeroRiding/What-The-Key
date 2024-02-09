@@ -1,14 +1,12 @@
 import React from 'react'
 import { ChordsScreenNavigationProp } from '../../utils/types/nav-types'
-import { Text, View, Image, Dimensions, ScrollView } from 'react-native'
+import { Text, View, ScrollView } from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
-import { getIntervals, getNoteName } from '../../utils/track-formating'
-
-const screen = Dimensions.get('window')
-const imageSize = screen.width * 0.1
+import { getIntervals } from '../../utils/track-formating'
+import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
 
 function IntervalsScreen({ navigation }: { navigation: ChordsScreenNavigationProp }) {
   const route = useRoute()
@@ -26,20 +24,7 @@ function IntervalsScreen({ navigation }: { navigation: ChordsScreenNavigationPro
       style={tw.style(`flex-grow w-full opacity-100`)}
     >
       <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
-        <View style={tw.style(`flex flex-col items-center justify-center gap-4`)}>
-          <Text style={tw.style(`text-2xl text-white text-center font-semibold`)}>
-            Chord Intervals for the key of the song: {getNoteName(track.audioAnalysis?.track.key ?? -1)} {mode}
-          </Text>
-          <Text style={tw.style(`text-xl text-white text-center font-medium`)}>{track.track.name}</Text>
-          <Text style={tw.style(`text-xl text-artistGray text-center`)}>{track.track.artists[0].name}</Text>
-          <Image
-            source={{ uri: track.track.album.images[0].url }}
-            style={tw.style(`mb-4 w-[${imageSize}] h-[${imageSize}] rounded-md border border-cream`, {
-              objectFit: 'contain',
-            })}
-            alt={track.track.name}
-          />
-        </View>
+        <TrackMini track={track} src='Intervals' mode={mode} />
         <Text style={tw.style(`text-slate-100 text-xl font-semibold`)}>Legend:</Text>
         <View style={tw.style(`flex flex-wrap flex-row items-center justify-between gap-2`)}>
           <View style={tw.style(`flex flex-col items-center justify-center`)}>
@@ -65,18 +50,24 @@ function IntervalsScreen({ navigation }: { navigation: ChordsScreenNavigationPro
         </View>
 
         <Text style={tw.style('text-center text-2xl text-slate-100 font-semibold')}>Major Intervals</Text>
-        <View style={tw.style(`flex flex-row flex-wrap py-2 px-4 items-center justify-center gap-4`)}>
+        <View style={tw.style(`flex flex-row flex-wrap p-2 items-center justify-center gap-2`)}>
           {majorIntervals?.map((interval, index) => (
-            <View key={index} style={tw.style(`flex flex-row rounded-xl p-2 bg-zinc-800 items-center gap-2`)}>
+            <View
+              key={index}
+              style={tw.style(`flex flex-row rounded-xl p-2 bg-zinc-800 items-center gap-2 shadow-sm shadow-zinc-200`)}
+            >
               <Text style={tw.style(`text-lg font-medium text-beigeCustom`)}>{interval.interval}</Text>
               <Text style={tw.style(`text-xl font-bold text-slate-100`)}>{interval.note}</Text>
             </View>
           ))}
         </View>
         <Text style={tw.style('text-center text-2xl text-slate-100 font-semibold')}>Minor Intervals</Text>
-        <View style={tw.style(`flex flex-row flex-wrap py-2 px-4 items-center justify-center gap-4`)}>
+        <View style={tw.style(`flex flex-row flex-wrap p-2 items-center justify-center gap-2 `)}>
           {minorIntervals?.map((interval, index) => (
-            <View key={index} style={tw.style(`flex flex-row rounded-xl p-2 bg-zinc-800 items-center gap-2`)}>
+            <View
+              key={index}
+              style={tw.style(`flex flex-row rounded-xl p-2 bg-zinc-800 items-center gap-2 shadow-sm shadow-zinc-200`)}
+            >
               <Text style={tw.style(`text-lg font-medium text-beigeCustom`)}>{interval.interval}</Text>
               <Text style={tw.style(`text-xl font-bold text-slate-100`)}>{interval.note}</Text>
             </View>

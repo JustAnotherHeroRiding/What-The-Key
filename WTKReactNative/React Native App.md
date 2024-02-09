@@ -153,6 +153,7 @@ Here we will display much more info about a track than before, for motivation le
 Each button will lead to a new child screen of the single page track screen #DONE 
 Correct the type errors when navigating to the track page #DONE 
 - For intervals we can display each interval of the I chord #DONE 
+##### It looks like all of these sub screens will require the same template to display the track information at the top. Let's create a common component.
 - For Scales we can show diagrams of scales that will sound good in the current key
 - Same for modes
 - For triads we can show the different positions of each chord, this will not vary much between tracks. I will also need to research what triads are #Research

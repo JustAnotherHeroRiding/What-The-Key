@@ -12,7 +12,7 @@ export type RootStackParamList = {
   }
   SingleTrackNavigator: {
     SingleTrackOverview: { trackId: string; src: Sources }
-    Chords: { track: TrackData }
+    Intervals: { track: TrackData }
   }
 }
 
@@ -26,4 +26,4 @@ export type SingleTrackOverviewNavigationProp = NativeStackNavigationProp<
   RootStackParamList['SingleTrackNavigator'],
   'SingleTrackOverview'
 >
-export type ChordsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList['SingleTrackNavigator'], 'Chords'>
+export type ChordsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList['SingleTrackNavigator'], 'Intervals'>

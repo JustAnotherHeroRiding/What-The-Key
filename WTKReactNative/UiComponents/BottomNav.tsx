@@ -16,7 +16,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../utils/types/nav-types'
 import { AntDesign } from '@expo/vector-icons'
 import React from 'react'
-import ChordsScreen from '../screens/SingleTrack/Chords'
+import IntervalsScreen from '../screens/SingleTrack/Intervals'
 
 const navTheme = {
   ...DefaultTheme,
@@ -70,10 +70,10 @@ const SingleTrackNavigator = () => {
         }}
       />
       <SingleTrackStack.Screen
-        name='Chords'
-        component={ChordsScreen}
+        name='Intervals'
+        component={IntervalsScreen}
         options={{
-          header: () => <CustomHeader title='Chords' />,
+          header: () => <CustomHeader title='Intervals' />,
         }}
       />
     </SingleTrackStack.Navigator>

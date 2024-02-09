@@ -77,7 +77,8 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
       </View>
       <View style={tw.style(`flex flex-wrap items-center justify-center flex-row gap-2`)}>
         <TouchableOpacity
-          style={tw`px-4 py-3 border  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
+          disabled={true}
+          style={tw`px-4 py-3 border opacity-70  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
           // Start the Play mode
         >
           <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>Play</Text>
@@ -104,35 +105,44 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
       <View style={tw.style(`flex flex-wrap items-center justify-center flex-row gap-2`)}>
         <TouchableOpacity
           disabled={true}
-          style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
+          style={tw`px-4 py-3 border opacity-70  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
           // Start displaying suggested scales to plays
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Scales</Text>
         </TouchableOpacity>
         <TouchableOpacity
           disabled={true}
-          style={tw`px-4 py-3  border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
+          style={tw`px-4 py-3  border opacity-70  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
           // Start displaying suggested modes to plays
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Modes</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Chords', { track: track })}
+          onPress={() => navigation.navigate('Intervals', { track: track })}
           style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
         >
-          <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Chords</Text>
+          <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Intervals</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
+          disabled={true}
+          style={tw`px-4 py-3 border  opacity-70 border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
           // Show the triads from the key/chords in the song's key
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Triads</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
+          disabled={true}
+          style={tw`px-4 py-3 border opacity-70 border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
           // Chord Progressions
         >
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Chord Progressions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          disabled={true}
+          style={tw`px-4 py-3 border opacity-70  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
+          // Twelve Bar Chart
+        >
+          <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Twelve Bars</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

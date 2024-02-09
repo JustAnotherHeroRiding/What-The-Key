@@ -1,11 +1,64 @@
+export interface Interval {
+  note: string
+  interval: string
+}
+
+export type Mode = 'Major' | 'Minor'
+
+const NOTES = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']
+
+const intervalNames: Record<Mode, string[]> = {
+  Major: ['Unison', 'Major 2nd', 'Major 3rd', 'Perfect 4th', 'Perfect 5th', 'Major 6th', 'Major 7th', 'Octave'],
+  Minor: ['Unison', 'Major 2nd', 'Minor 3rd', 'Perfect 4th', 'Perfect 5th', 'Minor 6th', 'Minor 7th', 'Octave'],
+}
+
+const intervalSymbols: Record<Mode, string[]> = {
+  Major: ['P1', 'M2', 'M3', 'P4', 'P5', 'M6', 'M7', 'P8'],
+  Minor: ['P1', 'M2', 'm3', 'P4', 'P5', 'm6', 'm7', 'P8'],
+};
+
+
+const intervalPatterns: Record<Mode, number[]> = {
+  Major: [2, 2, 1, 2, 2, 2, 1], // Major scale: W-W-H-W-W-W-H
+  Minor: [2, 1, 2, 2, 1, 2, 2], // Natural Minor scale: W-H-W-W-H-W-W
+}
+
+type ScaleIntervals = Partial<Record<Mode, Interval[]>>;
+
+
 export function getNoteName(key: number): string {
-  const notes = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']
   if (key >= 0 && key <= 11) {
-    return notes[key]
+    return NOTES[key]
   } else {
     return 'Key not found'
   }
 }
+export function getIntervals(key: number, mode: Mode | 'Both'): ScaleIntervals {
+  let result: Record<Mode, Interval[]> = {
+    Major: [],
+    Minor: []
+  };
+
+  // Always calculate both Major and Minor for simplicity, and choose what to return later
+  Object.entries(intervalPatterns).forEach(([currentMode, scalePattern]) => {
+    let currentIndex = key;
+    let currentIntervals: Interval[] = [];
+    scalePattern.forEach((step, index) => {
+      currentIndex = (currentIndex + step) % NOTES.length;
+      const intervalName = intervalSymbols[currentMode as Mode][index];
+      currentIntervals.push({ note: NOTES[currentIndex], interval: intervalName });
+    });
+    result[currentMode as Mode] = currentIntervals;
+  });
+
+  // If mode is not 'Both', filter the result to only include the requested mode
+  if (mode !== 'Both') {
+    return { [mode]: result[mode] };
+  }
+
+  return result;
+}
+
 
 export function formatDuration(durationMs: number) {
   const totalSeconds = Math.floor(durationMs / 1000)

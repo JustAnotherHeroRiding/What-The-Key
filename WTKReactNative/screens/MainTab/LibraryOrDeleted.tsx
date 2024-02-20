@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
-import { DeletedScreenNavigationProp, LibraryScreenNavigationProp, RootStackParamList } from '../../utils/types/nav-types'
+import {
+  DeletedScreenNavigationProp,
+  LibraryScreenNavigationProp,
+  RootStackParamList,
+} from '../../utils/types/nav-types'
 import tw from '../../utils/config/tailwindRN'
 import Toast from 'react-native-root-toast'
 import { TrackData } from '../../utils/types/spotify-types'
@@ -100,7 +104,9 @@ function LibraryOrDeletedScreen({
               {TitleCaseMap[type]}
             </Text>
             <Text style={tw.style(`text-white font-figtreeBold text-3xl py-4 text-center`)}>
-               {TitleCaseMap[type] === 'Library' ? 'Your library is empty :(, add some tracks!' : 'You have not deleted anything.'}
+              {TitleCaseMap[type] === 'Library'
+                ? 'Your library is empty :(, add some tracks!'
+                : 'You have not deleted anything.'}
             </Text>
             <TouchableOpacity
               disabled={isFetching || isLoading}

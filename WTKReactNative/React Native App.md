@@ -155,10 +155,18 @@ Correct the type errors when navigating to the track page #DONE
 - For intervals we can display each interval of the I chord #DONE 
 ##### It looks like all of these sub screens will require the same template to display the track information at the top. Let's create a common component. #DONE 
 ###### Add an explanation for the intervals, what does a major third actually mean? Now i know it is just 4 frets(2 semitones) from the root but this confused me for a while
+
+#### Scales
 - For Scales we can show diagrams of scales that will sound good in the current key
+
+#### Modes
 - Same for modes
+
+#### Triads
 - For triads we can show the different positions of each chord, this will not vary much between tracks. I will also need to research what triads are. Alright so i can display the possible triad shapes for each chord in the key #Research
+#### Chord Progressions
 - Chord Progressions - This one I'm not too sure. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.
+#### Twelve bar blues
 - Twelve bar blues chart in chord progressions to play blues over any song. In the play section we can make it interactive
 
 ## Home page - Recently Opened

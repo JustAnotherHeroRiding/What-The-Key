@@ -5,7 +5,7 @@ export interface Interval {
 
 export type Mode = 'Major' | 'Minor'
 
-const NOTES = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']
+export const NOTES = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B']
 
 // Unused for now, used the short names instead to display more information
 const intervalNames: Record<Mode, string[]> = {
@@ -16,16 +16,14 @@ const intervalNames: Record<Mode, string[]> = {
 const intervalSymbols: Record<Mode, string[]> = {
   Major: ['P1', 'M2', 'M3', 'P4', 'P5', 'M6', 'M7', 'P8'],
   Minor: ['P1', 'M2', 'm3', 'P4', 'P5', 'm6', 'm7', 'P8'],
-};
-
+}
 
 const intervalPatterns: Record<Mode, number[]> = {
   Major: [2, 2, 1, 2, 2, 2, 1], // Major scale: W-W-H-W-W-W-H
   Minor: [2, 1, 2, 2, 1, 2, 2], // Natural Minor scale: W-H-W-W-H-W-W
 }
 
-type ScaleIntervals = Partial<Record<Mode, Interval[]>>;
-
+type ScaleIntervals = Partial<Record<Mode, Interval[]>>
 
 export function getNoteName(key: number): string {
   if (key >= 0 && key <= 11) {
@@ -37,29 +35,28 @@ export function getNoteName(key: number): string {
 export function getIntervals(key: number, mode: Mode | 'Both'): ScaleIntervals {
   let result: Record<Mode, Interval[]> = {
     Major: [],
-    Minor: []
-  };
+    Minor: [],
+  }
 
   // Always calculate both Major and Minor for simplicity, and choose what to return later
   Object.entries(intervalPatterns).forEach(([currentMode, scalePattern]) => {
-    let currentIndex = key;
-    let currentIntervals: Interval[] = [];
+    let currentIndex = key
+    let currentIntervals: Interval[] = []
     scalePattern.forEach((step, index) => {
-      currentIndex = (currentIndex + step) % NOTES.length;
-      const intervalName = intervalSymbols[currentMode as Mode][index];
-      currentIntervals.push({ note: NOTES[currentIndex], interval: intervalName });
-    });
-    result[currentMode as Mode] = currentIntervals;
-  });
+      currentIndex = (currentIndex + step) % NOTES.length
+      const intervalName = intervalSymbols[currentMode as Mode][index]
+      currentIntervals.push({ note: NOTES[currentIndex], interval: intervalName })
+    })
+    result[currentMode as Mode] = currentIntervals
+  })
 
   // If mode is not 'Both', filter the result to only include the requested mode
   if (mode !== 'Both') {
-    return { [mode]: result[mode] };
+    return { [mode]: result[mode] }
   }
 
-  return result;
+  return result
 }
-
 
 export function formatDuration(durationMs: number) {
   const totalSeconds = Math.floor(durationMs / 1000)

@@ -20,7 +20,9 @@ const useSpotifyService = () => {
     if (!response.ok) {
       throw new Error(data.message || 'Error fetching track')
     }
-    const responseExtended = await fetch(`https://what-the-key.vercel.app/api/spotify/track/${data.tracks[0].id}`)
+    const responseExtended = await fetch(
+      `https://what-the-key.vercel.app/api/spotify/trackDetailed/${data.tracks[0].id}`,
+    )
     const dataExtended = await responseExtended.json()
 
     if (!responseExtended.ok) {

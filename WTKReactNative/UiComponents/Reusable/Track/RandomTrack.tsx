@@ -10,6 +10,8 @@ import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming } fr
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
+import * as Progress from 'react-native-progress'
+import colors from '../../../assets/colors'
 
 interface RandomTrackProps {
   trackData: TrackData
@@ -89,12 +91,20 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
           })}
           alt={trackData.track.name}
         />
+        <View style={tw`flex flex-col gap-2 items-center justify-center`}>
+          <Text style={[tw` text-beigeCustom mb-3 text-2xl`, { fontFamily: 'figtree-bold' }]}>Key Confidence</Text>
+          <Progress.Bar
+            style={tw.style(``)}
+            color={colors.beigeCustom}
+            progress={trackData.audioAnalysis?.track.key_confidence}
+          />
+        </View>
 
         <Text style={tw`max-w-[85%]  text-white mb-3 text-xl`}>
-          Key: {getNoteName(trackData.audioFeatures?.key ?? -1)}
-          {trackData.audioFeatures?.mode === 1 ? ' Major' : ' Minor'}
+          Key: {getNoteName(trackData.audioAnalysis?.track.key ?? -1)}
+          {trackData.audioAnalysis?.track.mode === 1 ? ' Major' : ' Minor'}
         </Text>
-        <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>BPM: {trackData.audioFeatures?.tempo}</Text>
+        <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>BPM: {trackData.audioAnalysis?.track?.tempo}</Text>
         <Text style={tw`max-w-[85%] text-white mb-3 text-xl`}>
           Year: {new Date(trackData.track.album.release_date).getFullYear()}
         </Text>

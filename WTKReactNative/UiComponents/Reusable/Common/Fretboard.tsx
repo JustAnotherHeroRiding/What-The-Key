@@ -31,7 +31,7 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
 
       {/* Frets and Fret Numbers */}
       {frets.map((fret, fretIndex) => (
-        <View key={fretIndex} style={tw`flex-row items-center`}>
+        <View key={fretIndex} style={tw`flex-row items-center justify-center`}>
           {/* Fret Number */}
           <Text style={tw`w-10 h-10 text-xl text-center text-white`}>{fret}</Text>
 
@@ -53,8 +53,7 @@ interface FretProps {
 
 const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes }) => {
   const note = getNoteAtFret(string, fret)
-  const noteForCheck = scaleNotes.find(sn => sn.includes(note)) // Adjusted for checking note presence
-  const isNoteInScale = Boolean(noteForCheck)
+  const isNoteInScale = scaleNotes.includes(note)
 
   return (
     <View

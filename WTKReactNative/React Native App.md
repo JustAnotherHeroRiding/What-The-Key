@@ -166,8 +166,8 @@ Correct the type errors when navigating to the track page #DONE
 - Create a fretboard component to use to display the scales #DONE 
 - Make it display Vertically #DONE 
 - Sharps are not being displayed #DONE 
-- Scales do not seem to be completely correctly, minor pentatonic is has misplaced notes
-- For Scales we can show diagrams of scales that will sound good in the current key
+- Scales do not seem to be completely correctly, minor pentatonic is has misplaced notes #DONE 
+- For Scales we can show diagrams of scales that will sound good in the current key #DONE 
 
 #### Modes
 - Same for modes as for the scales

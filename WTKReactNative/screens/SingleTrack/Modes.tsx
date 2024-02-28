@@ -6,21 +6,25 @@ import tw from '../../utils/config/tailwindRN'
 import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
-import { allModeNames, getScaleOrModeNotes } from '../../utils/scales-and-modes'
+import { ModeNames, allModeNames, getScaleOrModeNotes, scaleNotesAndIntervals } from '../../utils/scales-and-modes'
 import _ from 'lodash'
+import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
+import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
+import { getNoteName } from '../../utils/track-formating'
 
 function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) {
   const route = useRoute()
 
   const [query, setQuery] = useState('')
-  const [filteredModes, setFilteredModes] = useState<string[]>([])
+  const [filteredModes, setFilteredMode] = useState<string[]>([])
+  const [selectedMode, setSelectedMode] = useState<scaleNotesAndIntervals | null>(null)
 
   const handleSearch = () => {
     if (query.length > 0) {
       const filtered = allModeNames.filter(mode => mode.toLowerCase().includes(query.toLowerCase()))
-      setFilteredModes(filtered)
+      setFilteredMode(filtered)
     } else {
-      setFilteredModes([])
+      setFilteredMode([])
     }
   }
 
@@ -34,12 +38,21 @@ function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) 
   const mode = track.audioAnalysis?.track.mode === 1 ? 'Major' : 'Minor'
 
   const renderRow = ({ item, index }: { item: string; index: number }) => (
-    <TouchableOpacity style={tw.style(`py-3 px-3 bg-beigeCustom  rounded-md border-cream border `)}>
+    <TouchableOpacity
+      onPress={() => selectMode(item as ModeNames)}
+      style={tw.style(`py-3 px-3 bg-beigeCustom  rounded-md border-cream border `)}
+    >
       <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item[0].toUpperCase() + item.slice(1)}</Text>
     </TouchableOpacity>
   )
+  /* Enter a width to change the tailwind width class to apply */
+  const renderSeparator = (width: number) => <View style={tw.style(`h-2 w-${width}`)} />
 
-  const renderSeparator = () => <View style={tw.style('h-2 w-4')} />
+  const selectMode = (mode: ModeNames) => {
+    const scaleNotes = getScaleOrModeNotes(getNoteName(track.audioAnalysis?.track.key ?? -1), mode, 'mode')
+    setSelectedMode(scaleNotes)
+  }
+
   return (
     <LinearGradient
       colors={['#27272a', '#52525b']}
@@ -48,22 +61,22 @@ function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) 
       style={tw.style(`flex-grow w-full opacity-100`)}
     >
       <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
-        <TrackMini track={track} src='Modes' mode={mode} />
+        <TrackMini track={track} src='Scales' mode={mode} />
         <View style={tw.style('flex-grow w-full opacity-100')}>
           <Text
             style={tw.style('text-white border-slate-500 border-b-2 text-3xl py-4 text-center', {
               fontFamily: 'figtree-bold',
             })}
           >
-            Select a mode
+            Select a Mode
           </Text>
 
           <FlatList
             style={tw.style('flex flex-row')}
-            data={filteredModes.length > 0 ? filteredModes : allModeNames}
+            data={filteredModes.length > 0 && query ? filteredModes : allModeNames}
             renderItem={renderRow}
             keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={renderSeparator}
+            ItemSeparatorComponent={() => renderSeparator(2)}
             horizontal={true}
             contentContainerStyle={tw.style(`py-4`)}
           />
@@ -75,6 +88,20 @@ function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) 
             onChangeText={handleChange}
           />
         </View>
+        <FlatList
+          horizontal={true}
+          data={Object.values(selectedMode?.notes ?? {})}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={() => renderSeparator(2)}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity style={tw.style(`p-1 bg-beigeCustom  rounded-md border-cream border `)}>
+              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
+              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{selectedMode?.intervals[index]}</Text>
+            </TouchableOpacity>
+          )}
+        />
+        {selectedMode?.notes && <Fretboard scaleNotes={selectedMode?.notes} />}
+        <IntervalSymbolsLegend />
       </ScrollView>
     </LinearGradient>
   )

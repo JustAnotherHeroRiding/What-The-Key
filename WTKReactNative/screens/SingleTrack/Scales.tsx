@@ -50,8 +50,8 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
   const selectScale = (scale: ScaleName) => {
     const scaleNotes = getScaleOrModeNotes(getNoteName(track.audioAnalysis?.track.key ?? -1), scale, 'scale')
     setSelectedScale(scaleNotes)
-    console.log(scale, scaleNotes)
   }
+
   return (
     <LinearGradient
       colors={['#27272a', '#52525b']}
@@ -93,7 +93,7 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={() => renderSeparator(2)}
           renderItem={({ item, index }) => (
-            <TouchableOpacity style={tw.style(`py-3 px-3 bg-beigeCustom  rounded-md border-cream border `)}>
+            <TouchableOpacity style={tw.style(`p-1 bg-beigeCustom  rounded-md border-cream border `)}>
               <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
               <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>
                 {selectedScale?.intervals[index]}

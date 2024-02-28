@@ -24,8 +24,8 @@ const IntervalSymbolsLegend = () => {
           <Text style={tw.style(`text-slate-50 text-center`)}>Augmented</Text>
         </View>
         <View style={tw.style(`flex flex-col items-center justify-center`)}>
-          <Text style={tw.style(`text-slate-50 text-center`)}>d</Text>
-          <Text style={tw.style(`text-slate-50 text-center`)}>Diminished</Text>
+          <Text style={tw.style(`text-slate-50 text-center`)}>♭</Text>
+          <Text style={tw.style(`text-slate-50 text-center`)}>Flat</Text>
         </View>
       </View>
     </>

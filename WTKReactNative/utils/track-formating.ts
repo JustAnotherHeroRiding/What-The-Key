@@ -13,7 +13,7 @@ export const intervalNamesSingle = [
   'm3', // Minor 3rd
   'M3', // Major 3rd
   'P4', // Perfect 4th
-  'd5', // Diminished 5th
+  '♭5', // Flat 5th
   'P5', // Perfect 5th
   'm6', // Minor 6th
   'M6', // Major 6th

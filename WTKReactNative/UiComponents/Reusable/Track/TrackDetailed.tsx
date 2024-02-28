@@ -10,6 +10,8 @@ import { SessionContext } from '../../../utils/Context/Session/SessionContext'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
+import * as Progress from 'react-native-progress'
+import colors from '../../../assets/colors'
 
 interface TrackProps {
   track: TrackData
@@ -62,6 +64,14 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
         })}
         alt={track.track.name}
       />
+      <View style={tw`flex flex-col gap-2 items-center justify-center`}>
+        <Text style={[tw` text-beigeCustom mb-3 text-2xl`, { fontFamily: 'figtree-bold' }]}>Key Confidence</Text>
+        <Progress.Bar
+          style={tw.style(``)}
+          color={colors.beigeCustom}
+          progress={track.audioAnalysis?.track.key_confidence}
+        />
+      </View>
       <View style={tw.style(`flex flex-row justify-center items-center flex-wrap gap-2`)}>
         <InfoColumn
           label='Key'

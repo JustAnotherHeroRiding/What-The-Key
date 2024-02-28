@@ -148,6 +148,9 @@ Here we will display much more info about a track than before, for motivation le
 ##### Loading spinner size prop
 - Let's make the spinner more customizable instead of having a fixed size #DONE 
 
+## Key confidence
+- display the confidence percentage of the key #DONE 
+
 ## Music Theory Help
 ###### On the Detailed Track page, we have buttons for Scales, intervals, triads and chord progressions. When the user clicks on these buttons they should get diagrams and info on what will sound good in the key of the song.
 Each button will lead to a new child screen of the single page track screen #DONE 
@@ -156,7 +159,10 @@ Correct the type errors when navigating to the track page #DONE
 ##### It looks like all of these sub screens will require the same template to display the track information at the top. Let's create a common component. #DONE 
 ###### Add an explanation for the intervals, what does a major third actually mean? Now i know it is just 4 frets(2 semitones) from the root but this confused me for a while
 
-#### Scales
+#### Scales - [All Scales](https://pulse.berklee.edu/scales/index.html)
+- Util function that will return the notes in a scale #DONE 
+- Buttons to display all possible scales that can be selected #DONE 
+- When clicking the button the notes of the scale with appear
 - For Scales we can show diagrams of scales that will sound good in the current key
 
 #### Modes

@@ -148,6 +148,7 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/UiComponents/Reusable/Common/Fretboard.tsx",
     "WTKReactNative/UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend.tsx",
     "WTKReactNative/screens/SingleTrack/IntervalSymbolsLegend.tsx",
     "WTKReactNative/screens/SingleTrack/Modes.tsx",
@@ -158,7 +159,6 @@
     "WTKReactNative/node_modules/react-native-svg/windows/RNSVG/UseViewManager.h",
     "WTKReactNative/node_modules/react-native-svg/windows/RNSVG/UseViewManager.cpp",
     "WTKReactNative/node_modules/react-native-svg/windows/RNSVG/UseView.h",
-    "WTKReactNative/node_modules/react-native-svg/windows/RNSVG/UseView.cpp",
     "Song Key.md",
     "WTKReactNative/React Native App.md",
     "WTKReactNative/node_modules/@expo/dev-server/node_modules/@expo/osascript/README.md",

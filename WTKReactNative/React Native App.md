@@ -163,6 +163,10 @@ Correct the type errors when navigating to the track page #DONE
 - Util function that will return the notes in a scale #DONE 
 - Buttons to display all possible scales that can be selected #DONE 
 - When clicking the button the notes of the scale with appear #DONE 
+- Create a fretboard component to use to display the scales #DONE 
+- Make it display Vertically #DONE 
+- Sharps are not being displayed #DONE 
+- Scales do not seem to be completely correctly, minor pentatonic is has misplaced notes
 - For Scales we can show diagrams of scales that will sound good in the current key
 
 #### Modes

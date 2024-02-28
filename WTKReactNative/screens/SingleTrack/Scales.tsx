@@ -10,6 +10,7 @@ import { ScaleName, allScaleNames, getScaleOrModeNotes, scaleNotesAndIntervals }
 import _ from 'lodash'
 import { getNoteName } from '../../utils/track-formating'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
+import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 
 function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }) {
   const route = useRoute()
@@ -101,6 +102,7 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
             </TouchableOpacity>
           )}
         />
+        {selectedScale?.notes && <Fretboard scaleNotes={selectedScale?.notes} />}
         <IntervalSymbolsLegend />
       </ScrollView>
     </LinearGradient>

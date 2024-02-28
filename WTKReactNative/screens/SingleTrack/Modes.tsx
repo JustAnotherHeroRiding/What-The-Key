@@ -1,28 +1,26 @@
 import { FlatList, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { ScalesScreenNavigationProp } from '../../utils/types/nav-types'
+import { ModesScreenNavigationProp } from '../../utils/types/nav-types'
 import React, { useMemo, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
 import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
-import { ScaleName, allScaleNames, getScaleOrModeNotes, scaleNotesAndIntervals } from '../../utils/scales-and-modes'
+import { allModeNames, getScaleOrModeNotes } from '../../utils/scales-and-modes'
 import _ from 'lodash'
-import { getNoteName } from '../../utils/track-formating'
 
-function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }) {
+function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) {
   const route = useRoute()
 
   const [query, setQuery] = useState('')
-  const [filteredScales, setFilteredScales] = useState<string[]>([])
-  const [selectedScale, setSelectedScale] = useState<scaleNotesAndIntervals | null>(null)
+  const [filteredModes, setFilteredModes] = useState<string[]>([])
 
   const handleSearch = () => {
     if (query.length > 0) {
-      const filtered = allScaleNames.filter(scale => scale.toLowerCase().includes(query.toLowerCase()))
-      setFilteredScales(filtered)
+      const filtered = allModeNames.filter(mode => mode.toLowerCase().includes(query.toLowerCase()))
+      setFilteredModes(filtered)
     } else {
-      setFilteredScales([])
+      setFilteredModes([])
     }
   }
 
@@ -36,21 +34,12 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
   const mode = track.audioAnalysis?.track.mode === 1 ? 'Major' : 'Minor'
 
   const renderRow = ({ item, index }: { item: string; index: number }) => (
-    <TouchableOpacity
-      onPress={() => selectScale(item as ScaleName)}
-      style={tw.style(`py-3 px-3 bg-beigeCustom  rounded-md border-cream border `)}
-    >
+    <TouchableOpacity style={tw.style(`py-3 px-3 bg-beigeCustom  rounded-md border-cream border `)}>
       <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item[0].toUpperCase() + item.slice(1)}</Text>
     </TouchableOpacity>
   )
-  /* Enter a width to change the tailwind width class to apply */
-  const renderSeparator = (width: number) => <View style={tw.style(`h-2 w-${width}`)} />
 
-  const selectScale = (scale: ScaleName) => {
-    const scaleNotes = getScaleOrModeNotes(getNoteName(track.audioAnalysis?.track.key ?? -1), scale, 'scale')
-    setSelectedScale(scaleNotes)
-    console.log(scale, scaleNotes)
-  }
+  const renderSeparator = () => <View style={tw.style('h-2 w-4')} />
   return (
     <LinearGradient
       colors={['#27272a', '#52525b']}
@@ -59,22 +48,22 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
       style={tw.style(`flex-grow w-full opacity-100`)}
     >
       <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
-        <TrackMini track={track} src='Scales' mode={mode} />
+        <TrackMini track={track} src='Modes' mode={mode} />
         <View style={tw.style('flex-grow w-full opacity-100')}>
           <Text
             style={tw.style('text-white border-slate-500 border-b-2 text-3xl py-4 text-center', {
               fontFamily: 'figtree-bold',
             })}
           >
-            Select a scale
+            Select a mode
           </Text>
 
           <FlatList
             style={tw.style('flex flex-row')}
-            data={filteredScales.length > 0 ? filteredScales : allScaleNames}
+            data={filteredModes.length > 0 ? filteredModes : allModeNames}
             renderItem={renderRow}
             keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={() => renderSeparator(2)}
+            ItemSeparatorComponent={renderSeparator}
             horizontal={true}
             contentContainerStyle={tw.style(`py-4`)}
           />
@@ -86,23 +75,9 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
             onChangeText={handleChange}
           />
         </View>
-        <FlatList
-          horizontal={true}
-          data={Object.values(selectedScale?.notes ?? {})}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={() => renderSeparator(2)}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity style={tw.style(`py-3 px-3 bg-beigeCustom  rounded-md border-cream border `)}>
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>
-                {selectedScale?.intervals[index]}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
       </ScrollView>
     </LinearGradient>
   )
 }
 
-export default React.memo(ScalesScreen)
+export default React.memo(ModesScreen)

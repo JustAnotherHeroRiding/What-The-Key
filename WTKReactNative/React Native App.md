@@ -149,7 +149,7 @@ Here we will display much more info about a track than before, for motivation le
 - Let's make the spinner more customizable instead of having a fixed size #DONE 
 
 ## Key confidence
-- display the confidence percentage of the key #DONE 
+- display the confidence percentage of the key #DONE  
 
 ## Music Theory Help
 ###### On the Detailed Track page, we have buttons for Scales, intervals, triads and chord progressions. When the user clicks on these buttons they should get diagrams and info on what will sound good in the key of the song.

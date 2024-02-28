@@ -1,4 +1,4 @@
-import { NOTES } from './track-formating'
+import { NOTES, intervalNamesSingle } from './track-formating'
 
 export const SCALES = ['major', 'naturalMinor', 'harmonicMinor']
 export const MODES = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian']
@@ -11,19 +11,13 @@ export const CHROMATIC = ['chromatic']
 interface ScaleData {
   name: string
   description: string
-  intervals?: number[] // Add the intervals property
+  intervals?: number[]
 }
+
 export const allScaleNames = [
   'major',
   'naturalMinor',
   'harmonicMinor',
-  'ionian',
-  'dorian',
-  'phrygian',
-  'lydian',
-  'mixolydian',
-  'aeolian',
-  'locrian',
   'majorPentatonic',
   'minorPentatonic',
   'majorBlues',
@@ -33,17 +27,13 @@ export const allScaleNames = [
   'wholeTone',
   'chromatic',
 ]
+
+export const allModeNames = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian']
+export type ModeNames = 'ionian' | 'dorian' | 'phrygian' | 'lydian' | 'mixolydian' | 'aeolian' | 'locrian'
 export type ScaleName =
   | 'major'
   | 'naturalMinor'
   | 'harmonicMinor'
-  | 'ionian'
-  | 'dorian'
-  | 'phrygian'
-  | 'lydian'
-  | 'mixolydian'
-  | 'aeolian'
-  | 'locrian'
   | 'majorPentatonic'
   | 'minorPentatonic'
   | 'majorBlues'
@@ -54,7 +44,13 @@ export type ScaleName =
   | 'chromatic'
 
 type ScalesAndModesData = {
-  [key in ScaleName]?: ScaleData
+  [key in ScaleName | ModeNames]?: ScaleData
+}
+
+export interface scaleNotesAndIntervals {
+  name: ScaleName | ModeNames
+  notes: string[]
+  intervals: string[]
 }
 
 export const SCALES_DATA: ScalesAndModesData = {
@@ -72,6 +68,46 @@ export const SCALES_DATA: ScalesAndModesData = {
     name: 'Harmonic Minor',
     description: 'A minor scale with a raised seventh degree.',
     intervals: [2, 1, 2, 2, 1, 3, 1],
+  },
+  majorPentatonic: {
+    name: 'Major Pentatonic',
+    description: 'A five-note scale derived from the major scale.',
+    intervals: [2, 2, 3, 2, 3],
+  },
+  minorPentatonic: {
+    name: 'Minor Pentatonic',
+    description: 'A five-note scale derived from the natural minor scale.',
+    intervals: [3, 2, 2, 3, 2],
+  },
+  majorBlues: {
+    name: 'Major Blues',
+    description: 'A variation of the major pentatonic with an added blues note.',
+    intervals: [2, 1, 1, 3, 2, 3],
+  },
+  minorBlues: {
+    name: 'Minor Blues',
+    description: 'A variation of the minor pentatonic with an added blues note.',
+    intervals: [3, 2, 1, 1, 3, 2],
+  },
+  diminishedWholeHalf: {
+    name: 'Diminished Whole-Half',
+    description: 'An eight-note scale with alternating whole and half steps.',
+    intervals: [2, 1, 2, 1, 2, 1, 2, 1],
+  },
+  diminishedHalfWhole: {
+    name: 'Diminished Half-Whole',
+    description: 'An eight-note scale with alternating half and whole steps.',
+    intervals: [1, 2, 1, 2, 1, 2, 1, 2],
+  },
+  wholeTone: {
+    name: 'Whole Tone',
+    description: 'A six-note scale where each note is a whole step apart.',
+    intervals: [2, 2, 2, 2, 2, 2],
+  },
+  chromatic: {
+    name: 'Chromatic',
+    description: 'All twelve pitches in an octave played in succession.',
+    intervals: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   },
 }
 
@@ -112,82 +148,58 @@ export const MODES_DATA: ScalesAndModesData = {
     intervals: [1, 2, 2, 1, 2, 2, 2],
   },
 }
-
-export const PENTATONIC_DATA: ScalesAndModesData = {
-  majorPentatonic: {
-    name: 'Major Pentatonic',
-    description: 'A five-note scale derived from the major scale.',
-    intervals: [2, 2, 3, 2, 3],
-  },
-  minorPentatonic: {
-    name: 'Minor Pentatonic',
-    description: 'A five-note scale derived from the natural minor scale.',
-    intervals: [3, 2, 2, 3, 2],
-  },
+const getIntervalName = (interval: number): string => {
+  return interval >= 0 && interval < intervalNamesSingle.length ? intervalNamesSingle[interval] : ''
 }
 
-export const BLUES_DATA: ScalesAndModesData = {
-  majorBlues: {
-    name: 'Major Blues',
-    description: 'A variation of the major pentatonic with an added blues note.',
-    intervals: [2, 1, 1, 3, 2, 3],
-  },
-  minorBlues: {
-    name: 'Minor Blues',
-    description: 'A variation of the minor pentatonic with an added blues note.',
-    intervals: [3, 2, 1, 1, 3, 2],
-  },
-}
+export const getScaleOrModeNotes = (
+  key: string,
+  scaleName: ScaleName | ModeNames,
+  type: 'scale' | 'mode',
+): scaleNotesAndIntervals | null => {
+  let scaleData
 
-export const DIMINISHED_DATA: ScalesAndModesData = {
-  diminishedWholeHalf: {
-    name: 'Diminished Whole-Half',
-    description: 'An eight-note scale with alternating whole and half steps.',
-    intervals: [2, 1, 2, 1, 2, 1, 2, 1],
-  },
-  diminishedHalfWhole: {
-    name: 'Diminished Half-Whole',
-    description: 'An eight-note scale with alternating half and whole steps.',
-    intervals: [1, 2, 1, 2, 1, 2, 1, 2],
-  },
-}
-
-export const WHOLETONE_DATA: ScalesAndModesData = {
-  wholeTone: {
-    name: 'Whole Tone',
-    description: 'A six-note scale where each note is a whole step apart.',
-    intervals: [2, 2, 2, 2, 2, 2],
-  },
-}
-
-export const CHROMATIC_DATA: ScalesAndModesData = {
-  chromatic: {
-    name: 'Chromatic',
-    description: 'All twelve pitches in an octave played in succession.',
-    intervals: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  },
-}
-
-export const getScaleNotes = (key: string, scaleName: ScaleName): string[] | null => {
-  const scaleData = SCALES_DATA[scaleName]
+  switch (type) {
+    case 'scale':
+      scaleData = SCALES_DATA[scaleName]
+      break
+    case 'mode':
+      scaleData = MODES_DATA[scaleName]
+      break
+    default:
+      return null
+  }
 
   if (scaleData) {
     const keyIndex = NOTES.indexOf(key)
     if (keyIndex !== -1) {
       const scaleIntervals = scaleData.intervals ?? []
-
-      // Exclude the last interval
-      const intervalsWithoutLast = scaleIntervals.slice(0, -1)
-
-      const scaleNotes = [key]
       let currentNoteIndex = keyIndex
+      let cumulativeInterval = 0
 
-      for (const interval of intervalsWithoutLast) {
-        currentNoteIndex = (currentNoteIndex + interval) % NOTES.length
-        scaleNotes.push(NOTES[currentNoteIndex])
+      const scaleNotes: scaleNotesAndIntervals = {
+        name: scaleName,
+        notes: [key],
+        intervals: [],
       }
 
-      console.log(scaleNotes)
+      // Iterate over the intervals, calculating notes and cumulative intervals
+      scaleIntervals.forEach((interval, index) => {
+        if (index > 0) {
+          cumulativeInterval += scaleIntervals[index - 1] // Add the previous interval to cumulative
+        }
+
+        // Calculate the next note
+        currentNoteIndex = (currentNoteIndex + interval) % NOTES.length
+        if (index < scaleIntervals.length - 1) {
+          // Check if it's not the last iteration
+          scaleNotes.notes.push(NOTES[currentNoteIndex])
+        }
+
+        // Add interval name for all but the last step (which goes back to root)
+        const intervalName = getIntervalName(cumulativeInterval)
+        scaleNotes.intervals.push(intervalName)
+      })
 
       return scaleNotes
     }

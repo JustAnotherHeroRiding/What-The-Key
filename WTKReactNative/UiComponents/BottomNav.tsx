@@ -18,6 +18,7 @@ import { AntDesign } from '@expo/vector-icons'
 import React from 'react'
 import IntervalsScreen from '../screens/SingleTrack/Intervals'
 import ScalesScreen from '../screens/SingleTrack/Scales'
+import ModesScreen from '../screens/SingleTrack/Modes'
 
 const navTheme = {
   ...DefaultTheme,
@@ -82,6 +83,13 @@ const SingleTrackNavigator = () => {
         component={ScalesScreen}
         options={{
           header: () => <CustomHeader title='Scales' />,
+        }}
+      />
+      <SingleTrackStack.Screen
+        name='Modes'
+        component={ModesScreen}
+        options={{
+          header: () => <CustomHeader title='Modes' />,
         }}
       />
     </SingleTrackStack.Navigator>

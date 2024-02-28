@@ -9,6 +9,7 @@ import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
 import { ScaleName, allScaleNames, getScaleOrModeNotes, scaleNotesAndIntervals } from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import { getNoteName } from '../../utils/track-formating'
+import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 
 function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }) {
   const route = useRoute()
@@ -100,6 +101,7 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
             </TouchableOpacity>
           )}
         />
+        <IntervalSymbolsLegend />
       </ScrollView>
     </LinearGradient>
   )

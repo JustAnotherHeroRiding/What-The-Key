@@ -162,11 +162,11 @@ Correct the type errors when navigating to the track page #DONE
 #### Scales - [All Scales](https://pulse.berklee.edu/scales/index.html)
 - Util function that will return the notes in a scale #DONE 
 - Buttons to display all possible scales that can be selected #DONE 
-- When clicking the button the notes of the scale with appear
+- When clicking the button the notes of the scale with appear #DONE 
 - For Scales we can show diagrams of scales that will sound good in the current key
 
 #### Modes
-- Same for modes
+- Same for modes as for the scales
 
 #### Triads
 - For triads we can show the different positions of each chord, this will not vary much between tracks. I will also need to research what triads are. Alright so i can display the possible triad shapes for each chord in the key #Research

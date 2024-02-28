@@ -7,6 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
 import { getIntervals } from '../../utils/track-formating'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
+import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 
 function IntervalsScreen({ navigation }: { navigation: ChordsScreenNavigationProp }) {
   const route = useRoute()
@@ -25,29 +26,7 @@ function IntervalsScreen({ navigation }: { navigation: ChordsScreenNavigationPro
     >
       <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
         <TrackMini track={track} src='Intervals' mode={mode} />
-        <Text style={tw.style(`text-slate-100 text-xl font-semibold`)}>Legend:</Text>
-        <View style={tw.style(`flex flex-wrap flex-row items-center justify-between gap-2`)}>
-          <View style={tw.style(`flex flex-col items-center justify-center`)}>
-            <Text style={tw.style(`text-slate-50 text-center`)}>M</Text>
-            <Text style={tw.style(`text-slate-50 text-center`)}>Major</Text>
-          </View>
-          <View style={tw.style(`flex flex-col items-center justify-center`)}>
-            <Text style={tw.style(`text-slate-50 text-center`)}>m</Text>
-            <Text style={tw.style(`text-slate-50 text-center`)}>Minor</Text>
-          </View>
-          <View style={tw.style(`flex flex-col items-center justify-center`)}>
-            <Text style={tw.style(`text-slate-50 text-center`)}>P</Text>
-            <Text style={tw.style(`text-slate-50 text-center`)}>Perfect</Text>
-          </View>
-          <View style={tw.style(`flex flex-col items-center justify-center`)}>
-            <Text style={tw.style(`text-slate-50 text-center`)}>A</Text>
-            <Text style={tw.style(`text-slate-50 text-center`)}>Augmented</Text>
-          </View>
-          <View style={tw.style(`flex flex-col items-center justify-center`)}>
-            <Text style={tw.style(`text-slate-50 text-center`)}>d</Text>
-            <Text style={tw.style(`text-slate-50 text-center`)}>Diminished</Text>
-          </View>
-        </View>
+        <IntervalSymbolsLegend />
 
         <Text style={tw.style('text-center text-2xl text-slate-100 font-semibold')}>Major Intervals</Text>
         <View style={tw.style(`flex flex-row flex-wrap p-2 items-center justify-center gap-2`)}>

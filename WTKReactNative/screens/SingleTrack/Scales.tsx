@@ -95,12 +95,12 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={() => renderSeparator(2)}
           renderItem={({ item, index }) => (
-            <TouchableOpacity style={tw.style(`p-1 bg-beigeCustom  rounded-md border-cream border `)}>
+            <View style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}>
               <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
               <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>
                 {selectedScale?.intervals[index]}
               </Text>
-            </TouchableOpacity>
+            </View>
           )}
         />
         {/* Fretboard that will show up once a scale is selected */}

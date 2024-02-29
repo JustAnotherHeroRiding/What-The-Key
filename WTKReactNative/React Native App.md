@@ -173,7 +173,8 @@ Correct the type errors when navigating to the track page #DONE
 ###### The Modes and Scales component are very similar but I think it is best that we keep them separated so that users can choose to focus on either scales or modes. However we can make it so that only one component is needed with just one param marking it as `scales` or `modes`
 
 #### Fretboard 
-- Add option to display interval instead of note in the scales
+- Add option to display interval instead of note in the scales #DONE 
+- When rotating the phone, the notes/interval should rotate
 
 #### Triads
 - For triads we can show the different positions of each chord, this will not vary much between tracks. I will also need to research what triads are. Alright so i can display the possible triad shapes for each chord in the key #Research

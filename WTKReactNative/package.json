@@ -40,7 +40,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.6",
-    "twrnc": "^3.6.7"
+    "twrnc": "^3.6.7",
+    "expo-screen-orientation": "~6.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

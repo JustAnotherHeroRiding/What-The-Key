@@ -31,4 +31,4 @@ const IntervalSymbolsLegend = () => {
     </>
   )
 }
-export default IntervalSymbolsLegend
+export default React.memo(IntervalSymbolsLegend)

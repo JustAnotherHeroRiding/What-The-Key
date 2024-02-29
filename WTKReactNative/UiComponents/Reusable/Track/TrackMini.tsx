@@ -33,4 +33,4 @@ const TrackMini = ({ track, src, mode }: TrackMiniProps) => {
   )
 }
 
-export default TrackMini
+export default React.memo(TrackMini)

@@ -140,4 +140,4 @@ const RandomTrack = ({ trackData, setRandomTrack, userId }: RandomTrackProps) =>
   )
 }
 
-export default RandomTrack
+export default React.memo(RandomTrack)

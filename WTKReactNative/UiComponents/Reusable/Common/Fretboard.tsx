@@ -57,9 +57,9 @@ const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes }) => {
 
   return (
     <View
-      style={tw`p-1 w-10 h-10 justify-center items-center ${isNoteInScale ? 'bg-blue-500' : 'bg-gray-200'} rounded-md border border-gray-400 m-0.5`}
+      style={tw`p-1 w-10 h-10 justify-center items-center ${isNoteInScale ? 'bg-beigeCustom' : 'bg-slate-200'} rounded-md border border-gray-400 m-0.5`}
     >
-      {isNoteInScale && <Text style={tw`text-xs font-bold`}>{note}</Text>}
+      {isNoteInScale && <Text style={tw.style(`text-xs`, { fontFamily: 'figtree-bold' })}>{note}</Text>}
     </View>
   )
 }

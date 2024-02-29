@@ -156,4 +156,4 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
     </ScrollView>
   )
 }
-export default TrackDetailed
+export default React.memo(TrackDetailed)

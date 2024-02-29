@@ -131,4 +131,4 @@ const Track = ({ track, location, openTabsModal }: TrackProps) => {
     </>
   )
 }
-export default Track
+export default React.memo(Track)

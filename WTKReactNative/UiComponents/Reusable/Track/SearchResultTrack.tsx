@@ -159,4 +159,4 @@ const SearchResultTrack = ({ track, location }: SearchResultTrackProps) => {
   )
 }
 
-export default SearchResultTrack
+export default React.memo(SearchResultTrack)

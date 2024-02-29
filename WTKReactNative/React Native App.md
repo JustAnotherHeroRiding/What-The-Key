@@ -168,9 +168,12 @@ Correct the type errors when navigating to the track page #DONE
 - Sharps are not being displayed #DONE 
 - Scales do not seem to be completely correctly, minor pentatonic is has misplaced notes #DONE 
 - For Scales we can show diagrams of scales that will sound good in the current key #DONE 
-
 #### Modes
-- Same for modes as for the scales
+- Same for modes as for the scales #DONE 
+###### The Modes and Scales component are very similar but I think it is best that we keep them separated so that users can choose to focus on either scales or modes. However we can make it so that only one component is needed with just one param marking it as `scales` or `modes`
+
+#### Fretboard 
+- Add option to display interval instead of note in the scales
 
 #### Triads
 - For triads we can show the different positions of each chord, this will not vary much between tracks. I will also need to research what triads are. Alright so i can display the possible triad shapes for each chord in the key #Research

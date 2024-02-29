@@ -70,7 +70,7 @@ function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) 
           >
             Select a Mode
           </Text>
-
+          {/* List of Modes in the key of the song */}
           <FlatList
             style={tw.style('flex flex-row')}
             data={filteredModes.length > 0 && query ? filteredModes : allModeNames}
@@ -88,6 +88,7 @@ function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) 
             onChangeText={handleChange}
           />
         </View>
+        {/* Notes in the selected mode along with their intervals */}
         <FlatList
           horizontal={true}
           data={Object.values(selectedMode?.notes ?? {})}
@@ -100,6 +101,7 @@ function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) 
             </TouchableOpacity>
           )}
         />
+        {/* Fretboard that will show up once a mode is selected */}
         {selectedMode?.notes && <Fretboard scaleNotes={selectedMode?.notes} />}
         <IntervalSymbolsLegend />
       </ScrollView>

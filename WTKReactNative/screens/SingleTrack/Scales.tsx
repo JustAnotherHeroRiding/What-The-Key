@@ -70,7 +70,7 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
           >
             Select a scale
           </Text>
-
+          {/* List of scales in the key of the song */}
           <FlatList
             style={tw.style('flex flex-row')}
             data={filteredScales.length > 0 ? filteredScales : allScaleNames}
@@ -88,6 +88,7 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
             onChangeText={handleChange}
           />
         </View>
+        {/* Notes in the selected scale along with their intervals */}
         <FlatList
           horizontal={true}
           data={Object.values(selectedScale?.notes ?? {})}
@@ -102,6 +103,7 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
             </TouchableOpacity>
           )}
         />
+        {/* Fretboard that will show up once a scale is selected */}
         {selectedScale?.notes && <Fretboard scaleNotes={selectedScale?.notes} />}
         <IntervalSymbolsLegend />
       </ScrollView>

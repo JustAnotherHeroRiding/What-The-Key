@@ -102,7 +102,7 @@ function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) 
           )}
         />
         {/* Fretboard that will show up once a mode is selected */}
-        {selectedMode?.notes && <Fretboard scaleNotes={selectedMode?.notes} />}
+        {selectedMode?.notes && <Fretboard scaleNotes={selectedMode} />}
         <IntervalSymbolsLegend />
       </ScrollView>
     </LinearGradient>

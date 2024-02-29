@@ -104,7 +104,7 @@ function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }
           )}
         />
         {/* Fretboard that will show up once a scale is selected */}
-        {selectedScale?.notes && <Fretboard scaleNotes={selectedScale?.notes} />}
+        {selectedScale?.notes && <Fretboard scaleNotes={selectedScale} />}
         <IntervalSymbolsLegend />
       </ScrollView>
     </LinearGradient>

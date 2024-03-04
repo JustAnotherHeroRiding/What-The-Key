@@ -9,6 +9,7 @@ export type RootStackParamList = {
     Library: { type: dataSource }
     Deleted: { type: dataSource }
     Auth: undefined
+    Study: undefined
   }
   SingleTrackNavigator: {
     SingleTrackOverview: { trackId: string; src: Sources }
@@ -23,6 +24,7 @@ export type LibraryScreenNavigationProp = BottomTabNavigationProp<RootStackParam
 export type DeletedScreenNavigationProp = BottomTabNavigationProp<RootStackParamList['MainTab'], 'Deleted'>
 
 export type AuthScreenNavigationProp = BottomTabNavigationProp<RootStackParamList['MainTab'], 'Auth'>
+export type StudyScreenNavigationProp = BottomTabNavigationProp<RootStackParamList['MainTab'], 'Study'>
 
 export type SingleTrackOverviewNavigationProp = NativeStackNavigationProp<
   RootStackParamList['SingleTrackNavigator'],

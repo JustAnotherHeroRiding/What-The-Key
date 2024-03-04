@@ -19,6 +19,7 @@ import React from 'react'
 import IntervalsScreen from '../screens/SingleTrack/Intervals'
 import ScalesScreen from '../screens/SingleTrack/Scales'
 import ModesScreen from '../screens/SingleTrack/Modes'
+import StudyScreen from '../screens/MainTab/Study'
 
 const navTheme = {
   ...DefaultTheme,
@@ -130,6 +131,8 @@ const BottomTab = () => {
               return <Avatar size={25} url={profilePicUrl} location='nav' />
             }
             imageSource = require('../assets/images/default-user.png')
+          } else if (route.name === 'Study') {
+            imageSource = require('../assets/images/study.png')
           }
 
           return <Image source={imageSource} style={{ width: 25, height: 25, borderRadius: 40, marginTop: 8 }} />
@@ -141,14 +144,21 @@ const BottomTab = () => {
             fontFamily: focused ? 'figtree-bold' : 'figtree-regular',
           }
 
-          if (route.name === 'Home') {
-            label = 'Home'
-          } else if (route.name === 'Library') {
-            label = 'Library'
-          } else if (route.name === 'Deleted') {
-            label = 'Deleted'
-          } else if (route.name === 'Auth') {
-            label = session ? 'Profile' : 'Log In'
+          switch (route.name) {
+            case 'Home':
+              label = 'Home'
+              break
+            case 'Library':
+              label = 'Library'
+              break
+            case 'Auth':
+              label = session ? 'Profile' : 'Log In'
+              break
+            case 'Deleted':
+              label = 'Deleted'
+              break
+            case 'Study':
+              label = 'Study'
           }
 
           return <Text style={customStyle}>{label}</Text>
@@ -186,6 +196,7 @@ const BottomTab = () => {
           />
         </>
       )}
+      <Tab.Screen name='Study' component={StudyScreen} />
       <Tab.Screen name='Auth' component={AuthScreen} />
     </Tab.Navigator>
   )

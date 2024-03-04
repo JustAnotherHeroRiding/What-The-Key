@@ -172,8 +172,12 @@ Correct the type errors when navigating to the track page #DONE
 - Same for modes as for the scales #DONE 
 ###### The Modes and Scales component are very similar but I think it is best that we keep them separated so that users can choose to focus on either scales or modes. However we can make it so that only one component is needed with just one param marking it as `scales` or `modes`
 
+
+#### Study
+- Create a new Screen where users can select their own key and then select the scales or modes
 #### Fretboard 
 - Add option to display interval instead of note in the scales #DONE 
+[Screen Orientation Docs](https://docs.expo.dev/versions/latest/sdk/screen-orientation/)
 - When rotating the phone, the notes/interval should rotate
 
 #### Triads

@@ -6,39 +6,44 @@ import { Picker } from '@react-native-picker/picker'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
 import {
+  ModeNames,
   ScaleName,
   allModeNames,
   allScaleNames,
   getScaleOrModeNotes,
   scaleNotesAndIntervals,
+  scaleOrModeOptions,
 } from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
+import { capitalizeFirstLetter } from '../../utils/text-formatting'
 
-export const scaleOrModeOptions = ['Scales', 'Modes']
+interface SelectedOption {
+  scale: scaleNotesAndIntervals
+}
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
   const [selectedKey, setSelectedKey] = useState(NOTES[0])
-  const [scaleOrMode, setScaleOrMode] = useState('Scales')
+  const [scaleOrMode, setScaleOrMode] = useState('scale')
 
   const [query, setQuery] = useState('')
   const [filteredOptions, setFilteredOptions] = useState<string[]>(allScaleNames)
-  const [selectedScale, setSelectedScale] = useState<scaleNotesAndIntervals | null>(null)
+  const [selectedOption, setSelectedOption] = useState<SelectedOption | null>(null)
 
-  const optionsToDisplay = scaleOrMode === 'Scales' ? allScaleNames : allModeNames
+  const optionsToDisplay = scaleOrMode === 'scale' ? allScaleNames : allModeNames
 
   useEffect(() => {
     handleSearch()
   }, [scaleOrMode, query])
 
   const handleSearch = () => {
-    const scalesToFilter = scaleOrMode === 'Scales' ? allScaleNames : allModeNames
+    const scalesToFilter = scaleOrMode === 'scale' ? allScaleNames : allModeNames
     if (query.length > 0) {
       const filtered = scalesToFilter.filter(scale => scale.toLowerCase().includes(query.toLowerCase()))
       setFilteredOptions(filtered)
     } else {
-      setFilteredOptions(scaleOrMode === 'Scales' ? allScaleNames : allModeNames)
+      setFilteredOptions(scaleOrMode === 'scale' ? allScaleNames : allModeNames)
     }
   }
 
@@ -48,6 +53,12 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
     debouncedSearch()
     return debouncedSearch.cancel
   }, [query, optionsToDisplay, debouncedSearch])
+
+  useEffect(() => {
+    if (selectedOption?.scale.name && selectedOption?.scale.name !== undefined) {
+      selectScale(selectedOption?.scale.name)
+    }
+  }, [selectedKey, scaleOrMode])
 
   const renderRow = ({ item, index }: { item: string; index: number }) => (
     <TouchableOpacity
@@ -61,9 +72,17 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
   /* Enter a width to change the tailwind width class to apply */
   const renderSeparator = (width: number) => <View style={tw.style(`h-2 w-${width}`)} />
 
-  const selectScale = (scale: ScaleName) => {
-    const scaleNotes = getScaleOrModeNotes(selectedKey, scale, 'scale')
-    setSelectedScale(scaleNotes)
+  const selectScale = (scale: ScaleName | ModeNames | null) => {
+    if (scale === null) {
+      return
+    }
+    const scaleNotes: scaleNotesAndIntervals = getScaleOrModeNotes(
+      selectedKey,
+      scale,
+      scaleOrMode,
+    ) as scaleNotesAndIntervals
+    //console.log(scale, scaleNotes)
+    setSelectedOption({ scale: scaleNotes })
   }
 
   return (
@@ -71,7 +90,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
       colors={['#27272a', '#52525b']}
       start={{ x: 1, y: 0 }}
       end={{ x: 0, y: 0 }}
-      style={tw.style(`flex-grow w-full`)}
+      style={tw.style(`flex-grow w-full pb-16`)}
     >
       <ScrollView contentContainerStyle={tw.style(`flex justify-center gap-2 p-4`)}>
         <View style={tw.style(`justify-between flex-row`)}>
@@ -80,7 +99,9 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
             <Picker
               style={tw.style('bg-white')}
               selectedValue={selectedKey}
-              onValueChange={(itemValue, itemIndex) => setSelectedKey(itemValue)}
+              onValueChange={(itemValue, itemIndex) => {
+                setSelectedKey(itemValue)
+              }}
             >
               {NOTES.map(note => (
                 <Picker.Item key={`${note}-key}`} label={note} value={note} color='black' />
@@ -92,10 +113,13 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
             <Picker
               style={tw.style('bg-white')}
               selectedValue={scaleOrMode}
-              onValueChange={(itemValue, itemIndex) => setScaleOrMode(itemValue)}
+              onValueChange={(itemValue, itemIndex) => {
+                setScaleOrMode(itemValue)
+                setSelectedOption(null)
+              }}
             >
               {scaleOrModeOptions.map(option => (
-                <Picker.Item key={option} label={option} value={option} />
+                <Picker.Item key={option} label={`${capitalizeFirstLetter(option)}s`} value={option} />
               ))}
             </Picker>
           </View>
@@ -135,20 +159,20 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
         {/* Notes in the selected scale along with their intervals */}
         <FlatList
           horizontal={true}
-          data={Object.values(selectedScale?.notes ?? {})}
+          data={Object.values(selectedOption?.scale?.notes ?? {})}
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={() => renderSeparator(2)}
           renderItem={({ item, index }) => (
             <View style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}>
               <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
               <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>
-                {selectedScale?.intervals[index]}
+                {selectedOption?.scale?.intervals[index]}
               </Text>
             </View>
           )}
         />
         {/* Fretboard that will show up once a scale is selected */}
-        {selectedScale?.notes && <Fretboard scaleNotes={selectedScale} />}
+        {selectedOption?.scale?.notes && <Fretboard scaleNotes={selectedOption.scale} />}
         <IntervalSymbolsLegend />
       </ScrollView>
     </LinearGradient>

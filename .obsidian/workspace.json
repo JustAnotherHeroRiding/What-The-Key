@@ -148,6 +148,7 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/utils/text-formatting.ts",
     "WTKReactNative/node_modules/@react-native-picker/picker/android/build/generated/source/buildConfig/debug/com/reactnativecommunity/picker/BuildConfig.java",
     "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/TextViewImpl.class",
     "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/RNCPickerPackage.class",
@@ -158,7 +159,6 @@
     "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPickerManager$PickerEventEmitter.class",
     "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPicker.class",
     "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPicker$OnSelectListener.class",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPicker$OnFocusListener.class",
     "WTKReactNative/node_modules/@react-native-picker/picker/README.md",
     "WTKReactNative/assets/images/study.png",
     "WTKReactNative/assets/images/DALL·E 2024-03-04 19.52.07 - Create a simple and elegant navigation icon for a mobile app route called 'study', focused on music theory education. The icon should feature a logo i.png",

@@ -80,10 +80,6 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
     }
   }, [])
 
-  useEffect(() => {
-    console.log('isLandscape', isLandscape)
-  }, [isLandscape])
-
   return (
     <View style={tw`flex-1 flex-col`}>
       <View style={tw.style('flex-row justify-between')}>

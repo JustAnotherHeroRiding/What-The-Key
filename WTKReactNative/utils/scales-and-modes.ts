@@ -151,11 +151,13 @@ export const MODES_DATA: ScalesAndModesData = {
 const getIntervalName = (interval: number): string => {
   return interval >= 0 && interval < intervalNamesSingle.length ? intervalNamesSingle[interval] : ''
 }
+export const scaleOrModeOptions = ['scale', 'mode']
+export type scaleOrModeOptions = (typeof scaleOrModeOptions)[number]
 
 export const getScaleOrModeNotes = (
   key: string,
   scaleName: ScaleName | ModeNames,
-  type: 'scale' | 'mode',
+  type: scaleOrModeOptions,
 ): scaleNotesAndIntervals | null => {
   let scaleData
 

@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { NOTES as chromaticScale, intervalNamesSingle } from '../../../utils/track-formating'
 import { CustomButton } from './CustomButtom'
 import { scaleNotesAndIntervals } from '../../../utils/scales-and-modes'
 import * as ScreenOrientation from 'expo-screen-orientation'
+import { transform } from 'lodash'
 
 const getNoteAtFret = (openStringNote: string, fret: number, key: string, noteType: 'interval' | 'note'): string => {
   const openNoteIndex = chromaticScale.findIndex(note => note === openStringNote)
@@ -81,7 +82,8 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
   }, [])
 
   return (
-    <View style={tw`flex-1 flex-col`}>
+    <ScrollView>
+      {/* flex-row for portait */}
       <View style={tw.style('flex-row justify-between')}>
         <CustomButton
           title={`Show ${noteType === 'note' ? 'Intervals' : 'Notes'}`}
@@ -89,35 +91,46 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
         ></CustomButton>
         <CustomButton onPress={toggleOrientation} title={isLandscape ? 'Portrait' : 'Landscape'}></CustomButton>
       </View>
-      {/* String Names */}
-      <View style={tw`flex-row justify-center ml-10 items-center`}>
-        {strings.map((string, stringIndex) => (
-          <Text key={stringIndex} style={tw`w-10 h-10 p-1 m-0.5 text-xl text-center text-white`}>
-            {string}
-          </Text>
-        ))}
-      </View>
+      {/*  flex-col for portait  */}
+      <View style={tw.style('flex-1', isLandscape ? 'flex-row' : 'flex-col')}>
+        {/* String Names */}
+        {/* flex-row for portait */}
 
-      {/* Frets and Fret Numbers */}
-      {frets.map((fret, fretIndex) => (
-        <View key={fretIndex} style={tw`flex-row items-center justify-center`}>
-          {/* Fret Number */}
-          <Text style={tw`w-10 h-10 text-xl text-center text-white`}>{fret}</Text>
-
-          {/* Frets for each string */}
+        <View style={tw`${isLandscape ? 'flex-col' : 'flex-row'} justify-center ml-10 items-center`}>
           {strings.map((string, stringIndex) => (
-            <Fret
-              key={`${stringIndex}-${fretIndex}`}
-              string={string}
-              fret={fret}
-              scaleNotes={scaleNotes}
-              noteType={noteType}
-              isLandscape={isLandscape}
-            />
+            <Text key={stringIndex} style={tw`w-10 h-10 p-1 m-0.5 text-xl text-center text-white`}>
+              {string}
+            </Text>
           ))}
         </View>
-      ))}
-    </View>
+
+        {/* Frets and Fret Numbers */}
+        {/* flex-row for portait */}
+        <ScrollView horizontal={true}>
+          {frets.map((fret, fretIndex) => (
+            <View
+              key={fretIndex}
+              style={tw.style('items-center justify-center', isLandscape ? 'flex-col' : 'flex-row')}
+            >
+              {/* Fret Number */}
+              <Text style={tw`w-10 h-10 text-xl text-center text-white`}>{fret}</Text>
+
+              {/* Frets for each string */}
+              {strings.map((string, stringIndex) => (
+                <Fret
+                  key={`${stringIndex}-${fretIndex}`}
+                  string={string}
+                  fret={fret}
+                  scaleNotes={scaleNotes}
+                  noteType={noteType}
+                  isLandscape={isLandscape}
+                />
+              ))}
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -144,14 +157,21 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
 
   return (
     <View
-      style={tw.style([
-        'p-1 w-10 h-10 justify-center items-center shadow-lg shadow-slate-200 rounded-md m-0.5',
-        isNoteInScale ? 'border border-gray-400' : '',
-        isNoteInScale ? (isRootNote ? 'bg-beigeCustom border-2 border-slate-800' : 'bg-creamLight') : 'bg-slate-200',
-      ])}
+      style={tw.style(
+        [
+          'p-1 w-10  h-10 justify-center items-center shadow-lg shadow-slate-200 rounded-md m-0.5',
+          isNoteInScale ? 'border border-gray-400' : '',
+          isNoteInScale ? (isRootNote ? 'bg-beigeCustom border-2 border-slate-800' : 'bg-creamLight') : 'bg-slate-200',
+        ],
+        isLandscape
+          ? {
+              transform: [{ rotate: '360deg' }],
+            }
+          : {},
+      )}
     >
       {isNoteInScale && (
-        <Text style={tw.style([isRootNote ? 'text-xl' : 'text-lg'], { fontFamily: 'figtree-bold' })}>{note}</Text>
+        <Text style={tw.style([` ${isRootNote ? 'text-xl' : 'text-lg'}`], { fontFamily: 'figtree-bold' })}>{note}</Text>
       )}
     </View>
   )

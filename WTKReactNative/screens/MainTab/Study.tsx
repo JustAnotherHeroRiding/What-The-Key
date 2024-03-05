@@ -92,7 +92,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
       end={{ x: 0, y: 0 }}
       style={tw.style(`flex-grow w-full pb-16`)}
     >
-      <ScrollView contentContainerStyle={tw.style(`flex justify-center gap-2 p-4`)}>
+      <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
         <View style={tw.style(`justify-between flex-row`)}>
           <View style={tw.style(`flex-col w-1/3`)}>
             <Text style={tw.style(`text-slate-200`)}>Select a Key:</Text>
@@ -140,7 +140,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
           </Text>
           {/* List of scales in the key of the song */}
           <FlatList
-            style={tw.style('flex flex-row')}
+            style={tw.style('flex-row')}
             data={filteredOptions}
             renderItem={renderRow}
             keyExtractor={(item, index) => index.toString()}
@@ -159,6 +159,8 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
         {/* Notes in the selected scale along with their intervals */}
         <FlatList
           horizontal={true}
+          style={tw.style('flex-row')}
+          contentContainerStyle={tw.style(`items-center justify-center`)}
           data={Object.values(selectedOption?.scale?.notes ?? {})}
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={() => renderSeparator(2)}

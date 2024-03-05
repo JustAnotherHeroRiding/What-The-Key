@@ -7,7 +7,9 @@ Put this in a `local.properties` file in the android file whenever building loca
 
 
 # Logo Prompt
-Design a sleek, modern logo that integrates an open book with musical mottifs, which should be minimal and positioned on both pages of the open book. The logo should use my predefined color scheme of ``` blackCustom: '#000000', beigeCustom: '#f4dfc8', cream: '#f4eae0', creamLight: '#faf6f0', beigeDarker: '#e0dcd6', ```, using the complementary colors of beige and cream together with black and white, set against a pure white background suitable for a PNG format. The background should take up about 10% of the screen size while the remaining 90% should be the logo itself
+1. Design a sleek, modern logo that integrates an open book with musical motifs, which should be minimal and positioned on both pages of the open book. The logo should use my predefined color scheme of ``` blackCustom: '#000000', beigeCustom: '#f4dfc8', cream: '#f4eae0', creamLight: '#faf6f0', beigeDarker: '#e0dcd6', ```, using the complementary colors of beige and cream together with black and white, set against a pure white background suitable for a PNG format. The background should take up about 10% of the screen size while the remaining 90% should be the logo itself
+
+2. "Create a bold, emblem-style logo that merges the letter 'B' with the full body of a wolf in mid-stride. The 'B' should be stylized to form part of the wolf's body or movement, with a dynamic and fluid design. Use a minimalist color palette with the logo on a white background to facilitate clean PNG extraction."
 
 
 ## Multi platform App
@@ -176,6 +178,8 @@ Correct the type errors when navigating to the track page #DONE
 #### Modes
 - Same for modes as for the scales #DONE 
 ###### The Modes and Scales component are very similar but I think it is best that we keep them separated so that users can choose to focus on either scales or modes. However we can make it so that only one component is needed with just one param marking it as `scales` or `modes`
+---
+
 
 
 #### Study

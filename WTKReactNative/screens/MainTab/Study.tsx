@@ -1,11 +1,17 @@
 import { View, Text, ScrollView, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import { StudyScreenNavigationProp } from '../../utils/types/nav-types'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { NOTES, getNoteName } from '../../utils/track-formating'
 import { Picker } from '@react-native-picker/picker'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
-import { ScaleName, allScaleNames, getScaleOrModeNotes, scaleNotesAndIntervals } from '../../utils/scales-and-modes'
+import {
+  ScaleName,
+  allModeNames,
+  allScaleNames,
+  getScaleOrModeNotes,
+  scaleNotesAndIntervals,
+} from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
@@ -17,32 +23,41 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
   const [scaleOrMode, setScaleOrMode] = useState('Scales')
 
   const [query, setQuery] = useState('')
-  const [filteredScales, setFilteredScales] = useState<string[]>([])
+  const [filteredOptions, setFilteredOptions] = useState<string[]>(allScaleNames)
   const [selectedScale, setSelectedScale] = useState<scaleNotesAndIntervals | null>(null)
 
+  const optionsToDisplay = scaleOrMode === 'Scales' ? allScaleNames : allModeNames
+
+  useEffect(() => {
+    handleSearch()
+  }, [scaleOrMode, query])
+
   const handleSearch = () => {
+    const scalesToFilter = scaleOrMode === 'Scales' ? allScaleNames : allModeNames
     if (query.length > 0) {
-      const filtered = allScaleNames.filter(scale => scale.toLowerCase().includes(query.toLowerCase()))
-      setFilteredScales(filtered)
+      const filtered = scalesToFilter.filter(scale => scale.toLowerCase().includes(query.toLowerCase()))
+      setFilteredOptions(filtered)
     } else {
-      setFilteredScales([])
+      setFilteredOptions(scaleOrMode === 'Scales' ? allScaleNames : allModeNames)
     }
   }
 
-  const handleChange = (text: string) => {
-    setQuery(text)
+  const debouncedSearch = useMemo(() => _.debounce(handleSearch, 300), [query, optionsToDisplay])
+
+  useEffect(() => {
     debouncedSearch()
-  }
-  const debouncedSearch = useMemo(() => _.debounce(handleSearch, 300), [query])
+    return debouncedSearch.cancel
+  }, [query, optionsToDisplay, debouncedSearch])
 
   const renderRow = ({ item, index }: { item: string; index: number }) => (
     <TouchableOpacity
       onPress={() => selectScale(item as ScaleName)}
-      style={tw.style(`py-3 px-3 bg-beigeCustom  rounded-md border-cream border `)}
+      style={tw.style(`py-3 px-3 bg-beigeCustom rounded-md border-cream border`)}
     >
-      <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item[0].toUpperCase() + item.slice(1)}</Text>
+      <Text style={tw.style('text-xl', { fontFamily: 'figtree-bold' })}>{item[0].toUpperCase() + item.slice(1)}</Text>
     </TouchableOpacity>
   )
+
   /* Enter a width to change the tailwind width class to apply */
   const renderSeparator = (width: number) => <View style={tw.style(`h-2 w-${width}`)} />
 
@@ -59,22 +74,38 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
       style={tw.style(`flex-grow w-full`)}
     >
       <ScrollView contentContainerStyle={tw.style(`flex justify-center gap-2 p-4`)}>
-        <Text style={tw.style(`text-slate-200`)}>Select a Key:</Text>
-        <Picker selectedValue={selectedKey} onValueChange={(itemValue, itemIndex) => setSelectedKey(itemValue)}>
-          {NOTES.map(note => (
-            <Picker.Item style={tw.style(`text-black`)} key={`${note}-key}`} label={note} value={note} />
-          ))}
-        </Picker>
+        <View style={tw.style(`justify-between flex-row`)}>
+          <View style={tw.style(`flex-col w-1/3`)}>
+            <Text style={tw.style(`text-slate-200`)}>Select a Key:</Text>
+            <Picker
+              style={tw.style('bg-white')}
+              selectedValue={selectedKey}
+              onValueChange={(itemValue, itemIndex) => setSelectedKey(itemValue)}
+            >
+              {NOTES.map(note => (
+                <Picker.Item key={`${note}-key}`} label={note} value={note} color='black' />
+              ))}
+            </Picker>
+          </View>
+          <View style={tw.style(`flex-col w-1/2`)}>
+            <Text style={tw.style(`text-slate-200`)}>Select Scale or Mode:</Text>
+            <Picker
+              style={tw.style('bg-white')}
+              selectedValue={scaleOrMode}
+              onValueChange={(itemValue, itemIndex) => setScaleOrMode(itemValue)}
+            >
+              {scaleOrModeOptions.map(option => (
+                <Picker.Item key={option} label={option} value={option} />
+              ))}
+            </Picker>
+          </View>
+        </View>
 
-        <Text style={tw.style(`text-slate-200`)}>Select Scale or Mode:</Text>
-        <Picker selectedValue={scaleOrMode} onValueChange={(itemValue, itemIndex) => setScaleOrMode(itemValue)}>
-          {scaleOrModeOptions.map(option => (
-            <Picker.Item key={option} label={option} value={option} />
-          ))}
-        </Picker>
+        <View style={tw.style(`flex-row justify-between`)}>
+          <Text style={tw.style(`text-slate-200`)}>Selected Key: {selectedKey}</Text>
+          <Text style={tw.style(`text-slate-200`)}>Type: {scaleOrMode}</Text>
+        </View>
 
-        <Text style={tw.style(`text-slate-200`)}>Selected Key: {selectedKey}</Text>
-        <Text style={tw.style(`text-slate-200`)}>Type: {scaleOrMode}</Text>
         <View style={tw.style('flex-grow w-full opacity-100')}>
           <Text
             style={tw.style('text-white border-slate-500 border-b-2 text-3xl py-4 text-center', {
@@ -86,7 +117,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
           {/* List of scales in the key of the song */}
           <FlatList
             style={tw.style('flex flex-row')}
-            data={filteredScales.length > 0 ? filteredScales : allScaleNames}
+            data={filteredOptions}
             renderItem={renderRow}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={() => renderSeparator(2)}
@@ -98,7 +129,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
             placeholder='Search for a scale or mode'
             placeholderTextColor='gray'
             value={query}
-            onChangeText={handleChange}
+            onChangeText={setQuery}
           />
         </View>
         {/* Notes in the selected scale along with their intervals */}

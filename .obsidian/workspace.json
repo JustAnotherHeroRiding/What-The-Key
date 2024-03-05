@@ -148,17 +148,18 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/src/main/res/layout/simple_spinner_item.xml",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/src/main/res/layout/simple_spinner_dropdown_item.xml",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/src/main/res/drawable/spinner_dropdown_background.xml",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/src/main/res/drawable/ic_dropdown.xml",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/src/main/res/layout",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/src/main/res/drawable",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/src/main/res",
-    "WTKReactNative/node_modules/@react-native-picker/picker/ios/RNCPicker.xcodeproj/project.pbxproj",
-    "WTKReactNative/node_modules/@react-native-picker/picker/ios/RNCPickerManager.mm",
-    "WTKReactNative/node_modules/@react-native-picker/picker/ios/RNCPickerManager.h",
-    "WTKReactNative/node_modules/@react-native-picker/picker/ios/RNCPickerLabel.mm",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/generated/source/buildConfig/debug/com/reactnativecommunity/picker/BuildConfig.java",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/TextViewImpl.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/RNCPickerPackage.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPickerShadowNode.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPickerManager.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPickerManager$ReactPickerAdapter.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPickerLocalData.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPickerManager$PickerEventEmitter.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPicker.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPicker$OnSelectListener.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPicker$OnFocusListener.class",
+    "WTKReactNative/node_modules/@react-native-picker/picker/README.md",
     "WTKReactNative/assets/images/study.png",
     "WTKReactNative/assets/images/DALL·E 2024-03-04 19.52.07 - Create a simple and elegant navigation icon for a mobile app route called 'study', focused on music theory education. The icon should feature a logo i.png",
     "WTKReactNative/assets/images/DALL·E 2024-03-04 19.52.07 - Create a simple and elegant navigation icon for a mobile app route called 'study', focused on music theory education. The icon should feature a logo i.webp",
@@ -192,7 +193,6 @@
     "WTKReactNative/node_modules/is-negative-zero/README.md",
     "WTKReactNative/node_modules/is-negative-zero/CHANGELOG.md",
     "WTKReactNative/node_modules/is-map/README.md",
-    "WTKReactNative/node_modules/is-map/CHANGELOG.md",
-    "WTKReactNative/node_modules/is-finalizationregistry/README.md"
+    "WTKReactNative/node_modules/is-map/CHANGELOG.md"
   ]
 }

@@ -174,7 +174,8 @@ Correct the type errors when navigating to the track page #DONE
 
 
 #### Study
-- Create a new Screen where users can select their own key and then select the scales or modes
+- Create a new Screen where users can select their own key and then select the scales or modes #DONE 
+- Style the picker screens as they are white text on white background currently
 #### Fretboard 
 - Add option to display interval instead of note in the scales #DONE 
 [Screen Orientation Docs](https://docs.expo.dev/versions/latest/sdk/screen-orientation/)

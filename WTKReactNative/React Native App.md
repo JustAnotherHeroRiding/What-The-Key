@@ -5,6 +5,11 @@ Put this in a `local.properties` file in the android file whenever building loca
 `sdk.dir=C:\\Users\\Admin\\AppData\\Local\\Android\\Sdk`
 
 
+
+# Logo Prompt
+Design a sleek, modern logo that integrates an open book with musical mottifs, which should be minimal and positioned on both pages of the open book. The logo should use my predefined color scheme of ``` blackCustom: '#000000', beigeCustom: '#f4dfc8', cream: '#f4eae0', creamLight: '#faf6f0', beigeDarker: '#e0dcd6', ```, using the complementary colors of beige and cream together with black and white, set against a pure white background suitable for a PNG format. The background should take up about 10% of the screen size while the remaining 90% should be the logo itself
+
+
 ## Multi platform App
 
 Instead of using Kotlin to create a native android app, let's use React native to create a multi platform app.

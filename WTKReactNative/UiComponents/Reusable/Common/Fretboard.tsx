@@ -57,6 +57,14 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
     }
   }, [])
 
+  const [noteRotation, setNoteRotation] = useState(0)
+
+  const rotateNotes = useCallback(() => {
+    // Add 90 degrees to the current rotation, and use modulus to ensure it doesn't exceed 360
+    const newRotation = (noteRotation + 90) % 360
+    setNoteRotation(newRotation)
+  }, [noteRotation])
+
   useEffect(() => {
     // Function to update state based on current orientation
     const updateOrientationState = async () => {
@@ -84,13 +92,23 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
   return (
     <ScrollView>
       {/* flex-row for portait */}
-      <View style={tw.style('flex-row justify-between')}>
+      <ScrollView
+        horizontal={true}
+        style={tw.style('flex-row')}
+        contentContainerStyle={tw.style(`justify-between gap-2`)}
+      >
         <CustomButton
           title={`Show ${noteType === 'note' ? 'Intervals' : 'Notes'}`}
           onPress={() => toggleNoteType()}
         ></CustomButton>
         <CustomButton onPress={toggleOrientation} title={isLandscape ? 'Portrait' : 'Landscape'}></CustomButton>
-      </View>
+        <CustomButton
+          disabled={isLandscape}
+          btnStyle={{ opacity: isLandscape ? 0.7 : 1 }}
+          onPress={rotateNotes}
+          title={'Rotate'}
+        ></CustomButton>
+      </ScrollView>
       {/*  flex-col for portait  */}
       <View style={tw.style('flex-1', isLandscape ? 'flex-row' : 'flex-col')}>
         {/* String Names */}
@@ -98,7 +116,13 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
 
         <View style={tw`${isLandscape ? 'flex-col' : 'flex-row'} justify-center ml-10 items-center`}>
           {strings.map((string, stringIndex) => (
-            <Text key={stringIndex} style={tw`w-10 h-10 p-1 m-0.5 text-xl text-center text-white`}>
+            <Text
+              key={stringIndex}
+              style={tw.style(
+                `w-10 h-10 p-1 m-0.5 text-xl text-center text-white`,
+                !isLandscape && { transform: [{ rotate: `${noteRotation}deg` }] },
+              )}
+            >
               {string}
             </Text>
           ))}
@@ -106,14 +130,21 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
 
         {/* Frets and Fret Numbers */}
         {/* flex-row for portait */}
-        <ScrollView horizontal={true}>
+        <ScrollView horizontal={isLandscape}>
           {frets.map((fret, fretIndex) => (
             <View
               key={fretIndex}
               style={tw.style('items-center justify-center', isLandscape ? 'flex-col' : 'flex-row')}
             >
               {/* Fret Number */}
-              <Text style={tw`w-10 h-10 text-xl text-center text-white`}>{fret}</Text>
+              <Text
+                style={tw.style(
+                  `w-10 h-10 text-xl text-center text-white`,
+                  !isLandscape && { transform: [{ rotate: `${noteRotation}deg` }] },
+                )}
+              >
+                {fret}
+              </Text>
 
               {/* Frets for each string */}
               {strings.map((string, stringIndex) => (
@@ -124,6 +155,7 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
                   scaleNotes={scaleNotes}
                   noteType={noteType}
                   isLandscape={isLandscape}
+                  noteRotation={noteRotation}
                 />
               ))}
             </View>
@@ -140,9 +172,10 @@ interface FretProps {
   scaleNotes: scaleNotesAndIntervals
   noteType: NoteType
   isLandscape: boolean
+  noteRotation: number
 }
 
-const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteType, isLandscape }) => {
+const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteType, isLandscape, noteRotation }) => {
   const scaleKey = scaleNotes.notes[0]
   const note = useMemo(() => getNoteAtFret(string, fret, scaleKey, noteType), [string, fret, scaleKey, noteType])
 
@@ -167,7 +200,7 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
           ? {
               transform: [{ rotate: '360deg' }],
             }
-          : {},
+          : { transform: [{ rotate: `${noteRotation}deg` }] },
       )}
     >
       {isNoteInScale && (

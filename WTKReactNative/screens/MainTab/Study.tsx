@@ -93,7 +93,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
       style={tw.style(`flex-grow w-full pb-16`)}
     >
       <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
-        <View style={tw.style(`justify-between flex-row`)}>
+        <View style={tw.style(`justify-between gap-4 flex-row`)}>
           <View style={tw.style(`flex-col w-1/3`)}>
             <Text style={tw.style(`text-slate-200`)}>Select a Key:</Text>
             <Picker

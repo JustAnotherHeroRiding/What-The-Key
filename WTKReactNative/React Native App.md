@@ -188,7 +188,8 @@ Correct the type errors when navigating to the track page #DONE
 #### Fretboard 
 - Add option to display interval instead of note in the scales #DONE 
 [Screen Orientation Docs](https://docs.expo.dev/versions/latest/sdk/screen-orientation/)
-- When rotating the phone, the notes/interval should rotate
+- When rotating the phone, the notes/interval should rotate #DONE 
+- Manual rotate notes button
 
 #### Triads
 - For triads we can show the different positions of each chord, this will not vary much between tracks. I will also need to research what triads are. Alright so i can display the possible triad shapes for each chord in the key #Research

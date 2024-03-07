@@ -192,8 +192,8 @@ Correct the type errors when navigating to the track page #DONE
 - Manual rotate notes button #DONE 
 - rotate the string names and fret index #DONE 
 #### Fix the bottom nav text alignment on rotated screens
-- Create context provider for global orientation state
-- Import the context in the fretboard component and update it globally
+- Create context provider for global orientation state #DONE 
+- Import the context in the fretboard component and update it globally #DONE 
 - Use the global context in the bottom nav
 - Check if other UI changes are needed
 

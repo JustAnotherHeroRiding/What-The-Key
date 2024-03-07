@@ -20,6 +20,7 @@ import IntervalsScreen from '../screens/SingleTrack/Intervals'
 import ScalesScreen from '../screens/SingleTrack/Scales'
 import ModesScreen from '../screens/SingleTrack/Modes'
 import StudyScreen from '../screens/MainTab/Study'
+import { useOrientation } from '../utils/Context/OrientationProvider'
 
 const navTheme = {
   ...DefaultTheme,
@@ -100,6 +101,7 @@ const SingleTrackNavigator = () => {
 const BottomTab = () => {
   const session = useContext(SessionContext)
   const { profilePicUrl } = useContext(ProfilePicContext)
+  const { isLandscape } = useOrientation()
 
   return (
     <Tab.Navigator
@@ -135,14 +137,15 @@ const BottomTab = () => {
             imageSource = require('../assets/images/study.png')
           }
 
-          return <Image source={imageSource} style={{ width: 25, height: 25, borderRadius: 40, marginTop: 8 }} />
+          return (
+            <Image
+              source={imageSource}
+              style={tw.style(`w-6 h-6 rounded-full ${isLandscape ? 'absolute left-1/2 bottom-2 ml-2' : ''}`)}
+            />
+          )
         },
         tabBarLabel: ({ focused, color }) => {
           let label
-          let customStyle: StyleProp<TextStyle> = {
-            color: focused ? colors.beigeCustom : colors.slate300,
-            fontFamily: focused ? 'figtree-bold' : 'figtree-regular',
-          }
 
           switch (route.name) {
             case 'Home':
@@ -161,7 +164,19 @@ const BottomTab = () => {
               label = 'Study'
           }
 
-          return <Text style={customStyle}>{label}</Text>
+          return (
+            <Text
+              style={tw.style(
+                `${focused ? 'text-beigeCustom' : 'text-slate-300'} 
+                ${isLandscape && route.name !== 'Auth' ? 'absolute left-1/2 bottom-8 ' : route.name === 'Auth' ? 'absolute bottom-8' : ''} `,
+                {
+                  fontFamily: focused ? 'figtree-bold' : 'figtree-regular',
+                },
+              )}
+            >
+              {label}
+            </Text>
+          )
         },
         tabBarActiveTintColor: colors.beigeCustom,
         tabBarInactiveTintColor: 'gray',

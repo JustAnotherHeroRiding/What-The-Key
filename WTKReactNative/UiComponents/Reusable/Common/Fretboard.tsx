@@ -37,6 +37,7 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
   const strings = ['E', 'B', 'G', 'D', 'A', 'E'].reverse() // Standard tuning
   const frets = Array.from({ length: 15 }, (_, i) => i)
   const [noteType, setNoteType] = useState<NoteType>('note')
+  const { isLandscape, toggleOrientation } = useOrientation()
 
   const toggleNoteType = useCallback(() => {
     setNoteType(prevType => (prevType === 'note' ? 'interval' : 'note'))
@@ -49,8 +50,6 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
     const newRotation = (noteRotation + 90) % 360
     setNoteRotation(newRotation)
   }, [noteRotation])
-
-  const { isLandscape, toggleOrientation } = useOrientation()
 
   return (
     <ScrollView>

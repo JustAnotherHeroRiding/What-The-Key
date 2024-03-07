@@ -12,6 +12,7 @@ import { StatusBar } from 'expo-status-bar'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import Auth from './UiComponents/Pages/Auth/Auth'
+import { OrientationProvider } from './utils/Context/OrientationProvider'
 
 const queryClient = new QueryClient()
 
@@ -61,14 +62,16 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <SessionProvider>
         <ProfilePicProvider>
-          <SafeAreaProvider>
-            <ImageBackground source={require('./assets/images/background.png')} style={StyleSheet.absoluteFill}>
-              <SafeAreaView style={StyleSheet.absoluteFill}>
-                <StatusBar style='auto' />
-                <BottomNav />
-              </SafeAreaView>
-            </ImageBackground>
-          </SafeAreaProvider>
+          <OrientationProvider>
+            <SafeAreaProvider>
+              <ImageBackground source={require('./assets/images/background.png')} style={StyleSheet.absoluteFill}>
+                <SafeAreaView style={StyleSheet.absoluteFill}>
+                  <StatusBar style='auto' />
+                  <BottomNav />
+                </SafeAreaView>
+              </ImageBackground>
+            </SafeAreaProvider>
+          </OrientationProvider>
         </ProfilePicProvider>
       </SessionProvider>
     </QueryClientProvider>

@@ -6,6 +6,7 @@ import { CustomButton } from './CustomButtom'
 import { scaleNotesAndIntervals } from '../../../utils/scales-and-modes'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import { transform } from 'lodash'
+import { useOrientation } from '../../../utils/Context/OrientationProvider'
 
 const getNoteAtFret = (openStringNote: string, fret: number, key: string, noteType: 'interval' | 'note'): string => {
   const openNoteIndex = chromaticScale.findIndex(note => note === openStringNote)
@@ -41,22 +42,6 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
     setNoteType(prevType => (prevType === 'note' ? 'interval' : 'note'))
   }, [])
 
-  const [isLandscape, setIsLandscape] = useState(false)
-
-  const toggleOrientation = useCallback(async () => {
-    const currentOrientation = await ScreenOrientation.getOrientationAsync()
-    if (
-      currentOrientation === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
-      currentOrientation === ScreenOrientation.Orientation.LANDSCAPE_RIGHT
-    ) {
-      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
-      setIsLandscape(false)
-    } else {
-      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
-      setIsLandscape(true)
-    }
-  }, [])
-
   const [noteRotation, setNoteRotation] = useState(0)
 
   const rotateNotes = useCallback(() => {
@@ -65,29 +50,7 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
     setNoteRotation(newRotation)
   }, [noteRotation])
 
-  useEffect(() => {
-    // Function to update state based on current orientation
-    const updateOrientationState = async () => {
-      const orientationInfo = await ScreenOrientation.getOrientationAsync()
-      setIsLandscape(
-        orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
-          orientationInfo === ScreenOrientation.Orientation.LANDSCAPE_RIGHT,
-      )
-    }
-
-    // Add orientation change listener
-    const subscription = ScreenOrientation.addOrientationChangeListener(() => {
-      updateOrientationState()
-    })
-
-    // Initial orientation check
-    updateOrientationState()
-
-    // Cleanup
-    return () => {
-      ScreenOrientation.removeOrientationChangeListener(subscription)
-    }
-  }, [])
+  const { isLandscape, toggleOrientation } = useOrientation()
 
   return (
     <ScrollView>

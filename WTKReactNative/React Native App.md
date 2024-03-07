@@ -194,16 +194,16 @@ Correct the type errors when navigating to the track page #DONE
 #### Fix the bottom nav text alignment on rotated screens
 - Create context provider for global orientation state #DONE 
 - Import the context in the fretboard component and update it globally #DONE 
-- Use the global context in the bottom nav
-- Check if other UI changes are needed
+- Use the global context in the bottom nav #DONE 
+- Check if other UI changes are needed #Ongoing
 
 #### Triads
 - For triads we can show the different positions of each chord, this will not vary much between tracks. I will also need to research what triads are. Alright so i can display the possible triad shapes for each chord in the key #Research
 _Major triads_ are built from the 1st (root), 3rd (major 3rd), and 5th 
 (perfect 5th) degrees of the major scale.
 _Minor triads_ are built from the 1st (root), 3rd (minor 3rd), and 5th (perfect 5th) degrees of the minor scale.
-- When displaying triads in a certain key, use the Fretboard component to display all locations where these 3 intervals can be found
-- Button to switch between Major or Minor
+- When displaying triads in a certain key, use the Fretboard component to display all locations where these 3 intervals can be found #DONE 
+- Button to switch between Major or Minor #DONE 
 #### Chord Progressions
 - Chord Progressions - This one I'm not too sure. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.
 #### Twelve bar blues

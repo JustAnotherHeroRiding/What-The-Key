@@ -35,7 +35,7 @@ type NoteType = 'note' | 'interval'
 
 const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
   const strings = ['E', 'B', 'G', 'D', 'A', 'E'].reverse() // Standard tuning
-  const frets = Array.from({ length: 15 }, (_, i) => i)
+  const frets = Array.from({ length: 17 }, (_, i) => i)
   const [noteType, setNoteType] = useState<NoteType>('note')
   const { isLandscape, toggleOrientation } = useOrientation()
 
@@ -72,7 +72,7 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
         ></CustomButton>
       </ScrollView>
       {/*  flex-col for portait  */}
-      <View style={tw.style('flex-1', isLandscape ? 'flex-row' : 'flex-col')}>
+      <ScrollView horizontal={isLandscape} style={tw.style('flex-1', isLandscape ? 'flex-row' : 'flex-col')}>
         {/* String Names */}
         {/* flex-row for portait */}
 
@@ -123,7 +123,7 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
             </View>
           ))}
         </ScrollView>
-      </View>
+      </ScrollView>
     </ScrollView>
   )
 }

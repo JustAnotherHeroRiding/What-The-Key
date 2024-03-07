@@ -18,6 +18,7 @@ import _ from 'lodash'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
+import { useOrientation } from '../../utils/Context/OrientationProvider'
 
 interface SelectedOption {
   scale: scaleNotesAndIntervals
@@ -30,6 +31,8 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
   const [query, setQuery] = useState('')
   const [filteredOptions, setFilteredOptions] = useState<string[]>(allScaleNames)
   const [selectedOption, setSelectedOption] = useState<SelectedOption | null>(null)
+
+  const { isLandscape } = useOrientation()
 
   const optionsToDisplay = scaleOrMode === 'scale' ? allScaleNames : allModeNames
 
@@ -56,7 +59,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
 
   useEffect(() => {
     if (selectedOption?.scale.name && selectedOption?.scale.name !== undefined) {
-      selectScale(selectedOption?.scale.name)
+      selectScale(selectedOption?.scale.name as ScaleName | ModeNames)
     }
   }, [selectedKey, scaleOrMode])
 
@@ -94,8 +97,8 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
     >
       <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
         <View style={tw.style(`justify-between gap-4 flex-row`)}>
-          <View style={tw.style(`flex-col w-1/3`)}>
-            <Text style={tw.style(`text-slate-200`)}>Select a Key:</Text>
+          <View style={tw.style(`flex-col w-1/3 gap-2`)}>
+            <Text style={tw.style(`text-slate-200 text-center`)}>Select a Key:</Text>
             <Picker
               style={tw.style('bg-white')}
               selectedValue={selectedKey}
@@ -108,8 +111,8 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
               ))}
             </Picker>
           </View>
-          <View style={tw.style(`flex-col w-1/2`)}>
-            <Text style={tw.style(`text-slate-200`)}>Select Scale or Mode:</Text>
+          <View style={tw.style(`flex-col w-1/2 gap-2`)}>
+            <Text style={tw.style(`text-slate-200 text-center`)}>Select Type:</Text>
             <Picker
               style={tw.style('bg-white')}
               selectedValue={scaleOrMode}
@@ -125,9 +128,19 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
           </View>
         </View>
 
-        <View style={tw.style(`flex-row justify-between`)}>
-          <Text style={tw.style(`text-slate-200`)}>Selected Key: {selectedKey}</Text>
-          <Text style={tw.style(`text-slate-200`)}>Type: {scaleOrMode}</Text>
+        <View style={tw.style(`flex-row justify-between gap-4 `)}>
+          <Text style={tw.style(`text-slate-200`)}>
+            Selected Key:{' '}
+            <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
+              {capitalizeFirstLetter(selectedKey)}
+            </Text>
+          </Text>
+          <Text style={tw.style(`text-slate-200`)}>
+            Type:{' '}
+            <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
+              {capitalizeFirstLetter(scaleOrMode)}
+            </Text>
+          </Text>
         </View>
 
         <View style={tw.style('flex-grow w-full opacity-100')}>

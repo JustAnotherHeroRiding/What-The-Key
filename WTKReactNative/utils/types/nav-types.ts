@@ -16,6 +16,7 @@ export type RootStackParamList = {
     Intervals: { track: TrackData }
     Scales: { track: TrackData }
     Modes: { track: TrackData }
+    Triads: { track: TrackData }
   }
 }
 
@@ -36,3 +37,4 @@ export type ChordsScreenNavigationProp = NativeStackNavigationProp<
 >
 export type ScalesScreenNavigationProp = NativeStackNavigationProp<RootStackParamList['SingleTrackNavigator'], 'Scales'>
 export type ModesScreenNavigationProp = NativeStackNavigationProp<RootStackParamList['SingleTrackNavigator'], 'Modes'>
+export type TriadsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList['SingleTrackNavigator'], 'Triads'>

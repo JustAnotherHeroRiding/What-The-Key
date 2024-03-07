@@ -21,6 +21,7 @@ import ScalesScreen from '../screens/SingleTrack/Scales'
 import ModesScreen from '../screens/SingleTrack/Modes'
 import StudyScreen from '../screens/MainTab/Study'
 import { useOrientation } from '../utils/Context/OrientationProvider'
+import TriadsScreen from '../screens/SingleTrack/Triads'
 
 const navTheme = {
   ...DefaultTheme,
@@ -90,6 +91,13 @@ const SingleTrackNavigator = () => {
       <SingleTrackStack.Screen
         name='Modes'
         component={ModesScreen}
+        options={{
+          header: () => <CustomHeader title='Modes' />,
+        }}
+      />
+      <SingleTrackStack.Screen
+        name='Triads'
+        component={TriadsScreen}
         options={{
           header: () => <CustomHeader title='Modes' />,
         }}
@@ -168,7 +176,7 @@ const BottomTab = () => {
             <Text
               style={tw.style(
                 `${focused ? 'text-beigeCustom' : 'text-slate-300'} 
-                ${isLandscape && route.name !== 'Auth' ? 'absolute left-1/2 bottom-8 ' : route.name === 'Auth' ? 'absolute bottom-8' : ''} `,
+                ${isLandscape && route.name !== 'Auth' ? 'absolute left-1/2 bottom-8 ' : route.name === 'Auth' && isLandscape ? 'absolute bottom-8' : ''} `,
                 {
                   fontFamily: focused ? 'figtree-bold' : 'figtree-regular',
                 },

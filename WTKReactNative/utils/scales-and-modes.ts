@@ -1,4 +1,5 @@
-import { NOTES, intervalNamesSingle } from './track-formating'
+import { capitalizeFirstLetter } from './text-formatting'
+import { Mode, NOTES, intervalNamesSingle } from './track-formating'
 
 export const SCALES = ['major', 'naturalMinor', 'harmonicMinor']
 export const MODES = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian']
@@ -48,7 +49,7 @@ type ScalesAndModesData = {
 }
 
 export interface scaleNotesAndIntervals {
-  name: ScaleName | ModeNames
+  name: ScaleName | ModeNames | Mode
   notes: string[]
   intervals: string[]
 }
@@ -207,4 +208,26 @@ export const getScaleOrModeNotes = (
     }
   }
   return null
+}
+
+const calculateNoteFromIntervalSimple = (key: string, interval: number): string => {
+  const startIndex = NOTES.findIndex(note => note === key)
+  const noteIndex = (startIndex + interval) % NOTES.length
+  return NOTES[noteIndex]
+}
+
+const majorTriadIntervals = [0, 4, 7] // Root, Major third, Perfect fifth
+const minorTriadIntervals = [0, 3, 7] // Root, Minor third, Perfect fifth
+
+export const getTriadNotes = (key: string, mode: Mode): scaleNotesAndIntervals => {
+  const intervals = mode === 'Major' ? majorTriadIntervals : minorTriadIntervals
+  const notes = intervals.map(interval => calculateNoteFromIntervalSimple(key, interval))
+
+  const intervalNames = mode === 'Major' ? ['P1', 'M3', 'P5'] : ['P1', 'm3', 'P5']
+
+  return {
+    name: mode,
+    notes,
+    intervals: intervalNames,
+  }
 }

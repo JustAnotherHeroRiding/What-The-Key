@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import { StudyScreenNavigationProp } from '../../utils/types/nav-types'
 import React, { useEffect, useMemo, useState } from 'react'
-import { NOTES, getNoteName } from '../../utils/track-formating'
+import { Mode, NOTES, getNoteName } from '../../utils/track-formating'
 import { Picker } from '@react-native-picker/picker'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
@@ -11,6 +11,7 @@ import {
   allModeNames,
   allScaleNames,
   getScaleOrModeNotes,
+  getTriadNotes,
   scaleNotesAndIntervals,
   scaleOrModeOptions,
 } from '../../utils/scales-and-modes'
@@ -19,6 +20,7 @@ import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
 import { useOrientation } from '../../utils/Context/OrientationProvider'
+import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 
 interface SelectedOption {
   scale: scaleNotesAndIntervals
@@ -26,7 +28,7 @@ interface SelectedOption {
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
   const [selectedKey, setSelectedKey] = useState(NOTES[0])
-  const [scaleOrMode, setScaleOrMode] = useState('scale')
+  const [scaleType, setScaleType] = useState('scale')
 
   const [query, setQuery] = useState('')
   const [filteredOptions, setFilteredOptions] = useState<string[]>(allScaleNames)
@@ -34,34 +36,36 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
 
   const { isLandscape } = useOrientation()
 
-  const optionsToDisplay = scaleOrMode === 'scale' ? allScaleNames : allModeNames
-
   useEffect(() => {
     handleSearch()
-  }, [scaleOrMode, query])
+  }, [scaleType, query])
 
   const handleSearch = () => {
-    const scalesToFilter = scaleOrMode === 'scale' ? allScaleNames : allModeNames
+    const scalesToFilter = scaleType === 'scale' ? allScaleNames : allModeNames
     if (query.length > 0) {
       const filtered = scalesToFilter.filter(scale => scale.toLowerCase().includes(query.toLowerCase()))
       setFilteredOptions(filtered)
     } else {
-      setFilteredOptions(scaleOrMode === 'scale' ? allScaleNames : allModeNames)
+      setFilteredOptions(scaleType === 'scale' ? allScaleNames : allModeNames)
     }
   }
 
-  const debouncedSearch = useMemo(() => _.debounce(handleSearch, 300), [query, optionsToDisplay])
+  const debouncedSearch = useMemo(() => _.debounce(handleSearch, 300), [query])
 
   useEffect(() => {
     debouncedSearch()
     return debouncedSearch.cancel
-  }, [query, optionsToDisplay, debouncedSearch])
+  }, [query, debouncedSearch])
 
   useEffect(() => {
     if (selectedOption?.scale.name && selectedOption?.scale.name !== undefined) {
-      selectScale(selectedOption?.scale.name as ScaleName | ModeNames)
+      if (scaleType === 'triad') {
+        selectTriads(selectedOption?.scale.name as Mode)
+      } else {
+        selectScale(selectedOption?.scale.name as ScaleName | ModeNames)
+      }
     }
-  }, [selectedKey, scaleOrMode])
+  }, [selectedKey, scaleType])
 
   const renderRow = ({ item, index }: { item: string; index: number }) => (
     <TouchableOpacity
@@ -75,16 +79,21 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
   /* Enter a width to change the tailwind width class to apply */
   const renderSeparator = (width: number) => <View style={tw.style(`h-2 w-${width}`)} />
 
-  const selectScale = (scale: ScaleName | ModeNames | null) => {
+  const selectScale = (scale: ScaleName | ModeNames | null | Mode) => {
     if (scale === null) {
       return
     }
     const scaleNotes: scaleNotesAndIntervals = getScaleOrModeNotes(
       selectedKey,
-      scale,
-      scaleOrMode,
+      scale as ScaleName | ModeNames,
+      scaleType,
     ) as scaleNotesAndIntervals
     //console.log(scale, scaleNotes)
+    setSelectedOption({ scale: scaleNotes })
+  }
+
+  const selectTriads = (mode: Mode) => {
+    const scaleNotes = getTriadNotes(selectedKey, mode)
     setSelectedOption({ scale: scaleNotes })
   }
 
@@ -115,15 +124,16 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
             <Text style={tw.style(`text-slate-200 text-center`)}>Select Type:</Text>
             <Picker
               style={tw.style('bg-white')}
-              selectedValue={scaleOrMode}
+              selectedValue={scaleType}
               onValueChange={(itemValue, itemIndex) => {
-                setScaleOrMode(itemValue)
+                setScaleType(itemValue)
                 setSelectedOption(null)
               }}
             >
               {scaleOrModeOptions.map(option => (
                 <Picker.Item key={option} label={`${capitalizeFirstLetter(option)}s`} value={option} />
               ))}
+              <Picker.Item key={'triad'} label={`Triads`} value={'triad'} />
             </Picker>
           </View>
         </View>
@@ -138,37 +148,48 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
           <Text style={tw.style(`text-slate-200`)}>
             Type:{' '}
             <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
-              {capitalizeFirstLetter(scaleOrMode)}
+              {capitalizeFirstLetter(scaleType)}
             </Text>
           </Text>
         </View>
 
-        <View style={tw.style('flex-grow w-full opacity-100')}>
-          <Text
-            style={tw.style('text-white border-slate-500 border-b-2 text-3xl py-4 text-center', {
-              fontFamily: 'figtree-bold',
-            })}
-          >
-            Select a scale
-          </Text>
-          {/* List of scales in the key of the song */}
-          <FlatList
-            style={tw.style('flex-row')}
-            data={filteredOptions}
-            renderItem={renderRow}
-            keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={() => renderSeparator(2)}
+        {scaleType === 'triad' ? (
+          <ScrollView
             horizontal={true}
-            contentContainerStyle={tw.style(`py-4`)}
-          />
-          <TextInput
-            style={tw.style(`bg-[#fff] w-full rounded-2xl p-3 mb-5 text-black`)}
-            placeholder='Search for a scale or mode'
-            placeholderTextColor='gray'
-            value={query}
-            onChangeText={setQuery}
-          />
-        </View>
+            style={tw.style('flex-row')}
+            contentContainerStyle={tw.style(`justify-between gap-2`)}
+          >
+            <CustomButton title={`Major`} onPress={() => selectTriads('Major')}></CustomButton>
+            <CustomButton title={`Minor`} onPress={() => selectTriads('Minor')}></CustomButton>
+          </ScrollView>
+        ) : (
+          <View style={tw.style('flex-grow w-full opacity-100')}>
+            <Text
+              style={tw.style('text-white border-slate-500 border-b-2 text-3xl py-4 text-center', {
+                fontFamily: 'figtree-bold',
+              })}
+            >
+              Select a scale
+            </Text>
+            {/* List of scales in the key of the song */}
+            <FlatList
+              style={tw.style('flex-row')}
+              data={filteredOptions}
+              renderItem={renderRow}
+              keyExtractor={(item, index) => index.toString()}
+              ItemSeparatorComponent={() => renderSeparator(2)}
+              horizontal={true}
+              contentContainerStyle={tw.style(`py-4`)}
+            />
+            <TextInput
+              style={tw.style(`bg-[#fff] w-full rounded-2xl p-3 mb-5 text-black`)}
+              placeholder='Search for a scale or mode'
+              placeholderTextColor='gray'
+              value={query}
+              onChangeText={setQuery}
+            />
+          </View>
+        )}
         {/* Notes in the selected scale along with their intervals */}
         <FlatList
           horizontal={true}

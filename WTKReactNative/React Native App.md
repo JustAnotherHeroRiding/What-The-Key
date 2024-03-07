@@ -204,29 +204,25 @@ _Major triads_ are built from the 1st (root), 3rd (major 3rd), and 5th
 _Minor triads_ are built from the 1st (root), 3rd (minor 3rd), and 5th (perfect 5th) degrees of the minor scale.
 - When displaying triads in a certain key, use the Fretboard component to display all locations where these 3 intervals can be found #DONE 
 - Button to switch between Major or Minor #DONE 
+- Add triads to the Selector in the Study Screen #DONE 
 #### Chord Progressions
 - Chord Progressions - This one I'm not too sure. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.
 #### Twelve bar blues
-- Twelve bar blues chart in chord progressions to play blues over any song. In the play section we can make it interactive
+Twelve bar blues chart to play blues over any song. In the play section we can make it interactive
+- Display a simple 3x4 chart showing the order of the chords in the key of the song
+- Show a horizontal scroll view of suggested scales to play in either the I, IV or V chord which can be selected by the user
+- Clicking on the scale will open the fretboard as usual
+- Add triads to the list of suggested scales, perhaps in a separate row
 
 ## Home page - Recently Opened
 Currently when opening the home page we have a search bar, get random track button and the search button. Let's fill up the home page.
 - Add a couple of recently opened tracks so that users can keep playing from where they left off
 - Use the current tracks in the library as the seed for recommendations
-
-## Key selector
-
-Instead of searching for a song, select a key to see the intervals, scales, progressions etc...
-
-
 ## Incorrect keys
 - If a user notices that the key is not correct they can report it
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
-
-
 ## Sound
 - Record each note so that users can click play to hear intervals, scales, modes
-
 ## Play mode
 When we click play, we start the play along experience
 - Use the bars and add some sort of indicator to show the progress

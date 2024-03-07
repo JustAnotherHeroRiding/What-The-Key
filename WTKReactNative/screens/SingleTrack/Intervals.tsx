@@ -83,4 +83,4 @@ function IntervalsScreen({ navigation }: { navigation: ChordsScreenNavigationPro
   )
 }
 
-export default IntervalsScreen
+export default React.memo(IntervalsScreen)

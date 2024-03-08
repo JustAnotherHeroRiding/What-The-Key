@@ -208,8 +208,9 @@ _Minor triads_ are built from the 1st (root), 3rd (minor 3rd), and 5th (perfect
 
 #### Twelve bar blues
 Twelve bar blues chart to play blues over any song. In the play section we can make it interactive
-- Display a simple 3x4 chart showing the order of the chords in the key of the song
+- Display a simple 3x4 chart showing the order of the chords in the key of the song #DONE 
 - Show a horizontal scroll view of suggested scales to play in either the I, IV or V chord which can be selected by the user
+###### This can be encapsulated into a component as it is being used in multiple screens now
 - Clicking on the scale will open the fretboard as usual
 - Add triads to the list of suggested scales, perhaps in a separate row
 
@@ -279,3 +280,6 @@ Style the emails that supabase sends for email confirmation/reset password and e
 
 ## Chord Progressions
 - Chord Progressions - This one I'm not too sure. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.
+
+## Multiple Scale Selection
+Allow users to select 2 or more scales at once, displaying multiple fretboards. I must pay attention to both fretboards being fully visible, although they will have to become smaller.

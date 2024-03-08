@@ -3,14 +3,15 @@ import {
   ModeNames,
   SCALES_DATA,
   ScaleName,
+  TwelveBarVariants,
   TwelveBars,
   majorTriadIntervals,
   minorTriadIntervals,
   scaleNotesAndIntervals,
   scaleOrModeOptions,
-  twelveBarIntervals,
+  twelveBarsLookup,
 } from './consts/scales-consts-types'
-import { IntervalNames, Mode, NOTES, intervalNamesSingle } from './track-formating'
+import { Mode, NOTES, intervalNamesSingle } from './track-formating'
 
 const getIntervalName = (interval: number): string => {
   return interval >= 0 && interval < intervalNamesSingle.length ? intervalNamesSingle[interval] : ''
@@ -92,10 +93,10 @@ export const getTriadNotes = (key: string, mode: Mode): scaleNotesAndIntervals =
   }
 }
 
-export const getTwelveBars = (key: string): TwelveBars => {
-  const notes = twelveBarIntervals.map(interval => calculateNoteFromIntervalSimple(key, interval))
+export const getTwelveBars = (key: string, type: TwelveBarVariants = 'standard'): TwelveBars => {
+  const notes = twelveBarsLookup[type].map(interval => calculateNoteFromIntervalSimple(key, interval))
 
-  const intervalNames: IntervalNames[] = ['P1', 'P4', 'P5']
+  const intervalNames = twelveBarsLookup[type].map(interval => getIntervalName(interval))
 
   return {
     notes,

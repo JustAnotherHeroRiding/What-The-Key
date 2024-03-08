@@ -3,10 +3,8 @@ import { View, Text, ScrollView } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { NOTES as chromaticScale, intervalNamesSingle } from '../../../utils/track-formating'
 import { CustomButton } from './CustomButtom'
-import { scaleNotesAndIntervals } from '../../../utils/scales-and-modes'
-import * as ScreenOrientation from 'expo-screen-orientation'
-import { transform } from 'lodash'
 import { useOrientation } from '../../../utils/Context/OrientationProvider'
+import { scaleNotesAndIntervals } from '../../../utils/consts/scales-consts-types'
 
 const getNoteAtFret = (openStringNote: string, fret: number, key: string, noteType: 'interval' | 'note'): string => {
   const openNoteIndex = chromaticScale.findIndex(note => note === openStringNote)

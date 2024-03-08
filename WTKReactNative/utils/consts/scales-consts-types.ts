@@ -1,4 +1,4 @@
-import { Interval, IntervalNames, Mode } from '../track-formating'
+import { Mode } from '../track-formating'
 
 export const SCALES = ['major', 'naturalMinor', 'harmonicMinor']
 export const MODES = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian']
@@ -156,9 +156,19 @@ export const minorTriadIntervals = [0, 3, 7] // Root, Minor third, Perfect fifth
 
 export interface TwelveBars {
   notes: string[]
-  intervalNames: IntervalNames[]
+  intervalNames: string[]
 }
+
+export type TwelveBarVariants = 'standard' | 'shuffle' | 'quickToFour'
+
+export type TwelveBarsData = Record<TwelveBarVariants, number[]>
 
 export const twelveBarIntervals = [0, 0, 0, 0, 5, 5, 0, 0, 7, 7, 0, 0]
 export const shuffleBluesIntervals = [0, 0, 0, 0, 5, 5, 0, 0, 7, 5, 0, 0]
 export const quickToFourIntervals = [0, 5, 0, 0, 5, 5, 0, 0, 7, 7, 0, 0]
+
+export const twelveBarsLookup: TwelveBarsData = {
+  standard: twelveBarIntervals,
+  shuffle: shuffleBluesIntervals,
+  quickToFour: quickToFourIntervals,
+}

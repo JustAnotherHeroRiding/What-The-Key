@@ -22,6 +22,22 @@ export const intervalNamesSingle = [
 ] as const
 
 export type IntervalNames = (typeof intervalNamesSingle)[number]
+type RomanNumeralChord = 'I' | 'II' | 'III' | 'IV' | 'V' | 'VI' | 'VII' | 'i' | 'ii' | 'iii' | 'iv' | 'v' | 'vi' | 'vii'
+
+export const intervalToRomanChord: Record<IntervalNames, RomanNumeralChord | string> = {
+  P1: 'I', // Root or Unison - Major chord
+  m2: 'ii', // Minor 2nd - Typically would not assign a Roman numeral for just an interval
+  M2: 'II', // Major 2nd - Ditto
+  m3: 'iii', // Minor 3rd - Minor chord built on the third degree
+  M3: 'III', // Major 3rd - Major chord built on the third degree
+  P4: 'IV', // Perfect 4th - Major chord
+  '♭5': 'v°', // Flat 5th - Diminished chord (representing diminished here for demonstration)
+  P5: 'V', // Perfect 5th - Major chord
+  m6: 'vi', // Minor 6th - Minor chord
+  M6: 'VI', // Major 6th - Major chord
+  m7: 'vii', // Minor 7th - Minor chord in some contexts, though more commonly vii° for diminished
+  M7: 'VII', // Major 7th - Major chord
+}
 
 // Unused for now, used the short names instead to display more information
 const intervalNames: Record<Mode, string[]> = {

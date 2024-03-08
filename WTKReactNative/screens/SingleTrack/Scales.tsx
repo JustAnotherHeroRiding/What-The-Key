@@ -6,11 +6,12 @@ import tw from '../../utils/config/tailwindRN'
 import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
-import { ScaleName, allScaleNames, getScaleOrModeNotes, scaleNotesAndIntervals } from '../../utils/scales-and-modes'
+import { getScaleOrModeNotes } from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import { getNoteName } from '../../utils/track-formating'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
+import { scaleNotesAndIntervals, allScaleNames, ScaleName } from '../../utils/consts/scales-consts-types'
 
 function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }) {
   const route = useRoute()

@@ -205,8 +205,7 @@ _Minor triads_ are built from the 1st (root), 3rd (minor 3rd), and 5th (perfect
 - When displaying triads in a certain key, use the Fretboard component to display all locations where these 3 intervals can be found #DONE 
 - Button to switch between Major or Minor #DONE 
 - Add triads to the Selector in the Study Screen #DONE 
-#### Chord Progressions
-- Chord Progressions - This one I'm not too sure. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.
+
 #### Twelve bar blues
 Twelve bar blues chart to play blues over any song. In the play section we can make it interactive
 - Display a simple 3x4 chart showing the order of the chords in the key of the song
@@ -223,6 +222,11 @@ Currently when opening the home page we have a search bar, get random track butt
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
 ## Sound
 - Record each note so that users can click play to hear intervals, scales, modes
+
+## Circle of Fifths
+- Add an option on the study page to display the circle fifths
+- When the user selects a key, the wheel should rotate
+- Add advice on how to use it 
 ## Play mode
 When we click play, we start the play along experience
 - Use the bars and add some sort of indicator to show the progress
@@ -272,3 +276,6 @@ Style the emails that supabase sends for email confirmation/reset password and e
 
 ## Zustand
 - If react query is not enough, use zustand to manage global state
+
+## Chord Progressions
+- Chord Progressions - This one I'm not too sure. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.

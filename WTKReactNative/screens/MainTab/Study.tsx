@@ -5,22 +5,21 @@ import { Mode, NOTES, getNoteName } from '../../utils/track-formating'
 import { Picker } from '@react-native-picker/picker'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
-import {
-  ModeNames,
-  ScaleName,
-  allModeNames,
-  allScaleNames,
-  getScaleOrModeNotes,
-  getTriadNotes,
-  scaleNotesAndIntervals,
-  scaleOrModeOptions,
-} from '../../utils/scales-and-modes'
+import { getScaleOrModeNotes, getTriadNotes } from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
 import { useOrientation } from '../../utils/Context/OrientationProvider'
 import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
+import {
+  ModeNames,
+  ScaleName,
+  allModeNames,
+  allScaleNames,
+  scaleNotesAndIntervals,
+  scaleOrModeOptions,
+} from '../../utils/consts/scales-consts-types'
 
 interface SelectedOption {
   scale: scaleNotesAndIntervals

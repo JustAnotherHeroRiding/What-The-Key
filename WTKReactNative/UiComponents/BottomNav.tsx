@@ -22,6 +22,7 @@ import ModesScreen from '../screens/SingleTrack/Modes'
 import StudyScreen from '../screens/MainTab/Study'
 import { useOrientation } from '../utils/Context/OrientationProvider'
 import TriadsScreen from '../screens/SingleTrack/Triads'
+import TwelveBars from '../screens/SingleTrack/TwelveBars'
 
 const navTheme = {
   ...DefaultTheme,
@@ -100,6 +101,13 @@ const SingleTrackNavigator = () => {
         component={TriadsScreen}
         options={{
           header: () => <CustomHeader title='Modes' />,
+        }}
+      />
+      <SingleTrackStack.Screen
+        name='TwelveBars'
+        component={TwelveBars}
+        options={{
+          header: () => <CustomHeader title='Twelve Bars' />,
         }}
       />
     </SingleTrackStack.Navigator>

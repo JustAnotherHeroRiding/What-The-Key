@@ -19,7 +19,9 @@ export const intervalNamesSingle = [
   'M6', // Major 6th
   'm7', // Minor 7th
   'M7', // Major 7th
-]
+] as const
+
+export type IntervalNames = (typeof intervalNamesSingle)[number]
 
 // Unused for now, used the short names instead to display more information
 const intervalNames: Record<Mode, string[]> = {

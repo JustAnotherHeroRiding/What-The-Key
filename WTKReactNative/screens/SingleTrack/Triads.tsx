@@ -6,18 +6,13 @@ import tw from '../../utils/config/tailwindRN'
 import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
-import {
-  ScaleName,
-  allScaleNames,
-  getScaleOrModeNotes,
-  getTriadNotes,
-  scaleNotesAndIntervals,
-} from '../../utils/scales-and-modes'
+import { getTriadNotes } from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import { Mode, getNoteName } from '../../utils/track-formating'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
+import { scaleNotesAndIntervals } from '../../utils/consts/scales-consts-types'
 
 function TriadsScreen({ navigation }: { navigation: TriadsScreenNavigationProp }) {
   const route = useRoute()

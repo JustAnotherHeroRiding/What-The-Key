@@ -103,3 +103,12 @@ export const getTwelveBars = (key: string, type: TwelveBarVariants = 'standard')
     intervalNames: intervalNames,
   }
 }
+
+export const selectTriads = (
+  mode: Mode,
+  setSelectedOption: (values: React.SetStateAction<scaleNotesAndIntervals | null>) => void,
+  selectedKey: string,
+) => {
+  const scaleNotes = getTriadNotes(selectedKey, mode)
+  setSelectedOption(scaleNotes)
+}

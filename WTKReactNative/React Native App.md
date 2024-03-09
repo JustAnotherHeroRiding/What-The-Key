@@ -209,6 +209,7 @@ _Minor triads_ are built from the 1st (root), 3rd (minor 3rd), and 5th (perfect
 #### Twelve bar blues
 Twelve bar blues chart to play blues over any song. In the play section we can make it interactive
 - Display a simple 3x4 chart showing the order of the chords in the key of the song #DONE 
+- There is a bug when selecting G#, the correct notes are shown but G# is marked as G. All other sharps are correctly displayed
 - Show a horizontal scroll view of suggested scales to play in either the I, IV or V chord which can be selected by the user
 ###### This can be encapsulated into a component as it is being used in multiple screens now
 - Clicking on the scale will open the fretboard as usual

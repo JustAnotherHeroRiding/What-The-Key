@@ -148,6 +148,8 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/UiComponents/Reusable/Common/FlatListHelpers.tsx",
+    "WTKReactNative/UiComponents/Reusable/Common/ScalesList.tsx",
     "WTKReactNative/utils/consts/scales-consts-types.ts",
     "WTKReactNative/utils/consts/scales-consts.ts",
     "WTKReactNative/utils/consts",
@@ -164,8 +166,6 @@
     "WTKReactNative/utils/text-formatting.ts",
     "WTKReactNative/node_modules/@react-native-picker/picker/android/build/generated/source/buildConfig/debug/com/reactnativecommunity/picker/BuildConfig.java",
     "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/TextViewImpl.class",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/RNCPickerPackage.class",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/intermediates/javac/debug/classes/com/reactnativecommunity/picker/ReactPickerShadowNode.class",
     "WTKReactNative/node_modules/@react-native-picker/picker/README.md",
     "WTKReactNative/assets/images/study.png",
     "WTKReactNative/assets/images/DALL·E 2024-03-04 19.52.07 - Create a simple and elegant navigation icon for a mobile app route called 'study', focused on music theory education. The icon should feature a logo i.png",

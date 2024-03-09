@@ -4,6 +4,8 @@ import { View, Alert, Image } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker'
 import { CustomButton } from '../../Reusable/Common/CustomButtom'
 import tw from '../../../utils/config/tailwindRN'
+import React from 'react'
+import { useOrientation } from '../../../utils/Context/OrientationProvider'
 
 interface Props {
   size: number
@@ -16,6 +18,8 @@ export default function Avatar({ url, size = 150, onUpload, location }: Props) {
   const [uploading, setUploading] = useState(false)
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
   const avatarSize = { height: size, width: size }
+
+  const { isLandscape } = useOrientation()
 
   useEffect(() => {
     if (url) downloadImage(url)
@@ -102,7 +106,9 @@ export default function Avatar({ url, size = 150, onUpload, location }: Props) {
           accessibilityLabel='Avatar'
           style={[
             avatarSize,
-            tw`rounded-full overflow-hidden max-w-full pt-0 ${location === 'nav' ? 'border mt-2' : 'border-2'} border-beigeCustom`,
+            tw.style(
+              `rounded-full overflow-hidden max-w-full pt-0 ${location === 'nav' ? 'border' : 'border-2'} border-beigeCustom`,
+            ),
             { objectFit: 'cover' },
           ]}
         />

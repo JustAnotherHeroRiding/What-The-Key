@@ -146,7 +146,7 @@ const BottomTab = () => {
             imageSource = require('../assets/images/deleted.png')
           } else if (route.name === 'Auth') {
             if (profilePicUrl) {
-              return <Avatar size={25} url={profilePicUrl} location='nav' />
+              return <Avatar size={24} url={profilePicUrl} location='nav' />
             }
             imageSource = require('../assets/images/default-user.png')
           } else if (route.name === 'Study') {
@@ -156,7 +156,7 @@ const BottomTab = () => {
           return (
             <Image
               source={imageSource}
-              style={tw.style(`w-6 h-6 rounded-full ${isLandscape ? 'absolute left-1/2 bottom-2 ml-2' : ''}`)}
+              style={tw.style(`w-6 h-6 rounded-full  ${isLandscape ? 'absolute left-1/2 bottom-2 ml-2' : ''}`)}
             />
           )
         },

@@ -1,11 +1,11 @@
-import { View, Text, ScrollView, FlatList, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import { StudyScreenNavigationProp } from '../../utils/types/nav-types'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Mode, NOTES, getNoteName } from '../../utils/track-formating'
+import { Mode, NOTES } from '../../utils/track-formating'
 import { Picker } from '@react-native-picker/picker'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
-import { getScaleOrModeNotes, getTriadNotes } from '../../utils/scales-and-modes'
+import { getScaleOrModeNotes, getTriadNotes, selectTriads } from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
@@ -15,86 +15,18 @@ import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 import {
   ModeNames,
   ScaleName,
-  allModeNames,
-  allScaleNames,
   scaleNotesAndIntervals,
   scaleOrModeOptions,
 } from '../../utils/consts/scales-consts-types'
-
-interface SelectedOption {
-  scale: scaleNotesAndIntervals
-}
+import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
   const [selectedKey, setSelectedKey] = useState(NOTES[0])
   const [scaleType, setScaleType] = useState('scale')
-
-  const [query, setQuery] = useState('')
-  const [filteredOptions, setFilteredOptions] = useState<string[]>(allScaleNames)
-  const [selectedOption, setSelectedOption] = useState<SelectedOption | null>(null)
+  const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
+  const [triadMode, setTriadMode] = useState<Mode>('Major')
 
   const { isLandscape } = useOrientation()
-
-  useEffect(() => {
-    handleSearch()
-  }, [scaleType, query])
-
-  const handleSearch = () => {
-    const scalesToFilter = scaleType === 'scale' ? allScaleNames : allModeNames
-    if (query.length > 0) {
-      const filtered = scalesToFilter.filter(scale => scale.toLowerCase().includes(query.toLowerCase()))
-      setFilteredOptions(filtered)
-    } else {
-      setFilteredOptions(scaleType === 'scale' ? allScaleNames : allModeNames)
-    }
-  }
-
-  const debouncedSearch = useMemo(() => _.debounce(handleSearch, 300), [query])
-
-  useEffect(() => {
-    debouncedSearch()
-    return debouncedSearch.cancel
-  }, [query, debouncedSearch])
-
-  useEffect(() => {
-    if (selectedOption?.scale.name && selectedOption?.scale.name !== undefined) {
-      if (scaleType === 'triad') {
-        selectTriads(selectedOption?.scale.name as Mode)
-      } else {
-        selectScale(selectedOption?.scale.name as ScaleName | ModeNames)
-      }
-    }
-  }, [selectedKey, scaleType])
-
-  const renderRow = ({ item, index }: { item: string; index: number }) => (
-    <TouchableOpacity
-      onPress={() => selectScale(item as ScaleName)}
-      style={tw.style(`py-3 px-3 bg-beigeCustom rounded-md border-cream border`)}
-    >
-      <Text style={tw.style('text-xl', { fontFamily: 'figtree-bold' })}>{item[0].toUpperCase() + item.slice(1)}</Text>
-    </TouchableOpacity>
-  )
-
-  /* Enter a width to change the tailwind width class to apply */
-  const renderSeparator = (width: number) => <View style={tw.style(`h-2 w-${width}`)} />
-
-  const selectScale = (scale: ScaleName | ModeNames | null | Mode) => {
-    if (scale === null) {
-      return
-    }
-    const scaleNotes: scaleNotesAndIntervals = getScaleOrModeNotes(
-      selectedKey,
-      scale as ScaleName | ModeNames,
-      scaleType,
-    ) as scaleNotesAndIntervals
-    //console.log(scale, scaleNotes)
-    setSelectedOption({ scale: scaleNotes })
-  }
-
-  const selectTriads = (mode: Mode) => {
-    const scaleNotes = getTriadNotes(selectedKey, mode)
-    setSelectedOption({ scale: scaleNotes })
-  }
 
   return (
     <LinearGradient
@@ -152,62 +84,42 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
           </Text>
         </View>
 
-        {scaleType === 'triad' ? (
+        {scaleType === 'triad' && (
           <ScrollView
             horizontal={true}
             style={tw.style('flex-row')}
             contentContainerStyle={tw.style(`justify-between gap-2`)}
           >
-            <CustomButton title={`Major`} onPress={() => selectTriads('Major')}></CustomButton>
-            <CustomButton title={`Minor`} onPress={() => selectTriads('Minor')}></CustomButton>
+            <CustomButton
+              title={`Major`}
+              btnStyle={tw.style(`${triadMode === 'Major' ? 'bg-beigeCustom' : ''}`)}
+              onPress={() => {
+                selectTriads('Major', setSelectedOption, selectedKey)
+                setTriadMode('Major')
+              }}
+            ></CustomButton>
+            <CustomButton
+              title={`Minor`}
+              btnStyle={tw.style(`${triadMode === 'Minor' ? 'bg-beigeCustom' : ''}`)}
+              txtStyle={tw.style({ fontFamily: 'figtree-bold' })}
+              onPress={() => {
+                selectTriads('Minor', setSelectedOption, selectedKey)
+                setTriadMode('Minor')
+              }}
+            ></CustomButton>
           </ScrollView>
-        ) : (
-          <View style={tw.style('flex-grow w-full opacity-100')}>
-            <Text
-              style={tw.style('text-white border-slate-500 border-b-2 text-3xl py-4 text-center', {
-                fontFamily: 'figtree-bold',
-              })}
-            >
-              Select a scale
-            </Text>
-            {/* List of scales in the key of the song */}
-            <FlatList
-              style={tw.style('flex-row')}
-              data={filteredOptions}
-              renderItem={renderRow}
-              keyExtractor={(item, index) => index.toString()}
-              ItemSeparatorComponent={() => renderSeparator(2)}
-              horizontal={true}
-              contentContainerStyle={tw.style(`py-4`)}
-            />
-            <TextInput
-              style={tw.style(`bg-[#fff] w-full rounded-2xl p-3 mb-5 text-black`)}
-              placeholder='Search for a scale or mode'
-              placeholderTextColor='gray'
-              value={query}
-              onChangeText={setQuery}
-            />
-          </View>
         )}
-        {/* Notes in the selected scale along with their intervals */}
-        <FlatList
-          horizontal={true}
-          style={tw.style('flex-row')}
-          contentContainerStyle={tw.style(`items-center justify-center`)}
-          data={Object.values(selectedOption?.scale?.notes ?? {})}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={() => renderSeparator(2)}
-          renderItem={({ item, index }) => (
-            <View style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}>
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>
-                {selectedOption?.scale?.intervals[index]}
-              </Text>
-            </View>
-          )}
-        />
+        {scaleType !== 'triad' && (
+          <ScalesList
+            scaleType={scaleType}
+            selectedOption={selectedOption ? selectedOption : null}
+            setSelectedOption={setSelectedOption}
+            selectedKey={selectedKey}
+          />
+        )}
+
         {/* Fretboard that will show up once a scale is selected */}
-        {selectedOption?.scale?.notes && <Fretboard scaleNotes={selectedOption.scale} />}
+        {selectedOption?.notes && <Fretboard scaleNotes={selectedOption} />}
         <IntervalSymbolsLegend />
       </ScrollView>
     </LinearGradient>

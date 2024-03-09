@@ -12,6 +12,7 @@ import { TwelveBarVariants, TwelveBars, twelveBarsLookup } from '../../utils/con
 import { Picker } from '@react-native-picker/picker'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
 import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
+import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
 
 type DisplayType = 'roman' | 'note'
 
@@ -65,6 +66,8 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
                 return <ChordBlock key={`${index}-${chord}`} chord={intervalToRomanChord[chord as IntervalNames]} />
               })}
         </View>
+        <Text>Suggested Scales</Text>
+        <ScalesList />
       </ScrollView>
     </LinearGradient>
   )

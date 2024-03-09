@@ -154,7 +154,7 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
         [
           'p-1 w-10  h-10 justify-center items-center shadow-lg shadow-slate-200 rounded-md m-0.5',
           isNoteInScale ? 'border border-gray-400' : '',
-          isNoteInScale ? (isRootNote ? 'bg-beigeCustom border-2 border-slate-800' : 'bg-creamLight') : 'bg-slate-200',
+          isNoteInScale ? (isRootNote ? 'bg-beigeCustom border border-zinc-600' : 'bg-creamLight') : 'bg-slate-200',
         ],
         isLandscape
           ? {

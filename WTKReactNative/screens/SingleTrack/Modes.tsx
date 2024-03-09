@@ -12,47 +12,16 @@ import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/Int
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import { getNoteName } from '../../utils/track-formating'
 import { ModeNames, allModeNames, scaleNotesAndIntervals } from '../../utils/consts/scales-consts-types'
+import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
 
 function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) {
   const route = useRoute()
 
-  const [query, setQuery] = useState('')
-  const [filteredModes, setFilteredMode] = useState<string[]>([])
   const [selectedMode, setSelectedMode] = useState<scaleNotesAndIntervals | null>(null)
-
-  const handleSearch = () => {
-    if (query.length > 0) {
-      const filtered = allModeNames.filter(mode => mode.toLowerCase().includes(query.toLowerCase()))
-      setFilteredMode(filtered)
-    } else {
-      setFilteredMode([])
-    }
-  }
-
-  const handleChange = (text: string) => {
-    setQuery(text)
-    debouncedSearch()
-  }
-  const debouncedSearch = useMemo(() => _.debounce(handleSearch, 300), [query])
 
   const { track } = route.params as { track: TrackData }
   const mode = track.audioAnalysis?.track.mode === 1 ? 'Major' : 'Minor'
-
-  const renderRow = ({ item, index }: { item: string; index: number }) => (
-    <TouchableOpacity
-      onPress={() => selectMode(item as ModeNames)}
-      style={tw.style(`py-3 px-3 bg-beigeCustom  rounded-md border-cream border `)}
-    >
-      <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item[0].toUpperCase() + item.slice(1)}</Text>
-    </TouchableOpacity>
-  )
-  /* Enter a width to change the tailwind width class to apply */
-  const renderSeparator = (width: number) => <View style={tw.style(`h-2 w-${width}`)} />
-
-  const selectMode = (mode: ModeNames) => {
-    const scaleNotes = getScaleOrModeNotes(getNoteName(track.audioAnalysis?.track.key ?? -1), mode, 'mode')
-    setSelectedMode(scaleNotes)
-  }
+  const key = getNoteName(track.audioAnalysis?.track.key as number)
 
   return (
     <LinearGradient
@@ -71,37 +40,13 @@ function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) 
           >
             Select a Mode
           </Text>
-          {/* List of Modes in the key of the song */}
-          <FlatList
-            style={tw.style('flex flex-row')}
-            data={filteredModes.length > 0 && query ? filteredModes : allModeNames}
-            renderItem={renderRow}
-            keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={() => renderSeparator(2)}
-            horizontal={true}
-            contentContainerStyle={tw.style(`py-4`)}
-          />
-          <TextInput
-            style={tw.style(`bg-[#fff] w-full rounded-2xl p-3 mb-5 text-black`)}
-            placeholder='Search for a scale or mode'
-            placeholderTextColor='gray'
-            value={query}
-            onChangeText={handleChange}
+          <ScalesList
+            scaleType={'mode'}
+            selectedOption={selectedMode ? selectedMode : null}
+            setSelectedOption={setSelectedMode}
+            selectedKey={key}
           />
         </View>
-        {/* Notes in the selected mode along with their intervals */}
-        <FlatList
-          horizontal={true}
-          data={Object.values(selectedMode?.notes ?? {})}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={() => renderSeparator(2)}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity style={tw.style(`p-1 bg-beigeCustom  rounded-md border-cream border `)}>
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{selectedMode?.intervals[index]}</Text>
-            </TouchableOpacity>
-          )}
-        />
         {/* Fretboard that will show up once a mode is selected */}
         {selectedMode?.notes && <Fretboard scaleNotes={selectedMode} />}
         <IntervalSymbolsLegend />

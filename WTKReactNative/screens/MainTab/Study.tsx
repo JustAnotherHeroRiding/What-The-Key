@@ -1,23 +1,17 @@
 import { View, Text, ScrollView } from 'react-native'
 import { StudyScreenNavigationProp } from '../../utils/types/nav-types'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { Mode, NOTES } from '../../utils/track-formating'
 import { Picker } from '@react-native-picker/picker'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
-import { getScaleOrModeNotes, getTriadNotes, selectTriads } from '../../utils/scales-and-modes'
+import { selectTriads } from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
-import { useOrientation } from '../../utils/Context/OrientationProvider'
 import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
-import {
-  ModeNames,
-  ScaleName,
-  scaleNotesAndIntervals,
-  scaleOrModeOptions,
-} from '../../utils/consts/scales-consts-types'
+import { scaleNotesAndIntervals, scaleOrModeOptions } from '../../utils/consts/scales-consts-types'
 import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
@@ -25,8 +19,6 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
   const [scaleType, setScaleType] = useState('scale')
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
   const [triadMode, setTriadMode] = useState<Mode>('Major')
-
-  const { isLandscape } = useOrientation()
 
   return (
     <LinearGradient
@@ -93,6 +85,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
             <CustomButton
               title={`Major`}
               btnStyle={tw.style(`${triadMode === 'Major' ? 'bg-beigeCustom' : ''}`)}
+              txtStyle={tw.style(`${triadMode === 'Major' ? 'font-black' : ''}`)}
               onPress={() => {
                 selectTriads('Major', setSelectedOption, selectedKey)
                 setTriadMode('Major')
@@ -101,7 +94,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
             <CustomButton
               title={`Minor`}
               btnStyle={tw.style(`${triadMode === 'Minor' ? 'bg-beigeCustom' : ''}`)}
-              txtStyle={tw.style({ fontFamily: 'figtree-bold' })}
+              txtStyle={tw.style(`${triadMode === 'Minor' ? 'font-black' : ''}`)}
               onPress={() => {
                 selectTriads('Minor', setSelectedOption, selectedKey)
                 setTriadMode('Minor')

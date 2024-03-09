@@ -8,25 +8,35 @@ import { TrackData } from '../../utils/types/spotify-types'
 import tw from '../../utils/config/tailwindRN'
 import { getTwelveBars } from '../../utils/scales-and-modes'
 import { IntervalNames, getNoteName, intervalToRomanChord } from '../../utils/track-formating'
-import { TwelveBarVariants, TwelveBars, twelveBarsLookup } from '../../utils/consts/scales-consts-types'
+import {
+  TwelveBarVariants,
+  TwelveBars,
+  scaleNotesAndIntervals,
+  twelveBarsLookup,
+} from '../../utils/consts/scales-consts-types'
 import { Picker } from '@react-native-picker/picker'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
 import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
+import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
+import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 
 type DisplayType = 'roman' | 'note'
 
 function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigationProp }) {
   const route = useRoute()
-
   const { track } = route.params as { track: TrackData }
+
   const mode = track.audioAnalysis?.track.mode === 1 ? 'Major' : 'Minor'
+  const key = getNoteName(track.audioAnalysis?.track.key as number)
+
   const [twelveBars, setTwelveBars] = useState<TwelveBars | null>(null)
   const [selectedVariant, setSelectedVariant] = useState<TwelveBarVariants>('standard')
   const [displayType, setDisplayType] = useState<DisplayType>('note')
+  const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
 
   useEffect(() => {
-    setTwelveBars(getTwelveBars(getNoteName(track.audioAnalysis?.track.key as number), selectedVariant))
+    setTwelveBars(getTwelveBars(key, selectedVariant))
   }, [selectedVariant])
 
   return (
@@ -67,7 +77,15 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
               })}
         </View>
         <Text>Suggested Scales</Text>
-        <ScalesList />
+        <ScalesList
+          scaleType='scale'
+          selectedKey={key}
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+        />
+        {/* Fretboard that will show up once a scale is selected */}
+        {selectedOption?.notes && <Fretboard scaleNotes={selectedOption} />}
+        <IntervalSymbolsLegend />
       </ScrollView>
     </LinearGradient>
   )

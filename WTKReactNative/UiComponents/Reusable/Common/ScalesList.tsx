@@ -8,13 +8,14 @@ import {
   allModeNames,
   allScaleNames,
   scaleNotesAndIntervals,
+  scaleOrModeOptions,
 } from '../../../utils/consts/scales-consts-types'
 import _ from 'lodash'
-import { getScaleOrModeNotes, getTriadNotes, selectTriads } from '../../../utils/scales-and-modes'
+import { getScaleOrModeNotes, selectTriads } from '../../../utils/scales-and-modes'
 import { Mode } from '../../../utils/track-formating'
 
 interface ScalesListProps {
-  scaleType: string
+  scaleType: scaleOrModeOptions
   selectedKey: string
   selectedOption: scaleNotesAndIntervals | null
   setSelectedOption: (values: React.SetStateAction<scaleNotesAndIntervals | null>) => void

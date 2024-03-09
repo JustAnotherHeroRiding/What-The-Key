@@ -13,12 +13,13 @@ import { capitalizeFirstLetter } from '../../utils/text-formatting'
 import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 import { scaleNotesAndIntervals, scaleOrModeOptions } from '../../utils/consts/scales-consts-types'
 import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
+import TriadModeSelector from '../../UiComponents/Reusable/Common/TriadModeSelector'
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
   const [selectedKey, setSelectedKey] = useState(NOTES[0])
   const [scaleType, setScaleType] = useState('scale')
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
-  const [triadMode, setTriadMode] = useState<Mode>('Major')
+  const [triadMode, setTriadMode] = useState<Mode | null>(null)
 
   return (
     <LinearGradient
@@ -77,30 +78,12 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
         </View>
 
         {scaleType === 'triad' && (
-          <ScrollView
-            horizontal={true}
-            style={tw.style('flex-row')}
-            contentContainerStyle={tw.style(`justify-between gap-2`)}
-          >
-            <CustomButton
-              title={`Major`}
-              btnStyle={tw.style(`${triadMode === 'Major' ? 'bg-beigeCustom' : ''}`)}
-              txtStyle={tw.style(`${triadMode === 'Major' ? 'font-black' : ''}`)}
-              onPress={() => {
-                selectTriads('Major', setSelectedOption, selectedKey)
-                setTriadMode('Major')
-              }}
-            ></CustomButton>
-            <CustomButton
-              title={`Minor`}
-              btnStyle={tw.style(`${triadMode === 'Minor' ? 'bg-beigeCustom' : ''}`)}
-              txtStyle={tw.style(`${triadMode === 'Minor' ? 'font-black' : ''}`)}
-              onPress={() => {
-                selectTriads('Minor', setSelectedOption, selectedKey)
-                setTriadMode('Minor')
-              }}
-            ></CustomButton>
-          </ScrollView>
+          <TriadModeSelector
+            triadMode={triadMode}
+            setTriadMode={setTriadMode}
+            selectedKey={selectedKey}
+            setSelectedOption={setSelectedOption}
+          />
         )}
         {scaleType !== 'triad' && (
           <ScalesList

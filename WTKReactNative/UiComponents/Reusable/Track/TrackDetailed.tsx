@@ -138,13 +138,6 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
           <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Triads</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={true}
-          style={tw`px-4 py-3 border opacity-70 border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
-          // Chord Progressions
-        >
-          <Text style={tw.style(`text-center`, { fontFamily: 'figtree-bold' })}>Chord Progressions</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={() => navigation.navigate('TwelveBars', { track: track })}
           style={tw`px-4 py-3 border  border-black rounded-xl text-2xl bg-cream font-800 shadow-lg`}
         >

@@ -6,30 +6,25 @@ import tw from '../../utils/config/tailwindRN'
 import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
-import { getTriadNotes } from '../../utils/scales-and-modes'
+import { selectTriads } from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import { Mode, getNoteName } from '../../utils/track-formating'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 import { scaleNotesAndIntervals } from '../../utils/consts/scales-consts-types'
+import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
+import TriadModeSelector from '../../UiComponents/Reusable/Common/TriadModeSelector'
 
 function TriadsScreen({ navigation }: { navigation: TriadsScreenNavigationProp }) {
   const route = useRoute()
   const { track } = route.params as { track: TrackData }
+  const key = getNoteName(track.audioAnalysis?.track.key as number)
+  const mode = track.audioAnalysis?.track.mode === 1 ? 'Major' : 'Minor'
 
-  const [mode, setMode] = useState<Mode>(track.audioAnalysis?.track.mode === 1 ? 'Major' : 'Minor')
+  const [triadMode, setTriadMode] = useState<Mode | null>(null)
 
-  const [selectedScale, setSelectedScale] = useState<scaleNotesAndIntervals | null>(
-    getTriadNotes(getNoteName(track.audioAnalysis?.track.key as number), mode),
-  )
-  /* Enter a width to change the tailwind width class to apply */
-  const renderSeparator = (width: number) => <View style={tw.style(`h-2 w-${width}`)} />
-
-  const selectScale = (mode: Mode) => {
-    const scaleNotes = getTriadNotes(getNoteName(track.audioAnalysis?.track.key as number), mode)
-    setSelectedScale(scaleNotes)
-  }
+  const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
 
   return (
     <LinearGradient
@@ -45,27 +40,15 @@ function TriadsScreen({ navigation }: { navigation: TriadsScreenNavigationProp }
           style={tw.style('flex-row')}
           contentContainerStyle={tw.style(`justify-between gap-2`)}
         >
-          <CustomButton title={`Major`} onPress={() => selectScale('Major')}></CustomButton>
-          <CustomButton title={`Minor`} onPress={() => selectScale('Minor')}></CustomButton>
+          <TriadModeSelector
+            triadMode={triadMode}
+            setTriadMode={setTriadMode}
+            selectedKey={key}
+            setSelectedOption={setSelectedOption}
+          />
         </ScrollView>
-
-        {/* Notes in the selected scale along with their intervals */}
-        <FlatList
-          horizontal={true}
-          data={Object.values(selectedScale?.notes ?? {})}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={() => renderSeparator(2)}
-          renderItem={({ item, index }) => (
-            <View style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}>
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>
-                {selectedScale?.intervals[index]}
-              </Text>
-            </View>
-          )}
-        />
         {/* Fretboard that will show up once a scale is selected */}
-        {selectedScale?.notes && <Fretboard scaleNotes={selectedScale} />}
+        {selectedOption?.notes && <Fretboard scaleNotes={selectedOption} />}
         <IntervalSymbolsLegend />
       </ScrollView>
     </LinearGradient>

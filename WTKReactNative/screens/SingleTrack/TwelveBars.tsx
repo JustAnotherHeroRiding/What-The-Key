@@ -12,6 +12,7 @@ import {
   TwelveBarVariants,
   TwelveBars,
   scaleNotesAndIntervals,
+  scaleOrModeOptions,
   twelveBarsLookup,
 } from '../../utils/consts/scales-consts-types'
 import { Picker } from '@react-native-picker/picker'
@@ -34,6 +35,7 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
   const [selectedVariant, setSelectedVariant] = useState<TwelveBarVariants>('standard')
   const [displayType, setDisplayType] = useState<DisplayType>('note')
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
+  const [scaleType, setScaleType] = useState<scaleOrModeOptions>('scale')
 
   useEffect(() => {
     setTwelveBars(getTwelveBars(key, selectedVariant))
@@ -48,24 +50,34 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
     >
       <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
         <TrackMini track={track} src='Twelve Bars' mode={mode} />
-        <View style={tw.style(`flex-col w-full gap-2 items-center`)}>
-          <Text style={tw.style(`text-slate-200 text-center text-base`)}>Select the variant</Text>
+        <View style={tw.style(`flex-row items-center gap-2 mb-4`)}>
+          <View style={tw.style(`flex-col gap-2 w-3/4`)}>
+            <Text style={tw.style(`text-slate-200 text-center text-base`)}>Select the variant</Text>
 
-          <Picker
-            style={tw.style('bg-white w-1/2 rounded-3xl')}
-            selectedValue={selectedVariant}
-            onValueChange={(itemValue, itemIndex) => {
-              setSelectedVariant(itemValue)
-            }}
-          >
-            {Object.keys(twelveBarsLookup).map(key => {
-              return <Picker.Item key={key} label={capitalizeFirstLetter(key)} value={key} />
-            })}
-          </Picker>
-          <CustomButton
-            onPress={() => (displayType === 'note' ? setDisplayType('roman') : setDisplayType('note'))}
-            title={displayType === 'note' ? 'Roman' : 'Note'}
-          ></CustomButton>
+            <Picker
+              style={tw.style('bg-white')}
+              selectedValue={selectedVariant}
+              onValueChange={(itemValue, itemIndex) => {
+                setSelectedVariant(itemValue)
+              }}
+            >
+              {Object.keys(twelveBarsLookup).map(key => {
+                return <Picker.Item key={key} label={capitalizeFirstLetter(key)} value={key} />
+              })}
+            </Picker>
+          </View>
+          <View style={tw.style(`flex-col items-center gap-2`)}>
+            <CustomButton
+              onPress={() => (displayType === 'note' ? setDisplayType('roman') : setDisplayType('note'))}
+              title={displayType === 'note' ? 'Roman' : 'Note'}
+              btnStyle={tw`mt-auto`}
+            ></CustomButton>
+            <CustomButton
+              onPress={() => (scaleType === 'scale' ? setScaleType('mode') : setScaleType('scale'))}
+              title={scaleType === 'scale' ? 'Modes' : 'Scales'}
+              btnStyle={tw`mt-auto`}
+            ></CustomButton>
+          </View>
         </View>
         <View style={tw.style(`flex-row gap-2 flex-wrap justify-center`)}>
           {displayType === 'note'
@@ -76,9 +88,11 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
                 return <ChordBlock key={`${index}-${chord}`} chord={intervalToRomanChord[chord as IntervalNames]} />
               })}
         </View>
-        <Text>Suggested Scales</Text>
+        <Text style={tw.style(`text-slate-50 text-center text-2xl`, { fontFamily: 'figtree-bold' })}>
+          Suggested {capitalizeFirstLetter(scaleType)}s
+        </Text>
         <ScalesList
-          scaleType='scale'
+          scaleType={scaleType}
           selectedKey={key}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}

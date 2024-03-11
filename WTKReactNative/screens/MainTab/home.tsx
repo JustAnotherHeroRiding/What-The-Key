@@ -12,6 +12,14 @@ import { SessionContext } from '../../utils/Context/Session/SessionContext'
 import RandomTrack from '../../UiComponents/Reusable/Track/RandomTrack'
 import useSpotifyService from '../../services/SpotifyService'
 import { useQueryClient, useQuery, keepPreviousData } from '@tanstack/react-query'
+import {
+  ModeNames,
+  ScaleName,
+  allModeNames,
+  allScaleNames,
+  scaleOrModeOptions,
+  scaleOrModeOptionsConst,
+} from '../../utils/consts/scales-consts-types'
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const session = useContext(SessionContext)
@@ -31,6 +39,17 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
     queryFn: () => fetchRandomTrack(),
     enabled: false,
   })
+
+  const getRandomScale = () => {
+    const scaleType: scaleOrModeOptions = _.sample(scaleOrModeOptionsConst)
+    const randomScale = scaleType === 'mode' ? _.sample(allModeNames) : _.sample(allScaleNames)
+    const uniqueKey = Date.now().toString()
+
+    navigation.navigate('Study', {
+      preselectedType: scaleType,
+      preselectedScale: randomScale as ScaleName | ModeNames,
+    })
+  }
 
   const {
     data: searchResults,
@@ -87,12 +106,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
             <Text style={tw.style(`text-black text-base font-bold`)}>Random Track</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={tw.style(`bg-beigeCustom p-2 rounded-lg`)}
-            onPress={() =>
-              navigation.navigate('Study', { preselectedType: 'scale', preselectedScale: 'minorPentatonic' })
-            }
-          >
+          <TouchableOpacity style={tw.style(`bg-beigeCustom p-2 rounded-lg`)} onPress={() => getRandomScale()}>
             <Text style={tw.style(`text-black text-base font-bold`)}>Random Scale</Text>
           </TouchableOpacity>
         </View>

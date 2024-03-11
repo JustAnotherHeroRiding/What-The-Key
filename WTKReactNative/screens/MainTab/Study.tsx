@@ -26,16 +26,17 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
   const params = router.params as StudyScreenProps
 
   const [selectedKey, setSelectedKey] = useState(NOTES[0])
-  const [scaleType, setScaleType] = useState<extendedScaleType>(params.preselectedType ?? 'scale')
+  const [scaleType, setScaleType] = useState<extendedScaleType>(params?.preselectedType ?? 'scale')
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
   const [scaleMode, setScaleMode] = useState<Mode | null>(null)
   const [twelveBarsActive, setTwelveBarsActive] = useState(false)
 
   useEffect(() => {
-    if (params.preselectedType && params.preselectedScale) {
+    if (params && params.preselectedType && params.preselectedScale) {
       selectScale(params.preselectedType, setSelectedOption, NOTES[0], params.preselectedScale)
+      setScaleType(params.preselectedType)
     }
-  }, [])
+  }, [params])
 
   return (
     <LinearGradient
@@ -106,6 +107,12 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
             />
           </View>
         </ScrollView>
+        <View style={tw.style(`flex-col items-center justify-center`)}>
+          <Text style={tw.style(`text-slate-200`)}>Selected {capitalizeFirstLetter(scaleType)}</Text>
+          <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
+            {capitalizeFirstLetter(selectedOption?.name ?? '')}
+          </Text>
+        </View>
 
         {(scaleType === 'triad' || scaleType === 'seventh') && (
           <ModeSelector

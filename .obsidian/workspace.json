@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "b7cc62dce9733f31",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "WTKReactNative/React Native App.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "750033034d58141e",
             "type": "leaf",
             "state": {
@@ -31,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -159,7 +146,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3158cc49a0d6232d",
+  "active": "750033034d58141e",
   "lastOpenFiles": [
     "WTKReactNative/React Native App.md",
     "WTKReactNative/What the key Extensions.md",

@@ -4,8 +4,9 @@ Now that the basic functionality is complete and users can search and save songs
 ## Home page - Recently Opened
 Currently when opening the home page we have a search bar, get random track button and the search button. Let's fill up the home page.
 - The search button can be removed completely as the searching happens automatically after the debounce period, can be replaced with a random scale #DONE 
-- Add a prop to the Study screen that will preselect a scale
-- Track whenever a user opens the single track page
+- Add a prop to the Study screen that will preselect a scale #DONE 
+- Make the scale selected be randomly selected
+- Track whenever a user opens the single track page and keep statistics of how many times a track has been opened
 - Add a couple of recently opened tracks so that users can keep playing from where they left off
 - Use the current tracks in the library as the seed for recommendations in a horizontal `FlatList` of tracks
 - Scale/mode/triad/seventh of the day - Pick one at random and when clicking on it, it should open the study page with the fretboard open.

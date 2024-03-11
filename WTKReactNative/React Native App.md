@@ -221,7 +221,8 @@ Twelve bar blues chart to play blues over any song. In the play section we can m
 #### Seventh Triads to target chord tones
 After watching the video on SRV's Lenny, I think that 7th chords would be a good addition to the study page, especially for following a 12 bar blues progression
 - Add a fourth option in the Study screen Picker to display the seventh chords #DONE 
-- Figure out how to pick the seventh chords from the same scaleslist component
+- Figure out how to pick the seventh chords from the same `scaleslist` component #DONE I switched the selection to the Triad mode selector which has been repurposed to be used for seventh chords also
+- Optional switch to add the fifth to the 7th chords #DONE 
 
 ## Home page - Recently Opened
 Currently when opening the home page we have a search bar, get random track button and the search button. Let's fill up the home page.

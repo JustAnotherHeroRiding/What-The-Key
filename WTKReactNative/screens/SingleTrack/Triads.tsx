@@ -1,19 +1,16 @@
-import { FlatList, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { TriadsScreenNavigationProp } from '../../utils/types/nav-types'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
 import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
-import { selectTriads } from '../../utils/scales-and-modes'
 import _ from 'lodash'
 import { Mode, getNoteName } from '../../utils/track-formating'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
-import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 import { scaleNotesAndIntervals } from '../../utils/consts/scales-consts-types'
-import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
 import TriadModeSelector from '../../UiComponents/Reusable/Common/ModeSelector'
 
 function TriadsScreen({ navigation }: { navigation: TriadsScreenNavigationProp }) {
@@ -41,10 +38,11 @@ function TriadsScreen({ navigation }: { navigation: TriadsScreenNavigationProp }
           contentContainerStyle={tw.style(`justify-between gap-2`)}
         >
           <TriadModeSelector
-            triadMode={triadMode}
-            setTriadMode={setTriadMode}
+            scaleMode={triadMode ?? 'Major'}
+            setScaleMode={setTriadMode}
             selectedKey={key}
             setSelectedOption={setSelectedOption}
+            scaleType='triad'
           />
         </ScrollView>
         {/* Fretboard that will show up once a scale is selected */}

@@ -56,7 +56,11 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
         <TwelveBarsSelector selectedKey={key} />
 
         <Text style={tw.style(`text-slate-50 text-center text-2xl`, { fontFamily: 'figtree-bold' })}>
-          {scaleType === 'triad' ? 'Choose the Triad mode' : `Suggested ${capitalizeFirstLetter(scaleType)}`}
+          {scaleType === 'triad'
+            ? 'Choose the Triad mode'
+            : scaleType === 'seventh'
+              ? 'Seventh Chords'
+              : `Suggested ${capitalizeFirstLetter(scaleType)}`}
         </Text>
         {(scaleType === 'triad' || scaleType === 'seventh') && (
           <ModeSelector

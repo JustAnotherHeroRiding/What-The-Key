@@ -105,9 +105,27 @@ export const getTwelveBars = (key: string, type: TwelveBarVariants = 'standard')
   }
 }
 
-const getSeventhNotes = (key: string, mode: Mode = 'Major'): scaleNotesAndIntervals => {
-  const notes = seventhLookup[mode].map(interval => calculateNoteFromIntervalSimple(key, interval))
-  const intervalNames = seventhLookup[mode].map(interval => getIntervalName(interval))
+const getSeventhNotes = (key: string, mode: Mode = 'Major', addFifth: boolean): scaleNotesAndIntervals => {
+  // Clone the array to avoid mutating the original lookup data
+  let intervals = [...seventhLookup[mode]]
+
+  // If addFifth is true, insert the perfect fifth (7 semitones) into the array
+  // Assuming you want to insert it in the correct order for a chord (after the third but before the seventh)
+  if (addFifth) {
+    // Find the correct position based on existing intervals
+    // Since the array is already sorted, the fifth (7 semitones) should come after the third but before the seventh
+    const fifthPos = intervals.findIndex(interval => interval > 7)
+    if (fifthPos === -1) {
+      // If the fifth is larger than any interval present, add it to the end
+      intervals.push(7)
+    } else {
+      intervals.splice(fifthPos, 0, 7) // Otherwise, insert it at the correct position
+    }
+  }
+
+  const notes = intervals.map(interval => calculateNoteFromIntervalSimple(key, interval))
+  const intervalNames = intervals.map(interval => getIntervalName(interval))
+
   return {
     name: mode,
     notes,
@@ -119,8 +137,9 @@ export const selectSeventh = (
   mode: Mode,
   setSelectedOption: (values: React.SetStateAction<scaleNotesAndIntervals | null>) => void,
   selectedKey: string,
+  addFifth: boolean = false,
 ) => {
-  const scaleNotes = getSeventhNotes(selectedKey, mode)
+  const scaleNotes = getSeventhNotes(selectedKey, mode, addFifth)
   setSelectedOption(scaleNotes)
 }
 

@@ -1,10 +1,11 @@
-import { ScrollView } from 'react-native'
+import { ScrollView, Switch, View, Text } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CustomButton } from './CustomButtom'
 import { selectSeventh, selectTriads } from '../../../utils/scales-and-modes'
 import { scaleNotesAndIntervals } from '../../../utils/consts/scales-consts-types'
 import { Mode } from '../../../utils/track-formating'
+import colors from '../../../assets/colors'
 
 interface ModeSelectorProps {
   scaleMode: Mode
@@ -15,18 +16,20 @@ interface ModeSelectorProps {
 }
 
 function ModeSelector({ scaleMode, setScaleMode, selectedKey, setSelectedOption, scaleType }: ModeSelectorProps) {
+  const [addFifth, setAddFifth] = useState(false)
+
   useEffect(() => {
     if (scaleType === 'triad') {
       selectTriads(scaleMode as Mode, setSelectedOption, selectedKey)
     } else if (scaleType === 'seventh') {
-      selectSeventh(scaleMode as Mode, setSelectedOption, selectedKey)
+      selectSeventh(scaleMode as Mode, setSelectedOption, selectedKey, addFifth)
     }
-  }, [scaleMode, selectedKey, scaleType])
+  }, [scaleMode, selectedKey, scaleType, addFifth])
   return (
     <ScrollView
       horizontal={true}
       style={tw.style('flex-row')}
-      contentContainerStyle={tw.style(`justify-between gap-2`)}
+      contentContainerStyle={tw.style(`justify-between items-center gap-2`)}
     >
       <CustomButton
         title={`Major`}
@@ -44,6 +47,17 @@ function ModeSelector({ scaleMode, setScaleMode, selectedKey, setSelectedOption,
           setScaleMode('Minor')
         }}
       ></CustomButton>
+      {scaleType === 'seventh' && (
+        <View style={tw.style(`flex-col items-center justify-center`)}>
+          <Text style={tw.style(`text-slate-200`)}>Add Fifth</Text>
+          <Switch
+            thumbColor={colors.beigeCustom}
+            trackColor={{ false: colors.slate500, true: colors.cream }}
+            value={addFifth}
+            onValueChange={() => setAddFifth(!addFifth)}
+          />
+        </View>
+      )}
     </ScrollView>
   )
 }

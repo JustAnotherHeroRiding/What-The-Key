@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Switch } from 'react-native'
-import { StudyScreenNavigationProp } from '../../utils/types/nav-types'
-import React, { useState } from 'react'
+import { RootStackParamList, StudyScreenNavigationProp, StudyScreenProps } from '../../utils/types/nav-types'
+import React, { useEffect, useState } from 'react'
 import { Mode, NOTES } from '../../utils/track-formating'
 import { Picker } from '@react-native-picker/picker'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -18,13 +18,24 @@ import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
 import ModeSelector from '../../UiComponents/Reusable/Common/ModeSelector'
 import TwelveBarsSelector from '../../UiComponents/Reusable/Common/TwelveBarsSelector'
 import colors from '../../assets/colors'
+import { RouteProp, useRoute } from '@react-navigation/native'
+import { selectScale } from '../../utils/scales-and-modes'
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
+  const router = useRoute<RouteProp<RootStackParamList['MainTab']>>()
+  const params = router.params as StudyScreenProps
+
   const [selectedKey, setSelectedKey] = useState(NOTES[0])
-  const [scaleType, setScaleType] = useState<extendedScaleType>('scale')
+  const [scaleType, setScaleType] = useState<extendedScaleType>(params.preselectedType ?? 'scale')
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
   const [scaleMode, setScaleMode] = useState<Mode | null>(null)
   const [twelveBarsActive, setTwelveBarsActive] = useState(false)
+
+  useEffect(() => {
+    if (params.preselectedType && params.preselectedScale) {
+      selectScale(params.preselectedType, setSelectedOption, NOTES[0], params.preselectedScale)
+    }
+  }, [])
 
   return (
     <LinearGradient

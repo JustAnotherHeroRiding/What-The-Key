@@ -74,7 +74,9 @@ function ScalesList({ scaleType, selectedKey, selectedOption, setSelectedOption 
       <FlatList
         style={tw.style('flex-row')}
         data={filteredOptions}
-        renderItem={({ item, index }) => renderRow({ item, index, selectScale })}
+        renderItem={({ item, index }) =>
+          renderRow({ item, index, selectScale, selectedScale: selectedOption?.name ?? '' })
+        }
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={() => renderSeparator(2)}
         horizontal={true}

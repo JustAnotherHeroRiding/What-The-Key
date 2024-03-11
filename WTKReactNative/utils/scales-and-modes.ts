@@ -151,3 +151,13 @@ export const selectTriads = (
   const scaleNotes = getTriadNotes(selectedKey, mode)
   setSelectedOption(scaleNotes)
 }
+
+export const selectScale = (
+  type: scaleOrModeOptions,
+  setSelectedOption: (values: React.SetStateAction<scaleNotesAndIntervals | null>) => void,
+  selectedKey: string,
+  scaleName: ScaleName | ModeNames,
+) => {
+  const scaleNotes = getScaleOrModeNotes(selectedKey, scaleName, type)
+  setSelectedOption(scaleNotes)
+}

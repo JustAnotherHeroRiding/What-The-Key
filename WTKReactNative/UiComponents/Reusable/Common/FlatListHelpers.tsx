@@ -11,12 +11,15 @@ type RenderRowProps = {
   item: string
   index: number
   selectScale: SelectScaleFunction
+  selectedScale: string
 }
 
-export const renderRow = ({ item, index, selectScale }: RenderRowProps) => (
+export const renderRow = ({ item, index, selectScale, selectedScale }: RenderRowProps) => (
   <TouchableOpacity
     onPress={() => selectScale(item as ScaleName)}
-    style={tw.style(`py-3 px-3 bg-beigeCustom rounded-md border-cream border`)}
+    style={tw.style(
+      `py-3 px-3  ${item === selectedScale ? 'bg-beigeCustom' : 'bg-cream'} rounded-md border-cream border`,
+    )}
   >
     <Text style={tw.style('text-xl', { fontFamily: 'figtree-bold' })}>{capitalizeFirstLetter(item)}</Text>
   </TouchableOpacity>

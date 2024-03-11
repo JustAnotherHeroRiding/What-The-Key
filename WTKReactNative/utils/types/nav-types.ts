@@ -4,13 +4,18 @@ import { Sources, dataSource } from './track-service-types'
 import { TrackData } from './spotify-types'
 import { ModeNames, ScaleName, scaleOrModeOptions } from '../consts/scales-consts-types'
 
+export interface StudyScreenProps {
+  preselectedType?: scaleOrModeOptions
+  preselectedScale?: ScaleName | ModeNames
+}
+
 export type RootStackParamList = {
   MainTab: {
     Home: undefined
     Library: { type: dataSource }
     Deleted: { type: dataSource }
     Auth: undefined
-    Study: { preselectedType?: scaleOrModeOptions; preselectedScale?: ScaleName | ModeNames }
+    Study: StudyScreenProps
   }
   SingleTrackNavigator: {
     SingleTrackOverview: { trackId: string; src: Sources }

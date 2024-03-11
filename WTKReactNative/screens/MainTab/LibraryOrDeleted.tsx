@@ -32,7 +32,8 @@ function LibraryOrDeletedScreen({
   navigation: LibraryScreenNavigationProp | DeletedScreenNavigationProp
 }) {
   const router = useRoute<RouteProp<RootStackParamList['MainTab']>>()
-  const type = router.params?.type ?? ''
+  const params = router.params as { type: dataSource }
+  const type = params.type ?? ''
 
   const isValidType = type === 'library' || type === 'recycleBin'
 
@@ -139,6 +140,7 @@ function LibraryOrDeletedScreen({
               </Text>
             )}
             refreshing={isFetching}
+            //@ts-ignore
             onRefresh={() => refetch()}
           />
         )

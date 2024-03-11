@@ -9,7 +9,11 @@ import _ from 'lodash'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
-import { scaleNotesAndIntervals, scaleOrModeOptions } from '../../utils/consts/scales-consts-types'
+import {
+  extendedScaleType,
+  scaleNotesAndIntervals,
+  scaleOrModeOptionsConst,
+} from '../../utils/consts/scales-consts-types'
 import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
 import ModeSelector from '../../UiComponents/Reusable/Common/ModeSelector'
 import TwelveBarsSelector from '../../UiComponents/Reusable/Common/TwelveBarsSelector'
@@ -17,7 +21,7 @@ import colors from '../../assets/colors'
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
   const [selectedKey, setSelectedKey] = useState(NOTES[0])
-  const [scaleType, setScaleType] = useState('scale')
+  const [scaleType, setScaleType] = useState<extendedScaleType>('scale')
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
   const [scaleMode, setScaleMode] = useState<Mode | null>(null)
   const [twelveBarsActive, setTwelveBarsActive] = useState(false)
@@ -55,7 +59,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
                 setSelectedOption(null)
               }}
             >
-              {scaleOrModeOptions.map(option => (
+              {scaleOrModeOptionsConst.map(option => (
                 <Picker.Item key={option} label={`${capitalizeFirstLetter(option)}s`} value={option} />
               ))}
               <Picker.Item key={'triad'} label={`Triads`} value={'triad'} />
@@ -94,7 +98,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
 
         {(scaleType === 'triad' || scaleType === 'seventh') && (
           <ModeSelector
-            scaleMode={scaleMode ?? "Major"}
+            scaleMode={scaleMode ?? 'Major'}
             setScaleMode={setScaleMode}
             selectedKey={selectedKey}
             setSelectedOption={setSelectedOption}

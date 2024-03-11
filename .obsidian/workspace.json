@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "750033034d58141e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "WTKReactNative/What the key Extensions.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "WTKReactNative/React Native App.md",
+                "file": "WTKReactNative/What the key Extensions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "WTKReactNative/React Native App.md",
+                "file": "WTKReactNative/What the key Extensions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "WTKReactNative/React Native App.md"
+                "file": "WTKReactNative/What the key Extensions.md"
               }
             }
           }
@@ -146,12 +159,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b7cc62dce9733f31",
+  "active": "3158cc49a0d6232d",
   "lastOpenFiles": [
+    "WTKReactNative/React Native App.md",
+    "WTKReactNative/What the key Extensions.md",
     "WTKReactNative/UiComponents/Reusable/Common/ModeSelector.tsx",
     "WTKReactNative/screens/MainTab/StudyScreen.tsx",
     "When will React rerender a component.md",
-    "WTKReactNative/React Native App.md",
     "WTKReactNative/UiComponents/Reusable/Common/TwelveBarsSelector.tsx",
     "WTKReactNative/UiComponents/Reusable/Common/TriadModeSelector.tsx",
     "WTKReactNative/UiComponents/Reusable/Common/FlatListHelpers.tsx",
@@ -160,7 +174,6 @@
     "WTKReactNative/utils/consts/scales-consts.ts",
     "WTKReactNative/utils/consts",
     "WTKReactNative/screens/SingleTrack/TwelveBars.tsx",
-    "WTKReactNative/screens/SingleTrack/Triads.tsx",
     "WTKReactNative/assets/images/deleted.png",
     "WTKReactNative/assets/images/DALL·E 2024-03-06 18.50.01 - Design a sleek, modern logo that integrates a trash can with musical motifs in a minimal style. The logo should be easily recognizable at small sizes,.png",
     "WTKReactNative/assets/images/library.png",

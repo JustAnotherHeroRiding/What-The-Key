@@ -148,8 +148,9 @@ export const MODES_DATA: ScalesAndModesData = {
     intervals: [1, 2, 2, 1, 2, 2, 2],
   },
 }
-export const scaleOrModeOptions = ['scale', 'mode']
-export type scaleOrModeOptions = (typeof scaleOrModeOptions)[number]
+export const scaleOrModeOptionsConst = ['scale', 'mode'] as const
+export type scaleOrModeOptions = (typeof scaleOrModeOptionsConst)[number]
+export type extendedScaleType = scaleOrModeOptions | 'triad' | 'seventh'
 
 export const majorTriadIntervals = [0, 4, 7] // Root, Major third, Perfect fifth
 export const minorTriadIntervals = [0, 3, 7] // Root, Minor third, Perfect fifth

@@ -2,6 +2,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { Sources, dataSource } from './track-service-types'
 import { TrackData } from './spotify-types'
+import { ModeNames, ScaleName, scaleOrModeOptions } from '../consts/scales-consts-types'
 
 export type RootStackParamList = {
   MainTab: {
@@ -9,7 +10,7 @@ export type RootStackParamList = {
     Library: { type: dataSource }
     Deleted: { type: dataSource }
     Auth: undefined
-    Study: undefined
+    Study: { preselectedType?: scaleOrModeOptions; preselectedScale?: ScaleName | ModeNames }
   }
   SingleTrackNavigator: {
     SingleTrackOverview: { trackId: string; src: Sources }

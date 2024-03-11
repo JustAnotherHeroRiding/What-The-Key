@@ -7,7 +7,12 @@ import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import tw from '../../utils/config/tailwindRN'
 import { Mode, getNoteName } from '../../utils/track-formating'
-import { scaleNotesAndIntervals, scaleOrModeOptions } from '../../utils/consts/scales-consts-types'
+import {
+  extendedScaleType,
+  scaleNotesAndIntervals,
+  scaleOrModeOptions,
+  scaleOrModeOptionsConst,
+} from '../../utils/consts/scales-consts-types'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
 import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
@@ -24,7 +29,7 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
   const key = getNoteName(track.audioAnalysis?.track.key as number)
 
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
-  const [scaleType, setScaleType] = useState<scaleOrModeOptions | Mode>('scale')
+  const [scaleType, setScaleType] = useState<extendedScaleType | Mode>('scale')
   const [scaleMode, setScaleMode] = useState<Mode | null>(null)
 
   return (
@@ -46,7 +51,7 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
               setSelectedOption(null)
             }}
           >
-            {scaleOrModeOptions.map(option => (
+            {scaleOrModeOptionsConst.map(option => (
               <Picker.Item key={option} label={`${capitalizeFirstLetter(option)}s`} value={option} />
             ))}
             <Picker.Item key={'triad'} label={`Triads`} value={'triad'} />
@@ -73,7 +78,7 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
         )}
         {scaleType !== 'triad' && (
           <ScalesList
-            scaleType={scaleType}
+            scaleType={scaleType as scaleOrModeOptions}
             selectedOption={selectedOption ? selectedOption : null}
             setSelectedOption={setSelectedOption}
             selectedKey={key}

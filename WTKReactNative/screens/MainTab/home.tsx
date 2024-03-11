@@ -66,14 +66,14 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   }
 
   return (
-    <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center pb-16`)}>
+    <ScrollView contentContainerStyle={tw.style(`justify-center items-center pb-16`)}>
       <StatusBar style='auto' />
 
       <LinearGradient
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-5 rounded-lg items-center w-[80%] mt-[3%]`)}
+        style={tw.style(`border border-cream p-5 rounded-lg items-center w-[90%] mt-[3%]`)}
       >
         <TextInput
           style={tw.style(`bg-[#fff] w-full rounded-2xl p-3 mb-5 text-black`)}
@@ -82,17 +82,18 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
           value={query}
           onChangeText={text => setQuery(text)}
         />
-        <View style={tw.style(`flex flex-row justify-between w-full content-center`)}>
-          <TouchableOpacity style={tw.style(`bg-beigeCustom p-3 rounded-lg`)} onPress={() => GetRandomTrack()}>
-            <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Random Track</Text>
+        <View style={tw.style(`flex-row justify-between w-full gap-2`)}>
+          <TouchableOpacity style={tw.style(`bg-beigeCustom p-2 rounded-lg`)} onPress={() => GetRandomTrack()}>
+            <Text style={tw.style(`text-black text-base font-bold`)}>Random Track</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            disabled={!query}
-            style={tw.style(`bg-beigeCustom p-3 rounded-lg ${!query ? 'opacity-70' : ''}`)}
-            onPress={() => getSearchResults()}
+            style={tw.style(`bg-beigeCustom p-2 rounded-lg`)}
+            onPress={() =>
+              navigation.navigate('Study', { preselectedType: 'scale', preselectedScale: 'minorPentatonic' })
+            }
           >
-            <Text style={tw.style(`text-black text-base font-figtreeBold`)}>Search</Text>
+            <Text style={tw.style(`text-black text-base font-bold`)}>Random Scale</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -106,6 +107,30 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
           userId={session?.user.id}
         />
       )}
+      <LinearGradient
+        colors={['#27272a', '#52525b']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 0 }}
+        style={tw.style(`border border-cream p-4 rounded-lg w-[95%] mt-[3%]`)}
+      >
+        <Text style={tw.style(`text-slate-100 text-2xl font-bold`)}>Recently Opened</Text>
+      </LinearGradient>
+      <LinearGradient
+        colors={['#27272a', '#52525b']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 0 }}
+        style={tw.style(`border border-cream p-4 rounded-lg w-[95%] mt-[3%]`)}
+      >
+        <Text style={tw.style(`text-slate-100 text-2xl font-bold`)}>Suggested Theory</Text>
+      </LinearGradient>
+      <LinearGradient
+        colors={['#27272a', '#52525b']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 0 }}
+        style={tw.style(`border border-cream p-4 rounded-lg w-[95%] mt-[3%]`)}
+      >
+        <Text style={tw.style(`text-slate-100 text-2xl font-bold`)}>Songs to Learn</Text>
+      </LinearGradient>
     </ScrollView>
   )
 }

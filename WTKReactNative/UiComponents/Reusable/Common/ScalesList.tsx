@@ -15,7 +15,7 @@ import { getScaleOrModeNotes, selectTriads } from '../../../utils/scales-and-mod
 import { Mode } from '../../../utils/track-formating'
 
 interface ScalesListProps {
-  scaleType: scaleOrModeOptions
+  scaleType: scaleOrModeOptions | 'triad'
   selectedKey: string
   selectedOption: scaleNotesAndIntervals | null
   setSelectedOption: (values: React.SetStateAction<scaleNotesAndIntervals | null>) => void
@@ -63,7 +63,7 @@ function ScalesList({ scaleType, selectedKey, selectedOption, setSelectedOption 
     const scaleNotes: scaleNotesAndIntervals = getScaleOrModeNotes(
       selectedKey,
       scale as ScaleName | ModeNames,
-      scaleType,
+      scaleType as scaleOrModeOptions,
     ) as scaleNotesAndIntervals
     setSelectedOption(scaleNotes)
   }

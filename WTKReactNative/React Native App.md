@@ -210,10 +210,15 @@ _Minor triads_ are built from the 1st (root), 3rd (minor 3rd), and 5th (perfect
 Twelve bar blues chart to play blues over any song. In the play section we can make it interactive
 - Display a simple 3x4 chart showing the order of the chords in the key of the song #DONE 
 - There is a bug when selecting G#, the correct notes are shown but G# is marked as G. All other sharps are correctly displayed #DONE 
-- Show a horizontal scroll view of suggested scales to play in either the I, IV or V chord which can be selected by the user
-###### This can be encapsulated into a component as it is being used in multiple screens now
-- Clicking on the scale will open the fretboard as usual
+- Show a horizontal scroll view of suggested scales to play in either the I, IV or V chord which can be selected by the user #DONE 
+###### This can be encapsulated into a component as it is being used in multiple screens now #DONE 
+- Clicking on the scale will open the fretboard as usual #DONE 
 - Add triads to the list of suggested scales, perhaps in a separate row
+- Add the twelve bars option in the study screen by first encapsulating the twelve bar display logic and turning it into a component
+
+#### Seventh Chords
+After watching the video on SRV's Lenny, I think that 7th chords would be a good addition to the page, especially for following a 12 bar blues progression
+- Add a fourth option in the Study screen Picker to display the seventh chords
 
 ## Home page - Recently Opened
 Currently when opening the home page we have a search bar, get random track button and the search button. Let's fill up the home page.
@@ -229,6 +234,9 @@ Currently when opening the home page we have a search bar, get random track butt
 - Add an option on the study page to display the circle fifths
 - When the user selects a key, the wheel should rotate
 - Add advice on how to use it 
+
+## The lick
+- On the study page, add the lick in each key as a sound sample
 ## Play mode
 When we click play, we start the play along experience
 - Use the bars and add some sort of indicator to show the progress

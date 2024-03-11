@@ -7,7 +7,7 @@ import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import tw from '../../utils/config/tailwindRN'
 import { getTwelveBars } from '../../utils/scales-and-modes'
-import { IntervalNames, getNoteName, intervalToRomanChord } from '../../utils/track-formating'
+import { IntervalNames, Mode, getNoteName, intervalToRomanChord } from '../../utils/track-formating'
 import {
   TwelveBarVariants,
   TwelveBars,
@@ -17,10 +17,10 @@ import {
 } from '../../utils/consts/scales-consts-types'
 import { Picker } from '@react-native-picker/picker'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
-import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
 import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
+import TriadModeSelector from '../../UiComponents/Reusable/Common/TriadModeSelector'
 
 type DisplayType = 'roman' | 'note'
 
@@ -35,7 +35,8 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
   const [selectedVariant, setSelectedVariant] = useState<TwelveBarVariants>('standard')
   const [displayType, setDisplayType] = useState<DisplayType>('note')
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
-  const [scaleType, setScaleType] = useState<scaleOrModeOptions>('scale')
+  const [scaleType, setScaleType] = useState<scaleOrModeOptions | Mode>('scale')
+  const [triadMode, setTriadMode] = useState<Mode | null>(null)
 
   useEffect(() => {
     setTwelveBars(getTwelveBars(key, selectedVariant))
@@ -51,7 +52,7 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
       <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
         <TrackMini track={track} src='Twelve Bars' mode={mode} />
         <View style={tw.style(`flex-row items-center gap-2 mb-4`)}>
-          <View style={tw.style(`flex-col gap-2 w-3/4`)}>
+          <View style={tw.style(`flex-col gap-2 w-2/4`)}>
             <Text style={tw.style(`text-slate-200 text-center text-base`)}>Select the variant</Text>
 
             <Picker
@@ -66,17 +67,21 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
               })}
             </Picker>
           </View>
-          <View style={tw.style(`flex-col items-center gap-2`)}>
-            <CustomButton
-              onPress={() => (displayType === 'note' ? setDisplayType('roman') : setDisplayType('note'))}
-              title={displayType === 'note' ? 'Roman' : 'Note'}
-              btnStyle={tw`mt-auto`}
-            ></CustomButton>
-            <CustomButton
-              onPress={() => (scaleType === 'scale' ? setScaleType('mode') : setScaleType('scale'))}
-              title={scaleType === 'scale' ? 'Modes' : 'Scales'}
-              btnStyle={tw`mt-auto`}
-            ></CustomButton>
+          <View style={tw.style(`flex-col w-1/3 items-center gap-2`)}>
+            <Text style={tw.style(`text-slate-200 text-center text-base`)}>Select Type:</Text>
+            <Picker
+              style={tw.style('bg-white w-full')}
+              selectedValue={scaleType}
+              onValueChange={(itemValue, itemIndex) => {
+                setScaleType(itemValue)
+                setSelectedOption(null)
+              }}
+            >
+              {scaleOrModeOptions.map(option => (
+                <Picker.Item key={option} label={`${capitalizeFirstLetter(option)}s`} value={option} />
+              ))}
+              <Picker.Item key={'triad'} label={`Triads`} value={'triad'} />
+            </Picker>
           </View>
         </View>
         <View style={tw.style(`flex-row gap-2 flex-wrap justify-center`)}>
@@ -89,14 +94,24 @@ function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigati
               })}
         </View>
         <Text style={tw.style(`text-slate-50 text-center text-2xl`, { fontFamily: 'figtree-bold' })}>
-          Suggested {capitalizeFirstLetter(scaleType)}s
+          {scaleType === 'triad' ? 'Choose the Triad mode' : `Suggested ${capitalizeFirstLetter(scaleType)}`}
         </Text>
-        <ScalesList
-          scaleType={scaleType}
-          selectedKey={key}
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-        />
+        {scaleType === 'triad' && (
+          <TriadModeSelector
+            triadMode={triadMode}
+            setTriadMode={setTriadMode}
+            selectedKey={key}
+            setSelectedOption={setSelectedOption}
+          />
+        )}
+        {scaleType !== 'triad' && (
+          <ScalesList
+            scaleType={scaleType}
+            selectedOption={selectedOption ? selectedOption : null}
+            setSelectedOption={setSelectedOption}
+            selectedKey={key}
+          />
+        )}
         {/* Fretboard that will show up once a scale is selected */}
         {selectedOption?.notes && <Fretboard scaleNotes={selectedOption} />}
         <IntervalSymbolsLegend />

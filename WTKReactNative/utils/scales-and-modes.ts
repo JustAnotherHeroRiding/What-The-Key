@@ -9,6 +9,7 @@ import {
   minorTriadIntervals,
   scaleNotesAndIntervals,
   scaleOrModeOptions,
+  seventhLookup,
   twelveBarsLookup,
 } from './consts/scales-consts-types'
 import { Mode, NOTES, intervalNamesSingle } from './track-formating'
@@ -102,6 +103,25 @@ export const getTwelveBars = (key: string, type: TwelveBarVariants = 'standard')
     notes,
     intervalNames: intervalNames,
   }
+}
+
+const getSeventhNotes = (key: string, mode: Mode = 'Major'): scaleNotesAndIntervals => {
+  const notes = seventhLookup[mode].map(interval => calculateNoteFromIntervalSimple(key, interval))
+  const intervalNames = seventhLookup[mode].map(interval => getIntervalName(interval))
+  return {
+    name: mode,
+    notes,
+    intervals: intervalNames,
+  }
+}
+
+export const selectSeventh = (
+  mode: Mode,
+  setSelectedOption: (values: React.SetStateAction<scaleNotesAndIntervals | null>) => void,
+  selectedKey: string,
+) => {
+  const scaleNotes = getSeventhNotes(selectedKey, mode)
+  setSelectedOption(scaleNotes)
 }
 
 export const selectTriads = (

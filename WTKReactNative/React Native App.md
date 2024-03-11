@@ -213,12 +213,15 @@ Twelve bar blues chart to play blues over any song. In the play section we can m
 - Show a horizontal scroll view of suggested scales to play in either the I, IV or V chord which can be selected by the user #DONE 
 ###### This can be encapsulated into a component as it is being used in multiple screens now #DONE 
 - Clicking on the scale will open the fretboard as usual #DONE 
-- Add triads to the list of suggested scales, perhaps in a separate row
-- Add the twelve bars option in the study screen by first encapsulating the twelve bar display logic and turning it into a component
+- Add triads to the list of suggested scales, perhaps in a separate row #DONE 
+###### Ended up adding the same picker menu to select the scale type
+- Add the twelve bars option in the study screen by first encapsulating the twelve bar display logic and turning it into a component #DONE 
+- Make sure that scales and modes can still be selected when the twelve bars component is displayed #DONE 
 
-#### Seventh Chords
-After watching the video on SRV's Lenny, I think that 7th chords would be a good addition to the page, especially for following a 12 bar blues progression
-- Add a fourth option in the Study screen Picker to display the seventh chords
+#### Seventh Triads to target chord tones
+After watching the video on SRV's Lenny, I think that 7th chords would be a good addition to the study page, especially for following a 12 bar blues progression
+- Add a fourth option in the Study screen Picker to display the seventh chords #DONE 
+- Figure out how to pick the seventh chords from the same scaleslist component
 
 ## Home page - Recently Opened
 Currently when opening the home page we have a search bar, get random track button and the search button. Let's fill up the home page.

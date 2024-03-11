@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Switch } from 'react-native'
 import { StudyScreenNavigationProp } from '../../utils/types/nav-types'
 import React, { useState } from 'react'
 import { Mode, NOTES } from '../../utils/track-formating'
@@ -11,13 +11,16 @@ import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/Int
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
 import { scaleNotesAndIntervals, scaleOrModeOptions } from '../../utils/consts/scales-consts-types'
 import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
-import TriadModeSelector from '../../UiComponents/Reusable/Common/TriadModeSelector'
+import ModeSelector from '../../UiComponents/Reusable/Common/ModeSelector'
+import TwelveBarsSelector from '../../UiComponents/Reusable/Common/TwelveBarsSelector'
+import colors from '../../assets/colors'
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
   const [selectedKey, setSelectedKey] = useState(NOTES[0])
   const [scaleType, setScaleType] = useState('scale')
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
-  const [triadMode, setTriadMode] = useState<Mode | null>(null)
+  const [scaleMode, setScaleMode] = useState<Mode | null>(null)
+  const [twelveBarsActive, setTwelveBarsActive] = useState(false)
 
   return (
     <LinearGradient
@@ -56,34 +59,49 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
                 <Picker.Item key={option} label={`${capitalizeFirstLetter(option)}s`} value={option} />
               ))}
               <Picker.Item key={'triad'} label={`Triads`} value={'triad'} />
+              <Picker.Item key={'seventh'} label={`7th Chords`} value={'seventh'} />
             </Picker>
           </View>
         </View>
 
-        <View style={tw.style(`flex-row justify-between gap-4 `)}>
-          <Text style={tw.style(`text-slate-200`)}>
-            Selected Key:{' '}
+        <ScrollView
+          horizontal={true}
+          contentContainerStyle={tw.style(` items-center gap-4`)}
+          style={tw.style(`flex-row`)}
+        >
+          <View style={tw.style(`flex-col items-center justify-center`)}>
+            <Text style={tw.style(`text-slate-200`)}>Selected Key: </Text>
             <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
               {capitalizeFirstLetter(selectedKey)}
             </Text>
-          </Text>
-          <Text style={tw.style(`text-slate-200`)}>
-            Type:{' '}
+          </View>
+          <View style={tw.style(`flex-col items-center justify-center`)}>
+            <Text style={tw.style(`text-slate-200`)}>Type: </Text>
             <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
               {capitalizeFirstLetter(scaleType)}
             </Text>
-          </Text>
-        </View>
+          </View>
+          <View style={tw.style(`flex-col items-center justify-center`)}>
+            <Text style={tw.style(`text-slate-200`)}>Twelve bars </Text>
+            <Switch
+              thumbColor={colors.beigeCustom}
+              trackColor={{ false: colors.slate500, true: colors.cream }}
+              value={twelveBarsActive}
+              onValueChange={() => setTwelveBarsActive(!twelveBarsActive)}
+            />
+          </View>
+        </ScrollView>
 
-        {scaleType === 'triad' && (
-          <TriadModeSelector
-            triadMode={triadMode}
-            setTriadMode={setTriadMode}
+        {(scaleType === 'triad' || scaleType === 'seventh') && (
+          <ModeSelector
+            scaleMode={scaleMode ?? "Major"}
+            setScaleMode={setScaleMode}
             selectedKey={selectedKey}
             setSelectedOption={setSelectedOption}
+            scaleType={scaleType}
           />
         )}
-        {scaleType !== 'triad' && (
+        {scaleType !== 'triad' && scaleType !== 'seventh' && (
           <ScalesList
             scaleType={scaleType}
             selectedOption={selectedOption ? selectedOption : null}
@@ -91,6 +109,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
             selectedKey={selectedKey}
           />
         )}
+        {twelveBarsActive && <TwelveBarsSelector selectedKey={selectedKey} />}
 
         {/* Fretboard that will show up once a scale is selected */}
         {selectedOption?.notes && <Fretboard scaleNotes={selectedOption} />}

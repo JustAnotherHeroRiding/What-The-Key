@@ -14,7 +14,7 @@ import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 import { scaleNotesAndIntervals } from '../../utils/consts/scales-consts-types'
 import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
-import TriadModeSelector from '../../UiComponents/Reusable/Common/TriadModeSelector'
+import TriadModeSelector from '../../UiComponents/Reusable/Common/ModeSelector'
 
 function TriadsScreen({ navigation }: { navigation: TriadsScreenNavigationProp }) {
   const route = useRoute()

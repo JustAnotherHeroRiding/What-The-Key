@@ -148,6 +148,11 @@
   },
   "active": "b7cc62dce9733f31",
   "lastOpenFiles": [
+    "WTKReactNative/UiComponents/Reusable/Common/ModeSelector.tsx",
+    "WTKReactNative/screens/MainTab/StudyScreen.tsx",
+    "When will React rerender a component.md",
+    "WTKReactNative/React Native App.md",
+    "WTKReactNative/UiComponents/Reusable/Common/TwelveBarsSelector.tsx",
     "WTKReactNative/UiComponents/Reusable/Common/TriadModeSelector.tsx",
     "WTKReactNative/UiComponents/Reusable/Common/FlatListHelpers.tsx",
     "WTKReactNative/UiComponents/Reusable/Common/ScalesList.tsx",
@@ -156,7 +161,6 @@
     "WTKReactNative/utils/consts",
     "WTKReactNative/screens/SingleTrack/TwelveBars.tsx",
     "WTKReactNative/screens/SingleTrack/Triads.tsx",
-    "WTKReactNative/utils/Context/OrientationProvider.tsx",
     "WTKReactNative/assets/images/deleted.png",
     "WTKReactNative/assets/images/DALL·E 2024-03-06 18.50.01 - Design a sleek, modern logo that integrates a trash can with musical motifs in a minimal style. The logo should be easily recognizable at small sizes,.png",
     "WTKReactNative/assets/images/library.png",
@@ -164,8 +168,6 @@
     "WTKReactNative/assets/images/home.png",
     "WTKReactNative/assets/images/DALL·E 2024-03-06 18.37.07 - Design a sleek, modern logo featuring a house that occupies almost the entire image space. The logo should integrate musical motifs within or around t.png",
     "WTKReactNative/assets/images/home-old.png",
-    "WTKReactNative/utils/text-formatting.ts",
-    "WTKReactNative/node_modules/@react-native-picker/picker/android/build/generated/source/buildConfig/debug/com/reactnativecommunity/picker/BuildConfig.java",
     "WTKReactNative/node_modules/@react-native-picker/picker/README.md",
     "WTKReactNative/assets/images/study.png",
     "WTKReactNative/assets/images/DALL·E 2024-03-04 19.52.07 - Create a simple and elegant navigation icon for a mobile app route called 'study', focused on music theory education. The icon should feature a logo i.png",
@@ -173,7 +175,6 @@
     "WTKReactNative/node_modules/expo-screen-orientation/README.md",
     "WTKReactNative/node_modules/expo-screen-orientation/CHANGELOG.md",
     "Song Key.md",
-    "WTKReactNative/React Native App.md",
     "WTKReactNative/node_modules/@expo/dev-server/node_modules/@expo/osascript/README.md",
     "WTKReactNative/node_modules/expo-splash-screen/README.md",
     "WTKReactNative/node_modules/expo-splash-screen/CHANGELOG.md",
@@ -192,7 +193,6 @@
     "WTKReactNative/node_modules/is-number-object/CHANGELOG.md",
     "WTKReactNative/node_modules/is-negative-zero/README.md",
     "WTKReactNative/node_modules/is-negative-zero/CHANGELOG.md",
-    "WTKReactNative/node_modules/is-map/README.md",
-    "WTKReactNative/node_modules/is-map/CHANGELOG.md"
+    "WTKReactNative/node_modules/is-map/README.md"
   ]
 }

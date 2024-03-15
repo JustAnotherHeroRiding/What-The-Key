@@ -1,11 +1,13 @@
 
-Now that the basic functionality is complete and users can search and save songs, have tabs ready to go along with a powerful study screen to learn all scales, modes, triad positions and 7th chord, we can get to work on extending and improving the existing features to provide a professional feeling UX
+Now that the basic functionality is complete and users can search and save songs, have tabs ready to go along with a powerful study screen to learn all scales, modes, triad positions and 7th chords, we can get to work on extending and improving the existing features to provide a professional feeling UX
 
 ## Home page - Recently Opened
 Currently when opening the home page we have a search bar, get random track button and the search button. Let's fill up the home page.
 - The search button can be removed completely as the searching happens automatically after the debounce period, can be replaced with a random scale #DONE 
 - Add a prop to the Study screen that will preselect a scale #DONE 
-- Make the scale selected be randomly selected
+- Make the scale selected be randomly selected #DONE 
+- Open a new random scale on each button click #DONE 
+#### Time to get back to the backend for an update. I will need to either add a new table, separate from the existing track table or attach a new table with userId and view count and a time stamp for when the track was opened, so that I can sort by the timestamp for recently opened
 - Track whenever a user opens the single track page and keep statistics of how many times a track has been opened
 - Add a couple of recently opened tracks so that users can keep playing from where they left off
 - Use the current tracks in the library as the seed for recommendations in a horizontal `FlatList` of tracks

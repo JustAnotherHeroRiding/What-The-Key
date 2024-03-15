@@ -94,7 +94,7 @@ function ScalesList({ scaleType, selectedKey, selectedOption, setSelectedOption 
       <FlatList
         horizontal={true}
         style={tw.style('flex-row')}
-        contentContainerStyle={tw.style(`items-center mx-auto justify-center`)}
+        contentContainerStyle={tw.style(``)}
         data={Object.values(selectedOption?.notes ?? {})}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={() => renderSeparator(2)}

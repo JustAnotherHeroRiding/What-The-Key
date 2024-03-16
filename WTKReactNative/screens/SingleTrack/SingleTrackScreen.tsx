@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native'
-import { BackHandler } from 'react-native'
+import { BackHandler, TouchableOpacity, Text } from 'react-native'
 import useSpotifyService from '../../services/SpotifyService'
 import { useQuery } from '@tanstack/react-query'
 import tw from '../../utils/config/tailwindRN'
@@ -13,6 +13,7 @@ import { TrackData } from '../../utils/types/spotify-types'
 import TrackTabModal from '../../UiComponents/Reusable/TrackAdjacent/TrackTabModal'
 import useTrackService from '../../services/TrackService'
 import { SingleTrackOverviewNavigationProp } from '../../utils/types/nav-types'
+import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 
 function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavigationProp }) {
   const route = useRoute()
@@ -37,6 +38,7 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
     data: track,
     error: trackError,
     isFetching: isFetchingTrack,
+    refetch,
   } = useQuery({
     queryKey: ['SingleTrack', trackId],
     queryFn: () => getTrackAnalysis(trackId),
@@ -55,14 +57,11 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
     return () => backHandler.remove()
   }, [navigation])
 
-  if (trackError || trackStatusError) {
-    console.error(trackError)
-  }
-
   const handleBackPress = () => {
     navigation.goBack()
     return true
   }
+
   return (
     <LinearGradient
       colors={['#27272a', '#52525b']}
@@ -70,6 +69,7 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
       end={{ x: 0, y: 0 }}
       style={tw.style(`flex-grow w-full opacity-100`)}
     >
+      <CustomButton title='refetch' onPress={() => refetch()}></CustomButton>
       {isFetchingTrack || isFetchingTrackStatus ? (
         <LoadingSpinner />
       ) : track && trackAddedStatus ? (

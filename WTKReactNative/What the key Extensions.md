@@ -8,7 +8,7 @@ Currently when opening the home page we have a search bar, get random track butt
 - Make the scale selected be randomly selected #DONE 
 - Open a new random scale on each button click #DONE 
 #### Time to get back to the backend for an update. I will need to either add a new table, separate from the existing track table or attach a new table with userId and view count and a time stamp for when the track was opened, so that I can sort by the timestamp for recently opened
-- Update the api endpoint to accept a used id and make a db call if one has been passed
+- Update the api endpoint to accept a used id and make a db call if one has been passed #DONE 
 - Track whenever a user opens the single track page and keep statistics of how many times a track has been opened
 - Add a couple of recently opened tracks so that users can keep playing from where they left off
 - Use the current tracks in the library as the seed for recommendations in a horizontal `FlatList` of tracks

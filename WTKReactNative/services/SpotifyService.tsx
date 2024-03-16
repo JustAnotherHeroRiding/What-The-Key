@@ -39,10 +39,8 @@ const useSpotifyService = () => {
   const getTrackAnalysis = async (trackId: string): Promise<TrackData> => {
     const userId = session?.user.id
     const queryString = userId ? `?userId=${encodeURIComponent(userId)}` : ''
+    // Replace with the production url
     const url = `https://what-the-key.vercel.app/api/spotify/trackDetailed/${trackId}${queryString}`
-
-    console.log(url)
-
     const response = await fetch(url)
     const data = await response.json()
 

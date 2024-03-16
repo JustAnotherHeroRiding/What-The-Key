@@ -124,20 +124,19 @@ export class SpotifyService {
   ): Promise<TrackData> {
     await this.getAuthToken();
     let historyResponse;
-
     if (userId) {
       try {
+        // Change to the production url https://what-the-key.vercel.app
         historyResponse = await axios.post(
           'https://what-the-key.vercel.app/api/track/addHistory',
           {
-            method: 'POST',
+            userId,
+            trackId,
+          },
+          {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              userId,
-              trackId,
-            }),
           },
         );
       } catch (error) {
@@ -156,7 +155,7 @@ export class SpotifyService {
     return {
       track: trackResponse.data,
       audioAnalysis: audioFeaturesResponse.data as TrackDataAnalysis,
-      trackHistory: historyResponse,
+      trackHistory: historyResponse.data,
     };
   }
 

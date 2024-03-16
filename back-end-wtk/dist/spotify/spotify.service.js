@@ -97,14 +97,12 @@ let SpotifyService = class SpotifyService {
         if (userId) {
             try {
                 historyResponse = await axios_1.default.post('https://what-the-key.vercel.app/api/track/addHistory', {
-                    method: 'POST',
+                    userId,
+                    trackId,
+                }, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        userId,
-                        trackId,
-                    }),
                 });
             }
             catch (error) {
@@ -121,7 +119,7 @@ let SpotifyService = class SpotifyService {
         return {
             track: trackResponse.data,
             audioAnalysis: audioFeaturesResponse.data,
-            trackHistory: historyResponse,
+            trackHistory: historyResponse.data,
         };
     }
     async searchTracks(searchQuery) {

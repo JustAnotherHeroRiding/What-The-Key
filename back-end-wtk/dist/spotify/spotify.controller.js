@@ -120,7 +120,7 @@ __decorate([
         required: true,
         description: 'Spotify track ID',
     }),
-    (0, swagger_1.ApiParam)({
+    (0, swagger_1.ApiQuery)({
         name: 'userId',
         type: String,
         required: false,
@@ -129,7 +129,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Track details' }),
     (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Param)('userId')),
+    __param(1, (0, common_1.Query)('userId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)

@@ -1,10 +1,14 @@
+import { useContext } from 'react'
 import { SpotifyTracksSearchResult, TrackData } from '../utils/types/spotify-types'
+import { SessionContext } from '../utils/Context/Session/SessionContext'
 
 interface SearchProps {
   queryString: string
 }
 
 const useSpotifyService = () => {
+  const session = useContext(SessionContext)
+
   const searchTracks = async ({ queryString }: SearchProps): Promise<SpotifyTracksSearchResult> => {
     const response = await fetch(`https://what-the-key.vercel.app/api/spotify/search?query=${queryString}`)
 
@@ -33,7 +37,13 @@ const useSpotifyService = () => {
   }
 
   const getTrackAnalysis = async (trackId: string): Promise<TrackData> => {
-    const response = await fetch(`https://what-the-key.vercel.app/api/spotify/trackDetailed/${trackId}`)
+    const userId = session?.user.id
+    const queryString = userId ? `?userId=${encodeURIComponent(userId)}` : ''
+    const url = `https://what-the-key.vercel.app/api/spotify/trackDetailed/${trackId}${queryString}`
+
+    console.log(url)
+
+    const response = await fetch(url)
     const data = await response.json()
 
     if (!response.ok) {

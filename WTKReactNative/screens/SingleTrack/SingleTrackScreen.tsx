@@ -63,7 +63,6 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
     navigation.goBack()
     return true
   }
-
   return (
     <LinearGradient
       colors={['#27272a', '#52525b']}

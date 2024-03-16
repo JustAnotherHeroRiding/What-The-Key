@@ -81,7 +81,7 @@ export class SpotifyController {
     required: true,
     description: 'Spotify track ID',
   })
-  @ApiParam({
+  @ApiQuery({
     name: 'userId',
     type: String,
     required: false,
@@ -91,7 +91,7 @@ export class SpotifyController {
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async fetchTrackDetailed(
     @Param('id') trackId: string,
-    @Param('userId') userId: string,
+    @Query('userId') userId: string,
   ) {
     try {
       return await this.spotifyService.fetchTrackDetailed(trackId, userId);

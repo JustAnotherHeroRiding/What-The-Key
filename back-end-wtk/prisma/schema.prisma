@@ -347,6 +347,7 @@ model users {
   identities                  identities[]
   mfa_factors                 mfa_factors[]
   sessions                    sessions[]
+  is_anonymous                Boolean       @default(false)
 
   @@index([instance_id])
   @@schema("auth")

@@ -36,3 +36,11 @@ export class AddTabsDto {
   })
   tabUrl: string;
 }
+
+export class AddToHistoryDto {
+  @ApiProperty({ example: 'user123', description: 'ID of the user' })
+  userId: string;
+
+  @ApiProperty({ example: 'track456', description: 'ID of the track' })
+  trackId: string;
+}

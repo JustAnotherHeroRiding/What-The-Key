@@ -1,3 +1,5 @@
+import { UserTrackHistory } from '@prisma/client';
+
 export interface SpotifyTracksSearchResult {
   tracks: {
     href: string;
@@ -92,6 +94,7 @@ export interface TrackData {
   audioFeatures?: AudioFeatures;
   track: SpotifyItem;
   audioAnalysis?: TrackDataAnalysis;
+  trackHistory?: UserTrackHistory;
 }
 
 export interface TrackDataAnalysis {

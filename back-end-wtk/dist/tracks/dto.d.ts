@@ -12,3 +12,7 @@ export declare class AddTabsDto {
     trackId: string;
     tabUrl: string;
 }
+export declare class AddToHistoryDto {
+    userId: string;
+    trackId: string;
+}

@@ -118,21 +118,45 @@ export class SpotifyService {
     };
   }
 
-  async fetchTrackDetailed(trackId: string): Promise<TrackData> {
+  async fetchTrackDetailed(
+    trackId: string,
+    userId?: string,
+  ): Promise<TrackData> {
     await this.getAuthToken();
+    let historyResponse;
+
+    if (userId) {
+      try {
+        historyResponse = await axios.post(
+          'https://what-the-key.vercel.app/api/track/addHistory',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+              trackId,
+            }),
+          },
+        );
+      } catch (error) {
+        console.error('Error adding track to the history:', error);
+      }
+    }
 
     const headers = this.createHeaders();
-    const trackResponse = await axios.get(
-      `https://api.spotify.com/v1/tracks/${trackId}`,
-      { headers },
-    );
-    const audioFeaturesResponse: { data: TrackDataAnalysis } = await axios.get(
-      `https://api.spotify.com/v1/audio-analysis/${trackId}`,
-      { headers },
-    );
+    const [trackResponse, audioFeaturesResponse] = await Promise.all([
+      axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, { headers }),
+      axios.get(`https://api.spotify.com/v1/audio-analysis/${trackId}`, {
+        headers,
+      }),
+    ]);
+
     return {
       track: trackResponse.data,
-      audioAnalysis: audioFeaturesResponse.data,
+      audioAnalysis: audioFeaturesResponse.data as TrackDataAnalysis,
+      trackHistory: historyResponse,
     };
   }
 

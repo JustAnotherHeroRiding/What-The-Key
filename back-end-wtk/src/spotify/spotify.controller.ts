@@ -47,7 +47,8 @@ export class SpotifyController {
   @Get('track/:id')
   @ApiOperation({
     summary: 'Fetch a Single Track',
-    description: 'Fetches a single track from Spotify based on its ID.',
+    description:
+      'Fetches a single track from Spotify based on its ID. If a user id is passed.',
   })
   @ApiParam({
     name: 'id',
@@ -72,7 +73,7 @@ export class SpotifyController {
   @ApiOperation({
     summary: 'Fetch a Single Track',
     description:
-      'Fetches a single track from Spotify based on its ID, including the audio analysis.',
+      'Fetches a single track from Spotify based on its ID, including the audio analysis, it will also note that the user has opened it for the history.',
   })
   @ApiParam({
     name: 'id',
@@ -80,11 +81,20 @@ export class SpotifyController {
     required: true,
     description: 'Spotify track ID',
   })
+  @ApiParam({
+    name: 'userId',
+    type: String,
+    required: false,
+    description: 'User ID',
+  })
   @ApiResponse({ status: 200, description: 'Track details' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
-  async fetchTrackDetailed(@Param('id') trackId: string) {
+  async fetchTrackDetailed(
+    @Param('id') trackId: string,
+    @Param('userId') userId: string,
+  ) {
     try {
-      return await this.spotifyService.fetchTrackDetailed(trackId);
+      return await this.spotifyService.fetchTrackDetailed(trackId, userId);
     } catch (error) {
       throw new HttpException(
         'Error fetching track',

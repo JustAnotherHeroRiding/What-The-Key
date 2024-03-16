@@ -15,7 +15,12 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { AddTabsDto, AddTrackDto, DeleteTrackDto } from './dto';
+import {
+  AddTabsDto,
+  AddToHistoryDto,
+  AddTrackDto,
+  DeleteTrackDto,
+} from './dto';
 
 @ApiTags('Track')
 @Controller('track')
@@ -122,6 +127,26 @@ export class TrackController {
         userId,
         tabUrl,
       );
+      return track;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
+  @Post('addHistory')
+  @ApiOperation({
+    summary: 'Add to History',
+    description: 'Add a track to the opened tracks history.',
+  })
+  @ApiBody({ type: AddToHistoryDto })
+  @ApiResponse({ status: 200, description: 'Track added to the history' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  async addToHistory(
+    @Body('trackId') trackId: string,
+    @Body('userId') userId: string,
+  ) {
+    try {
+      const track = await this.trackService.addTrackToHistory(trackId, userId);
       return track;
     } catch (error) {
       throw new InternalServerErrorException(error.message);

@@ -21,6 +21,12 @@ export declare class TrackController {
         trackId: string;
         tabUrl: string;
     }>;
+    addToHistory(trackId: string, userId: string): Promise<{
+        id: number;
+        userId: number;
+        trackId: string;
+        openedAt: Date;
+    }>;
     getTabs(trackId: string, userId: string): Promise<{
         id: number;
         userId: number;

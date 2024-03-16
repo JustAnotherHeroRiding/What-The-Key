@@ -1,5 +1,5 @@
 import { PrismaService } from '../services/prisma.service';
-import { Track, User, TrackTab, Prisma } from '@prisma/client';
+import { Track, User, TrackTab, Prisma, UserTrackHistory } from '@prisma/client';
 export interface TrackConnection {
     id: string;
     libraryUserId: number;
@@ -18,4 +18,5 @@ export declare class TrackService {
         isInLibrary: boolean;
         isInRecycleBin: boolean;
     }>;
+    addTrackToHistory(trackId: string, userId: string): Promise<UserTrackHistory>;
 }

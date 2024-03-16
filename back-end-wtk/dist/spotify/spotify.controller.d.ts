@@ -4,7 +4,7 @@ export declare class SpotifyController {
     constructor(spotifyService: SpotifyService);
     fetchMultipleTracks(trackIds: string): Promise<import("../utils/spotify-types").TrackData[]>;
     fetchTrack(trackId: string): Promise<import("../utils/spotify-types").TrackData>;
-    fetchTrackDetailed(trackId: string): Promise<import("../utils/spotify-types").TrackData>;
+    fetchTrackDetailed(trackId: string, userId: string): Promise<import("../utils/spotify-types").TrackData>;
     searchTracks(searchQuery: string): Promise<import("../utils/spotify-types").SpotifyTracksSearchResult>;
     getRandomGuitarTrack(): Promise<import("../utils/spotify-types").TrackData>;
     getGenres(): Promise<string[]>;

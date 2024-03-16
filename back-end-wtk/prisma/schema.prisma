@@ -10,22 +10,36 @@ datasource db {
 }
 
 model User {
-  id               Int               @id @default(autoincrement())
-  profileId        String            @unique // Assuming this corresponds to the id in the profiles table
-  libraryTracks    LibraryTrack[]    @relation("UserToLibraryTrack")
-  recycleBinTracks RecycleBinTrack[] @relation("UserToRecycleBinTrack")
-  trackTabsUser    TrackTab[]        @relation("trackTabsUser")
+  id               Int                @id @default(autoincrement())
+  profileId        String             @unique
+  libraryTracks    LibraryTrack[]     @relation("UserToLibraryTrack")
+  recycleBinTracks RecycleBinTrack[]  @relation("UserToRecycleBinTrack")
+  trackTabsUser    TrackTab[]         @relation("trackTabsUser")
+  userTrackHistory UserTrackHistory[] @relation("userToHistory")
+
+  @@schema("public")
+}
+
+model UserTrackHistory {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  trackId  String
+  openedAt DateTime @default(now())
+
+  user  User  @relation("userToHistory", fields: [userId], references: [id])
+  track Track @relation("trackToHistory", fields: [trackId], references: [id])
 
   @@schema("public")
 }
 
 model Track {
-  id               String            @id
+  id               String             @id
   libraryUserId    Int?
   recycleBinUserId Int?
-  libraryTracks    LibraryTrack[]    @relation("TrackToLibraryTrack")
-  recycleBinTracks RecycleBinTrack[] @relation("TrackToRecycleBinTrack")
-  trackTabsTrack   TrackTab[]        @relation("trackTabsTrack")
+  libraryTracks    LibraryTrack[]     @relation("TrackToLibraryTrack")
+  recycleBinTracks RecycleBinTrack[]  @relation("TrackToRecycleBinTrack")
+  trackTabsTrack   TrackTab[]         @relation("trackTabsTrack")
+  UserTrackHistory UserTrackHistory[] @relation("trackToHistory")
 
   @@schema("public")
 }

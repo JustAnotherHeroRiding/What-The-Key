@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma.service';
-import { Track, User, TrackTab, Prisma } from '@prisma/client';
+import {
+  Track,
+  User,
+  TrackTab,
+  Prisma,
+  UserTrackHistory,
+} from '@prisma/client';
 
 export interface TrackConnection {
   id: string;
@@ -213,5 +219,36 @@ export class TrackService {
       isInLibrary: !!trackInLibrary,
       isInRecycleBin: !!trackInRecycleBin,
     };
+  }
+
+  async addTrackToHistory(
+    trackId: string,
+    userId: string,
+  ): Promise<UserTrackHistory> {
+    const user = await this.ensureUserExists(userId);
+
+    if (!user) {
+      throw new Error('User not found, track will not be added.');
+    }
+
+    let track: TrackConnection = await this.prisma.track.findUnique({
+      where: { id: trackId },
+    });
+    if (!track) {
+      track = await this.prisma.track.create({
+        data: {
+          id: trackId,
+        },
+      });
+    }
+
+    const data = {
+      trackId: trackId,
+      userId: user.id,
+    };
+
+    const trackHistory = await this.prisma.userTrackHistory.create({ data });
+
+    return trackHistory;
   }
 }

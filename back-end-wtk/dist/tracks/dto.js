@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AddTabsDto = exports.DeleteTrackDto = exports.AddTrackDto = void 0;
+exports.AddToHistoryDto = exports.AddTabsDto = exports.DeleteTrackDto = exports.AddTrackDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 class AddTrackDto {
 }
@@ -59,4 +59,15 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], AddTabsDto.prototype, "tabUrl", void 0);
+class AddToHistoryDto {
+}
+exports.AddToHistoryDto = AddToHistoryDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'user123', description: 'ID of the user' }),
+    __metadata("design:type", String)
+], AddToHistoryDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'track456', description: 'ID of the track' }),
+    __metadata("design:type", String)
+], AddToHistoryDto.prototype, "trackId", void 0);
 //# sourceMappingURL=dto.js.map

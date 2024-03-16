@@ -59,6 +59,15 @@ let TrackController = class TrackController {
             throw new common_1.InternalServerErrorException(error.message);
         }
     }
+    async addToHistory(trackId, userId) {
+        try {
+            const track = await this.trackService.addTrackToHistory(trackId, userId);
+            return track;
+        }
+        catch (error) {
+            throw new common_1.InternalServerErrorException(error.message);
+        }
+    }
     async getTabs(trackId, userId) {
         try {
             const tabs = await this.trackService.getTabsForTrack(trackId, userId);
@@ -149,6 +158,21 @@ __decorate([
     __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "addTabs", null);
+__decorate([
+    (0, common_1.Post)('addHistory'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Add to History',
+        description: 'Add a track to the opened tracks history.',
+    }),
+    (0, swagger_1.ApiBody)({ type: dto_1.AddToHistoryDto }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Track added to the history' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
+    __param(0, (0, common_1.Body)('trackId')),
+    __param(1, (0, common_1.Body)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], TrackController.prototype, "addToHistory", null);
 __decorate([
     (0, common_1.Get)('getTabs'),
     (0, swagger_1.ApiOperation)({

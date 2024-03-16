@@ -36,9 +36,9 @@ let SpotifyController = class SpotifyController {
             throw new common_1.HttpException('Error fetching track', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    async fetchTrackDetailed(trackId) {
+    async fetchTrackDetailed(trackId, userId) {
         try {
-            return await this.spotifyService.fetchTrackDetailed(trackId);
+            return await this.spotifyService.fetchTrackDetailed(trackId, userId);
         }
         catch (error) {
             throw new common_1.HttpException('Error fetching track', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
@@ -93,7 +93,7 @@ __decorate([
     (0, common_1.Get)('track/:id'),
     (0, swagger_1.ApiOperation)({
         summary: 'Fetch a Single Track',
-        description: 'Fetches a single track from Spotify based on its ID.',
+        description: 'Fetches a single track from Spotify based on its ID. If a user id is passed.',
     }),
     (0, swagger_1.ApiParam)({
         name: 'id',
@@ -112,7 +112,7 @@ __decorate([
     (0, common_1.Get)('trackDetailed/:id'),
     (0, swagger_1.ApiOperation)({
         summary: 'Fetch a Single Track',
-        description: 'Fetches a single track from Spotify based on its ID, including the audio analysis.',
+        description: 'Fetches a single track from Spotify based on its ID, including the audio analysis, it will also note that the user has opened it for the history.',
     }),
     (0, swagger_1.ApiParam)({
         name: 'id',
@@ -120,11 +120,18 @@ __decorate([
         required: true,
         description: 'Spotify track ID',
     }),
+    (0, swagger_1.ApiParam)({
+        name: 'userId',
+        type: String,
+        required: false,
+        description: 'User ID',
+    }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Track details' }),
     (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Param)('userId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], SpotifyController.prototype, "fetchTrackDetailed", null);
 __decorate([

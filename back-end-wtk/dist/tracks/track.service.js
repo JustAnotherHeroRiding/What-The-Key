@@ -168,6 +168,28 @@ let TrackService = class TrackService {
             isInRecycleBin: !!trackInRecycleBin,
         };
     }
+    async addTrackToHistory(trackId, userId) {
+        const user = await this.ensureUserExists(userId);
+        if (!user) {
+            throw new Error('User not found, track will not be added.');
+        }
+        let track = await this.prisma.track.findUnique({
+            where: { id: trackId },
+        });
+        if (!track) {
+            track = await this.prisma.track.create({
+                data: {
+                    id: trackId,
+                },
+            });
+        }
+        const data = {
+            trackId: trackId,
+            userId: user.id,
+        };
+        const trackHistory = await this.prisma.userTrackHistory.create({ data });
+        return trackHistory;
+    }
 };
 exports.TrackService = TrackService;
 exports.TrackService = TrackService = __decorate([

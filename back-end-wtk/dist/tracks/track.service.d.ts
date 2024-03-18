@@ -1,5 +1,6 @@
 import { PrismaService } from '../services/prisma.service';
 import { Track, User, TrackTab, Prisma, UserTrackHistory } from '@prisma/client';
+import { RecentlyOpenedType } from './tracks.controller';
 export interface TrackConnection {
     id: string;
     libraryUserId: number;
@@ -18,6 +19,6 @@ export declare class TrackService {
         isInLibrary: boolean;
         isInRecycleBin: boolean;
     }>;
-    getOpenedTracksHistory(userId: string): Promise<Track[]>;
+    getOpenedTracksHistory(userId: string, type?: RecentlyOpenedType): Promise<Track[]>;
     addTrackToHistory(trackId: string, userId: string): Promise<UserTrackHistory>;
 }

@@ -168,18 +168,33 @@ let TrackService = class TrackService {
             isInRecycleBin: !!trackInRecycleBin,
         };
     }
-    async getOpenedTracksHistory(userId) {
+    async getOpenedTracksHistory(userId, type = 'latest') {
         const user = await this.ensureUserExists(userId);
         if (!user) {
             throw new Error('User not found, cannot get track history.');
         }
-        const uniqueHistoryEntries = await this.prisma.$queryRaw `
+        if (type === 'latest') {
+            const uniqueHistoryEntries = await this.prisma.$queryRaw `
     SELECT DISTINCT ON ("trackId") * FROM "UserTrackHistory" 
     WHERE "userId" = ${user.id} 
     ORDER BY "trackId", "openedAt" DESC 
     LIMIT 8
   `;
-        return uniqueHistoryEntries;
+            return uniqueHistoryEntries;
+        }
+        else if (type === 'favorites') {
+            const favoriteTracks = await this.prisma.$queryRaw `
+      SELECT "trackId", COUNT(*) as visit_count FROM "UserTrackHistory"
+      WHERE "userId" = ${user.id}
+      GROUP BY "trackId"
+      ORDER BY visit_count DESC
+      LIMIT 8
+    `;
+            return favoriteTracks;
+        }
+        else {
+            throw new Error('Invalid type provided.');
+        }
     }
     async addTrackToHistory(trackId, userId) {
         const user = await this.ensureUserExists(userId);

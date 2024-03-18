@@ -17,6 +17,8 @@ import {
 } from '../utils/types/track-service-types'
 import { apiUrl } from '../utils/consts/production'
 
+export type RecentlyOpenedType = 'latest' | 'favorites'
+
 const useTrackService = () => {
   const session = useContext(SessionContext)
   const queryClient = useQueryClient()
@@ -116,10 +118,13 @@ const useTrackService = () => {
     return libraryData
   }
 
-  const getHistoryTracks = async (): Promise<TrackData[] | ApiErrorResponse> => {
+  const getHistoryTracks = async (type: RecentlyOpenedType): Promise<TrackData[] | ApiErrorResponse> => {
     const queryParams = new URLSearchParams({
       userId: session?.user.id ?? '',
+      type: type,
     }).toString()
+
+    console.log(`${apiUrl}/api/track/getHistory?${queryParams}`)
 
     const responseTrackIds = await fetch(`${apiUrl}/api/track/getHistory?${queryParams}`, {
       method: 'GET',

@@ -1,5 +1,6 @@
 import { UserService } from '../auth/user.service';
 import { TrackService } from './track.service';
+export type RecentlyOpenedType = 'latest' | 'favorites';
 export declare class TrackController {
     private readonly userService;
     private readonly trackService;
@@ -15,7 +16,7 @@ export declare class TrackController {
         recycleBinUserId: number;
     }>;
     deleteTrack(userId: string, trackId: string): Promise<import(".prisma/client").Prisma.BatchPayload>;
-    getHistory(userId: string): Promise<{
+    getHistory(userId: string, type?: RecentlyOpenedType): Promise<{
         id: string;
         libraryUserId: number;
         recycleBinUserId: number;

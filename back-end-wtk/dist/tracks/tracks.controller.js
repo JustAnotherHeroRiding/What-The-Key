@@ -50,9 +50,9 @@ let TrackController = class TrackController {
             throw new common_1.InternalServerErrorException(error.message);
         }
     }
-    async getHistory(userId) {
+    async getHistory(userId, type = 'latest') {
         try {
-            const trackHistory = await this.trackService.getOpenedTracksHistory(userId);
+            const trackHistory = await this.trackService.getOpenedTracksHistory(userId, type);
             return trackHistory;
         }
         catch (error) {
@@ -166,11 +166,18 @@ __decorate([
         required: true,
         description: 'User ID',
     }),
+    (0, swagger_1.ApiQuery)({
+        name: 'type',
+        enum: ['latest', 'favorites'],
+        required: true,
+        description: 'Type of history to get',
+    }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'List of tabs for the track' }),
     (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
     __param(0, (0, common_1.Query)('userId')),
+    __param(1, (0, common_1.Query)('type')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "getHistory", null);
 __decorate([

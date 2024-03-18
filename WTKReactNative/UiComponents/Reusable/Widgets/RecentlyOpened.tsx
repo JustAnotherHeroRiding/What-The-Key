@@ -12,9 +12,9 @@ import { SessionContext } from '../../../utils/Context/Session/SessionContext'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
-import { Sources } from '../../../utils/types/track-service-types'
+import { RecentlyOpenedType } from '../../../services/TrackService'
 
-function RecentlyOpened() {
+function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
   const { getHistoryTracks } = useTrackService()
@@ -25,8 +25,8 @@ function RecentlyOpened() {
     error: historyError,
     refetch: refreshTrackHistory,
   } = useQuery({
-    queryKey: ['trackHistory'],
-    queryFn: () => getHistoryTracks(),
+    queryKey: ['trackHistory', type],
+    queryFn: () => getHistoryTracks(type),
     enabled: !!session?.user.id,
   })
 

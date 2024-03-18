@@ -7,6 +7,7 @@ import {
   Prisma,
   UserTrackHistory,
 } from '@prisma/client';
+import { RecentlyOpenedType } from './tracks.controller';
 
 export interface TrackConnection {
   id: string;
@@ -221,20 +222,38 @@ export class TrackService {
     };
   }
 
-  async getOpenedTracksHistory(userId: string): Promise<Track[]> {
+  async getOpenedTracksHistory(
+    userId: string,
+    type: RecentlyOpenedType = 'latest',
+  ): Promise<Track[]> {
     const user = await this.ensureUserExists(userId);
 
     if (!user) {
       throw new Error('User not found, cannot get track history.');
     }
-
-    const uniqueHistoryEntries = await this.prisma.$queryRaw<Track[]>`
+    // If the type is recent then we sort by openedAt in DESC order
+    // If the type is favorites, we count the number of times they appear in the table,
+    // and then sort and return
+    if (type === 'latest') {
+      const uniqueHistoryEntries = await this.prisma.$queryRaw<Track[]>`
     SELECT DISTINCT ON ("trackId") * FROM "UserTrackHistory" 
     WHERE "userId" = ${user.id} 
     ORDER BY "trackId", "openedAt" DESC 
     LIMIT 8
   `;
-    return uniqueHistoryEntries;
+      return uniqueHistoryEntries;
+    } else if (type === 'favorites') {
+      const favoriteTracks = await this.prisma.$queryRaw<Track[]>`
+      SELECT "trackId", COUNT(*) as visit_count FROM "UserTrackHistory"
+      WHERE "userId" = ${user.id}
+      GROUP BY "trackId"
+      ORDER BY visit_count DESC
+      LIMIT 8
+    `;
+      return favoriteTracks;
+    } else {
+      throw new Error('Invalid type provided.');
+    }
   }
 
   async addTrackToHistory(

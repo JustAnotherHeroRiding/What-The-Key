@@ -22,6 +22,8 @@ import {
   DeleteTrackDto,
 } from './dto';
 
+export type RecentlyOpenedType = 'latest' | 'favorites';
+
 @ApiTags('Track')
 @Controller('track')
 export class TrackController {
@@ -122,12 +124,23 @@ export class TrackController {
     required: true,
     description: 'User ID',
   })
+  @ApiQuery({
+    name: 'type',
+    enum: ['latest', 'favorites'], // This makes it clear that 'type' can only be one of these two values.
+    required: true,
+    description: 'Type of history to get',
+  })
   @ApiResponse({ status: 200, description: 'List of tabs for the track' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
-  async getHistory(@Query('userId') userId: string) {
+  async getHistory(
+    @Query('userId') userId: string,
+    @Query('type') type: RecentlyOpenedType = 'latest',
+  ) {
     try {
-      const trackHistory =
-        await this.trackService.getOpenedTracksHistory(userId);
+      const trackHistory = await this.trackService.getOpenedTracksHistory(
+        userId,
+        type,
+      );
       return trackHistory;
     } catch (error) {
       throw new InternalServerErrorException(error.message);

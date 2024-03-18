@@ -168,7 +168,7 @@ let TrackService = class TrackService {
             isInRecycleBin: !!trackInRecycleBin,
         };
     }
-    async getOpenedTracksHistory(userId, type = 'latest') {
+    async getOpenedTracksHistory(userId, type = 'latest', limit = 8) {
         const user = await this.ensureUserExists(userId);
         if (!user) {
             throw new Error('User not found, cannot get track history.');
@@ -181,7 +181,7 @@ let TrackService = class TrackService {
     WHERE "userId" = ${user.id}
     GROUP BY "trackId")
     ORDER BY "openedAt" DESC
-    LIMIT 8;
+    LIMIT ${limit};
   `;
             return uniqueHistoryEntries;
         }
@@ -191,7 +191,7 @@ let TrackService = class TrackService {
       WHERE "userId" = ${user.id}
       GROUP BY "trackId"
       ORDER BY visit_count DESC
-      LIMIT 8
+      LIMIT ${limit}
     `;
             const convertedTracks = favoriteTracks.map((track) => ({
                 ...track,

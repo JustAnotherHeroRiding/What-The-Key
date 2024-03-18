@@ -55,7 +55,6 @@ export class TrackService {
       track = await this.prisma.track.create({
         data: {
           id: trackId,
-          // You may need to provide other required fields for a new track
         },
       });
     }
@@ -229,7 +228,8 @@ export class TrackService {
   async getOpenedTracksHistory(
     userId: string,
     type: RecentlyOpenedType = 'latest',
-  ): Promise<Track[]> {
+    limit: number = 8,
+  ): Promise<Track[] | UserTrackHistory[]> {
     const user = await this.ensureUserExists(userId);
 
     if (!user) {
@@ -246,7 +246,7 @@ export class TrackService {
     WHERE "userId" = ${user.id}
     GROUP BY "trackId")
     ORDER BY "openedAt" DESC
-    LIMIT 8;
+    LIMIT ${limit};
   `;
       return uniqueHistoryEntries;
     } else if (type === 'favorites') {
@@ -255,7 +255,7 @@ export class TrackService {
       WHERE "userId" = ${user.id}
       GROUP BY "trackId"
       ORDER BY visit_count DESC
-      LIMIT 8
+      LIMIT ${limit}
     `;
 
       // Convert BigInt to String (for visit_count or any other BigInt fields)

@@ -6,7 +6,11 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { SpotifyService } from './spotify.service';
+import {
+  RecommendationSeed,
+  SeedType,
+  SpotifyService,
+} from './spotify.service';
 import {
   ApiOperation,
   ApiParam,
@@ -14,10 +18,14 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { TrackService } from 'src/tracks/track.service';
 @ApiTags('Spotify')
 @Controller('spotify')
 export class SpotifyController {
-  constructor(private readonly spotifyService: SpotifyService) {}
+  constructor(
+    private readonly spotifyService: SpotifyService,
+    private trackService: TrackService,
+  ) {}
 
   @Get('tracks')
   @ApiOperation({
@@ -137,6 +145,52 @@ export class SpotifyController {
   async getRandomGuitarTrack() {
     try {
       return await this.spotifyService.getRandomGuitarTrack();
+    } catch (error) {
+      throw new HttpException(
+        'Error fetching tracks',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get('getRecommendations')
+  @ApiOperation({
+    summary: 'Get reccomendations for new tracks.',
+    description: 'Searches for tracks in Spotify based on the seeds we pass.',
+  })
+  @ApiQuery({
+    name: 'userId',
+    type: String,
+    required: true,
+    description: 'User ID',
+  })
+  @ApiQuery({
+    name: 'type',
+    enum: ['latest', 'favorites'], // This makes it clear that 'type' can only be one of these two values.
+    required: true,
+    description: 'Type of history to get',
+  })
+  @ApiResponse({ status: 200, description: 'Search results' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  async getRecommendations(
+    @Query('type') type: 'latest' | 'favorites',
+    @Query('userId') userId: string,
+  ) {
+    try {
+      const trackHistory = await this.trackService.getOpenedTracksHistory(
+        userId,
+        type,
+        5, // Only 5 seeds can be provided so it is wasteful to fetch more, by default the history fetches 8 tracks
+      );
+      const seedTrackIds: RecommendationSeed[] = trackHistory
+        .slice(0, 5)
+        .map((history) => ({
+          id: history.trackId,
+          type: 'tracks' as SeedType,
+        }));
+      // Fetch recommendations based on these seed track IDs
+      const recommendations = await this.spotifyService.getRecs(seedTrackIds);
+      return recommendations;
     } catch (error) {
       throw new HttpException(
         'Error fetching tracks',

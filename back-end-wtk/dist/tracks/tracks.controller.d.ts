@@ -20,6 +20,11 @@ export declare class TrackController {
         id: string;
         libraryUserId: number;
         recycleBinUserId: number;
+    }[] | {
+        id: number;
+        userId: number;
+        trackId: string;
+        openedAt: Date;
     }[]>;
     addToHistory(trackId: string, userId: string): Promise<{
         id: number;

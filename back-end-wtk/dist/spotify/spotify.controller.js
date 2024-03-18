@@ -16,9 +16,11 @@ exports.SpotifyController = void 0;
 const common_1 = require("@nestjs/common");
 const spotify_service_1 = require("./spotify.service");
 const swagger_1 = require("@nestjs/swagger");
+const track_service_1 = require("../tracks/track.service");
 let SpotifyController = class SpotifyController {
-    constructor(spotifyService) {
+    constructor(spotifyService, trackService) {
         this.spotifyService = spotifyService;
+        this.trackService = trackService;
     }
     async fetchMultipleTracks(trackIds) {
         try {
@@ -55,6 +57,22 @@ let SpotifyController = class SpotifyController {
     async getRandomGuitarTrack() {
         try {
             return await this.spotifyService.getRandomGuitarTrack();
+        }
+        catch (error) {
+            throw new common_1.HttpException('Error fetching tracks', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async getRecommendations(type, userId) {
+        try {
+            const trackHistory = await this.trackService.getOpenedTracksHistory(userId, type, 5);
+            const seedTrackIds = trackHistory
+                .slice(0, 5)
+                .map((history) => ({
+                id: history.trackId,
+                type: 'tracks',
+            }));
+            const recommendations = await this.spotifyService.getRecs(seedTrackIds);
+            return recommendations;
         }
         catch (error) {
             throw new common_1.HttpException('Error fetching tracks', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
@@ -166,6 +184,32 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], SpotifyController.prototype, "getRandomGuitarTrack", null);
 __decorate([
+    (0, common_1.Get)('getRecommendations'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Get reccomendations for new tracks.',
+        description: 'Searches for tracks in Spotify based on the seeds we pass.',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'userId',
+        type: String,
+        required: true,
+        description: 'User ID',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'type',
+        enum: ['latest', 'favorites'],
+        required: true,
+        description: 'Type of history to get',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Search results' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
+    __param(0, (0, common_1.Query)('type')),
+    __param(1, (0, common_1.Query)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], SpotifyController.prototype, "getRecommendations", null);
+__decorate([
     (0, common_1.Get)('genres'),
     (0, swagger_1.ApiOperation)({
         summary: 'Get Genres',
@@ -180,6 +224,7 @@ __decorate([
 exports.SpotifyController = SpotifyController = __decorate([
     (0, swagger_1.ApiTags)('Spotify'),
     (0, common_1.Controller)('spotify'),
-    __metadata("design:paramtypes", [spotify_service_1.SpotifyService])
+    __metadata("design:paramtypes", [spotify_service_1.SpotifyService,
+        track_service_1.TrackService])
 ], SpotifyController);
 //# sourceMappingURL=spotify.controller.js.map

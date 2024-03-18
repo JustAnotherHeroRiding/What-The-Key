@@ -141,6 +141,24 @@ let SpotifyService = class SpotifyService {
         const response = await axios_1.default.get(url, { headers });
         return response.data;
     }
+    async getRecs(seeds) {
+        await this.getAuthToken();
+        const headers = this.createHeaders();
+        const seedsByType = seeds.reduce((acc, seed) => {
+            const key = `seed_${seed.type}`;
+            if (!acc[key]) {
+                acc[key] = [];
+            }
+            acc[key].push(seed.id);
+            return acc;
+        }, {});
+        const queryParams = Object.entries(seedsByType)
+            .map(([key, value]) => `${key}=${value.join(',')}`)
+            .join('&');
+        const url = `https://api.spotify.com/v1/recommendations?${queryParams}&limit=8`;
+        const response = await axios_1.default.get(url, { headers });
+        return response.data;
+    }
     async getGenres() {
         await this.getAuthToken();
         const headers = this.createHeaders();

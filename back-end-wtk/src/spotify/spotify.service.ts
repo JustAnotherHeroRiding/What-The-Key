@@ -7,6 +7,12 @@ import {
   TrackData,
   TrackDataAnalysis,
 } from '../utils/spotify-types';
+
+export type SeedType = 'artists' | 'genres' | 'tracks';
+export interface RecommendationSeed {
+  id: string;
+  type: SeedType;
+}
 @Injectable()
 export class SpotifyService {
   private readonly clientId = process.env.SPOTIFY_CLIENT_ID;
@@ -182,6 +188,33 @@ export class SpotifyService {
     const seedGenres = 'rock,blues,punk,post-punk,alt-rock';
     const url = `https://api.spotify.com/v1/recommendations?&seed_genres=${seedGenres}&limit=1`;
 
+    const response = await axios.get(url, { headers });
+    return response.data;
+  }
+
+  async getRecs(seeds: RecommendationSeed[]): Promise<TrackData> {
+    await this.getAuthToken();
+    const headers = this.createHeaders();
+
+    // Aggregate IDs by type
+    const seedsByType = seeds.reduce(
+      (acc, seed) => {
+        const key = `seed_${seed.type}`; // Construct the key name (e.g., seed_artists)
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(seed.id);
+        return acc;
+      },
+      {} as Record<string, string[]>,
+    );
+
+    // Construct query parameters from aggregated IDs
+    const queryParams = Object.entries(seedsByType)
+      .map(([key, value]) => `${key}=${value.join(',')}`)
+      .join('&');
+
+    const url = `https://api.spotify.com/v1/recommendations?${queryParams}&limit=8`;
     const response = await axios.get(url, { headers });
     return response.data;
   }

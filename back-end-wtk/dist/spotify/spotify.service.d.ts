@@ -1,4 +1,9 @@
 import { SpotifyTracksSearchResult, TrackData } from '../utils/spotify-types';
+export type SeedType = 'artists' | 'genres' | 'tracks';
+export interface RecommendationSeed {
+    id: string;
+    type: SeedType;
+}
 export declare class SpotifyService {
     private readonly clientId;
     private readonly clientSecret;
@@ -14,5 +19,6 @@ export declare class SpotifyService {
     fetchTrackDetailed(trackId: string, userId?: string): Promise<TrackData>;
     searchTracks(searchQuery: string): Promise<SpotifyTracksSearchResult>;
     getRandomGuitarTrack(): Promise<TrackData>;
+    getRecs(seeds: RecommendationSeed[]): Promise<TrackData>;
     getGenres(): Promise<string[]>;
 }

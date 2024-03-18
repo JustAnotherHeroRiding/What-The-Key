@@ -19,6 +19,6 @@ export declare class TrackService {
         isInLibrary: boolean;
         isInRecycleBin: boolean;
     }>;
-    getOpenedTracksHistory(userId: string, type?: RecentlyOpenedType): Promise<Track[]>;
+    getOpenedTracksHistory(userId: string, type?: RecentlyOpenedType, limit?: number): Promise<Track[] | UserTrackHistory[]>;
     addTrackToHistory(trackId: string, userId: string): Promise<UserTrackHistory>;
 }

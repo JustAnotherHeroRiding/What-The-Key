@@ -17,9 +17,13 @@ Add a couple of recently opened tracks so that users can keep playing from where
 - Fetch them sorted by the timestamp, and limit the amount to 8 #DONE 
 - In the home page, make a request and display a horizontal `FlatList` of these tracks #DONE 
 ### Favorites
-- Show a `flatlist` of most opened tracks
+- Show a `flatlist` of most opened tracks #DONE 
+- Added type to reuse the same endpoint for fetching the history #DONE 
+- Used raw sql queries to return the correct data #DONE 
 ### Recommendations
-- Use the current tracks in the library as the seed for recommendations in a horizontal `FlatList` of tracks
+Use the current tracks in the library as the seed for recommendations in a horizontal `FlatList` of tracks. Better yet we can use a mix of the latest and most popular tracks.
+- If the user uses safe mode, we will put the 5 most opened tracks as the 5 track seeds
+- If the user uses adventurous mode, the we will use the last 5 opened tracks
 - Scale/mode/triad/seventh of the day - Pick one at random and when clicking on it, it should open the study page with the fretboard open.
 
 #### Scale description
@@ -28,7 +32,8 @@ Add a couple of recently opened tracks so that users can keep playing from where
 - If a user notices that the key is not correct they can report it
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
 ## Sound
-- Record each note so that users can click play to hear intervals, scales, modes
+- Record each note so that users can click on each fret to play the note and see these scales sound like.
+- Test and see if double click should stop the first clip or play it twice, try to make it feel as if you are playing a real guitar
 
 ## Circle of Fifths
 - Add an option on the study page to display the circle of fifths

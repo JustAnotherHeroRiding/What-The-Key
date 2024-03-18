@@ -1,7 +1,8 @@
 import { useContext } from 'react'
-import { SpotifyTracksSearchResult, TrackData } from '../utils/types/spotify-types'
+import { RandomTrack, SpotifyTracksSearchResult, TrackData } from '../utils/types/spotify-types'
 import { SessionContext } from '../utils/Context/Session/SessionContext'
 import { apiUrl } from '../utils/consts/production'
+import { RecentlyOpenedType } from './TrackService'
 
 interface SearchProps {
   queryString: string
@@ -35,6 +36,25 @@ const useSpotifyService = () => {
     return dataExtended
   }
 
+  const getRecommendations = async (type: RecentlyOpenedType): Promise<RandomTrack> => {
+    const userId = session?.user.id
+    // If the user is not logged in, do not get recs.
+    if (!userId) throw new Error('User not found')
+
+    const params = new URLSearchParams()
+    params.append('type', type)
+    params.append('userId', userId)
+
+    const response = await fetch(`${apiUrl}/api/spotify/getRecommendations?${params.toString()}`)
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Error fetching track')
+    }
+
+    return data as RandomTrack
+  }
+
   const getTrackAnalysis = async (trackId: string): Promise<TrackData> => {
     const userId = session?.user.id
     const queryString = userId ? `?userId=${encodeURIComponent(userId)}` : ''
@@ -54,6 +74,7 @@ const useSpotifyService = () => {
     searchTracks,
     fetchRandomTrack,
     getTrackAnalysis,
+    getRecommendations,
   }
 }
 

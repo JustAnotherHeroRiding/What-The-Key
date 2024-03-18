@@ -27,7 +27,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
 
   const [query, setQuery] = useState('')
 
-  const { searchTracks, fetchRandomTrack } = useSpotifyService()
+  const { searchTracks, fetchRandomTrack, getRecommendations } = useSpotifyService()
   const queryClient = useQueryClient()
 
   const {
@@ -40,6 +40,19 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
     queryFn: () => fetchRandomTrack(),
     enabled: false,
   })
+
+  const {
+    data: recommendedTracks,
+    isFetching: areRecsLoading,
+    error: recsError,
+    refetch: refetchRecs,
+  } = useQuery({
+    queryKey: ['recs'],
+    queryFn: () => getRecommendations('latest'),
+    enabled: !!session?.user.id,
+  })
+
+  console.log(recommendedTracks)
 
   const getRandomScale = () => {
     const scaleType: scaleOrModeOptions = _.sample(scaleOrModeOptionsConst)

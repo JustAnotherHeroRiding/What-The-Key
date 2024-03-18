@@ -13,7 +13,8 @@ Currently when opening the home page we have a search bar, get random track butt
 
 ### Recently Opened
 Add a couple of recently opened tracks so that users can keep playing from where they left off
-- Make an endpoint where we can fetch the last 8 tracks opened by a user
+- Make an endpoint where we can fetch the last 8 tracks opened by a user #DONE 
+- Fetch them sorted by the timestamp, and limit the amount to 8
 - In the home page, make a request and display a horizontal `FlatList` of these tracks
 ### Favorites
 - Show a `flatlist` of most opened tracks

@@ -173,14 +173,13 @@ let TrackService = class TrackService {
         if (!user) {
             throw new Error('User not found, cannot get track history.');
         }
-        return this.prisma.userTrackHistory
-            .findMany({
-            where: {
-                userId: user.id,
-            },
-            include: { track: true },
-        })
-            .then((results) => results.map((r) => r.track));
+        const uniqueHistoryEntries = await this.prisma.$queryRaw `
+    SELECT DISTINCT ON ("trackId") * FROM "UserTrackHistory" 
+    WHERE "userId" = ${user.id} 
+    ORDER BY "trackId", "openedAt" DESC 
+    LIMIT 8
+  `;
+        return uniqueHistoryEntries;
     }
     async addTrackToHistory(trackId, userId) {
         const user = await this.ensureUserExists(userId);

@@ -1,4 +1,2 @@
-const production = false;
-export const apiUrl = production
-  ? 'https://what-the-key.vercel.app/api'
-  : 'http://localhost:3000';
+const production = true
+export const apiUrl = production ? 'https://what-the-key.vercel.app' : 'http://localhost:3000'

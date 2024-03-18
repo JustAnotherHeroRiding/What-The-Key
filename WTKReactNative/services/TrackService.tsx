@@ -1,7 +1,7 @@
 // services/trackService.js
 import { useContext } from 'react'
 import { SessionContext } from '../utils/Context/Session/SessionContext'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Toast from 'react-native-root-toast'
 import { TrackData } from '../utils/types/spotify-types'
 import {
@@ -15,13 +15,14 @@ import {
   Tab,
   isTrackAdded,
 } from '../utils/types/track-service-types'
+import { apiUrl } from '../utils/consts/production'
 
 const useTrackService = () => {
   const session = useContext(SessionContext)
   const queryClient = useQueryClient()
 
   const addTrack = async ({ trackId, source }: addTrackProps): Promise<TrackConnection> => {
-    const response = await fetch('https://what-the-key.vercel.app/api/track/addTrack', {
+    const response = await fetch(`${apiUrl}/api/track/addTrack`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ const useTrackService = () => {
       source: location,
     }).toString()
 
-    const responseTrackIds = await fetch(`https://what-the-key.vercel.app/api/track/getTracks?${queryParams}`, {
+    const responseTrackIds = await fetch(`${apiUrl}/api/track/getTracks?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -102,7 +103,7 @@ const useTrackService = () => {
 
     const trackIdsJoined = trackIds.map((track: { id: any }) => track.id).join(',')
     const spotifyResponse = await fetch(
-      `https://what-the-key.vercel.app/api/spotify/tracks?ids=${trackIdsJoined}
+      `${apiUrl}/api/spotify/tracks?ids=${trackIdsJoined}
           `,
       {
         method: 'GET',
@@ -117,10 +118,10 @@ const useTrackService = () => {
 
   const getHistoryTracks = async (): Promise<TrackData[] | ApiErrorResponse> => {
     const queryParams = new URLSearchParams({
-      userId: session?.user.id ?? 'no user',
+      userId: session?.user.id ?? '',
     }).toString()
 
-    const responseTrackIds = await fetch(`https://what-the-key.vercel.app/api/track/getHistory?${queryParams}`, {
+    const responseTrackIds = await fetch(`${apiUrl}/api/track/getHistory?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -132,9 +133,9 @@ const useTrackService = () => {
       throw new Error(trackIds.message || 'Error fetching track ids from database')
     }
 
-    const trackIdsJoined = trackIds.map((track: { id: any }) => track.id).join(',')
+    const trackIdsJoined = trackIds.map((track: { trackId: string }) => track.trackId).join(',')
     const spotifyResponse = await fetch(
-      `https://what-the-key.vercel.app/api/spotify/tracks?ids=${trackIdsJoined}
+      `${apiUrl}/api/spotify/tracks?ids=${trackIdsJoined}
           `,
       {
         method: 'GET',
@@ -153,7 +154,7 @@ const useTrackService = () => {
       trackId: trackId,
     }
 
-    const deleteRequest = await fetch(`https://what-the-key.vercel.app/api/track/deleteTrack`, {
+    const deleteRequest = await fetch(`${apiUrl}/api/track/deleteTrack`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -202,7 +203,7 @@ const useTrackService = () => {
   })
 
   const addTab = async ({ trackId, tabUrl }: addTabProps): Promise<TrackConnection> => {
-    const response = await fetch('https://what-the-key.vercel.app/api/track/addTabs', {
+    const response = await fetch(`${apiUrl}/api/track/addTabs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -256,7 +257,7 @@ const useTrackService = () => {
       trackId: trackId,
     }).toString()
 
-    const tabRes = await fetch(`https://what-the-key.vercel.app/api/track/getTabs?${queryParams}`, {
+    const tabRes = await fetch(`${apiUrl}/api/track/getTabs?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -276,7 +277,7 @@ const useTrackService = () => {
       trackId: trackId,
     }).toString()
 
-    const addedStatusRes = await fetch(`https://what-the-key.vercel.app/api/track/isTrackAdded?${queryParams}`, {
+    const addedStatusRes = await fetch(`${apiUrl}/api/track/isTrackAdded?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

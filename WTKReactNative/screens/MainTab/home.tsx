@@ -20,7 +20,7 @@ import {
   scaleOrModeOptions,
   scaleOrModeOptionsConst,
 } from '../../utils/consts/scales-consts-types'
-import useTrackService from '../../services/TrackService'
+import RecentlyOpened from '../../UiComponents/Reusable/Widgets/RecentlyOpened'
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const session = useContext(SessionContext)
@@ -28,20 +28,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const [query, setQuery] = useState('')
 
   const { searchTracks, fetchRandomTrack } = useSpotifyService()
-  const { getHistoryTracks } = useTrackService()
   const queryClient = useQueryClient()
-
-  const {
-    data: trackHistory,
-    isFetching: isHistoryLoading,
-    error: historyError,
-    refetch: refreshTrackHistory,
-  } = useQuery({
-    queryKey: ['trackHistory'],
-    queryFn: () => getHistoryTracks(),
-  })
-
-  console.log(trackHistory)
 
   const {
     data: randomTrack,
@@ -141,6 +128,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         style={tw.style(`border border-cream p-4 rounded-lg w-[95%] mt-[3%]`)}
       >
         <Text style={tw.style(`text-slate-100 text-2xl font-bold`)}>Recently Opened</Text>
+        <RecentlyOpened />
       </LinearGradient>
       <LinearGradient
         colors={['#27272a', '#52525b']}

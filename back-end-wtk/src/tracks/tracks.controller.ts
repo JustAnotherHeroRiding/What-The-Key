@@ -134,7 +134,7 @@ export class TrackController {
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async getHistory(
     @Query('userId') userId: string,
-    @Query('type') type: RecentlyOpenedType = 'latest',
+    @Query('type') type: RecentlyOpenedType,
   ) {
     try {
       const trackHistory = await this.trackService.getOpenedTracksHistory(

@@ -50,7 +50,7 @@ let TrackController = class TrackController {
             throw new common_1.InternalServerErrorException(error.message);
         }
     }
-    async getHistory(userId, type = 'latest') {
+    async getHistory(userId, type) {
         try {
             const trackHistory = await this.trackService.getOpenedTracksHistory(userId, type);
             return trackHistory;

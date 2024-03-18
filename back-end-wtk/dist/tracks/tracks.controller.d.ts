@@ -16,7 +16,7 @@ export declare class TrackController {
         recycleBinUserId: number;
     }>;
     deleteTrack(userId: string, trackId: string): Promise<import(".prisma/client").Prisma.BatchPayload>;
-    getHistory(userId: string, type?: RecentlyOpenedType): Promise<{
+    getHistory(userId: string, type: RecentlyOpenedType): Promise<{
         id: string;
         libraryUserId: number;
         recycleBinUserId: number;

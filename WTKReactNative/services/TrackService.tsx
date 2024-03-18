@@ -137,8 +137,8 @@ const useTrackService = () => {
     if (!responseTrackIds.ok) {
       throw new Error(trackIds.message || 'Error fetching track ids from database')
     }
-
-    const trackIdsJoined = trackIds.map((track: { trackId: string }) => track.trackId).join(',')
+    // If the type is favorites, a visit_count field will also be returned
+    const trackIdsJoined = trackIds.map((track: { trackId: string; visit_count?: number }) => track.trackId).join(',')
     const spotifyResponse = await fetch(
       `${apiUrl}/api/spotify/tracks?ids=${trackIdsJoined}
           `,

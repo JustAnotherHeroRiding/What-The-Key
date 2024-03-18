@@ -190,7 +190,11 @@ let TrackService = class TrackService {
       ORDER BY visit_count DESC
       LIMIT 8
     `;
-            return favoriteTracks;
+            const convertedTracks = favoriteTracks.map((track) => ({
+                ...track,
+                visit_count: track.visit_count.toString(),
+            }));
+            return convertedTracks;
         }
         else {
             throw new Error('Invalid type provided.');

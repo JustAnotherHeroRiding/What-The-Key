@@ -15,6 +15,10 @@ export interface TrackConnection {
   recycleBinUserId: number;
 }
 
+interface TrackWithVisitCount extends Track {
+  visit_count: string; // Assuming visit_count is converted to a string
+}
+
 @Injectable()
 export class TrackService {
   constructor(private prisma: PrismaService) {}
@@ -243,14 +247,21 @@ export class TrackService {
   `;
       return uniqueHistoryEntries;
     } else if (type === 'favorites') {
-      const favoriteTracks = await this.prisma.$queryRaw<Track[]>`
+      const favoriteTracks = await this.prisma.$queryRaw<TrackWithVisitCount[]>`
       SELECT "trackId", COUNT(*) as visit_count FROM "UserTrackHistory"
       WHERE "userId" = ${user.id}
       GROUP BY "trackId"
       ORDER BY visit_count DESC
       LIMIT 8
     `;
-      return favoriteTracks;
+
+      // Convert BigInt to String (for visit_count or any other BigInt fields)
+      const convertedTracks = favoriteTracks.map((track) => ({
+        ...track,
+        visit_count: track.visit_count.toString(),
+      }));
+
+      return convertedTracks;
     } else {
       throw new Error('Invalid type provided.');
     }

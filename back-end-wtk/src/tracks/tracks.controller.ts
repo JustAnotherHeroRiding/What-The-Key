@@ -111,23 +111,24 @@ export class TrackController {
     }
   }
 
-  @Post('addTabs')
-  @ApiOperation({ summary: 'Add Tabs', description: 'Add tabs to a track.' })
-  @ApiBody({ type: AddTabsDto })
-  @ApiResponse({ status: 200, description: 'Tabs added to track' })
+  @Get('getHistory')
+  @ApiOperation({
+    summary: 'Get History',
+    description: 'Get the opened tracks history.',
+  })
+  @ApiQuery({
+    name: 'userId',
+    type: String,
+    required: true,
+    description: 'User ID',
+  })
+  @ApiResponse({ status: 200, description: 'List of tabs for the track' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
-  async addTabs(
-    @Body('trackId') trackId: string,
-    @Body('userId') userId: string,
-    @Body('tabUrl') tabUrl: string,
-  ) {
+  async getHistory(@Query('userId') userId: string) {
     try {
-      const track = await this.trackService.addTabToTrack(
-        trackId,
-        userId,
-        tabUrl,
-      );
-      return track;
+      const trackHistory =
+        await this.trackService.getOpenedTracksHistory(userId);
+      return trackHistory;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
@@ -147,6 +148,28 @@ export class TrackController {
   ) {
     try {
       const track = await this.trackService.addTrackToHistory(trackId, userId);
+      return track;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
+  @Post('addTabs')
+  @ApiOperation({ summary: 'Add Tabs', description: 'Add tabs to a track.' })
+  @ApiBody({ type: AddTabsDto })
+  @ApiResponse({ status: 200, description: 'Tabs added to track' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  async addTabs(
+    @Body('trackId') trackId: string,
+    @Body('userId') userId: string,
+    @Body('tabUrl') tabUrl: string,
+  ) {
+    try {
+      const track = await this.trackService.addTabToTrack(
+        trackId,
+        userId,
+        tabUrl,
+      );
       return track;
     } catch (error) {
       throw new InternalServerErrorException(error.message);

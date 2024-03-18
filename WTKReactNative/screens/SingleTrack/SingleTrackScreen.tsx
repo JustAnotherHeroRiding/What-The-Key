@@ -13,7 +13,6 @@ import { TrackData } from '../../utils/types/spotify-types'
 import TrackTabModal from '../../UiComponents/Reusable/TrackAdjacent/TrackTabModal'
 import useTrackService from '../../services/TrackService'
 import { SingleTrackOverviewNavigationProp } from '../../utils/types/nav-types'
-import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 
 function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavigationProp }) {
   const route = useRoute()
@@ -38,7 +37,6 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
     data: track,
     error: trackError,
     isFetching: isFetchingTrack,
-    refetch,
   } = useQuery({
     queryKey: ['SingleTrack', trackId],
     queryFn: () => getTrackAnalysis(trackId),
@@ -62,6 +60,10 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
     return true
   }
 
+  if (trackError || trackStatusError) {
+    return <NotFoundComponent />
+  }
+
   return (
     <LinearGradient
       colors={['#27272a', '#52525b']}
@@ -69,7 +71,6 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
       end={{ x: 0, y: 0 }}
       style={tw.style(`flex-grow w-full opacity-100`)}
     >
-      <CustomButton title='refetch' onPress={() => refetch()}></CustomButton>
       {isFetchingTrack || isFetchingTrackStatus ? (
         <LoadingSpinner />
       ) : track && trackAddedStatus ? (

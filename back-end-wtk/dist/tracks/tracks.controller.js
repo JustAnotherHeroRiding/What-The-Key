@@ -50,10 +50,10 @@ let TrackController = class TrackController {
             throw new common_1.InternalServerErrorException(error.message);
         }
     }
-    async addTabs(trackId, userId, tabUrl) {
+    async getHistory(userId) {
         try {
-            const track = await this.trackService.addTabToTrack(trackId, userId, tabUrl);
-            return track;
+            const trackHistory = await this.trackService.getOpenedTracksHistory(userId);
+            return trackHistory;
         }
         catch (error) {
             throw new common_1.InternalServerErrorException(error.message);
@@ -62,6 +62,15 @@ let TrackController = class TrackController {
     async addToHistory(trackId, userId) {
         try {
             const track = await this.trackService.addTrackToHistory(trackId, userId);
+            return track;
+        }
+        catch (error) {
+            throw new common_1.InternalServerErrorException(error.message);
+        }
+    }
+    async addTabs(trackId, userId, tabUrl) {
+        try {
+            const track = await this.trackService.addTabToTrack(trackId, userId, tabUrl);
             return track;
         }
         catch (error) {
@@ -146,18 +155,24 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "deleteTrack", null);
 __decorate([
-    (0, common_1.Post)('addTabs'),
-    (0, swagger_1.ApiOperation)({ summary: 'Add Tabs', description: 'Add tabs to a track.' }),
-    (0, swagger_1.ApiBody)({ type: dto_1.AddTabsDto }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Tabs added to track' }),
+    (0, common_1.Get)('getHistory'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Get History',
+        description: 'Get the opened tracks history.',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'userId',
+        type: String,
+        required: true,
+        description: 'User ID',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of tabs for the track' }),
     (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
-    __param(0, (0, common_1.Body)('trackId')),
-    __param(1, (0, common_1.Body)('userId')),
-    __param(2, (0, common_1.Body)('tabUrl')),
+    __param(0, (0, common_1.Query)('userId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], TrackController.prototype, "addTabs", null);
+], TrackController.prototype, "getHistory", null);
 __decorate([
     (0, common_1.Post)('addHistory'),
     (0, swagger_1.ApiOperation)({
@@ -173,6 +188,19 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "addToHistory", null);
+__decorate([
+    (0, common_1.Post)('addTabs'),
+    (0, swagger_1.ApiOperation)({ summary: 'Add Tabs', description: 'Add tabs to a track.' }),
+    (0, swagger_1.ApiBody)({ type: dto_1.AddTabsDto }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Tabs added to track' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
+    __param(0, (0, common_1.Body)('trackId')),
+    __param(1, (0, common_1.Body)('userId')),
+    __param(2, (0, common_1.Body)('tabUrl')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:returntype", Promise)
+], TrackController.prototype, "addTabs", null);
 __decorate([
     (0, common_1.Get)('getTabs'),
     (0, swagger_1.ApiOperation)({

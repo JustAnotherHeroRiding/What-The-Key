@@ -20,6 +20,7 @@ import {
   scaleOrModeOptions,
   scaleOrModeOptionsConst,
 } from '../../utils/consts/scales-consts-types'
+import useTrackService from '../../services/TrackService'
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const session = useContext(SessionContext)
@@ -27,7 +28,20 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const [query, setQuery] = useState('')
 
   const { searchTracks, fetchRandomTrack } = useSpotifyService()
+  const { getHistoryTracks } = useTrackService()
   const queryClient = useQueryClient()
+
+  const {
+    data: trackHistory,
+    isFetching: isHistoryLoading,
+    error: historyError,
+    refetch: refreshTrackHistory,
+  } = useQuery({
+    queryKey: ['trackHistory'],
+    queryFn: () => getHistoryTracks(),
+  })
+
+  console.log(trackHistory)
 
   const {
     data: randomTrack,
@@ -43,7 +57,6 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const getRandomScale = () => {
     const scaleType: scaleOrModeOptions = _.sample(scaleOrModeOptionsConst)
     const randomScale = scaleType === 'mode' ? _.sample(allModeNames) : _.sample(allScaleNames)
-    const uniqueKey = Date.now().toString()
 
     navigation.navigate('Study', {
       preselectedType: scaleType,

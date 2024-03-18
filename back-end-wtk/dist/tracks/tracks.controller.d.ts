@@ -15,17 +15,22 @@ export declare class TrackController {
         recycleBinUserId: number;
     }>;
     deleteTrack(userId: string, trackId: string): Promise<import(".prisma/client").Prisma.BatchPayload>;
-    addTabs(trackId: string, userId: string, tabUrl: string): Promise<{
-        id: number;
-        userId: number;
-        trackId: string;
-        tabUrl: string;
-    }>;
+    getHistory(userId: string): Promise<{
+        id: string;
+        libraryUserId: number;
+        recycleBinUserId: number;
+    }[]>;
     addToHistory(trackId: string, userId: string): Promise<{
         id: number;
         userId: number;
         trackId: string;
         openedAt: Date;
+    }>;
+    addTabs(trackId: string, userId: string, tabUrl: string): Promise<{
+        id: number;
+        userId: number;
+        trackId: string;
+        tabUrl: string;
     }>;
     getTabs(trackId: string, userId: string): Promise<{
         id: number;

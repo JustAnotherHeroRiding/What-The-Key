@@ -115,6 +115,38 @@ const useTrackService = () => {
     return libraryData
   }
 
+  const getHistoryTracks = async (): Promise<TrackData[] | ApiErrorResponse> => {
+    const queryParams = new URLSearchParams({
+      userId: session?.user.id ?? 'no user',
+    }).toString()
+
+    const responseTrackIds = await fetch(`https://what-the-key.vercel.app/api/track/getHistory?${queryParams}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const trackIds = await responseTrackIds.json()
+
+    if (!responseTrackIds.ok) {
+      throw new Error(trackIds.message || 'Error fetching track ids from database')
+    }
+
+    const trackIdsJoined = trackIds.map((track: { id: any }) => track.id).join(',')
+    const spotifyResponse = await fetch(
+      `https://what-the-key.vercel.app/api/spotify/tracks?ids=${trackIdsJoined}
+          `,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+    const trackHistory: TrackData[] = await spotifyResponse.json()
+    return trackHistory
+  }
+
   const deleteTrack = async ({ trackId }: deleteTrackProps) => {
     const requestBody = {
       userId: session?.user.id ?? 'no user',
@@ -265,6 +297,7 @@ const useTrackService = () => {
     addTabMut,
     getTabs,
     isTrackAdded,
+    getHistoryTracks,
     isAddingTab,
     isDeletingTrack,
     isAddingTrack,

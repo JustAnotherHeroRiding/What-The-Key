@@ -175,10 +175,13 @@ let TrackService = class TrackService {
         }
         if (type === 'latest') {
             const uniqueHistoryEntries = await this.prisma.$queryRaw `
-    SELECT DISTINCT ON ("trackId") * FROM "UserTrackHistory" 
-    WHERE "userId" = ${user.id} 
-    ORDER BY "trackId", "openedAt" DESC 
-    LIMIT 8
+    SELECT * FROM "UserTrackHistory"
+    WHERE "id" IN (
+    SELECT MAX("id") FROM "UserTrackHistory"
+    WHERE "userId" = ${user.id}
+    GROUP BY "trackId")
+    ORDER BY "openedAt" DESC
+    LIMIT 8;
   `;
             return uniqueHistoryEntries;
         }

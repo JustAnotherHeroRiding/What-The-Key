@@ -69,15 +69,15 @@ function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
             `flex-col border border-cream rounded-md shadow-sm shadow-zinc-700 p-1 items-center justify-center gap-2 w-40`,
           )}
         >
-          <Text style={tw.style(`text-sm text-white text-center font-bold`)}>{item.track.name}</Text>
-          <Text style={tw.style(`text-xs text-artistGray text-center`)}>{item.track.artists[0].name}</Text>
           <Image
             source={{ uri: item.track.album.images[0].url }}
-            style={tw.style(`mb-2 mt-auto w-36 h-36 rounded-md border border-cream`, {
+            style={tw.style(`mb-auto mt-2 w-36 h-36 rounded-md border border-cream`, {
               objectFit: 'contain',
             })}
             alt={item.track.name}
           />
+          <Text style={tw.style(`text-sm text-white text-center font-bold`)}>{item.track.name}</Text>
+          <Text style={tw.style(`text-xs text-artistGray text-center`)}>{item.track.artists[0].name}</Text>
         </TouchableOpacity>
       )}
     />

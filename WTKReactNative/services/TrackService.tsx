@@ -124,8 +124,6 @@ const useTrackService = () => {
       type: type,
     }).toString()
 
-    console.log(`${apiUrl}/api/track/getHistory?${queryParams}`)
-
     const responseTrackIds = await fetch(`${apiUrl}/api/track/getHistory?${queryParams}`, {
       method: 'GET',
       headers: {

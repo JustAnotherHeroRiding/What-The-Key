@@ -49,8 +49,6 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList['SingleTrackNavigator']>>()
 
-  console.log(track)
-
   return (
     <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
       <Text style={tw.style(`text-white text-2xl w-[90%] text-center`, { fontFamily: 'figtree-bold' })}>

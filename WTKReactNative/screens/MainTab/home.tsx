@@ -125,16 +125,18 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-4 rounded-lg w-[95%] mt-[3%]`)}
+        style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
       >
-        <Text style={tw.style(`text-slate-100 text-2xl font-bold`)}>Recently Opened</Text>
-        <RecentlyOpened />
+        <View style={tw.style(`gap-2`)}>
+          <Text style={tw.style(`text-slate-100 text-2xl font-bold`)}>Recently Opened</Text>
+          <RecentlyOpened />
+        </View>
       </LinearGradient>
       <LinearGradient
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-4 rounded-lg w-[95%] mt-[3%]`)}
+        style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
       >
         <Text style={tw.style(`text-slate-100 text-2xl font-bold`)}>Suggested Theory</Text>
       </LinearGradient>
@@ -142,7 +144,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-4 rounded-lg w-[95%] mt-[3%]`)}
+        style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
       >
         <Text style={tw.style(`text-slate-100 text-2xl font-bold`)}>Songs to Learn</Text>
       </LinearGradient>

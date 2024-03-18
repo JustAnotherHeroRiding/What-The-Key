@@ -45,6 +45,7 @@
       "eas": {
         "projectId": "af11d910-f02c-4039-9d8a-8e660b72c08b"
       }
-    }
+    },
+    "packagerOpts": { "url": "http://localhost:3000" }
   }
 }

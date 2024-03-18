@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { View, Text, FlatList, Image, Dimensions } from 'react-native'
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import { TrackData } from '../../../utils/types/spotify-types'
 import { useQuery } from '@tanstack/react-query'
 import useTrackService from '../../../services/TrackService'
@@ -9,11 +9,14 @@ import LoadingSpinner from '../Common/LoadingSpinner'
 import NotFoundComponent from '../Common/NotFound'
 import { CustomButton } from '../Common/CustomButtom'
 import { SessionContext } from '../../../utils/Context/Session/SessionContext'
-
-const screen = Dimensions.get('window')
-const imageSize = screen.width * 0.1
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../../../utils/types/nav-types'
+import { Sources } from '../../../utils/types/track-service-types'
 
 function RecentlyOpened() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
   const { getHistoryTracks } = useTrackService()
   const session = useContext(SessionContext)
   const {
@@ -27,7 +30,7 @@ function RecentlyOpened() {
     enabled: !!session?.user.id,
   })
 
-  /*   if (isHistoryLoading) return <LoadingSpinner />
+  if (isHistoryLoading) return <LoadingSpinner />
   if (historyError || !trackHistory)
     return (
       <View>
@@ -40,9 +43,7 @@ function RecentlyOpened() {
         />
         <NotFoundComponent />
       </View>
-    ) */
-
-  //console.log(trackHistory)
+    )
 
   return (
     <FlatList
@@ -53,17 +54,31 @@ function RecentlyOpened() {
       keyExtractor={(item, index) => index.toString()}
       ItemSeparatorComponent={() => renderSeparator(2)}
       renderItem={({ item, index }) => (
-        <View style={tw.style(`flex flex-col items-center justify-center gap-4`)}>
-          <Text style={tw.style(`text-xl text-white text-center font-medium`)}>{item.track.name}</Text>
-          <Text style={tw.style(`text-xl text-artistGray text-center`)}>{item.track.artists[0].name}</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('SingleTrackNavigator', {
+              /* @ts-ignore */
+              screen: 'SingleTrackOverview',
+              params: {
+                trackId: item.track.id,
+                src: 'home',
+              },
+            })
+          }
+          style={tw.style(
+            `flex-col border border-cream rounded-md shadow-sm shadow-zinc-700 p-1 items-center justify-center gap-2 w-40`,
+          )}
+        >
+          <Text style={tw.style(`text-sm text-white text-center font-bold`)}>{item.track.name}</Text>
+          <Text style={tw.style(`text-xs text-artistGray text-center`)}>{item.track.artists[0].name}</Text>
           <Image
             source={{ uri: item.track.album.images[0].url }}
-            style={tw.style(`mb-4 w-[${imageSize}] h-[${imageSize}] rounded-md border border-cream`, {
+            style={tw.style(`mb-2 mt-auto w-36 h-36 rounded-md border border-cream`, {
               objectFit: 'contain',
             })}
             alt={item.track.name}
           />
-        </View>
+        </TouchableOpacity>
       )}
     />
   )

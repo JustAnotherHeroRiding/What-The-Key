@@ -20,9 +20,8 @@ import {
   scaleOrModeOptions,
   scaleOrModeOptionsConst,
 } from '../../utils/consts/scales-consts-types'
-import RecentlyOpened from '../../UiComponents/Reusable/Widgets/RecentlyOpened'
 import TrackRecommendations from '../../UiComponents/Reusable/Widgets/TrackRecommendations'
-import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
+import TrackHistory from '../../UiComponents/Reusable/Widgets/TrackHistory'
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const session = useContext(SessionContext)
@@ -131,7 +130,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       >
         <View style={tw.style(`gap-2`)}>
           <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Recently Opened</Text>
-          <RecentlyOpened type='latest' />
+          <TrackHistory type='latest' />
         </View>
       </LinearGradient>
       <LinearGradient
@@ -142,7 +141,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       >
         <View style={tw.style(`gap-2`)}>
           <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Favorites</Text>
-          <RecentlyOpened type='favorites' />
+          <TrackHistory type='favorites' />
         </View>
       </LinearGradient>
       <LinearGradient

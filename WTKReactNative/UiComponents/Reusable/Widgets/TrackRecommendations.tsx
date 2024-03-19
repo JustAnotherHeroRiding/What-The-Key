@@ -31,6 +31,8 @@ function TrackRecommendations() {
     enabled: !!session?.user.id,
   })
 
+  if (areRecsLoading) return <LoadingSpinner />
+
   if (recsError || !recommendedTracks)
     return (
       <View>
@@ -48,21 +50,16 @@ function TrackRecommendations() {
     <>
       <View style={tw.style(`flex-row gap-2 justify-center p-2`)}>
         <CustomButton
-          title='New'
-          btnStyle={tw.style(`${recommendationType === 'latest' ? 'bg-beigeCustom' : ''}`)}
-          onPress={() => setRecommendationType('latest')}
-        />
-        <CustomButton
           title='Safe'
           btnStyle={tw.style(`${recommendationType === 'favorites' ? 'bg-beigeCustom' : ''}`)}
           onPress={() => setRecommendationType('favorites')}
         />
+        <CustomButton
+          title='New'
+          btnStyle={tw.style(`${recommendationType === 'latest' ? 'bg-beigeCustom' : ''}`)}
+          onPress={() => setRecommendationType('latest')}
+        />
       </View>
-      {areRecsLoading && (
-        <View style={tw.style(`absolute inset-0 z-10 justify-center items-center`)}>
-          <LoadingSpinner />
-        </View>
-      )}
 
       <FlatList
         horizontal={true}

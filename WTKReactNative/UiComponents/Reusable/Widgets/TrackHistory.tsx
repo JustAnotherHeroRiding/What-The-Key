@@ -14,7 +14,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
 import { RecentlyOpenedType } from '../../../services/TrackService'
 
-function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
+function TrackHistory({ type }: { type: RecentlyOpenedType }) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
   const { getHistoryTracks } = useTrackService()
@@ -29,6 +29,8 @@ function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
     queryFn: () => getHistoryTracks(type),
     enabled: !!session?.user.id,
   })
+
+  if (isHistoryLoading) return <LoadingSpinner />
 
   if (historyError || !trackHistory)
     return (
@@ -45,11 +47,6 @@ function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
 
   return (
     <>
-      {isHistoryLoading && (
-        <View style={tw.style(`absolute inset-0 z-10 justify-center items-center`)}>
-          <LoadingSpinner />
-        </View>
-      )}
       <FlatList
         horizontal={true}
         style={tw.style('flex-row')}
@@ -89,4 +86,4 @@ function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
   )
 }
 
-export default RecentlyOpened
+export default TrackHistory

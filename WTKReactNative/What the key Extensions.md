@@ -28,6 +28,7 @@ Use the current tracks in the library as the seed for recommendations in a horiz
 - Scale/mode/triad/seventh of the day - Pick one at random and when clicking on it, it should open the study page with the fretboard open.
 
 #### Scale description
+Each scale object already has a short description, but we have to find it as we are only using an array of string/mode names
 - Let's add a short description for each scale
 ## Incorrect keys
 - If a user notices that the key is not correct they can report it

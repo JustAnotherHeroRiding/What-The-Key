@@ -2,11 +2,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { Sources, dataSource } from './track-service-types'
 import { TrackData } from './spotify-types'
-import { ModeNames, ScaleName, scaleOrModeOptions } from '../consts/scales-consts-types'
+import { ModeNames, ScaleName, extendedScaleType } from '../consts/scales-consts-types'
 
 export interface StudyScreenProps {
-  preselectedType?: scaleOrModeOptions
-  preselectedScale?: ScaleName | ModeNames
+  preselectedType?: extendedScaleType
+  preselectedScale?: ScaleName | ModeNames | 'triad' | 'seventh'
 }
 
 export type RootStackParamList = {

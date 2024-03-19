@@ -10,6 +10,8 @@ import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 import { capitalizeFirstLetter } from '../../utils/text-formatting'
 import {
+  ModeNames,
+  ScaleName,
   extendedScaleType,
   scaleNotesAndIntervals,
   scaleOrModeOptionsConst,
@@ -19,7 +21,7 @@ import ModeSelector from '../../UiComponents/Reusable/Common/ModeSelector'
 import TwelveBarsSelector from '../../UiComponents/Reusable/Common/TwelveBarsSelector'
 import colors from '../../assets/colors'
 import { RouteProp, useRoute } from '@react-navigation/native'
-import { selectScale } from '../../utils/scales-and-modes'
+import { selectScale, selectSeventh, selectTriads } from '../../utils/scales-and-modes'
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
   const router = useRoute<RouteProp<RootStackParamList['MainTab']>>()
@@ -30,10 +32,22 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
   const [scaleMode, setScaleMode] = useState<Mode | null>(null)
   const [twelveBarsActive, setTwelveBarsActive] = useState(false)
+  console.log(params)
 
   useEffect(() => {
     if (params && params.preselectedType && params.preselectedScale) {
-      selectScale(params.preselectedType, setSelectedOption, NOTES[0], params.preselectedScale)
+      if (params.preselectedType === 'scale' || params.preselectedType === 'mode') {
+        selectScale(
+          params.preselectedType,
+          setSelectedOption,
+          NOTES[0],
+          params.preselectedScale as ScaleName | ModeNames,
+        )
+      } else if (params.preselectedScale === 'seventh') {
+        selectSeventh('Major', setSelectedOption, selectedKey)
+      } else if (params.preselectedScale === 'triad') {
+        selectTriads('Major', setSelectedOption, selectedKey)
+      }
       setScaleType(params.preselectedType)
     }
   }, [params])

@@ -155,12 +155,12 @@ export const MODES_DATA: ScalesAndModesData = {
 
 export const TRIAD_SEVENTH: ScalesAndModesData = {
   triad: {
-    name: 'Triad',
+    name: 'triad',
     description: 'A three-note chord containing only the most essential notes that define it.',
     intervals: [0, 4, 7],
   },
   seventh: {
-    name: 'Seventh',
+    name: 'seventh',
     description: 'A three or four note chord commonly used in twelve bar blues.',
     intervals: [0, 4, 7, 10], // Root, Major third, (Perfect fifth?) m7
   },

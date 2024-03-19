@@ -1,26 +1,21 @@
-import React, { useState } from 'react'
-import { FlatList, Touchable, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { TouchableOpacity, View } from 'react-native'
 import { Text } from 'react-native-elements'
 import {
   SCALES_DATA,
   MODES_DATA,
   TRIAD_SEVENTH,
-  ScaleData,
   scaleNotesAndIntervals,
   scaleNotesAndIntervalsExpanded,
   ScaleName,
   ModeNames,
+  allScaleNames,
 } from '../../../utils/consts/scales-consts-types'
-import { CustomButton } from '../Common/CustomButtom'
 import tw from '../../../utils/config/tailwindRN'
-import {
-  getScaleOrModeNotes,
-  getSeventhNotes,
-  getTriadNotes,
-  selectSeventh,
-  selectTriads,
-} from '../../../utils/scales-and-modes'
-import { renderSeparator } from '../Common/FlatListHelpers'
+import { getScaleOrModeNotes, getSeventhNotes, getTriadNotes } from '../../../utils/scales-and-modes'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../../../utils/types/nav-types'
 
 const allTheoryElements = [
   ...Object.values(SCALES_DATA),
@@ -30,7 +25,9 @@ const allTheoryElements = [
 ]
 
 function TheoryOfTheDay() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList['MainTab']>>()
   const [theory, setTheory] = useState<scaleNotesAndIntervalsExpanded | null>(null)
+
   function getTheoryOfTheDay() {
     // Calculate a unique index for each day
     const now = new Date()
@@ -43,20 +40,18 @@ function TheoryOfTheDay() {
     const index = dayOfYear % allTheoryElements.length
     const theoryOfTheDay = allTheoryElements[index]
     let scaleNotes: scaleNotesAndIntervals
-    console.log(theory?.name)
-    if (theory?.name.toLowerCase() === 'seventh') {
-      scaleNotes = getSeventhNotes('C', 'Major', false)
-    } else if (theory?.name.toLowerCase() === 'triad') {
+    if (theoryOfTheDay?.name.toLowerCase() === 'seventh') {
+      scaleNotes = getSeventhNotes('C', 'Major', true)
+    } else if (theoryOfTheDay?.name.toLowerCase() === 'triad') {
       scaleNotes = getTriadNotes('C', 'Major')
     } else {
-      // This will have to worked on as we need to know if we are working with a scale or not
+      const scaleType = allScaleNames.includes(theoryOfTheDay.name as ScaleName) ? 'scale' : 'mode'
       scaleNotes = getScaleOrModeNotes(
         'C',
         theoryOfTheDay.name as ScaleName | ModeNames,
-        'scale',
+        scaleType,
       ) as scaleNotesAndIntervals
     }
-    console.log(scaleNotes)
     const theoryNew: scaleNotesAndIntervalsExpanded = {
       name: theoryOfTheDay.name as ScaleName | ModeNames | 'triad' | 'seventh',
       description: theoryOfTheDay.description,
@@ -66,40 +61,46 @@ function TheoryOfTheDay() {
     setTheory(theoryNew)
   }
 
+  useEffect(() => {
+    getTheoryOfTheDay()
+  }, [])
+
   return (
-    <>
-      <CustomButton
-        title='Get Theory'
-        onPress={() => {
-          getTheoryOfTheDay()
-        }}
-      />
-      <TouchableOpacity>
-        <View style={tw.style(`p-2`)}>
-          <Text style={tw.style(`text-slate-50 text-xl text-center`, { fontFamily: 'figtree-bold' })}>
-            {theory?.name}
-          </Text>
-          <Text style={tw.style(`text-slate-50 text-xl text-center`, { fontFamily: 'figtree-bold' })}>
-            {theory?.description}
-          </Text>
-          <FlatList
-            horizontal={true}
-            style={tw.style('flex-row')}
-            contentContainerStyle={tw.style(``)}
-            data={Object.values(theory?.notes ?? {})}
-            keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={() => renderSeparator(2)}
-            renderItem={({ item, index }) => (
-              <View style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}>
-                <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
-                <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{theory?.intervals[index]}</Text>
-              </View>
-            )}
-          />
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Study', {
+          // I need a better way to find the scale type of the theory
+          preselectedType:
+            theory?.name === 'triad' || theory?.name === 'seventh'
+              ? theory.name
+              : allScaleNames.includes(theory?.name as ScaleName)
+                ? 'scale'
+                : 'mode',
+          preselectedScale: theory?.name as ScaleName | ModeNames | 'seventh' | 'triad',
+        })
+      }
+    >
+      <View style={tw.style(`p-2`)}>
+        <Text style={tw.style(`text-slate-50 text-xl text-center`, { fontFamily: 'figtree-bold' })}>
+          {theory?.name === 'seventh' ? 'Seventh Chords' : theory?.name === 'triad' ? 'Triads' : theory?.name}
+        </Text>
+        <Text style={tw.style(`text-slate-50 text-xl text-center`, { fontFamily: 'figtree-bold' })}>
+          {theory?.description}
+        </Text>
+        <View style={tw.style(`flex-row gap-2 justify-center flex-wrap`)}>
+          {theory?.notes.map((note, index) => (
+            <View
+              key={`${note}-${index}`}
+              style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}
+            >
+              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{note}</Text>
+              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{theory?.intervals[index]}</Text>
+            </View>
+          ))}
         </View>
-      </TouchableOpacity>
-    </>
+      </View>
+    </TouchableOpacity>
   )
 }
 
-export default React.memo(TheoryOfTheDay)
+export default TheoryOfTheDay

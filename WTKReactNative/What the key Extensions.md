@@ -25,9 +25,10 @@ Use the current tracks in the library as the seed for recommendations in a horiz
 - Create a component where the `flatlist` will be displayed #DONE 
 - If the user uses **Safe** mode, we will put the 5 most opened tracks as the 5 track seeds #DONE 
 - If the user uses **New** mode, the we will use the last 5 opened tracks #DONE 
-- Scale/mode/triad/seventh of the day - Pick one at random and when clicking on it, it should open the study page with the fretboard open.
+- Scale/mode/triad/seventh of the day - Pick one at random and when clicking on it, it should open the study page with the fretboard open. #DONE 
+##### Keep working on it so that all types are displayed correctly as we just expanded the scale data type, so all types need to tested
+- Learn more link that will open the study page #DONE 
 - On the theory of the day widget, there should be a couple of examples such as position one of the scales, notes/interval columns, name of the theory topic
-- Learn more link that will open the study page
 
 #### Scale description
 Each scale object already has a short description, but we have to find it as we are only using an array of string/mode names

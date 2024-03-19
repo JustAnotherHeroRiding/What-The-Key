@@ -1,42 +1,43 @@
-import React, { useContext } from 'react'
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
-import { TrackData } from '../../../utils/types/spotify-types'
+import { useContext, useState } from 'react'
+import useSpotifyService from '../../../services/SpotifyService'
+import { SessionContext } from '../../../utils/Context/Session/SessionContext'
 import { useQuery } from '@tanstack/react-query'
-import useTrackService from '../../../services/TrackService'
+import React from 'react'
+import { FlatList, TouchableOpacity, View, Text, Image } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { renderSeparator } from '../Common/FlatListHelpers'
+import { CustomButton } from '../Common/CustomButtom'
 import LoadingSpinner from '../Common/LoadingSpinner'
 import NotFoundComponent from '../Common/NotFound'
-import { CustomButton } from '../Common/CustomButtom'
-import { SessionContext } from '../../../utils/Context/Session/SessionContext'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
 import { RecentlyOpenedType } from '../../../services/TrackService'
 
-function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
+function TrackRecommendations() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
-
-  const { getHistoryTracks } = useTrackService()
   const session = useContext(SessionContext)
+  const { getRecommendations } = useSpotifyService()
+  const [recommendationType, setRecommendationType] = useState<RecentlyOpenedType>('latest')
+
   const {
-    data: trackHistory,
-    isFetching: isHistoryLoading,
-    error: historyError,
-    refetch: refreshTrackHistory,
+    data: recommendedTracks,
+    isFetching: areRecsLoading,
+    error: recsError,
+    refetch: refetchRecs,
   } = useQuery({
-    queryKey: ['trackHistory', type],
-    queryFn: () => getHistoryTracks(type),
+    queryKey: ['recs', recommendationType],
+    queryFn: () => getRecommendations(recommendationType),
     enabled: !!session?.user.id,
   })
 
-  if (historyError || !trackHistory)
+  if (recsError || !recommendedTracks)
     return (
       <View>
         <CustomButton
           title='Refresh'
           onPress={() => {
-            refreshTrackHistory
+            refetchRecs
           }}
         />
         <NotFoundComponent />
@@ -45,16 +46,29 @@ function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
 
   return (
     <>
-      {isHistoryLoading && (
+      <View style={tw.style(`flex-row gap-2 justify-center p-2`)}>
+        <CustomButton
+          title='New'
+          btnStyle={tw.style(`${recommendationType === 'latest' ? 'bg-beigeCustom' : ''}`)}
+          onPress={() => setRecommendationType('latest')}
+        />
+        <CustomButton
+          title='Safe'
+          btnStyle={tw.style(`${recommendationType === 'favorites' ? 'bg-beigeCustom' : ''}`)}
+          onPress={() => setRecommendationType('favorites')}
+        />
+      </View>
+      {areRecsLoading && (
         <View style={tw.style(`absolute inset-0 z-10 justify-center items-center`)}>
           <LoadingSpinner />
         </View>
       )}
+
       <FlatList
         horizontal={true}
         style={tw.style('flex-row')}
         contentContainerStyle={tw.style(``)}
-        data={trackHistory as TrackData[]}
+        data={recommendedTracks.tracks}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={() => renderSeparator(2)}
         renderItem={({ item, index }) => (
@@ -64,24 +78,24 @@ function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
                 /* @ts-ignore */
                 screen: 'SingleTrackOverview',
                 params: {
-                  trackId: item.track.id,
+                  trackId: item.id,
                   src: 'home',
                 },
               })
             }
             style={tw.style(
-              `flex-col border border-cream rounded-md bg-zinc-900 shadow-sm shadow-zinc-700 p-1 items-center justify-center gap-2 w-40`,
+              `flex-col border border-cream bg-zinc-900 rounded-md shadow-sm shadow-zinc-700 p-1 items-center justify-center gap-2 w-40`,
             )}
           >
             <Image
-              source={{ uri: item.track.album.images[0].url }}
+              source={{ uri: item.album.images[0].url }}
               style={tw.style(`mb-auto mt-2 w-36 h-36 rounded-md border border-cream`, {
                 objectFit: 'contain',
               })}
-              alt={item.track.name}
+              alt={item.name ?? ''}
             />
-            <Text style={tw.style(`text-sm text-white text-center font-bold`)}>{item.track.name}</Text>
-            <Text style={tw.style(`text-xs text-artistGray text-center`)}>{item.track.artists[0].name}</Text>
+            <Text style={tw.style(`text-sm text-white text-center font-bold`)}>{item.name}</Text>
+            <Text style={tw.style(`text-xs text-artistGray text-center`)}>{item.artists[0].name}</Text>
           </TouchableOpacity>
         )}
       />
@@ -89,4 +103,4 @@ function RecentlyOpened({ type }: { type: RecentlyOpenedType }) {
   )
 }
 
-export default RecentlyOpened
+export default TrackRecommendations

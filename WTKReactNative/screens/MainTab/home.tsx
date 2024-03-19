@@ -21,13 +21,15 @@ import {
   scaleOrModeOptionsConst,
 } from '../../utils/consts/scales-consts-types'
 import RecentlyOpened from '../../UiComponents/Reusable/Widgets/RecentlyOpened'
+import TrackRecommendations from '../../UiComponents/Reusable/Widgets/TrackRecommendations'
+import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const session = useContext(SessionContext)
 
   const [query, setQuery] = useState('')
 
-  const { searchTracks, fetchRandomTrack, getRecommendations } = useSpotifyService()
+  const { searchTracks, fetchRandomTrack } = useSpotifyService()
   const queryClient = useQueryClient()
 
   const {
@@ -40,19 +42,6 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
     queryFn: () => fetchRandomTrack(),
     enabled: false,
   })
-
-  const {
-    data: recommendedTracks,
-    isFetching: areRecsLoading,
-    error: recsError,
-    refetch: refetchRecs,
-  } = useQuery({
-    queryKey: ['recs'],
-    queryFn: () => getRecommendations('latest'),
-    enabled: !!session?.user.id,
-  })
-
-  console.log(recommendedTracks)
 
   const getRandomScale = () => {
     const scaleType: scaleOrModeOptions = _.sample(scaleOrModeOptionsConst)
@@ -162,7 +151,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         end={{ x: 0, y: 0 }}
         style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
       >
-        <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Suggested Theory</Text>
+        <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Theory of the Day</Text>
       </LinearGradient>
       <LinearGradient
         colors={['#27272a', '#52525b']}
@@ -171,6 +160,8 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
       >
         <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Songs to Learn</Text>
+
+        <TrackRecommendations />
       </LinearGradient>
     </ScrollView>
   )

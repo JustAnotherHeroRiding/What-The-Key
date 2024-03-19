@@ -22,8 +22,9 @@ Add a couple of recently opened tracks so that users can keep playing from where
 - Used raw sql queries to return the correct data #DONE 
 ### Recommendations
 Use the current tracks in the library as the seed for recommendations in a horizontal `FlatList` of tracks. Better yet we can use a mix of the latest and most popular tracks.
-- If the user uses safe mode, we will put the 5 most opened tracks as the 5 track seeds
-- If the user uses adventurous mode, the we will use the last 5 opened tracks
+- Create a component where the `flatlist` will be displayed #DONE 
+- If the user uses **Safe** mode, we will put the 5 most opened tracks as the 5 track seeds #DONE 
+- If the user uses **New** mode, the we will use the last 5 opened tracks #DONE 
 - Scale/mode/triad/seventh of the day - Pick one at random and when clicking on it, it should open the study page with the fretboard open.
 
 #### Scale description

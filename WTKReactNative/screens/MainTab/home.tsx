@@ -22,6 +22,7 @@ import {
 } from '../../utils/consts/scales-consts-types'
 import TrackRecommendations from '../../UiComponents/Reusable/Widgets/TrackRecommendations'
 import TrackHistory from '../../UiComponents/Reusable/Widgets/TrackHistory'
+import TheoryOfTheDay from '../../UiComponents/Reusable/Widgets/TheoryOfTheDay'
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   const session = useContext(SessionContext)
@@ -151,6 +152,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
       >
         <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Theory of the Day</Text>
+        <TheoryOfTheDay />
       </LinearGradient>
       <LinearGradient
         colors={['#27272a', '#52525b']}

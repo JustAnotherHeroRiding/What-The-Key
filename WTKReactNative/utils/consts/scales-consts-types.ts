@@ -8,7 +8,7 @@ export const DIMINISHED = ['diminishedWholeHalf', 'diminishedHalfWhole']
 export const WHOLETONE = ['wholeTone']
 export const CHROMATIC = ['chromatic']
 
-interface ScaleData {
+export interface ScaleData {
   name: string
   description: string
   intervals?: number[]
@@ -44,13 +44,17 @@ export type ScaleName =
   | 'chromatic'
 
 export type ScalesAndModesData = {
-  [key in ScaleName | ModeNames]?: ScaleData
+  [key in ScaleName | ModeNames | 'triad' | 'seventh']?: ScaleData
 }
 
 export interface scaleNotesAndIntervals {
-  name: ScaleName | ModeNames | Mode
+  name: ScaleName | ModeNames | Mode | 'triad' | 'seventh'
   notes: string[]
   intervals: string[]
+}
+
+export interface scaleNotesAndIntervalsExpanded extends scaleNotesAndIntervals {
+  description: string
 }
 
 export const SCALES_DATA: ScalesAndModesData = {
@@ -146,6 +150,19 @@ export const MODES_DATA: ScalesAndModesData = {
     name: 'Locrian',
     description: 'Diminished scale with a lowered second and fifth, a dissonant sound.',
     intervals: [1, 2, 2, 1, 2, 2, 2],
+  },
+}
+
+export const TRIAD_SEVENTH: ScalesAndModesData = {
+  triad: {
+    name: 'Triad',
+    description: 'A three-note chord containing only the most essential notes that define it.',
+    intervals: [0, 4, 7],
+  },
+  seventh: {
+    name: 'Seventh',
+    description: 'A three or four note chord commonly used in twelve bar blues.',
+    intervals: [0, 4, 7, 10], // Root, Major third, (Perfect fifth?) m7
   },
 }
 export const scaleOrModeOptionsConst = ['scale', 'mode'] as const

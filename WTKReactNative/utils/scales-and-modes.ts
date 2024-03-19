@@ -105,7 +105,7 @@ export const getTwelveBars = (key: string, type: TwelveBarVariants = 'standard')
   }
 }
 
-const getSeventhNotes = (key: string, mode: Mode = 'Major', addFifth: boolean): scaleNotesAndIntervals => {
+export const getSeventhNotes = (key: string, mode: Mode = 'Major', addFifth: boolean): scaleNotesAndIntervals => {
   // Clone the array to avoid mutating the original lookup data
   let intervals = [...seventhLookup[mode]]
 
@@ -140,6 +140,7 @@ export const selectSeventh = (
   addFifth: boolean = false,
 ) => {
   const scaleNotes = getSeventhNotes(selectedKey, mode, addFifth)
+  console.log(selectedKey, mode, addFifth)
   setSelectedOption(scaleNotes)
 }
 

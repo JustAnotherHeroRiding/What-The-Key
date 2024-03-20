@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { NOTES as chromaticScale, intervalNamesSingle } from '../../../utils/track-formating'
 import { CustomButton } from './CustomButtom'
 import { useOrientation } from '../../../utils/Context/OrientationProvider'
 import { scaleNotesAndIntervals } from '../../../utils/consts/scales-consts-types'
+import { Audio, AVPlaybackStatusSuccess } from 'expo-av'
+import { Sound } from 'expo-av/build/Audio'
 
 const getNoteAtFret = (openStringNote: string, fret: number, key: string, noteType: 'interval' | 'note'): string => {
-  const openNoteIndex = chromaticScale.findIndex(note => note === openStringNote)
+  const openNoteIndex = chromaticScale.findIndex(note => note === openStringNote.toUpperCase())
   const noteIndex = (openNoteIndex + fret) % chromaticScale.length
   const note = chromaticScale[noteIndex]
 
@@ -32,7 +34,7 @@ interface FretboardProps {
 type NoteType = 'note' | 'interval'
 
 const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
-  const strings = ['E', 'B', 'G', 'D', 'A', 'E'].reverse() // Standard tuning
+  const strings = ['e', 'B', 'G', 'D', 'A', 'E'].reverse() // Standard tuning
   const frets = Array.from({ length: 17 }, (_, i) => i)
   const [noteType, setNoteType] = useState<NoteType>('note')
   const { isLandscape, toggleOrientation } = useOrientation()
@@ -135,6 +137,26 @@ interface FretProps {
   noteRotation: number
 }
 
+const soundFiles = {
+  0: require('../../../assets/sounds/e/hE0.wav'),
+  1: require('../../../assets/sounds/e/hE1.wav'),
+  2: require('../../../assets/sounds/e/hE2.wav'),
+  3: require('../../../assets/sounds/e/hE3.wav'),
+  4: require('../../../assets/sounds/e/hE4.wav'),
+  5: require('../../../assets/sounds/e/hE5.wav'),
+  6: require('../../../assets/sounds/e/hE6.wav'),
+  7: require('../../../assets/sounds/e/hE7.wav'),
+  8: require('../../../assets/sounds/e/hE8.wav'),
+  9: require('../../../assets/sounds/e/hE9.wav'),
+  10: require('../../../assets/sounds/e/hE10.wav'),
+  11: require('../../../assets/sounds/e/hE11.wav'),
+  12: require('../../../assets/sounds/e/hE12.wav'),
+  13: require('../../../assets/sounds/e/hE13.wav'),
+  14: require('../../../assets/sounds/e/hE14.wav'),
+  15: require('../../../assets/sounds/e/hE15.wav'),
+  16: require('../../../assets/sounds/e/hE16.wav'),
+}
+
 const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteType, isLandscape, noteRotation }) => {
   const scaleKey = scaleNotes.notes[0]
   const note = useMemo(() => getNoteAtFret(string, fret, scaleKey, noteType), [string, fret, scaleKey, noteType])
@@ -148,8 +170,40 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
 
   const isRootNote = note === 'P1' || note === scaleKey
 
+  const [sound, setSound] = useState<Sound>()
+
+  async function playSound() {
+    // First, release any previously loaded sound to avoid memory leaks and resource exhaustion
+    if (sound) {
+      await sound.unloadAsync()
+      setSound(undefined) // Reset the state to ensure cleanup is complete
+    }
+
+    if (fret in soundFiles) {
+      const soundFile = soundFiles[fret as keyof typeof soundFiles]
+      const { sound: loadedSound } = await Audio.Sound.createAsync(soundFile)
+      setSound(loadedSound)
+
+      await loadedSound.playAsync()
+      // Optionally, you can also unload the sound right after it finishes playing:
+      loadedSound.setOnPlaybackStatusUpdate(async status => {
+        if ((status as AVPlaybackStatusSuccess).didJustFinish) {
+          await loadedSound.unloadAsync()
+          setSound(undefined) // Clean up after playback is complete
+        }
+      })
+    } else {
+      console.warn(`No sound file for fret ${fret}`)
+    }
+  }
+
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => {
+        if (string === 'e' && fret <= 16) {
+          playSound()
+        }
+      }}
       style={tw.style(
         [
           'p-1 w-10  h-10 justify-center items-center shadow-lg shadow-slate-200 rounded-md m-0.5',
@@ -166,7 +220,7 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
       {isNoteInScale && (
         <Text style={tw.style([` ${isRootNote ? 'text-xl' : 'text-lg'}`], { fontFamily: 'figtree-bold' })}>{note}</Text>
       )}
-    </View>
+    </TouchableOpacity>
   )
 })
 

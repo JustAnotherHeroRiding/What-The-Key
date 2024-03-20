@@ -1,4 +1,4 @@
-
+ex
 Now that the basic functionality is complete and users can search and save songs, have tabs ready to go along with a powerful study screen to learn all scales, modes, triad positions and 7th chords, we can get to work on extending and improving the existing features to provide a professional feeling UX
 
 ## Home page - Recently Opened
@@ -29,6 +29,7 @@ Use the current tracks in the library as the seed for recommendations in a horiz
 ##### Keep working on it so that all types are displayed correctly as we just expanded the scale data type, so all types need to tested
 - Learn more link that will open the study page #DONE 
 - On the theory of the day widget, there should be a couple of examples such as position one of the scales, notes/interval columns, name of the theory topic
+- Manually test to see if the correct type will be preselected with all 4 theory types
 
 #### Scale description
 Each scale object already has a short description, but we have to find it as we are only using an array of string/mode names
@@ -37,7 +38,20 @@ Each scale object already has a short description, but we have to find it as we 
 - If a user notices that the key is not correct they can report it
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
 ## Sound
-- Record each note so that users can click on each fret to play the note and see these scales sound like.
+Record each note so that users can click on each fret to play the note and see these scales sound like.
+- Record each note for the first 16 frets #DONE 
+
+### Create a separate wav file for each note
+- High E string #DONE 
+- B
+- G
+- D
+- A
+- Low E
+
+### Make clicking the frets play the notes
+- Only one note can be active per string
+- Double clicks should stop the previous clip and start again
 - Test and see if double click should stop the first clip or play it twice, try to make it feel as if you are playing a real guitar
 
 ## Circle of Fifths

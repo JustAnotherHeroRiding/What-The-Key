@@ -32,7 +32,6 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
   const [selectedOption, setSelectedOption] = useState<scaleNotesAndIntervals | null>(null)
   const [scaleMode, setScaleMode] = useState<Mode | null>(null)
   const [twelveBarsActive, setTwelveBarsActive] = useState(false)
-  console.log(params)
 
   useEffect(() => {
     if (params && params.preselectedType && params.preselectedScale) {

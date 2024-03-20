@@ -42,7 +42,8 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.6",
     "twrnc": "^3.6.7",
-    "@react-native-picker/picker": "2.4.10"
+    "@react-native-picker/picker": "2.4.10",
+    "expo-av": "~13.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

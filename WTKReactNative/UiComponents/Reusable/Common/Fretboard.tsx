@@ -147,7 +147,7 @@ interface FretProps {
 const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, isLandscape, noteRotation }) => {
   const scaleKey = scaleNotes.notes[0]
   const note = useMemo(() => getNoteAtFret(string, fret, scaleKey, noteType), [string, fret, scaleKey, noteType])
-  const sounds = useSounds()
+  const { playSound } = useSounds()
 
   let isNoteInScale = false
   if (noteType === 'note') {
@@ -160,14 +160,14 @@ const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, isLands
 
   const [sound, setSound] = useState<Sound>()
 
-  const playSound = async () => {
+  /*   const playSound = async () => {
     if (sound) {
       await sound.unloadAsync()
       setSound(undefined)
     }
     if (soundFiles[string] && fret in soundFiles[string]!) {
       console.log('Playing sound')
-      const soundToPlay = sounds.sounds[string as keyof typeof sounds.sounds]?.[fret]
+      const soundToPlay = sounds.sounds[string]?.[fret]
       const { sound: loadedSound } = await Audio.Sound.createAsync(soundToPlay as AVPlaybackSource)
 
       setSound(loadedSound)
@@ -182,37 +182,11 @@ const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, isLands
     } else {
       console.warn(`No sound file loaded for string ${string} and fret ${fret}`)
     }
-  }
-
-  /*   async function playSound() {
-    // First, release any previously loaded sound to avoid memory leaks and resource exhaustion
-    if (sound) {
-      await sound.unloadAsync()
-      setSound(undefined) // Reset the state to ensure cleanup is complete
-    }
-
-    if (soundFiles[string] && fret in soundFiles[string]!) {
-      const soundFile = soundFiles[string]?.[fret]
-      const { sound: loadedSound } = await Audio.Sound.createAsync(soundFile as AVPlaybackSource)
-      setSound(loadedSound)
-
-      await loadedSound.playAsync()
-      // Optionally, you can also unload the sound right after it finishes playing:
-      loadedSound.setOnPlaybackStatusUpdate(async status => {
-        if ((status as AVPlaybackStatusSuccess).didJustFinish) {
-          await loadedSound.unloadAsync()
-          setSound(undefined) // Clean up after playback is complete
-        }
-      })
-    } else {
-      console.warn(`No sound file for fret ${fret}`)
-    }
-  }
- */
+  } */
   return (
     <TouchableOpacity
       onPress={() => {
-        playSound()
+        playSound(sound, setSound, string, fret)
       }}
       style={tw.style(
         [

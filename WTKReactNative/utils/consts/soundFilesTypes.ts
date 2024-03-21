@@ -26,12 +26,36 @@ export type AllSounds = {
 export interface SoundContextType {
   sounds: AllSounds
   loadSounds: (soundFiles: SoundFilesType) => Promise<void>
+  playSound: (
+    sound: Sound | undefined,
+    setSound: React.Dispatch<React.SetStateAction<Sound | undefined>>,
+    string: StringNames,
+    fret: FretNumber,
+  ) => Promise<void>
 }
 
 export const soundFiles: SoundFilesType = {
   E: {},
   A: {},
-  D: {},
+  D: {
+    0: require('../../assets/sounds/D/D0.wav'),
+    1: require('../../assets/sounds/D/D1.wav'),
+    2: require('../../assets/sounds/D/D2.wav'),
+    3: require('../../assets/sounds/D/D3.wav'),
+    4: require('../../assets/sounds/D/D4.wav'),
+    5: require('../../assets/sounds/D/D5.wav'),
+    6: require('../../assets/sounds/D/D6.wav'),
+    7: require('../../assets/sounds/D/D7.wav'),
+    8: require('../../assets/sounds/D/D8.wav'),
+    9: require('../../assets/sounds/D/D9.wav'),
+    10: require('../../assets/sounds/D/D10.wav'),
+    11: require('../../assets/sounds/D/D11.wav'),
+    12: require('../../assets/sounds/D/D12.wav'),
+    13: require('../../assets/sounds/D/D13.wav'),
+    14: require('../../assets/sounds/D/D14.wav'),
+    15: require('../../assets/sounds/D/D15.wav'),
+    16: require('../../assets/sounds/D/D16.wav'),
+  },
   G: {
     0: require('../../assets/sounds/G/G0.wav'),
     1: require('../../assets/sounds/G/G1.wav'),

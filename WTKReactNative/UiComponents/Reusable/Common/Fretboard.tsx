@@ -5,10 +5,11 @@ import { NOTES as chromaticScale, intervalNamesSingle } from '../../../utils/tra
 import { CustomButton } from './CustomButtom'
 import { useOrientation } from '../../../utils/Context/OrientationProvider'
 import { scaleNotesAndIntervals } from '../../../utils/consts/scales-consts-types'
-import { Audio, AVPlaybackStatusSuccess } from 'expo-av'
+import { Audio, AVPlaybackSource, AVPlaybackStatusSuccess } from 'expo-av'
 import { Sound } from 'expo-av/build/Audio'
 
 const getNoteAtFret = (openStringNote: string, fret: number, key: string, noteType: 'interval' | 'note'): string => {
+  // we are passing a lowercase 'e' which returned duplicated notes from the b string
   const openNoteIndex = chromaticScale.findIndex(note => note === openStringNote.toUpperCase())
   const noteIndex = (openNoteIndex + fret) % chromaticScale.length
   const note = chromaticScale[noteIndex]
@@ -33,9 +34,19 @@ interface FretboardProps {
 
 type NoteType = 'note' | 'interval'
 
+type FretNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
+
+type StringNames = 'E' | 'A' | 'D' | 'G' | 'B' | 'e'
+
+type SoundFiles = {
+  [key in StringNames]?: Partial<{
+    [fret in FretNumber]?: any
+  }>
+}
+
 const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
-  const strings = ['e', 'B', 'G', 'D', 'A', 'E'].reverse() // Standard tuning
-  const frets = Array.from({ length: 17 }, (_, i) => i)
+  const strings: StringNames[] = ['e', 'B', 'G', 'D', 'A', 'E'].reverse() as StringNames[] // Standard tuning
+  const frets = Array.from({ length: 17 }, (_, i) => i) as FretNumber[]
   const [noteType, setNoteType] = useState<NoteType>('note')
   const { isLandscape, toggleOrientation } = useOrientation()
 
@@ -129,32 +140,57 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
 }
 
 interface FretProps {
-  string: string
-  fret: number
+  string: StringNames
+  fret: FretNumber
   scaleNotes: scaleNotesAndIntervals
   noteType: NoteType
   isLandscape: boolean
   noteRotation: number
 }
 
-const soundFiles = {
-  0: require('../../../assets/sounds/e/hE0.wav'),
-  1: require('../../../assets/sounds/e/hE1.wav'),
-  2: require('../../../assets/sounds/e/hE2.wav'),
-  3: require('../../../assets/sounds/e/hE3.wav'),
-  4: require('../../../assets/sounds/e/hE4.wav'),
-  5: require('../../../assets/sounds/e/hE5.wav'),
-  6: require('../../../assets/sounds/e/hE6.wav'),
-  7: require('../../../assets/sounds/e/hE7.wav'),
-  8: require('../../../assets/sounds/e/hE8.wav'),
-  9: require('../../../assets/sounds/e/hE9.wav'),
-  10: require('../../../assets/sounds/e/hE10.wav'),
-  11: require('../../../assets/sounds/e/hE11.wav'),
-  12: require('../../../assets/sounds/e/hE12.wav'),
-  13: require('../../../assets/sounds/e/hE13.wav'),
-  14: require('../../../assets/sounds/e/hE14.wav'),
-  15: require('../../../assets/sounds/e/hE15.wav'),
-  16: require('../../../assets/sounds/e/hE16.wav'),
+const soundFiles: SoundFiles = {
+  E: {},
+  A: {},
+  D: {},
+  G: {},
+  B: {
+    0: require('../../../assets/sounds/B/B0.wav'),
+    1: require('../../../assets/sounds/B/B1.wav'),
+    2: require('../../../assets/sounds/B/B2.wav'),
+    3: require('../../../assets/sounds/B/B3.wav'),
+    4: require('../../../assets/sounds/B/B4.wav'),
+    5: require('../../../assets/sounds/B/B5.wav'),
+    6: require('../../../assets/sounds/B/B6.wav'),
+    7: require('../../../assets/sounds/B/B7.wav'),
+    8: require('../../../assets/sounds/B/B8.wav'),
+    9: require('../../../assets/sounds/B/B9.wav'),
+    10: require('../../../assets/sounds/B/B10.wav'),
+    11: require('../../../assets/sounds/B/B11.wav'),
+    12: require('../../../assets/sounds/B/B12.wav'),
+    13: require('../../../assets/sounds/B/B13.wav'),
+    14: require('../../../assets/sounds/B/B14.wav'),
+    15: require('../../../assets/sounds/B/B15.wav'),
+    16: require('../../../assets/sounds/B/B16.wav'),
+  },
+  e: {
+    0: require('../../../assets/sounds/e/hE0.wav'),
+    1: require('../../../assets/sounds/e/hE1.wav'),
+    2: require('../../../assets/sounds/e/hE2.wav'),
+    3: require('../../../assets/sounds/e/hE3.wav'),
+    4: require('../../../assets/sounds/e/hE4.wav'),
+    5: require('../../../assets/sounds/e/hE5.wav'),
+    6: require('../../../assets/sounds/e/hE6.wav'),
+    7: require('../../../assets/sounds/e/hE7.wav'),
+    8: require('../../../assets/sounds/e/hE8.wav'),
+    9: require('../../../assets/sounds/e/hE9.wav'),
+    10: require('../../../assets/sounds/e/hE10.wav'),
+    11: require('../../../assets/sounds/e/hE11.wav'),
+    12: require('../../../assets/sounds/e/hE12.wav'),
+    13: require('../../../assets/sounds/e/hE13.wav'),
+    14: require('../../../assets/sounds/e/hE14.wav'),
+    15: require('../../../assets/sounds/e/hE15.wav'),
+    16: require('../../../assets/sounds/e/hE16.wav'),
+  },
 }
 
 const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteType, isLandscape, noteRotation }) => {
@@ -179,9 +215,9 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
       setSound(undefined) // Reset the state to ensure cleanup is complete
     }
 
-    if (fret in soundFiles) {
-      const soundFile = soundFiles[fret as keyof typeof soundFiles]
-      const { sound: loadedSound } = await Audio.Sound.createAsync(soundFile)
+    if (soundFiles[string] && fret in soundFiles[string]!) {
+      const soundFile = soundFiles[string]?.[fret]
+      const { sound: loadedSound } = await Audio.Sound.createAsync(soundFile as AVPlaybackSource)
       setSound(loadedSound)
 
       await loadedSound.playAsync()
@@ -200,9 +236,7 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
   return (
     <TouchableOpacity
       onPress={() => {
-        if (string === 'e' && fret <= 16) {
-          playSound()
-        }
+        playSound()
       }}
       style={tw.style(
         [

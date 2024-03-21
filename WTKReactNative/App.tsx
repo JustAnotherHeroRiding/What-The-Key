@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, View, TextStyle } from 'react-native'
+import { ImageBackground, StyleSheet, View } from 'react-native'
 import * as Font from 'expo-font'
 import { useEffect, useState } from 'react'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
@@ -11,8 +11,9 @@ import { ProfilePicProvider } from './utils/Context/Profile/ProfileProvider'
 import { StatusBar } from 'expo-status-bar'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
-import Auth from './UiComponents/Pages/Auth/Auth'
 import { OrientationProvider } from './utils/Context/OrientationProvider'
+import { SoundProvider, useSounds } from './utils/Context/SoundPlayer'
+import { soundFiles } from './utils/consts/soundFilesTypes'
 
 const queryClient = new QueryClient()
 
@@ -63,14 +64,16 @@ export default function App() {
       <SessionProvider>
         <ProfilePicProvider>
           <OrientationProvider>
-            <SafeAreaProvider>
-              <ImageBackground source={require('./assets/images/background.png')} style={StyleSheet.absoluteFill}>
-                <SafeAreaView style={StyleSheet.absoluteFill}>
-                  <StatusBar style='auto' />
-                  <BottomNav />
-                </SafeAreaView>
-              </ImageBackground>
-            </SafeAreaProvider>
+            <SoundProvider>
+              <SafeAreaProvider>
+                <ImageBackground source={require('./assets/images/background.png')} style={StyleSheet.absoluteFill}>
+                  <SafeAreaView style={StyleSheet.absoluteFill}>
+                    <StatusBar style='auto' />
+                    <BottomNav />
+                  </SafeAreaView>
+                </ImageBackground>
+              </SafeAreaProvider>
+            </SoundProvider>
           </OrientationProvider>
         </ProfilePicProvider>
       </SessionProvider>

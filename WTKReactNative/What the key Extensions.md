@@ -40,19 +40,22 @@ Each scale object already has a short description, but we have to find it as we 
 ## Sound
 Record each note so that users can click on each fret to play the note and see these scales sound like.
 - Record each note for the first 16 frets #DONE 
+- Create a sound context to manage the playing of files globally
 
 ### Create a separate wav file for each note
 - High E string #DONE 
-- B
-- G
+- B #DONE 
+- G #DONE 
 - D
 - A
 - Low E
 
 ### Make clicking the frets play the notes
+- Clicking on a fret will play the note #DONE 
+- Double clicks should stop the previous clip and start again #DONE 
+- Test and see if double click should stop the first clip or play it twice, try to make it feel as if you are playing a real guitar #DONE 
 - Only one note can be active per string
-- Double clicks should stop the previous clip and start again
-- Test and see if double click should stop the first clip or play it twice, try to make it feel as if you are playing a real guitar
+
 
 ## Circle of Fifths
 - Add an option on the study page to display the circle of fifths

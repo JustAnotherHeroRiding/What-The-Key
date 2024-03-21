@@ -5,8 +5,10 @@ import { NOTES as chromaticScale, intervalNamesSingle } from '../../../utils/tra
 import { CustomButton } from './CustomButtom'
 import { useOrientation } from '../../../utils/Context/OrientationProvider'
 import { scaleNotesAndIntervals } from '../../../utils/consts/scales-consts-types'
-import { Audio, AVPlaybackSource, AVPlaybackStatusSuccess } from 'expo-av'
 import { Sound } from 'expo-av/build/Audio'
+import { useSounds } from '../../../utils/Context/SoundPlayer'
+import { StringNames, FretNumber, NoteType, soundFiles, SoundFilesType } from '../../../utils/consts/soundFilesTypes'
+import { AVPlaybackSource, AVPlaybackStatusSuccess, Audio } from 'expo-av'
 
 const getNoteAtFret = (openStringNote: string, fret: number, key: string, noteType: 'interval' | 'note'): string => {
   // we are passing a lowercase 'e' which returned duplicated notes from the b string
@@ -32,23 +34,17 @@ interface FretboardProps {
   scaleNotes: scaleNotesAndIntervals
 }
 
-type NoteType = 'note' | 'interval'
-
-type FretNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16
-
-type StringNames = 'E' | 'A' | 'D' | 'G' | 'B' | 'e'
-
-type SoundFiles = {
-  [key in StringNames]?: Partial<{
-    [fret in FretNumber]?: any
-  }>
-}
-
 const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
   const strings: StringNames[] = ['e', 'B', 'G', 'D', 'A', 'E'].reverse() as StringNames[] // Standard tuning
   const frets = Array.from({ length: 17 }, (_, i) => i) as FretNumber[]
   const [noteType, setNoteType] = useState<NoteType>('note')
   const { isLandscape, toggleOrientation } = useOrientation()
+
+  const { loadSounds } = useSounds()
+
+  useEffect(() => {
+    loadSounds(soundFiles)
+  }, [])
 
   const toggleNoteType = useCallback(() => {
     setNoteType(prevType => (prevType === 'note' ? 'interval' : 'note'))
@@ -148,54 +144,10 @@ interface FretProps {
   noteRotation: number
 }
 
-const soundFiles: SoundFiles = {
-  E: {},
-  A: {},
-  D: {},
-  G: {},
-  B: {
-    0: require('../../../assets/sounds/B/B0.wav'),
-    1: require('../../../assets/sounds/B/B1.wav'),
-    2: require('../../../assets/sounds/B/B2.wav'),
-    3: require('../../../assets/sounds/B/B3.wav'),
-    4: require('../../../assets/sounds/B/B4.wav'),
-    5: require('../../../assets/sounds/B/B5.wav'),
-    6: require('../../../assets/sounds/B/B6.wav'),
-    7: require('../../../assets/sounds/B/B7.wav'),
-    8: require('../../../assets/sounds/B/B8.wav'),
-    9: require('../../../assets/sounds/B/B9.wav'),
-    10: require('../../../assets/sounds/B/B10.wav'),
-    11: require('../../../assets/sounds/B/B11.wav'),
-    12: require('../../../assets/sounds/B/B12.wav'),
-    13: require('../../../assets/sounds/B/B13.wav'),
-    14: require('../../../assets/sounds/B/B14.wav'),
-    15: require('../../../assets/sounds/B/B15.wav'),
-    16: require('../../../assets/sounds/B/B16.wav'),
-  },
-  e: {
-    0: require('../../../assets/sounds/e/hE0.wav'),
-    1: require('../../../assets/sounds/e/hE1.wav'),
-    2: require('../../../assets/sounds/e/hE2.wav'),
-    3: require('../../../assets/sounds/e/hE3.wav'),
-    4: require('../../../assets/sounds/e/hE4.wav'),
-    5: require('../../../assets/sounds/e/hE5.wav'),
-    6: require('../../../assets/sounds/e/hE6.wav'),
-    7: require('../../../assets/sounds/e/hE7.wav'),
-    8: require('../../../assets/sounds/e/hE8.wav'),
-    9: require('../../../assets/sounds/e/hE9.wav'),
-    10: require('../../../assets/sounds/e/hE10.wav'),
-    11: require('../../../assets/sounds/e/hE11.wav'),
-    12: require('../../../assets/sounds/e/hE12.wav'),
-    13: require('../../../assets/sounds/e/hE13.wav'),
-    14: require('../../../assets/sounds/e/hE14.wav'),
-    15: require('../../../assets/sounds/e/hE15.wav'),
-    16: require('../../../assets/sounds/e/hE16.wav'),
-  },
-}
-
-const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteType, isLandscape, noteRotation }) => {
+const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, isLandscape, noteRotation }) => {
   const scaleKey = scaleNotes.notes[0]
   const note = useMemo(() => getNoteAtFret(string, fret, scaleKey, noteType), [string, fret, scaleKey, noteType])
+  const sounds = useSounds()
 
   let isNoteInScale = false
   if (noteType === 'note') {
@@ -208,7 +160,31 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
 
   const [sound, setSound] = useState<Sound>()
 
-  async function playSound() {
+  const playSound = async () => {
+    if (sound) {
+      await sound.unloadAsync()
+      setSound(undefined)
+    }
+    if (soundFiles[string] && fret in soundFiles[string]!) {
+      console.log('Playing sound')
+      const soundToPlay = sounds.sounds[string as keyof typeof sounds.sounds]?.[fret]
+      const { sound: loadedSound } = await Audio.Sound.createAsync(soundToPlay as AVPlaybackSource)
+
+      setSound(loadedSound)
+      await loadedSound.playAsync()
+      loadedSound.setOnPlaybackStatusUpdate(async status => {
+        if ((status as AVPlaybackStatusSuccess).didJustFinish) {
+          await loadedSound.unloadAsync()
+          setSound(undefined)
+        }
+      })
+      // Consider handling unload/release here if it's not managed globally
+    } else {
+      console.warn(`No sound file loaded for string ${string} and fret ${fret}`)
+    }
+  }
+
+  /*   async function playSound() {
     // First, release any previously loaded sound to avoid memory leaks and resource exhaustion
     if (sound) {
       await sound.unloadAsync()
@@ -232,7 +208,7 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
       console.warn(`No sound file for fret ${fret}`)
     }
   }
-
+ */
   return (
     <TouchableOpacity
       onPress={() => {
@@ -256,6 +232,6 @@ const Fret: React.FC<FretProps> = React.memo(({ string, fret, scaleNotes, noteTy
       )}
     </TouchableOpacity>
   )
-})
+}
 
 export default Fretboard

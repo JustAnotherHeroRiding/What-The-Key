@@ -36,7 +36,25 @@ export interface SoundContextType {
 
 export const soundFiles: SoundFilesType = {
   E: {},
-  A: {},
+  A: {
+    0: require('../../assets/sounds/A/A0.wav'),
+    1: require('../../assets/sounds/A/A1.wav'),
+    2: require('../../assets/sounds/A/A2.wav'),
+    3: require('../../assets/sounds/A/A3.wav'),
+    4: require('../../assets/sounds/A/A4.wav'),
+    5: require('../../assets/sounds/A/A5.wav'),
+    6: require('../../assets/sounds/A/A6.wav'),
+    7: require('../../assets/sounds/A/A7.wav'),
+    8: require('../../assets/sounds/A/A8.wav'),
+    9: require('../../assets/sounds/A/A9.wav'),
+    10: require('../../assets/sounds/A/A10.wav'),
+    11: require('../../assets/sounds/A/A11.wav'),
+    12: require('../../assets/sounds/A/A12.wav'),
+    13: require('../../assets/sounds/A/A13.wav'),
+    14: require('../../assets/sounds/A/A14.wav'),
+    15: require('../../assets/sounds/A/A15.wav'),
+    16: require('../../assets/sounds/A/A16.wav'),
+  },
   D: {
     0: require('../../assets/sounds/D/D0.wav'),
     1: require('../../assets/sounds/D/D1.wav'),

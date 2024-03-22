@@ -35,7 +35,25 @@ export interface SoundContextType {
 }
 
 export const soundFiles: SoundFilesType = {
-  E: {},
+  E: {
+    0: require('../../assets/sounds/lowE/lowE0.wav'),
+    1: require('../../assets/sounds/lowE/lowE1.wav'),
+    2: require('../../assets/sounds/lowE/lowE2.wav'),
+    3: require('../../assets/sounds/lowE/lowE3.wav'),
+    4: require('../../assets/sounds/lowE/lowE4.wav'),
+    5: require('../../assets/sounds/lowE/lowE5.wav'),
+    6: require('../../assets/sounds/lowE/lowE6.wav'),
+    7: require('../../assets/sounds/lowE/lowE7.wav'),
+    8: require('../../assets/sounds/lowE/lowE8.wav'),
+    9: require('../../assets/sounds/lowE/lowE9.wav'),
+    10: require('../../assets/sounds/lowE/lowE10.wav'),
+    11: require('../../assets/sounds/lowE/lowE11.wav'),
+    12: require('../../assets/sounds/lowE/lowE12.wav'),
+    13: require('../../assets/sounds/lowE/lowE13.wav'),
+    14: require('../../assets/sounds/lowE/lowE14.wav'),
+    15: require('../../assets/sounds/lowE/lowE15.wav'),
+    16: require('../../assets/sounds/lowE/lowE16.wav'),
+  },
   A: {
     0: require('../../assets/sounds/A/A0.wav'),
     1: require('../../assets/sounds/A/A1.wav'),

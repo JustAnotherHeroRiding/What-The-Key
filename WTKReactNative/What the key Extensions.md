@@ -29,6 +29,9 @@ Use the current tracks in the library as the seed for recommendations in a horiz
 ##### Keep working on it so that all types are displayed correctly as we just expanded the scale data type, so all types need to tested
 - Learn more link that will open the study page #DONE 
 - On the theory of the day widget, there should be a couple of examples such as position one of the scales, notes/interval columns, name of the theory topic
+- notes/intervals added #DONE 
+- name and description #DONE 
+- Format the name so that it is not in camelCase
 - Manually test to see if the correct type will be preselected with all 4 theory types
 
 #### Scale description
@@ -46,15 +49,18 @@ Record each note so that users can click on each fret to play the note and see t
 - High E string #DONE 
 - B #DONE 
 - G #DONE 
-- D
-- A
-- Low E
+- D #DONE 
+- A #DONE 
+- Low E #DONE 
 
 ### Make clicking the frets play the notes
 - Clicking on a fret will play the note #DONE 
 - Double clicks should stop the previous clip and start again #DONE 
 - Test and see if double click should stop the first clip or play it twice, try to make it feel as if you are playing a real guitar #DONE 
 - Only one note can be active per string
+
+#### Playable Note/Intervals columns
+When displaying the note and interval columns for the selected scale, clicking on each column should play the appropriate note
 
 
 ## Circle of Fifths
@@ -123,3 +129,4 @@ Allow users to select 2 or more scales at once, displaying multiple fretboards. 
 
 ## Highlight possible voicings
 - When rendering the fretboard for 7th chords or triads for example, I should do a simple check for possible shapes that can be played. These can be notes that are on adjacent frets, no more than 3 for example with triads. I will have to work on the implementation until it will helpful 
+

@@ -147,7 +147,7 @@ interface FretProps {
 const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, isLandscape, noteRotation }) => {
   const scaleKey = scaleNotes.notes[0]
   const note = useMemo(() => getNoteAtFret(string, fret, scaleKey, noteType), [string, fret, scaleKey, noteType])
-  const { playSound } = useSounds()
+  const { playSound, stopSound } = useSounds()
 
   let isNoteInScale = false
   if (noteType === 'note') {
@@ -158,35 +158,25 @@ const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, isLands
 
   const isRootNote = note === 'P1' || note === scaleKey
 
-  const [sound, setSound] = useState<Sound>()
+  const handlePressIn = () => {
+    stopPreviousSound()
+    playSound(string, fret)
+  }
 
-  /*   const playSound = async () => {
-    if (sound) {
-      await sound.unloadAsync()
-      setSound(undefined)
+  useEffect(() => {
+    return () => {
+      stopPreviousSound()
     }
-    if (soundFiles[string] && fret in soundFiles[string]!) {
-      console.log('Playing sound')
-      const soundToPlay = sounds.sounds[string]?.[fret]
-      const { sound: loadedSound } = await Audio.Sound.createAsync(soundToPlay as AVPlaybackSource)
+  }, [string, fret])
 
-      setSound(loadedSound)
-      await loadedSound.playAsync()
-      loadedSound.setOnPlaybackStatusUpdate(async status => {
-        if ((status as AVPlaybackStatusSuccess).didJustFinish) {
-          await loadedSound.unloadAsync()
-          setSound(undefined)
-        }
-      })
-      // Consider handling unload/release here if it's not managed globally
-    } else {
-      console.warn(`No sound file loaded for string ${string} and fret ${fret}`)
-    }
-  } */
+  const stopPreviousSound = () => {
+    stopSound(string, fret)
+  }
+
   return (
     <TouchableOpacity
-      onPress={() => {
-        playSound(sound, setSound, string, fret)
+      onPressIn={() => {
+        handlePressIn()
       }}
       style={tw.style(
         [

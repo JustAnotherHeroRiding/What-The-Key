@@ -31,19 +31,11 @@ Use the current tracks in the library as the seed for recommendations in a horiz
 - On the theory of the day widget, there should be a couple of examples such as position one of the scales, notes/interval columns, name of the theory topic
 - notes/intervals added #DONE 
 - name and description #DONE 
-- Format the name so that it is not in camelCase
-- Manually test to see if the correct type will be preselected with all 4 theory types
 
-#### Scale description
-Each scale object already has a short description, but we have to find it as we are only using an array of string/mode names
-- Let's add a short description for each scale
-## Incorrect keys
-- If a user notices that the key is not correct they can report it
-- Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
 ## Sound
 Record each note so that users can click on each fret to play the note and see these scales sound like.
 - Record each note for the first 16 frets #DONE 
-- Create a sound context to manage the playing of files globally
+- Create a sound context to manage the playing of files globally #DONE 
 
 ### Create a separate wav file for each note
 - High E string #DONE 
@@ -58,6 +50,19 @@ Record each note so that users can click on each fret to play the note and see t
 - Double clicks should stop the previous clip and start again #DONE 
 - Test and see if double click should stop the first clip or play it twice, try to make it feel as if you are playing a real guitar #DONE 
 - Only one note can be active per string
+- Fix notes with a click, identify badly cut notes
+
+
+#### Theory of the day continuation
+- Format the name so that it is not in camelCase
+- Manually test to see if the correct type will be preselected with all 4 theory types
+
+#### Scale description
+Each scale object already has a short description, but we have to find it as we are only using an array of string/mode names
+- Let's add a short description for each scale
+## Incorrect keys
+- If a user notices that the key is not correct they can report it
+- Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
 
 #### Playable Note/Intervals columns
 When displaying the note and interval columns for the selected scale, clicking on each column should play the appropriate note
@@ -113,6 +118,7 @@ Style the emails that supabase sends for email confirmation/reset password and e
 - Use a similar looking template for sign up and magic link emails
 ## Ui Motivation
 - Have a look at the Spotify and ChatGPT apps for possible improvements to my UI
+- Remove the one color/border cards and use similar cards such as spotify/windows with blurred rounded background and no border
 
 ## Rate Limiting
 - Currently users can spam the refresh button, limit it so that this is not possible

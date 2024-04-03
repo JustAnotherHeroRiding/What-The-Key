@@ -1,5 +1,4 @@
 import { AVPlaybackSource } from 'expo-av'
-import { Sound } from 'expo-av/build/Audio'
 
 export type NoteType = 'note' | 'interval'
 
@@ -26,12 +25,8 @@ export type AllSounds = {
 export interface SoundContextType {
   sounds: AllSounds
   loadSounds: (soundFiles: SoundFilesType) => Promise<void>
-  playSound: (
-    sound: Sound | undefined,
-    setSound: React.Dispatch<React.SetStateAction<Sound | undefined>>,
-    string: StringNames,
-    fret: FretNumber,
-  ) => Promise<void>
+  playSound: (string: StringNames, fret: FretNumber) => Promise<void>
+  stopSound: (string: StringNames, fret: FretNumber) => Promise<void>
 }
 
 export const soundFiles: SoundFilesType = {

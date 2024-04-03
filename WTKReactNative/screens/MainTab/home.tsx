@@ -130,7 +130,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
       >
         <View style={tw.style(`gap-2`)}>
-          <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Recently Opened</Text>
+          <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Recently Opened</Text>
           <TrackHistory type='latest' />
         </View>
       </LinearGradient>
@@ -141,7 +141,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
       >
         <View style={tw.style(`gap-2`)}>
-          <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Favorites</Text>
+          <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Favorites</Text>
           <TrackHistory type='favorites' />
         </View>
       </LinearGradient>
@@ -149,9 +149,8 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
+        style={tw.style(`border border-cream rounded-lg w-[95%] mt-[3%]`)}
       >
-        <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Theory of the Day</Text>
         <TheoryOfTheDay />
       </LinearGradient>
       <LinearGradient
@@ -160,7 +159,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         end={{ x: 0, y: 0 }}
         style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
       >
-        <Text style={tw.style(`text-slate-50 text-2xl font-bold`)}>Songs to Learn</Text>
+        <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Songs to Learn</Text>
 
         <TrackRecommendations />
       </LinearGradient>

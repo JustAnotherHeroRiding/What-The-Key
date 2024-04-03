@@ -81,7 +81,7 @@ function TrackRecommendations() {
               })
             }
             style={tw.style(
-              `flex-col border border-cream bg-zinc-900 rounded-md shadow-sm shadow-zinc-700 p-1 items-center justify-center gap-2 w-40`,
+              `flex-col bg-zinc-900 rounded-md shadow-sm shadow-zinc-700 p-1 items-center justify-center gap-2 w-40`,
             )}
           >
             <Image

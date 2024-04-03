@@ -67,7 +67,7 @@ function TrackHistory({ type }: { type: RecentlyOpenedType }) {
               })
             }
             style={tw.style(
-              `flex-col border border-cream rounded-md bg-zinc-900 shadow-sm shadow-zinc-700 p-1 items-center justify-center gap-2 w-40`,
+              `flex-col  rounded-md bg-zinc-900 shadow-sm shadow-zinc-700 p-1 items-center justify-center gap-2 w-40`,
             )}
           >
             <Image

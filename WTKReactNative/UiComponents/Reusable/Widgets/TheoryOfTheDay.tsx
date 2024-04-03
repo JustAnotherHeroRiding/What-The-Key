@@ -16,13 +16,9 @@ import { getScaleOrModeNotes, getSeventhNotes, getTriadNotes } from '../../../ut
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
+import { capitalizeFirstLetter } from '../../../utils/text-formatting'
 
-const allTheoryElements = [
-  ...Object.values(SCALES_DATA),
-  ...Object.values(MODES_DATA),
-  ...Object.values(TRIAD_SEVENTH),
-  // You can add arrays for triads, seventh chords, etc., in a similar manner
-]
+const allTheoryElements = [...Object.values(SCALES_DATA), ...Object.values(MODES_DATA), ...Object.values(TRIAD_SEVENTH)]
 
 function TheoryOfTheDay() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList['MainTab']>>()
@@ -66,40 +62,55 @@ function TheoryOfTheDay() {
   }, [])
 
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate('Study', {
-          // I need a better way to find the scale type of the theory
-          preselectedType:
-            theory?.name === 'triad' || theory?.name === 'seventh'
-              ? theory.name
-              : allScaleNames.includes(theory?.name as ScaleName)
-                ? 'scale'
-                : 'mode',
-          preselectedScale: theory?.name as ScaleName | ModeNames | 'seventh' | 'triad',
-        })
-      }
-    >
-      <View style={tw.style(`p-2`)}>
-        <Text style={tw.style(`text-slate-50 text-xl text-center`, { fontFamily: 'figtree-bold' })}>
-          {theory?.name === 'seventh' ? 'Seventh Chords' : theory?.name === 'triad' ? 'Triads' : theory?.name}
+    <View style={tw.style(`p-2`)}>
+      <View style={tw.style(`gap-2`)}>
+        <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Theory of the Day</Text>
+
+        <Text style={tw.style(`text-slate-50 text-2xl text-center`, { fontFamily: 'figtree-bold' })}>
+          {theory?.name === 'seventh'
+            ? 'Seventh Chords'
+            : theory?.name === 'triad'
+              ? 'Triads'
+              : capitalizeFirstLetter(theory?.name ?? '')}
         </Text>
-        <Text style={tw.style(`text-slate-50 text-xl text-center`, { fontFamily: 'figtree-bold' })}>
-          {theory?.description}
-        </Text>
-        <View style={tw.style(`flex-row gap-2 justify-center flex-wrap`)}>
-          {theory?.notes.map((note, index) => (
-            <View
-              key={`${note}-${index}`}
-              style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}
-            >
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{note}</Text>
-              <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{theory?.intervals[index]}</Text>
-            </View>
-          ))}
-        </View>
       </View>
-    </TouchableOpacity>
+      <Text style={tw.style(`text-slate-200 text-xl text-center`, { fontFamily: 'figtree-bold' })}>
+        {theory?.description}
+      </Text>
+      <View style={tw.style(`flex-row gap-2 justify-center flex-wrap my-2`)}>
+        {theory?.notes.map((note, index) => (
+          <View
+            key={`${note}-${index}`}
+            style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}
+          >
+            <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{note}</Text>
+            <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{theory?.intervals[index]}</Text>
+          </View>
+        ))}
+      </View>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('Study', {
+            // I need a better way to find the scale type of the theory
+            preselectedType:
+              theory?.name === 'triad' || theory?.name === 'seventh'
+                ? theory.name
+                : allScaleNames.includes(theory?.name as ScaleName)
+                  ? 'scale'
+                  : 'mode',
+            preselectedScale: theory?.name as ScaleName | ModeNames | 'seventh' | 'triad',
+          })
+        }
+      >
+        <Text
+          style={tw.style(`text-black p-1 rounded-lg text-2xl text-center bg-cream ml-auto`, {
+            fontFamily: 'figtree-bold',
+          })}
+        >
+          Learn it
+        </Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 

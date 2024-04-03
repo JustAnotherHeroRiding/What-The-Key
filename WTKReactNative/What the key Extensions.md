@@ -49,8 +49,9 @@ Record each note so that users can click on each fret to play the note and see t
 - Clicking on a fret will play the note #DONE 
 - Double clicks should stop the previous clip and start again #DONE 
 - Test and see if double click should stop the first clip or play it twice, try to make it feel as if you are playing a real guitar #DONE 
-- Only one note can be active per string
-- Fix notes with a click, identify badly cut notes
+- Only one note can be active per string #DONE 
+##### the `unloadAsync()` function from `expo-av` causes the click, the note clips themselves are good. Used a hack fix where i just mute the string but a better solution is needed
+- Fix notes with a click, identify badly cut notes #TODO
 
 
 #### Theory of the day continuation

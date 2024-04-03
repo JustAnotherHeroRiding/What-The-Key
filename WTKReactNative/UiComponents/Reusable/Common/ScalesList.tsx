@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { View, Text, FlatList, TextInput } from 'react-native'
+import { View, Text, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { renderRow, renderSeparator } from './FlatListHelpers'
 import {
@@ -11,8 +11,9 @@ import {
   scaleOrModeOptions,
 } from '../../../utils/consts/scales-consts-types'
 import _ from 'lodash'
-import { getScaleOrModeNotes, selectTriads } from '../../../utils/scales-and-modes'
-import { Mode } from '../../../utils/track-formating'
+import { getIntervalToFretMapping, getScaleOrModeNotes, selectTriads } from '../../../utils/scales-and-modes'
+import { IntervalNames, Mode } from '../../../utils/track-formating'
+import { useSounds } from '../../../utils/Context/SoundPlayer'
 
 interface ScalesListProps {
   scaleType: scaleOrModeOptions | 'triad'
@@ -24,6 +25,9 @@ interface ScalesListProps {
 function ScalesList({ scaleType, selectedKey, selectedOption, setSelectedOption }: ScalesListProps) {
   const [query, setQuery] = useState('')
   const [filteredOptions, setFilteredOptions] = useState<string[]>(allScaleNames)
+  const [intervalToFret, setIntervalToFret] = useState(getIntervalToFretMapping(selectedKey, 'B'))
+
+  const { playSound } = useSounds()
 
   useEffect(() => {
     handleSearch()
@@ -54,6 +58,7 @@ function ScalesList({ scaleType, selectedKey, selectedOption, setSelectedOption 
         selectScale(selectedOption.name as ScaleName | ModeNames)
       }
     }
+    setIntervalToFret(getIntervalToFretMapping(selectedKey, 'B'))
   }, [selectedKey, scaleType])
 
   const selectScale = (scale: ScaleName | ModeNames | null | Mode) => {
@@ -99,10 +104,13 @@ function ScalesList({ scaleType, selectedKey, selectedOption, setSelectedOption 
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={() => renderSeparator(2)}
         renderItem={({ item, index }) => (
-          <View style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}>
+          <TouchableOpacity
+            onPress={() => playSound('B', intervalToFret[selectedOption?.intervals[index] as IntervalNames])}
+            style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}
+          >
             <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
             <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{selectedOption?.intervals[index]}</Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>

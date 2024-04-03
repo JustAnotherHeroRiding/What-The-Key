@@ -24,17 +24,19 @@ import { RootStackParamList } from '../../../utils/types/nav-types'
 import { capitalizeFirstLetter } from '../../../utils/text-formatting'
 import { useSounds } from '../../../utils/Context/SoundPlayer'
 import { IntervalNames } from '../../../utils/track-formating'
-import { soundFiles } from '../../../utils/consts/soundFilesTypes'
+import { FretNumber, soundFiles } from '../../../utils/consts/soundFilesTypes'
 
 const allTheoryElements = [...Object.values(SCALES_DATA), ...Object.values(MODES_DATA), ...Object.values(TRIAD_SEVENTH)]
 
 function TheoryOfTheDay() {
+  const STRING = 'B'
+  const KEY = 'C'
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList['MainTab']>>()
   const [theory, setTheory] = useState<scaleNotesAndIntervalsExpanded | null>(null)
 
   const { playSound, loadSounds } = useSounds()
   // Hardcoded the B string as it seems to sound the best, the function allows to pick any key or string
-  const intervalToFret = getIntervalToFretMapping('C', 'B')
+  const intervalToFret = getIntervalToFretMapping(KEY, STRING)
 
   function getTheoryOfTheDay() {
     // Calculate a unique index for each day
@@ -49,13 +51,13 @@ function TheoryOfTheDay() {
     const theoryOfTheDay = allTheoryElements[index]
     let scaleNotes: scaleNotesAndIntervals
     if (theoryOfTheDay?.name.toLowerCase() === 'seventh') {
-      scaleNotes = getSeventhNotes('C', 'Major', true)
+      scaleNotes = getSeventhNotes(KEY, 'Major', true)
     } else if (theoryOfTheDay?.name.toLowerCase() === 'triad') {
-      scaleNotes = getTriadNotes('C', 'Major')
+      scaleNotes = getTriadNotes(KEY, 'Major')
     } else {
       const scaleType = allScaleNames.includes(theoryOfTheDay.name as ScaleName) ? 'scale' : 'mode'
       scaleNotes = getScaleOrModeNotes(
-        'C',
+        KEY,
         theoryOfTheDay.name as ScaleName | ModeNames,
         scaleType,
       ) as scaleNotesAndIntervals
@@ -93,7 +95,7 @@ function TheoryOfTheDay() {
       <View style={tw.style(`flex-row gap-2 justify-center flex-wrap my-2`)}>
         {theory?.notes.map((note, index) => (
           <TouchableOpacity
-            onPressIn={() => {
+            onPress={() => {
               playSound('B', intervalToFret[theory?.intervals[index] as IntervalNames])
             }}
             key={`${note}-${index}`}
@@ -119,7 +121,7 @@ function TheoryOfTheDay() {
         }
       >
         <Text
-          style={tw.style(`text-black p-1 rounded-lg text-2xl text-center bg-cream ml-auto`, {
+          style={tw.style(`text-black p-2 rounded-lg text-xl text-center bg-cream ml-auto`, {
             fontFamily: 'figtree-bold',
           })}
         >

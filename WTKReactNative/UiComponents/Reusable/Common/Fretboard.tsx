@@ -173,7 +173,7 @@ const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, isLands
 
   return (
     <TouchableOpacity
-      onPressIn={() => {
+      onPress={() => {
         handlePressIn()
       }}
       style={tw.style(

@@ -21,10 +21,10 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
-import { capitalizeFirstLetter } from '../../../utils/text-formatting'
 import { useSounds } from '../../../utils/Context/SoundPlayer'
 import { IntervalNames } from '../../../utils/track-formating'
-import { FretNumber, soundFiles } from '../../../utils/consts/soundFilesTypes'
+import { soundFiles } from '../../../utils/consts/soundFilesTypes'
+import { splitJoinAndCapitalizeFirstLetter } from '../../../utils/split-camel-case'
 
 const allTheoryElements = [...Object.values(SCALES_DATA), ...Object.values(MODES_DATA), ...Object.values(TRIAD_SEVENTH)]
 
@@ -68,6 +68,7 @@ function TheoryOfTheDay() {
       notes: scaleNotes?.notes ?? [],
       intervals: scaleNotes?.intervals ?? [],
     }
+    //setTheory(theoryNew)
     setTheory(theoryNew)
   }
 
@@ -86,7 +87,7 @@ function TheoryOfTheDay() {
             ? 'Seventh Chords'
             : theory?.name === 'triad'
               ? 'Triads'
-              : capitalizeFirstLetter(theory?.name ?? '')}
+              : splitJoinAndCapitalizeFirstLetter(theory?.name ?? '')}
         </Text>
       </View>
       <Text style={tw.style(`text-slate-200 text-xl text-center`, { fontFamily: 'figtree-bold' })}>

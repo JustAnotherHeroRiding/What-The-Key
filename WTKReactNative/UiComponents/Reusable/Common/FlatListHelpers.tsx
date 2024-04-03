@@ -4,6 +4,7 @@ import { ModeNames, ScaleName } from '../../../utils/consts/scales-consts-types'
 import React from 'react'
 import { capitalizeFirstLetter } from '../../../utils/text-formatting'
 import { Mode } from '../../../utils/track-formating'
+import { splitJoinAndCapitalizeFirstLetter } from '../../../utils/split-camel-case'
 
 export type SelectScaleFunction = (scale: ScaleName | ModeNames | null | Mode) => void
 
@@ -21,7 +22,7 @@ export const renderRow = ({ item, index, selectScale, selectedScale }: RenderRow
       `py-3 px-3  ${item === selectedScale ? 'bg-beigeCustom' : 'bg-cream'} rounded-md border-cream border`,
     )}
   >
-    <Text style={tw.style('text-xl', { fontFamily: 'figtree-bold' })}>{capitalizeFirstLetter(item)}</Text>
+    <Text style={tw.style('text-xl', { fontFamily: 'figtree-bold' })}>{splitJoinAndCapitalizeFirstLetter(item)}</Text>
   </TouchableOpacity>
 )
 

@@ -53,20 +53,23 @@ Record each note so that users can click on each fret to play the note and see t
 ##### the `unloadAsync()` function from `expo-av` causes the click, the note clips themselves are good. Used a hack fix where i just mute the string but a better solution is needed
 - Fix notes with a click, identify badly cut notes #TODO
 
+#### Playable Note/Intervals columns
+When displaying the note and interval columns for the selected scale, clicking on each column should play the appropriate note #DONE 
+
 
 #### Theory of the day continuation
-- Format the name so that it is not in camelCase
-- Manually test to see if the correct type will be preselected with all 4 theory types
+- Format the name so that it is not in camelCase #DONE 
+- Manually test to see if the correct type will be preselected with all 4 theory types #TODO
 
-#### Scale description
+
+## Continue here
+### Scale description
 Each scale object already has a short description, but we have to find it as we are only using an array of string/mode names
 - Let's add a short description for each scale
 ## Incorrect keys
 - If a user notices that the key is not correct they can report it
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
 
-#### Playable Note/Intervals columns
-When displaying the note and interval columns for the selected scale, clicking on each column should play the appropriate note
 
 
 ## Circle of Fifths

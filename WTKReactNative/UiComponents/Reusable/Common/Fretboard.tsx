@@ -5,10 +5,8 @@ import { NOTES as chromaticScale, intervalNamesSingle } from '../../../utils/tra
 import { CustomButton } from './CustomButtom'
 import { useOrientation } from '../../../utils/Context/OrientationProvider'
 import { scaleNotesAndIntervals } from '../../../utils/consts/scales-consts-types'
-import { Sound } from 'expo-av/build/Audio'
 import { useSounds } from '../../../utils/Context/SoundPlayer'
-import { StringNames, FretNumber, NoteType, soundFiles, SoundFilesType } from '../../../utils/consts/soundFilesTypes'
-import { AVPlaybackSource, AVPlaybackStatusSuccess, Audio } from 'expo-av'
+import { StringNames, FretNumber, NoteType, soundFiles } from '../../../utils/consts/soundFilesTypes'
 
 const getNoteAtFret = (openStringNote: string, fret: number, key: string, noteType: 'interval' | 'note'): string => {
   // we are passing a lowercase 'e' which returned duplicated notes from the b string

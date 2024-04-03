@@ -12,10 +12,44 @@ import {
   seventhLookup,
   twelveBarsLookup,
 } from './consts/scales-consts-types'
-import { Mode, NOTES, intervalNamesSingle } from './track-formating'
+import { FretNumber, StringNames } from './consts/soundFilesTypes'
+import { IntervalNames, Mode, NOTES, intervalNamesSingle } from './track-formating'
 
 const getIntervalName = (interval: number): string => {
   return interval >= 0 && interval < intervalNamesSingle.length ? intervalNamesSingle[interval] : ''
+}
+
+type StringNoteOrder = Record<StringNames, string[]>
+
+const getStringNoteOrder: StringNoteOrder = {
+  E: ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#'],
+  A: ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'],
+  D: ['D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#'],
+  G: ['G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#'],
+  B: ['B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#'],
+  e: ['B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#'],
+}
+
+export const getIntervalToFretMapping = (
+  startingNote: string,
+  string: StringNames,
+): Record<IntervalNames, FretNumber> => {
+  const notes = getStringNoteOrder[string]
+  const startIndex = notes.indexOf(startingNote)
+
+  if (startIndex === -1) {
+    throw new Error(`Invalid starting note for string ${string}: ${startingNote}`)
+  }
+
+  const mapping: Record<IntervalNames, FretNumber> = {} as Record<IntervalNames, FretNumber>
+
+  intervalNamesSingle.forEach((interval, index) => {
+    const noteIndex = (startIndex + index) % notes.length
+    const fretNumber = noteIndex === 0 ? 12 : (noteIndex as FretNumber) // Wrap around to 12 for the note B
+    mapping[interval] = fretNumber
+  })
+
+  return mapping
 }
 
 export const getScaleOrModeNotes = (

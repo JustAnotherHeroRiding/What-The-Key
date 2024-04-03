@@ -52,7 +52,6 @@ export const SoundProvider = ({ children }: SoundPlayerProps) => {
           activeSoundsRef.current[string] = undefined
         }
       })
-      // Consider handling unload/release here if it's not managed globally
     } else {
       console.warn(`No sound file loaded for string ${string} and fret ${fret}`)
     }

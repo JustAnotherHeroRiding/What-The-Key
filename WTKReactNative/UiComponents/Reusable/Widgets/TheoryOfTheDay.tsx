@@ -12,17 +12,29 @@ import {
   allScaleNames,
 } from '../../../utils/consts/scales-consts-types'
 import tw from '../../../utils/config/tailwindRN'
-import { getScaleOrModeNotes, getSeventhNotes, getTriadNotes } from '../../../utils/scales-and-modes'
+import {
+  getIntervalToFretMapping,
+  getScaleOrModeNotes,
+  getSeventhNotes,
+  getTriadNotes,
+} from '../../../utils/scales-and-modes'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
 import { capitalizeFirstLetter } from '../../../utils/text-formatting'
+import { useSounds } from '../../../utils/Context/SoundPlayer'
+import { IntervalNames } from '../../../utils/track-formating'
+import { soundFiles } from '../../../utils/consts/soundFilesTypes'
 
 const allTheoryElements = [...Object.values(SCALES_DATA), ...Object.values(MODES_DATA), ...Object.values(TRIAD_SEVENTH)]
 
 function TheoryOfTheDay() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList['MainTab']>>()
   const [theory, setTheory] = useState<scaleNotesAndIntervalsExpanded | null>(null)
+
+  const { playSound, loadSounds } = useSounds()
+  // Hardcoded the B string as it seems to sound the best, the function allows to pick any key or string
+  const intervalToFret = getIntervalToFretMapping('C', 'B')
 
   function getTheoryOfTheDay() {
     // Calculate a unique index for each day
@@ -59,6 +71,7 @@ function TheoryOfTheDay() {
 
   useEffect(() => {
     getTheoryOfTheDay()
+    loadSounds(soundFiles)
   }, [])
 
   return (
@@ -79,13 +92,16 @@ function TheoryOfTheDay() {
       </Text>
       <View style={tw.style(`flex-row gap-2 justify-center flex-wrap my-2`)}>
         {theory?.notes.map((note, index) => (
-          <View
+          <TouchableOpacity
+            onPressIn={() => {
+              playSound('B', intervalToFret[theory?.intervals[index] as IntervalNames])
+            }}
             key={`${note}-${index}`}
             style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}
           >
             <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{note}</Text>
             <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{theory?.intervals[index]}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
       <TouchableOpacity
@@ -107,7 +123,7 @@ function TheoryOfTheDay() {
             fontFamily: 'figtree-bold',
           })}
         >
-          Learn it
+          Learn
         </Text>
       </TouchableOpacity>
     </View>

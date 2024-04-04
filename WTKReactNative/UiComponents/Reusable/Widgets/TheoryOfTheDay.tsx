@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { Text } from 'react-native-elements'
 import {
-  SCALES_DATA,
-  MODES_DATA,
-  TRIAD_SEVENTH,
   scaleNotesAndIntervals,
   scaleNotesAndIntervalsExpanded,
   ScaleName,
   ModeNames,
   allScaleNames,
+  allTheoryElements,
 } from '../../../utils/consts/scales-consts-types'
 import tw from '../../../utils/config/tailwindRN'
 import {
@@ -24,9 +22,7 @@ import { RootStackParamList } from '../../../utils/types/nav-types'
 import { useSounds } from '../../../utils/Context/SoundPlayer'
 import { IntervalNames } from '../../../utils/track-formating'
 import { soundFiles } from '../../../utils/consts/soundFilesTypes'
-import { splitJoinAndCapitalizeFirstLetter } from '../../../utils/split-camel-case'
-
-const allTheoryElements = [...Object.values(SCALES_DATA), ...Object.values(MODES_DATA), ...Object.values(TRIAD_SEVENTH)]
+import { splitAndJoinAndCapitalizeFirstLetter } from '../../../utils/split-camel-case'
 
 function TheoryOfTheDay() {
   const STRING = 'B'
@@ -87,7 +83,7 @@ function TheoryOfTheDay() {
             ? 'Seventh Chords'
             : theory?.name === 'triad'
               ? 'Triads'
-              : splitJoinAndCapitalizeFirstLetter(theory?.name ?? '')}
+              : splitAndJoinAndCapitalizeFirstLetter(theory?.name ?? '')}
         </Text>
       </View>
       <Text style={tw.style(`text-slate-200 text-xl text-center`, { fontFamily: 'figtree-bold' })}>

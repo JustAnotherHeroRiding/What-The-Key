@@ -51,6 +51,7 @@ export interface scaleNotesAndIntervals {
   name: ScaleName | ModeNames | Mode | 'triad' | 'seventh'
   notes: string[]
   intervals: string[]
+  description: string
 }
 
 export interface scaleNotesAndIntervalsExpanded extends scaleNotesAndIntervals {
@@ -196,3 +197,9 @@ export const seventhLookup: SeventhData = {
   Major: [0, 4, 10],
   Minor: [0, 3, 10],
 }
+
+export const allTheoryElements = [
+  ...Object.values(SCALES_DATA),
+  ...Object.values(MODES_DATA),
+  ...Object.values(TRIAD_SEVENTH),
+]

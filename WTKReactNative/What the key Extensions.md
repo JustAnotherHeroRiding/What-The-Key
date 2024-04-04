@@ -62,13 +62,13 @@ When displaying the note and interval columns for the selected scale, clicking o
 - Manually test to see if the correct type will be preselected with all 4 theory types #TODO
 
 
-## Continue here
 ### Scale description
 Each scale object already has a short description, but we have to find it as we are only using an array of string/mode names
 - Let's add a short description for each scale
 ## Incorrect keys
 - If a user notices that the key is not correct they can report it
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
+- User can either locally set his key or browse for user suggested keys
 
 
 

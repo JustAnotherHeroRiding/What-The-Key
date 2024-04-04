@@ -5,6 +5,6 @@ export const splitAndJoinCamelCase = (name: string): string => {
   return splitName.join(' ')
 }
 
-export const splitJoinAndCapitalizeFirstLetter = (name: string): string => {
+export const splitAndJoinAndCapitalizeFirstLetter = (name: string): string => {
   return splitAndJoinCamelCase(capitalizeFirstLetter(name))
 }

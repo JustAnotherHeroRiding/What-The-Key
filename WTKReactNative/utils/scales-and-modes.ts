@@ -81,6 +81,7 @@ export const getScaleOrModeNotes = (
         name: scaleName,
         notes: [key],
         intervals: [],
+        description: scaleData.description,
       }
 
       // Iterate over the intervals, calculating notes and cumulative intervals
@@ -125,6 +126,7 @@ export const getTriadNotes = (key: string, mode: Mode): scaleNotesAndIntervals =
     name: mode,
     notes,
     intervals: intervalNames,
+    description: `A triad is a chord consisting of the root, a major or minor third and the perfect fifth. `,
   }
 }
 
@@ -164,6 +166,8 @@ export const getSeventhNotes = (key: string, mode: Mode = 'Major', addFifth: boo
     name: mode,
     notes,
     intervals: intervalNames,
+    description: `A seventh chord is a four-note chord consisting of a root, 
+    a major or minor third, a perfect fifth(can be left out), and a seventh interval.`,
   }
 }
 

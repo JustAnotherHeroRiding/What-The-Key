@@ -125,6 +125,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
           <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
             {capitalizeFirstLetter(selectedOption?.name ?? '')}
           </Text>
+          <Text style={tw.style(`text-slate-200`)}>{selectedOption?.description}</Text>
         </View>
 
         {(scaleType === 'triad' || scaleType === 'seventh') && (

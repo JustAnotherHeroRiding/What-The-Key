@@ -16,6 +16,7 @@ import {
   isTrackAdded,
 } from '../utils/types/track-service-types'
 import { apiUrl } from '../utils/consts/production'
+import { displayToast } from '../utils/toasts'
 
 export type RecentlyOpenedType = 'latest' | 'favorites'
 
@@ -54,34 +55,18 @@ const useTrackService = () => {
              */
       queryClient.invalidateQueries({ queryKey: ['library'] })
       queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
-      Toast.show(
-        `Track successfully added to the ${variables.source === 'recycleBin' ? 'Deleted Tracks' : 'Library'}`,
-        {
-          duration: Toast.durations.LONG,
-          position: -40,
-          shadow: true,
-          animation: true,
-          hideOnPress: true,
-          delay: 0,
-        },
-      )
+      displayToast({
+        message: `Track successfully added to the ${variables.source === 'recycleBin' ? 'Deleted Tracks' : 'Library'}`,
+      })
     },
     onError: (error: Error) => {
-      // Handle error
-      Toast.show(
-        error instanceof Error
-          ? 'Track could not be added, are you logged in or have you already added this track?'
-          : 'An Unknown error occured.',
-        {
-          duration: Toast.durations.LONG,
-          position: -40,
-          shadow: true,
-          animation: true,
-          hideOnPress: true,
-          delay: 0,
-          backgroundColor: 'red',
-        },
-      )
+      displayToast({
+        message:
+          error instanceof Error
+            ? 'Track could not be added, are you logged in or have you already added this track?'
+            : 'An Unknown error occured.',
+        backgroundColor: 'error',
+      })
     },
   })
 
@@ -178,30 +163,15 @@ const useTrackService = () => {
   const { mutate: deleteTrackMut, isPending: isDeletingTrack } = useMutation({
     mutationFn: deleteTrack,
     onSuccess: (_, variables) => {
-      Toast.show(`Track has been successfully deleted.`, {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      })
+      displayToast({ message: `Track has been successfully deleted.` })
       queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
     },
     onError: (error: Error) => {
       // Handle error
-      Toast.show(
-        error instanceof Error ? `Track could not be deleted, please try again` : 'An Unknown error occured.',
-        {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.BOTTOM,
-          shadow: true,
-          animation: true,
-          hideOnPress: true,
-          delay: 0,
-          backgroundColor: 'red',
-        },
-      )
+      displayToast({
+        message: error instanceof Error ? `Track could not be deleted, please try again` : 'An Unknown error occured.',
+        backgroundColor: 'error',
+      })
     },
   })
 
@@ -230,26 +200,12 @@ const useTrackService = () => {
     mutationFn: addTab,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['singleTrack', variables.trackId] })
-      // Which cache should be invalidated here? I think just the single track cache with the track id, or maybe the url
-      Toast.show(`Tab successfully added!`, {
-        duration: Toast.durations.LONG,
-        position: -40,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      })
+      displayToast({ message: `Tab successfully added!`, backgroundColor: 'success' })
     },
     onError: (error: Error) => {
-      // Handle error
-      Toast.show(error instanceof Error ? 'Tab could not be added, please try again?' : 'An Unknown error occured.', {
-        duration: Toast.durations.LONG,
-        position: -40,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-        backgroundColor: 'red',
+      displayToast({
+        message: error instanceof Error ? 'Tab could not be added, please try again?' : 'An Unknown error occured.',
+        backgroundColor: 'error',
       })
     },
   })

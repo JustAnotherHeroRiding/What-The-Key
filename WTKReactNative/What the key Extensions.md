@@ -80,11 +80,20 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 ##### Limit the number of tracks in the library to encourage focus on a couple of songs
 - Add the counter #DONE 
 - Take the current number of tracks to display #DONE 
-- Change color to orange at 15
-- Change to red at 20
-- Stop add track requests if this is overflowed
-- This will need to be a global state
+- Change color to orange at 15 #DONE 
+- Change to red at 20 #DONE 
+##### Multiple ways to handle the global access to the number of added tracks.
+- Add a backend endpoint that will simply return the number of tracks that a user has added #DONE 
+- Reuse the profile profile context to access the profile settings #DONE 
+- Extend the user model to include the `trackLimitEnabled` flag #DONE 
+- Stop add track requests if the limit is reached
 - Add settings in the profile to allow users to disable the limit
+- Add an info sign next to the limit to explain what it does with a little pop up modal
+
+
+### Single track update
+- When a track is added from the single track page, update the save button to an open tab button
+
 
 ## Filters and search
 - When in the Lib/Bin screen, users can apply filters or search tracks in the library
@@ -109,6 +118,7 @@ If a user notices that the key is not correct they can report it
 
 ## The Lick
 - On the study page, add the lick in each key as a sound sample
+- reuse the already included files and play them at an interval
 ## Play mode
 When we click play, we start the play along experience
 - Use the bars and add some sort of indicator to show the progress
@@ -142,9 +152,6 @@ Style the emails that supabase sends for email confirmation/reset password and e
 ## Rate Limiting
 - Currently users can spam the refresh button, limit it so that this is not possible
 
-## Zustand
-- If react query is not enough, use zustand to manage global state
-
 ## Chord Progressions
 - Chord Progressions - This one I'm not too sure about. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.
 
@@ -154,4 +161,5 @@ Allow users to select 2 or more scales at once, displaying multiple fretboards. 
 
 ## Highlight possible voicings
 - When rendering the fretboard for 7th chords or triads for example, I should do a simple check for possible shapes that can be played. These can be notes that are on adjacent frets, no more than 3 for example with triads. I will have to work on the implementation until it will helpful 
+- Only include 3 adjacent strings
 

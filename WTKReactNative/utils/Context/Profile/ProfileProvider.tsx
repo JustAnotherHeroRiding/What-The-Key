@@ -1,39 +1,57 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { SessionContext } from '../Session/SessionContext';
-import { supabase } from '../../config/supabase';
+import React, { createContext, useState, useContext, useEffect } from 'react'
+import { SessionContext } from '../Session/SessionContext'
+import { supabase } from '../../config/supabase'
 
 interface ProfilePicContextType {
-    profilePicUrl: string | null;
-    setProfilePicUrl: React.Dispatch<React.SetStateAction<string | null>>;
+  profilePicUrl: string | null
+  setProfilePicUrl: React.Dispatch<React.SetStateAction<string | null>>
+  trackLimitEnabled: boolean
+  setTrackLimitEnabled: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const ProfilePicContext = createContext<ProfilePicContextType>({
-    profilePicUrl: null,
-    setProfilePicUrl: () => { }
-});
+  profilePicUrl: null,
+  setProfilePicUrl: () => {},
+  trackLimitEnabled: false,
+  setTrackLimitEnabled: () => {},
+})
 
 interface ProfilePicProviderProps {
-    children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export const ProfilePicProvider = ({ children }: ProfilePicProviderProps) => {
-    const [profilePicUrl, setProfilePicUrl] = useState<string | null>(null);
-    const session = useContext(SessionContext);
+  const [profilePicUrl, setProfilePicUrl] = useState<string | null>(null)
+  const [trackLimitEnabled, setTrackLimitEnabled] = useState(false)
+  const session = useContext(SessionContext)
 
-    useEffect(() => {
+  useEffect(() => {
+    if (session) {
+      // If this check is removed the profile pic is not fetched correctly
+      if (!profilePicUrl) {
+        supabase
+          .from('profiles')
+          .select('avatar_url')
+          .eq('id', session.user.id)
+          .single()
+          .then(data => {
+            setProfilePicUrl(data.data?.avatar_url)
+          })
+      }
+      supabase
+        .from('profiles')
+        .select('trackLimitEnabled')
+        .eq('id', session.user.id)
+        .single()
+        .then(data => {
+          setProfilePicUrl(data.data?.trackLimitEnabled)
+        })
+    }
+  }, [session])
 
-        if (session && !profilePicUrl) {
-            supabase.from('profiles').select('avatar_url').eq('id', session.user.id).single().then((data) => {
-                setProfilePicUrl(data.data?.avatar_url)
-            })
-
-        }
-    },
-        [session])
-
-    return (
-        <ProfilePicContext.Provider value={{ profilePicUrl, setProfilePicUrl }}>
-            {children}
-        </ProfilePicContext.Provider>
-    );
-};
+  return (
+    <ProfilePicContext.Provider value={{ profilePicUrl, setProfilePicUrl, trackLimitEnabled, setTrackLimitEnabled }}>
+      {children}
+    </ProfilePicContext.Provider>
+  )
+}

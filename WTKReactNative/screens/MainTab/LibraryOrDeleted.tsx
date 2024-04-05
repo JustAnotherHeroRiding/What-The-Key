@@ -161,13 +161,15 @@ const TitleHeader = function ({ type, numberOfTracks }: { type: dataSource; numb
       >
         {TitleCaseMap[type]}
       </Text>
-      <Text
-        style={tw.style(`${getTextColor()} absolute right-2 text-xl py-4 text-center`, {
-          fontFamily: 'figtree-bold',
-        })}
-      >
-        {numberOfTracks}/25
-      </Text>
+      {type === 'library' && (
+        <Text
+          style={tw.style(`${getTextColor()} absolute right-2 text-xl py-4 text-center`, {
+            fontFamily: 'figtree-bold',
+          })}
+        >
+          {numberOfTracks}/25
+        </Text>
+      )}
     </View>
   )
 }

@@ -10,5 +10,6 @@ export declare class UserService {
         full_name: string;
         avatar_url: string;
         website: string;
+        trackLimitEnabled: boolean;
     }>;
 }

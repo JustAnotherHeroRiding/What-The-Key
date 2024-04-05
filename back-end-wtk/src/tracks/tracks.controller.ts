@@ -64,6 +64,38 @@ export class TrackController {
     }
   }
 
+  @Get('getNumberOfTracks')
+  @ApiOperation({
+    summary: 'Get number of tracks',
+    description:
+      'Get the number of tracks added for a user from either the library or recycle bin.',
+  })
+  @ApiQuery({
+    name: 'userId',
+    type: String,
+    required: true,
+    description: 'User ID',
+  })
+  @ApiQuery({
+    name: 'source',
+    enum: ['library', 'recycleBin'],
+    required: true,
+    description: 'Source of the tracks',
+  })
+  @ApiResponse({ status: 200, description: 'List of tracks' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  async getNumberOfTracks(
+    @Query('userId') userId: string,
+    @Query('source') source: 'library' | 'recycleBin',
+  ) {
+    try {
+      const tracks = await this.trackService.getNumberOfTracks(userId, source);
+      return tracks;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
   @Post('addTrack')
   @ApiOperation({
     summary: 'Add Track',

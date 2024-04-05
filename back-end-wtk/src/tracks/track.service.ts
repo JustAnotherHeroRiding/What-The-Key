@@ -137,6 +137,34 @@ export class TrackService {
     }
   }
 
+  async getNumberOfTracks(
+    userId: string,
+    source: 'library' | 'recycleBin',
+  ): Promise<number> {
+    const user = await this.ensureUserExists(userId);
+
+    if (!user) {
+      throw new Error('User not found, cannot fetch tracks.');
+    }
+    let numberOfTracks: number;
+
+    if (source === 'library') {
+      numberOfTracks = await this.prisma.libraryTrack.count({
+        where: { userId: user.id },
+      });
+    } else if (source === 'recycleBin') {
+      numberOfTracks = await this.prisma.recycleBinTrack.count({
+        where: { userId: user.id },
+      });
+    } else {
+      throw new Error(
+        'Please provide the correct source (library or recycleBin).',
+      );
+    }
+
+    return numberOfTracks;
+  }
+
   async addTabToTrack(
     trackId: string,
     userId: string,

@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { supabase } from '../../../utils/config/supabase'
-import { View, Alert } from 'react-native'
-import { Input } from 'react-native-elements'
+import { View, Alert, Text } from 'react-native'
+import { Input, Switch } from 'react-native-elements'
 import { Session } from '@supabase/supabase-js'
 import tw from '../../../utils/config/tailwindRN'
 import { CustomButton } from '../../Reusable/Common/CustomButtom'
 import Avatar from './Avatar'
 import { ProfilePicContext } from '../../../utils/Context/Profile/ProfileProvider'
 import { LinearGradient } from 'expo-linear-gradient'
+import colors from '../../../assets/colors'
 export interface Profile {
   id?: string
   username: string
   avatar_url: string
   full_name: string
+  trackLimitEnabled: boolean
   updated_at: Date
 }
 
@@ -21,6 +23,7 @@ export default function Account({ session }: { session: Session }) {
   const [username, setUsername] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
   const [fullName, setFullName] = useState('')
+  const [trackLimitEnabled, setTrackLimitEnabled] = useState(false)
 
   const { setProfilePicUrl } = useContext(ProfilePicContext)
 
@@ -35,7 +38,7 @@ export default function Account({ session }: { session: Session }) {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, avatar_url, full_name`)
+        .select(`username, avatar_url, full_name, trackLimitEnabled`)
         .eq('id', session?.user.id)
         .single()
       if (error && status !== 406) {
@@ -46,6 +49,7 @@ export default function Account({ session }: { session: Session }) {
         setUsername(data.username)
         setAvatarUrl(data.avatar_url)
         setFullName(data.full_name)
+        setTrackLimitEnabled(data.trackLimitEnabled)
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -60,10 +64,12 @@ export default function Account({ session }: { session: Session }) {
     username,
     avatar_url,
     full_name,
+    trackLimitEnabled,
   }: {
     username: string
     avatar_url: string
     full_name: string
+    trackLimitEnabled: boolean
   }) {
     try {
       setLoading(true)
@@ -74,16 +80,14 @@ export default function Account({ session }: { session: Session }) {
         username,
         avatar_url,
         full_name,
+        trackLimitEnabled,
         updated_at: new Date(),
       }
-
-      console.log('Updating profile with:', updates) // Log the data being sent
 
       const data = await supabase
         .from('profiles')
         .upsert(updates)
         .then(data => {
-          console.log('Supabase response:', data) // Log the response from Supabase
           if (Error) {
             throw Error
           }
@@ -112,7 +116,7 @@ export default function Account({ session }: { session: Session }) {
           onUpload={(url: string) => {
             setAvatarUrl(url)
             setProfilePicUrl(url)
-            updateProfile({ username, avatar_url: url, full_name: fullName })
+            updateProfile({ username, avatar_url: url, full_name: fullName, trackLimitEnabled: trackLimitEnabled })
           }}
           location='profile'
         />
@@ -144,16 +148,29 @@ export default function Account({ session }: { session: Session }) {
           onChangeText={text => setFullName(text)}
         />
       </View>
-      <View style={tw.style(`self-stretch py-4 mt-4`)}>
+      <View style={tw.style(`flex-col w-full items-center`)}>
+        <View style={tw.style(`flex-col gap-2`)}>
+          <Text style={tw.style(`text-slate-300 text-lg`, { fontFamily: 'figtree-bold' })}>Track Limit</Text>
+          <Text style={tw.style(`text-slate-100 `)}>
+            Allows you to add more than 25 tracks to the library. My suggestion is to keep it off for better focus.
+          </Text>
+        </View>
+        <Switch
+          thumbColor={colors.beigeCustom}
+          trackColor={{ false: colors.slate500, true: colors.cream }}
+          value={trackLimitEnabled}
+          onValueChange={() => setTrackLimitEnabled(!trackLimitEnabled)}
+          style={{ transform: [{ scaleX: 1.8 }, { scaleY: 1.8 }] }}
+        />
+      </View>
+      <View style={tw.style(`flex-row gap-4`)}>
         <CustomButton
           title={loading ? 'Loading ...' : 'Update'}
-          onPress={() => updateProfile({ username, avatar_url: avatarUrl, full_name: fullName })}
+          onPress={() => updateProfile({ username, avatar_url: avatarUrl, full_name: fullName, trackLimitEnabled })}
           txtStyle={tw`text-black`}
           btnStyle={tw`bg-cream`}
           disabled={loading}
         />
-      </View>
-      <View style={tw.style(`self-stretch`)}>
         <CustomButton
           title='Sign Out'
           onPress={() => {

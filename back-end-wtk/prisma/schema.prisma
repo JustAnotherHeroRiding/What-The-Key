@@ -356,12 +356,13 @@ model users {
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model profiles {
-  id         String    @id @db.Uuid
-  updated_at DateTime? @db.Timestamptz(6)
-  username   String?   @unique
-  full_name  String?
-  avatar_url String?
-  website    String?
+  id                String    @id @db.Uuid
+  updated_at        DateTime? @db.Timestamptz(6)
+  username          String?   @unique
+  full_name         String?
+  avatar_url        String?
+  website           String?
+  trackLimitEnabled Boolean   @default(false)
 
   @@schema("public")
 }

@@ -32,6 +32,15 @@ let TrackController = class TrackController {
             throw new common_1.InternalServerErrorException(error.message);
         }
     }
+    async getNumberOfTracks(userId, source) {
+        try {
+            const tracks = await this.trackService.getNumberOfTracks(userId, source);
+            return tracks;
+        }
+        catch (error) {
+            throw new common_1.InternalServerErrorException(error.message);
+        }
+    }
     async addTrack(userId, trackId, source) {
         try {
             const track = await this.trackService.addTrackToUserLibraryOrBin(trackId, userId, source);
@@ -123,6 +132,32 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "getTracks", null);
+__decorate([
+    (0, common_1.Get)('getNumberOfTracks'),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Get number of tracks',
+        description: 'Get the number of tracks added for a user from either the library or recycle bin.',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'userId',
+        type: String,
+        required: true,
+        description: 'User ID',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'source',
+        enum: ['library', 'recycleBin'],
+        required: true,
+        description: 'Source of the tracks',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of tracks' }),
+    (0, swagger_1.ApiResponse)({ status: 500, description: 'Internal server error' }),
+    __param(0, (0, common_1.Query)('userId')),
+    __param(1, (0, common_1.Query)('source')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], TrackController.prototype, "getNumberOfTracks", null);
 __decorate([
     (0, common_1.Post)('addTrack'),
     (0, swagger_1.ApiOperation)({

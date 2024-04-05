@@ -10,6 +10,7 @@ export declare class TrackController {
         libraryUserId: number;
         recycleBinUserId: number;
     }[]>;
+    getNumberOfTracks(userId: string, source: 'library' | 'recycleBin'): Promise<number>;
     addTrack(userId: string, trackId: string, source: 'library' | 'recycleBin'): Promise<{
         id: string;
         libraryUserId: number;

@@ -101,6 +101,27 @@ let TrackService = class TrackService {
             throw new Error('Please provide the correct source(library of recycleBin).');
         }
     }
+    async getNumberOfTracks(userId, source) {
+        const user = await this.ensureUserExists(userId);
+        if (!user) {
+            throw new Error('User not found, cannot fetch tracks.');
+        }
+        let numberOfTracks;
+        if (source === 'library') {
+            numberOfTracks = await this.prisma.libraryTrack.count({
+                where: { userId: user.id },
+            });
+        }
+        else if (source === 'recycleBin') {
+            numberOfTracks = await this.prisma.recycleBinTrack.count({
+                where: { userId: user.id },
+            });
+        }
+        else {
+            throw new Error('Please provide the correct source (library or recycleBin).');
+        }
+        return numberOfTracks;
+    }
     async addTabToTrack(trackId, userId, tabUrl) {
         const user = await this.ensureUserExists(userId);
         if (!user) {

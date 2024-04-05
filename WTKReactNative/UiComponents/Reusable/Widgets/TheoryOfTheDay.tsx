@@ -20,9 +20,9 @@ import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
 import { useSounds } from '../../../utils/Context/SoundPlayer'
-import { IntervalNames } from '../../../utils/track-formating'
 import { soundFiles } from '../../../utils/consts/soundFilesTypes'
-import { splitAndJoinAndCapitalizeFirstLetter } from '../../../utils/split-camel-case'
+import { splitAndJoinAndCapitalizeFirstLetter } from '../../../utils/formating/split-camel-case'
+import NoteIntervalColumns from '../Theory/NoteIntervalColumns'
 
 function TheoryOfTheDay() {
   const STRING = 'B'
@@ -90,18 +90,7 @@ function TheoryOfTheDay() {
         {theory?.description}
       </Text>
       <View style={tw.style(`flex-row gap-2 justify-center flex-wrap my-2`)}>
-        {theory?.notes.map((note, index) => (
-          <TouchableOpacity
-            onPress={() => {
-              playSound('B', intervalToFret[theory?.intervals[index] as IntervalNames])
-            }}
-            key={`${note}-${index}`}
-            style={tw.style(`p-1 bg-beigeCustom  justify-center items-center rounded-md border-cream border `)}
-          >
-            <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{note}</Text>
-            <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{theory?.intervals[index]}</Text>
-          </TouchableOpacity>
-        ))}
+        <NoteIntervalColumns selectedOption={theory} intervalToFret={intervalToFret} />
       </View>
       <TouchableOpacity
         onPress={() =>

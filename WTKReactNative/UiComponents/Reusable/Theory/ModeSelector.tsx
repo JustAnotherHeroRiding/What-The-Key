@@ -1,10 +1,10 @@
 import { ScrollView, Switch, View, Text } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import React, { useEffect, useState } from 'react'
-import { CustomButton } from './CustomButtom'
+import { CustomButton } from '../Common/CustomButtom'
 import { selectSeventh, selectTriads } from '../../../utils/scales-and-modes'
 import { scaleNotesAndIntervals } from '../../../utils/consts/scales-consts-types'
-import { Mode } from '../../../utils/track-formating'
+import { Mode } from '../../../utils/formating/track-formating'
 import colors from '../../../assets/colors'
 
 interface ModeSelectorProps {

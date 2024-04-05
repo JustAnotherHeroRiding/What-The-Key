@@ -7,11 +7,11 @@ import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
 import _ from 'lodash'
-import { Mode, getNoteName } from '../../utils/track-formating'
+import { Mode, getNoteName } from '../../utils/formating/track-formating'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
-import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
+import Fretboard from '../../UiComponents/Reusable/Theory/Fretboard'
 import { scaleNotesAndIntervals } from '../../utils/consts/scales-consts-types'
-import TriadModeSelector from '../../UiComponents/Reusable/Common/ModeSelector'
+import TriadModeSelector from '../../UiComponents/Reusable/Theory/ModeSelector'
 
 function TriadsScreen({ navigation }: { navigation: TriadsScreenNavigationProp }) {
   const route = useRoute()

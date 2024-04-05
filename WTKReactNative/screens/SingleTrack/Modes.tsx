@@ -8,10 +8,10 @@ import { TrackData } from '../../utils/types/spotify-types'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
 import _ from 'lodash'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
-import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
-import { getNoteName } from '../../utils/track-formating'
+import Fretboard from '../../UiComponents/Reusable/Theory/Fretboard'
+import { getNoteName } from '../../utils/formating/track-formating'
 import { scaleNotesAndIntervals } from '../../utils/consts/scales-consts-types'
-import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
+import ScalesList from '../../UiComponents/Reusable/Theory/ScalesList'
 
 function ModesScreen({ navigation }: { navigation: ModesScreenNavigationProp }) {
   const route = useRoute()

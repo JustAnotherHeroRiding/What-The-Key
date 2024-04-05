@@ -7,11 +7,11 @@ import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
 import _ from 'lodash'
-import { getNoteName } from '../../utils/track-formating'
+import { getNoteName } from '../../utils/formating/track-formating'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
-import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
+import Fretboard from '../../UiComponents/Reusable/Theory/Fretboard'
 import { scaleNotesAndIntervals } from '../../utils/consts/scales-consts-types'
-import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
+import ScalesList from '../../UiComponents/Reusable/Theory/ScalesList'
 
 function ScalesScreen({ navigation }: { navigation: ScalesScreenNavigationProp }) {
   const route = useRoute()

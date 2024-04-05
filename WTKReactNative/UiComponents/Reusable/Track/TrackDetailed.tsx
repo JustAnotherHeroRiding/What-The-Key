@@ -3,7 +3,7 @@ import { Image, Text, ScrollView, TouchableOpacity, View, StyleProp, TextStyle }
 import { TrackData } from '../../../utils/types/spotify-types'
 import tw from '../../../utils/config/tailwindRN'
 import { Dimensions } from 'react-native'
-import { formatDuration, formatTimeSignature, getNoteName } from '../../../utils/track-formating'
+import { formatDuration, formatTimeSignature, getNoteName } from '../../../utils/formating/track-formating'
 import useTrackService from '../../../services/TrackService'
 import { Sources, isTrackAdded } from '../../../utils/types/track-service-types'
 import { SessionContext } from '../../../utils/Context/Session/SessionContext'

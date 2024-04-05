@@ -72,7 +72,7 @@ function TrackHistory({ type }: { type: RecentlyOpenedType }) {
           >
             <Image
               source={{ uri: item.track.album.images[0].url }}
-              style={tw.style(`mb-auto mt-2 w-36 h-36 rounded-md border border-cream`, {
+              style={tw.style(`mb-auto mt-2 w-36 h-36`, {
                 objectFit: 'contain',
               })}
               alt={item.track.name}

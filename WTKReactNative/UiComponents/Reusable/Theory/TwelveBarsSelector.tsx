@@ -9,9 +9,9 @@ import {
   scaleNotesAndIntervals,
   TwelveBars,
 } from '../../../utils/consts/scales-consts-types'
-import { capitalizeFirstLetter } from '../../../utils/text-formatting'
-import { IntervalNames, Mode, intervalToRomanChord } from '../../../utils/track-formating'
-import { CustomButton } from './CustomButtom'
+import { capitalizeFirstLetter } from '../../../utils/formating/text-formatting'
+import { IntervalNames, Mode, intervalToRomanChord } from '../../../utils/formating/track-formating'
+import { CustomButton } from '../Common/CustomButtom'
 import { getTwelveBars } from '../../../utils/scales-and-modes'
 
 export type DisplayType = 'roman' | 'note'

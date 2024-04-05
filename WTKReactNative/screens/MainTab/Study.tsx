@@ -1,14 +1,14 @@
 import { View, Text, ScrollView, Switch } from 'react-native'
 import { RootStackParamList, StudyScreenNavigationProp, StudyScreenProps } from '../../utils/types/nav-types'
 import React, { useEffect, useState } from 'react'
-import { Mode, NOTES } from '../../utils/track-formating'
+import { Mode, NOTES } from '../../utils/formating/track-formating'
 import { Picker } from '@react-native-picker/picker'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
 import _ from 'lodash'
-import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
+import Fretboard from '../../UiComponents/Reusable/Theory/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
-import { capitalizeFirstLetter } from '../../utils/text-formatting'
+import { capitalizeFirstLetter } from '../../utils/formating/text-formatting'
 import {
   ModeNames,
   ScaleName,
@@ -16,12 +16,13 @@ import {
   scaleNotesAndIntervals,
   scaleOrModeOptionsConst,
 } from '../../utils/consts/scales-consts-types'
-import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
-import ModeSelector from '../../UiComponents/Reusable/Common/ModeSelector'
-import TwelveBarsSelector from '../../UiComponents/Reusable/Common/TwelveBarsSelector'
+import ScalesList from '../../UiComponents/Reusable/Theory/ScalesList'
+import ModeSelector from '../../UiComponents/Reusable/Theory/ModeSelector'
+import TwelveBarsSelector from '../../UiComponents/Reusable/Theory/TwelveBarsSelector'
 import colors from '../../assets/colors'
 import { RouteProp, useRoute } from '@react-navigation/native'
 import { selectScale, selectSeventh, selectTriads } from '../../utils/scales-and-modes'
+import { splitAndJoinAndCapitalizeFirstLetter } from '../../utils/formating/split-camel-case'
 
 export default function StudyScreen({ navigation }: { navigation: StudyScreenNavigationProp }) {
   const router = useRoute<RouteProp<RootStackParamList['MainTab']>>()
@@ -95,23 +96,23 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
 
         <ScrollView
           horizontal={true}
-          contentContainerStyle={tw.style(` items-center gap-4`)}
+          contentContainerStyle={tw.style(`flex-grow items-stretch flex-row gap-4`)}
           style={tw.style(`flex-row`)}
         >
-          <View style={tw.style(`flex-col items-center justify-center`)}>
-            <Text style={tw.style(`text-slate-200`)}>Selected Key: </Text>
-            <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
+          <View style={tw.style(`flex-1 flex-col items-center justify-center`)}>
+            <Text style={tw.style(`text-slate-200`)}>Selected Key</Text>
+            <Text style={tw.style(`text-beigeCustom text-xl my-auto`, { fontFamily: 'figtree-bold' })}>
               {capitalizeFirstLetter(selectedKey)}
             </Text>
           </View>
-          <View style={tw.style(`flex-col items-center justify-center`)}>
-            <Text style={tw.style(`text-slate-200`)}>Type: </Text>
-            <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
+          <View style={tw.style(`flex-1 flex-col items-center justify-center`)}>
+            <Text style={tw.style(`text-slate-200`)}>Type</Text>
+            <Text style={tw.style(`text-beigeCustom text-xl my-auto`, { fontFamily: 'figtree-bold' })}>
               {capitalizeFirstLetter(scaleType)}
             </Text>
           </View>
-          <View style={tw.style(`flex-col items-center justify-center`)}>
-            <Text style={tw.style(`text-slate-200`)}>Twelve bars </Text>
+          <View style={tw.style(`flex-1 flex-col items-center justify-center `)}>
+            <Text style={tw.style(`text-slate-200`)}>Twelve bars</Text>
             <Switch
               thumbColor={colors.beigeCustom}
               trackColor={{ false: colors.slate500, true: colors.cream }}
@@ -123,9 +124,9 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
         <View style={tw.style(`flex-col items-center justify-center`)}>
           <Text style={tw.style(`text-slate-200`)}>Selected {capitalizeFirstLetter(scaleType)}</Text>
           <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
-            {capitalizeFirstLetter(selectedOption?.name ?? '')}
+            {splitAndJoinAndCapitalizeFirstLetter(selectedOption?.name ?? '')}
           </Text>
-          <Text style={tw.style(`text-slate-200`)}>{selectedOption?.description}</Text>
+          <Text style={tw.style(`text-slate-50`)}>{selectedOption?.description}</Text>
         </View>
 
         {(scaleType === 'triad' || scaleType === 'seventh') && (

@@ -2,8 +2,8 @@ import { TouchableOpacity, View, Text } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { ModeNames, ScaleName } from '../../../utils/consts/scales-consts-types'
 import React from 'react'
-import { Mode } from '../../../utils/track-formating'
-import { splitAndJoinAndCapitalizeFirstLetter } from '../../../utils/split-camel-case'
+import { Mode } from '../../../utils/formating/track-formating'
+import { splitAndJoinAndCapitalizeFirstLetter } from '../../../utils/formating/split-camel-case'
 
 export type SelectScaleFunction = (scale: ScaleName | ModeNames | null | Mode) => void
 

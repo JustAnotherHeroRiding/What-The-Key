@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
-import { Mode, getNoteName } from '../../../utils/track-formating'
+import { Mode, getNoteName } from '../../../utils/formating/track-formating'
 import { TrackData } from '../../../utils/types/spotify-types'
 import { Dimensions } from 'react-native'
 

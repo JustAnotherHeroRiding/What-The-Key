@@ -5,7 +5,7 @@ import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import { LinearGradient } from 'expo-linear-gradient'
 import tw from '../../utils/config/tailwindRN'
-import { getIntervals } from '../../utils/track-formating'
+import { getIntervals } from '../../utils/formating/track-formating'
 import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
 

@@ -64,13 +64,21 @@ When displaying the note and interval columns for the selected scale, clicking o
 
 ### Scale description
 Each scale object already has a short description, but we have to find it as we are only using an array of string/mode names
-- Let's add a short description for each scale
+- Let's add a short description for each scale #DONE 
+
+
+## Note/Interval column
+As this is being used in multiple places and has more complicated logic now that it can also play sounds, let's create a separate 
+component for it
+- Create the component and replace all uses of it #DONE 
+- Currently it is being used in the theory of the day #do 
+- Study page #DONE 
+
+
 ## Incorrect keys
 - If a user notices that the key is not correct they can report it
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
 - User can either locally set his key or browse for user suggested keys
-
-
 
 ## Circle of Fifths
 - Add an option on the study page to display the circle of fifths

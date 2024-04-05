@@ -1,4 +1,4 @@
-import { Mode } from '../track-formating'
+import { Mode } from '../formating/track-formating'
 
 export const SCALES = ['major', 'naturalMinor', 'harmonicMinor']
 export const MODES = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian']

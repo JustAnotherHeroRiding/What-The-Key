@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native'
-import { getNoteName } from '../../../utils/track-formating'
+import { getNoteName } from '../../../utils/formating/track-formating'
 import { TrackData } from '../../../utils/types/spotify-types'
 import tw from '../../../utils/config/tailwindRN'
 import { LinearGradient } from 'expo-linear-gradient'

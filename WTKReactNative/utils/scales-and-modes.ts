@@ -13,7 +13,7 @@ import {
   twelveBarsLookup,
 } from './consts/scales-consts-types'
 import { FretNumber, StringNames } from './consts/soundFilesTypes'
-import { IntervalNames, Mode, NOTES, intervalNamesSingle } from './track-formating'
+import { IntervalNames, Mode, NOTES, intervalNamesSingle } from './formating/track-formating'
 
 const getIntervalName = (interval: number): string => {
   return interval >= 0 && interval < intervalNamesSingle.length ? intervalNamesSingle[interval] : ''

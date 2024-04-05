@@ -6,19 +6,19 @@ import TrackMini from '../../UiComponents/Reusable/Track/TrackMini'
 import { useRoute } from '@react-navigation/native'
 import { TrackData } from '../../utils/types/spotify-types'
 import tw from '../../utils/config/tailwindRN'
-import { Mode, getNoteName } from '../../utils/track-formating'
+import { Mode, getNoteName } from '../../utils/formating/track-formating'
 import {
   extendedScaleType,
   scaleNotesAndIntervals,
   scaleOrModeOptions,
   scaleOrModeOptionsConst,
 } from '../../utils/consts/scales-consts-types'
-import { capitalizeFirstLetter } from '../../utils/text-formatting'
-import ScalesList from '../../UiComponents/Reusable/Common/ScalesList'
-import Fretboard from '../../UiComponents/Reusable/Common/Fretboard'
+import { capitalizeFirstLetter } from '../../utils/formating/text-formatting'
+import ScalesList from '../../UiComponents/Reusable/Theory/ScalesList'
+import Fretboard from '../../UiComponents/Reusable/Theory/Fretboard'
 import IntervalSymbolsLegend from '../../UiComponents/Reusable/TrackAdjacent/IntervalSymbolsLegend'
-import ModeSelector from '../../UiComponents/Reusable/Common/ModeSelector'
-import TwelveBarsSelector from '../../UiComponents/Reusable/Common/TwelveBarsSelector'
+import ModeSelector from '../../UiComponents/Reusable/Theory/ModeSelector'
+import TwelveBarsSelector from '../../UiComponents/Reusable/Theory/TwelveBarsSelector'
 import { Picker } from '@react-native-picker/picker'
 
 function TwelveBarsScreen({ navigation }: { navigation: TwelveBarsScreenNavigationProp }) {

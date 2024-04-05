@@ -89,10 +89,12 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 - Stop add track requests if the limit is reached
 - Add settings in the profile to allow users to disable the limit
 - Add an info sign next to the limit to explain what it does with a little pop up modal
+## Scrapped I will not add the track limit
 
 
 ### Single track update
-- When a track is added from the single track page, update the save button to an open tab button
+- When a track is added from the single track page, update the save button to an open tab button #DONE 
+- Make only the button load and not the entire page #DONE 
 
 
 ## Filters and search

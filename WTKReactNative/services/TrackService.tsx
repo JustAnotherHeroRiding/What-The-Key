@@ -54,6 +54,7 @@ const useTrackService = () => {
              */
       queryClient.invalidateQueries({ queryKey: ['library'] })
       queryClient.invalidateQueries({ queryKey: ['recycleBin'] })
+      queryClient.invalidateQueries({ queryKey: ['SingleTrackStatus', variables.trackId] })
       displayToast({
         message: `Track successfully added to the ${variables.source === 'recycleBin' ? 'Deleted Tracks' : 'Library'}`,
       })

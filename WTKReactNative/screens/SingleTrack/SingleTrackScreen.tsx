@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native'
-import { BackHandler, TouchableOpacity, Text } from 'react-native'
+import { BackHandler } from 'react-native'
 import useSpotifyService from '../../services/SpotifyService'
 import { useQuery } from '@tanstack/react-query'
 import tw from '../../utils/config/tailwindRN'
@@ -71,10 +71,16 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
       end={{ x: 0, y: 0 }}
       style={tw.style(`flex-grow w-full opacity-100`)}
     >
-      {isFetchingTrack || isFetchingTrackStatus ? (
+      {isFetchingTrack ? (
         <LoadingSpinner />
       ) : track && trackAddedStatus ? (
-        <TrackDetailed track={track} src={src} openTabsModal={openTabsModal} trackAddedStatus={trackAddedStatus} />
+        <TrackDetailed
+          track={track}
+          src={src}
+          openTabsModal={openTabsModal}
+          trackAddedStatus={trackAddedStatus}
+          isFetchingTrackStatus={isFetchingTrackStatus}
+        />
       ) : (
         <NotFoundComponent />
       )}

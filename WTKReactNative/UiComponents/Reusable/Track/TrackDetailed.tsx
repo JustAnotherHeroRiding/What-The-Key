@@ -12,12 +12,14 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../utils/types/nav-types'
 import * as Progress from 'react-native-progress'
 import colors from '../../../assets/colors'
+import LoadingSpinner from '../Common/LoadingSpinner'
 
 interface TrackProps {
   track: TrackData
   src: Sources
   openTabsModal: (trackData: TrackData) => void
   trackAddedStatus: isTrackAdded
+  isFetchingTrackStatus: boolean
 }
 
 type InfoColumnProps = {
@@ -39,7 +41,7 @@ const InfoColumn: React.FC<InfoColumnProps> = ({ label, value, tailwindStyle = '
 const screen = Dimensions.get('window')
 const imageSize = screen.width * 0.85
 
-const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackProps) => {
+const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus, isFetchingTrackStatus }: TrackProps) => {
   const session = useContext(SessionContext)
   const { addTrackMut, isAddingTrack } = useTrackService()
 
@@ -93,24 +95,25 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus }: TrackPro
         >
           <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>Play</Text>
         </TouchableOpacity>
-        {session &&
-          (trackAddedStatus.isInLibrary || trackAddedStatus.isInRecycleBin ? (
-            <TouchableOpacity
-              onPress={() => openTabsModal(track)}
-              style={tw`px-4 py-3 border  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
-            >
-              <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>Open Tab</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              style={tw`px-4 py-3 border  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
-              onPress={() => addToLib()}
-            >
-              <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>
-                {isAddingTrack ? 'Adding...' : 'Save'}
-              </Text>
-            </TouchableOpacity>
-          ))}
+        {session && isFetchingTrackStatus ? (
+          <LoadingSpinner />
+        ) : trackAddedStatus.isInLibrary || trackAddedStatus.isInRecycleBin ? (
+          <TouchableOpacity
+            onPress={() => openTabsModal(track)}
+            style={tw`px-4 py-3 border  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
+          >
+            <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>Open Tab</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={tw`px-4 py-3 border  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
+            onPress={() => addToLib()}
+          >
+            <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>
+              {isAddingTrack ? 'Adding...' : 'Save'}
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
       <View style={tw.style(`flex flex-wrap items-center justify-center flex-row gap-2`)}>
         <TouchableOpacity

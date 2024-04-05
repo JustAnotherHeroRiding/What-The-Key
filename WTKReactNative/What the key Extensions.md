@@ -71,12 +71,34 @@ Each scale object already has a short description, but we have to find it as we 
 As this is being used in multiple places and has more complicated logic now that it can also play sounds, let's create a separate 
 component for it
 - Create the component and replace all uses of it #DONE 
-- Currently it is being used in the theory of the day #do 
+- Currently it is being used in the theory of the day #DONE 
 - Study page #DONE 
+
+## Redesign the library/deleted split
+Library should be for songs I am learning to play #DONE 
+Deleted should be for songs I have already learned or stopped learning #DONE 
+##### Limit the number of tracks in the library to encourage focus on a couple of songs
+- Add the counter #DONE 
+- Take the current number of tracks to display #DONE 
+- Change color to orange at 15
+- Change to red at 20
+- Stop add track requests if this is overflowed
+- This will need to be a global state
+- Add settings in the profile to allow users to disable the limit
+
+## Filters and search
+- When in the Lib/Bin screen, users can apply filters or search tracks in the library
+- The search bar can be somewhere on top in the header, with the title on the left edge
+- This will be local until I implement an infinite query, after which it will make a db call
+
+## Drag and drop
+- Allow users to reorder the tracks in the library/Bin
+- This will require a db call to rearrange the order in the database
+##### Currently we are sorting by timestamp, let's see how we can manipulate this with the drag and drop
 
 
 ## Incorrect keys
-- If a user notices that the key is not correct they can report it
+If a user notices that the key is not correct they can report it
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
 - User can either locally set his key or browse for user suggested keys
 
@@ -100,21 +122,6 @@ When we click play, we start the play along experience
 - Let's try to play it using a the user's own spotify account
 - The image, name and artist will shift to the bottom
 - Allow user to mute the track and only use the metronome, or just hear the track to play along
-
-
-## Redesign the library/deleted split
-- Library should be for songs I am learning to play
-- Deleted should be for songs I have already learned or stopped learning
-- Maybe add a tag and have many sections so that users can filter them more effectively
-- Perhaps limit the number of tracks in the library to encourage focus on a couple of songs
-
-## Drag and drop
-- Allow users to reorder the tracks in the library/Bin
-## Filters and search
-- When in the Lib/Bin screen, users can apply filters or search tracks in the library
-- The search bar can be somewhere on top in the header, with the title on the left edge
-- This will be local until I implement an infinite query, after which it will make a db call
-
 ## Shazam-like integration
 - Activate the mic to detect a song
 - Afterwards search for that song and open the track details page

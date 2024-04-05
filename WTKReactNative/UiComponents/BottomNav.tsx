@@ -121,7 +121,7 @@ const BottomTab = () => {
 
   return (
     <Tab.Navigator
-      key={session ? 'logged-in' : 'logged-out'} // Add this line
+      key={session ? 'logged-in' : 'logged-out'}
       screenOptions={({ route }) => ({
         tabBarBackground: () => {
           return (
@@ -168,7 +168,7 @@ const BottomTab = () => {
               label = 'Home'
               break
             case 'Library':
-              label = 'Library'
+              label = 'Learning'
               break
             case 'Auth':
               label = session ? 'Profile' : 'Log In'
@@ -217,8 +217,9 @@ const BottomTab = () => {
             name='Library'
             component={LibraryOrDeletedScreen}
             initialParams={{ type: 'library' }}
-            options={{ title: 'Library' }}
+            options={{ title: 'Learning' }}
           />
+
           <Tab.Screen
             name='Deleted'
             component={LibraryOrDeletedScreen}

@@ -97,13 +97,7 @@ function LibraryOrDeletedScreen({
           </View>
         ) : isApiErrorResponse(tracks) ? (
           <View>
-            <Text
-              style={tw.style(`text-white border-slate-500 border-b-2 text-3xl py-4 text-center`, {
-                fontFamily: 'figtree-bold',
-              })}
-            >
-              {TitleCaseMap[type]}
-            </Text>
+            <TitleHeader type={type} numberOfTracks={(tracks as TrackData[]).length} />
             <Text style={tw.style(`text-white font-figtreeBold text-3xl py-4 text-center`)}>
               {TitleCaseMap[type] === 'Library'
                 ? 'Your library is empty :(, add some tracks!'
@@ -130,15 +124,7 @@ function LibraryOrDeletedScreen({
             data={tracks as TrackData[]}
             renderItem={({ item }) => <Track track={item} location={type} openTabsModal={() => openTabsModal(item)} />}
             keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={() => (
-              <Text
-                style={tw.style(`text-white border-slate-500 border-b-2 text-3xl py-4 text-center`, {
-                  fontFamily: 'figtree-bold',
-                })}
-              >
-                {TitleCaseMap[type]}
-              </Text>
-            )}
+            ListHeaderComponent={() => <TitleHeader type={type} numberOfTracks={(tracks as TrackData[]).length} />}
             refreshing={isFetching}
             //@ts-ignore
             onRefresh={() => refetch()}
@@ -151,6 +137,38 @@ function LibraryOrDeletedScreen({
         <TrackTabModal currentTrack={currentTrackForModal} closeTabsModal={closeTabsModal} isAddingTab={isAddingTab} />
       )}
     </LinearGradient>
+  )
+}
+
+const TitleHeader = function ({ type, numberOfTracks }: { type: dataSource; numberOfTracks: number }) {
+  const getTextColor = () => {
+    if (numberOfTracks < 15) {
+      return 'text-slate-50'
+    } else if (numberOfTracks >= 15 && numberOfTracks < 25) {
+      return 'text-orange-400'
+    } else if (numberOfTracks >= 25) {
+      return 'text-red-500'
+    } else {
+      return 'text-slate-50'
+    }
+  }
+  return (
+    <View style={tw.style(`border-slate-500 border-b-2 flex-row justify-center items-center`)}>
+      <Text
+        style={tw.style(` text-slate-50 text-3xl py-4 text-center flex-grow`, {
+          fontFamily: 'figtree-bold',
+        })}
+      >
+        {TitleCaseMap[type]}
+      </Text>
+      <Text
+        style={tw.style(`${getTextColor()} absolute right-2 text-xl py-4 text-center`, {
+          fontFamily: 'figtree-bold',
+        })}
+      >
+        {numberOfTracks}/25
+      </Text>
+    </View>
   )
 }
 

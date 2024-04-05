@@ -36,7 +36,6 @@ function LibraryOrDeletedScreen({
   const type = params.type ?? ''
 
   const [query, setQuery] = useState('')
-  const textInputRef = useRef(null)
 
   const isValidType = type === 'library' || type === 'recycleBin'
 
@@ -129,35 +128,36 @@ function LibraryOrDeletedScreen({
             </TouchableOpacity>
           </View>
         ) : (
-          <FlatList
-            style={tw.style(`flex-grow`)}
-            contentContainerStyle={tw.style(`pb-20`)}
-            data={tracks as TrackData[]}
-            renderItem={({ item }) => <Track track={item} location={type} openTabsModal={() => openTabsModal(item)} />}
-            keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={
-              <View style={tw.style(`border-slate-500 border-b-2 flex-row justify-between items-center`)}>
-                <Text
-                  style={tw.style(` text-slate-50 text-3xl py-4 text-center px-2 `, {
-                    fontFamily: 'figtree-bold',
-                  })}
-                >
-                  {TitleCaseMap[type]}
-                </Text>
-                <TextInput
-                  ref={textInputRef}
-                  style={tw.style(`bg-[#fff] flex-1 rounded-2xl p-3 text-black`)}
-                  placeholder='Search'
-                  placeholderTextColor='gray'
-                  value={query}
-                  onChangeText={text => setQuery(text)}
-                />
-              </View>
-            }
-            refreshing={isFetching}
-            //@ts-ignore
-            onRefresh={() => refetch()}
-          />
+          <>
+            <View style={tw.style(`border-slate-500 border-b-2 flex-row justify-between items-center`)}>
+              <Text
+                style={tw.style(` text-slate-50 text-3xl py-4 text-center px-2 `, {
+                  fontFamily: 'figtree-bold',
+                })}
+              >
+                {TitleCaseMap[type]}
+              </Text>
+              <TextInput
+                style={tw.style(`bg-[#fff] flex-1 rounded-2xl p-3 text-black`)}
+                placeholder='Search'
+                placeholderTextColor='gray'
+                value={query}
+                onChangeText={text => setQuery(text)}
+              />
+            </View>
+            <FlatList
+              style={tw.style(`flex-grow mb-32`)}
+              contentContainerStyle={tw.style(``)}
+              data={tracks as TrackData[]}
+              renderItem={({ item }) => (
+                <Track track={item} location={type} openTabsModal={() => openTabsModal(item)} />
+              )}
+              keyExtractor={(item, index) => index.toString()}
+              refreshing={isFetching}
+              //@ts-ignore
+              onRefresh={() => refetch()}
+            />
+          </>
         )
       ) : (
         <NotFoundComponent />

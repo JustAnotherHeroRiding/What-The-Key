@@ -98,8 +98,9 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 
 
 ## Filters and search
-- When in the Lib/Bin screen, users can apply filters or search tracks in the library
-- The search bar can be somewhere on top in the header, with the title on the left edge
+- When in the Lib/Bin screen, users can apply filters or search tracks in the library #DONE 
+- The search bar can be somewhere on top in the header, with the title on the left edge #DONE 
+- Make the search bar filter the tracks shown
 - This will be local until I implement an infinite query, after which it will make a db call
 
 ## Drag and drop

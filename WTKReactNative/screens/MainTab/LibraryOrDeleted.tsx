@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, FlatList } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { View, Text, TouchableOpacity, FlatList, TextInput } from 'react-native'
 import {
   DeletedScreenNavigationProp,
   LibraryScreenNavigationProp,
@@ -34,6 +34,9 @@ function LibraryOrDeletedScreen({
   const router = useRoute<RouteProp<RootStackParamList['MainTab']>>()
   const params = router.params as { type: dataSource }
   const type = params.type ?? ''
+
+  const [query, setQuery] = useState('')
+  const textInputRef = useRef(null)
 
   const isValidType = type === 'library' || type === 'recycleBin'
 
@@ -97,7 +100,15 @@ function LibraryOrDeletedScreen({
           </View>
         ) : isApiErrorResponse(tracks) ? (
           <View>
-            <TitleHeader type={type} />
+            <View style={tw.style(`border-slate-500 border-b-2 flex-row justify-between items-center`)}>
+              <Text
+                style={tw.style(` text-slate-50 text-3xl py-4 text-center px-2 `, {
+                  fontFamily: 'figtree-bold',
+                })}
+              >
+                {TitleCaseMap[type]}
+              </Text>
+            </View>
             <Text style={tw.style(`text-white font-figtreeBold text-3xl py-4 text-center`)}>
               {TitleCaseMap[type] === 'Library'
                 ? 'Your library is empty :(, add some tracks!'
@@ -124,7 +135,25 @@ function LibraryOrDeletedScreen({
             data={tracks as TrackData[]}
             renderItem={({ item }) => <Track track={item} location={type} openTabsModal={() => openTabsModal(item)} />}
             keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={() => <TitleHeader type={type} />}
+            ListHeaderComponent={
+              <View style={tw.style(`border-slate-500 border-b-2 flex-row justify-between items-center`)}>
+                <Text
+                  style={tw.style(` text-slate-50 text-3xl py-4 text-center px-2 `, {
+                    fontFamily: 'figtree-bold',
+                  })}
+                >
+                  {TitleCaseMap[type]}
+                </Text>
+                <TextInput
+                  ref={textInputRef}
+                  style={tw.style(`bg-[#fff] flex-1 rounded-2xl p-3 text-black`)}
+                  placeholder='Search'
+                  placeholderTextColor='gray'
+                  value={query}
+                  onChangeText={text => setQuery(text)}
+                />
+              </View>
+            }
             refreshing={isFetching}
             //@ts-ignore
             onRefresh={() => refetch()}
@@ -137,20 +166,6 @@ function LibraryOrDeletedScreen({
         <TrackTabModal currentTrack={currentTrackForModal} closeTabsModal={closeTabsModal} isAddingTab={isAddingTab} />
       )}
     </LinearGradient>
-  )
-}
-
-const TitleHeader = function ({ type }: { type: dataSource }) {
-  return (
-    <View style={tw.style(`border-slate-500 border-b-2 flex-row justify-center items-center`)}>
-      <Text
-        style={tw.style(` text-slate-50 text-3xl py-4 text-center flex-grow`, {
-          fontFamily: 'figtree-bold',
-        })}
-      >
-        {TitleCaseMap[type]}
-      </Text>
-    </View>
   )
 }
 

@@ -26,25 +26,15 @@ export const ProfilePicProvider = ({ children }: ProfilePicProviderProps) => {
   const session = useContext(SessionContext)
 
   useEffect(() => {
-    if (session) {
+    if (session && !profilePicUrl) {
       // If this check is removed the profile pic is not fetched correctly
-      if (!profilePicUrl) {
-        supabase
-          .from('profiles')
-          .select('avatar_url')
-          .eq('id', session.user.id)
-          .single()
-          .then(data => {
-            setProfilePicUrl(data.data?.avatar_url)
-          })
-      }
       supabase
         .from('profiles')
-        .select('trackLimitEnabled')
+        .select('avatar_url')
         .eq('id', session.user.id)
         .single()
         .then(data => {
-          setProfilePicUrl(data.data?.trackLimitEnabled)
+          setProfilePicUrl(data.data?.avatar_url)
         })
     }
   }, [session])

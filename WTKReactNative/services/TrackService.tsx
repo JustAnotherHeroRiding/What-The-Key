@@ -1,8 +1,7 @@
 // services/trackService.js
 import { useContext } from 'react'
 import { SessionContext } from '../utils/Context/Session/SessionContext'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import Toast from 'react-native-root-toast'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { TrackData } from '../utils/types/spotify-types'
 import {
   addTrackProps,
@@ -24,7 +23,7 @@ const useTrackService = () => {
   const session = useContext(SessionContext)
   const queryClient = useQueryClient()
 
-  const addTrack = async ({ trackId, source }: addTrackProps): Promise<TrackConnection> => {
+  const addTrack = async ({ trackId, source }: addTrackProps): Promise<TrackConnection | undefined> => {
     const response = await fetch(`${apiUrl}/api/track/addTrack`, {
       method: 'POST',
       headers: {
@@ -101,6 +100,28 @@ const useTrackService = () => {
     )
     const libraryData: TrackData[] = await spotifyResponse.json()
     return libraryData
+  }
+
+  const getNumberOfTracksAdded = async ({ location }: getTracksProps): Promise<number | ApiErrorResponse> => {
+    const queryParams = new URLSearchParams({
+      userId: session?.user.id ?? 'no user',
+      source: location,
+    }).toString()
+
+    const trackCountResponse = await fetch(`${apiUrl}/api/track/getNumberOfTracks?${queryParams}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const trackCount = await trackCountResponse.json()
+
+    if (!trackCountResponse.ok) {
+      throw new Error(trackCount.message || 'Error fetching track ids from database')
+    }
+
+    console.log(trackCount)
+    return trackCount
   }
 
   const getHistoryTracks = async (type: RecentlyOpenedType): Promise<TrackData[] | ApiErrorResponse> => {
@@ -258,6 +279,7 @@ const useTrackService = () => {
     getTabs,
     isTrackAdded,
     getHistoryTracks,
+    getNumberOfTracksAdded,
     isAddingTab,
     isDeletingTrack,
     isAddingTrack,

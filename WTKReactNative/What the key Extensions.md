@@ -100,8 +100,10 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 ## Filters and search
 - When in the Lib/Bin screen, users can apply filters or search tracks in the library #DONE 
 - The search bar can be somewhere on top in the header, with the title on the left edge #DONE 
-- Make the search bar filter the tracks shown
-- This will be local until I implement an infinite query, after which it will make a db call
+- Make the library/bin query infinite
+- Scrolling down will trigger the second page to load, make the limit 20 tracks
+- Create a search endpoint
+- Make a db call to display the filtered results, the query key will be the location and the query
 
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin
@@ -121,25 +123,7 @@ If a user notices that the key is not correct they can report it
 
 ## The Lick
 - On the study page, add the lick in each key as a sound sample
-- reuse the already included files and play them at an interval
-## Play mode
-When we click play, we start the play along experience
-- Use the bars and add some sort of indicator to show the progress
-- Add a tick on each beat, play a sound if the users wants to function as a metronome
-- We can loop over all of the beats
-- Sections can be used to change the track info displayed
-- Each section will display  the tempo, key , mode, time-signature
-- For segments, try to use the pitch and timbre, but learn first what they represent
-- For tatums, as they are less than a beat, we can have some sort of visual indicator but no sound or progress on the bar
-- Scale schematics and chords will display in the middle of the image while track is playing
-- Let's try to play it using a the user's own spotify account
-- The image, name and artist will shift to the bottom
-- Allow user to mute the track and only use the metronome, or just hear the track to play along
-## Shazam-like integration
-- Activate the mic to detect a song
-- Afterwards search for that song and open the track details page
-Possible APIs: [Audd](https://audd.io/) or [AcrCloud](https://www.acrcloud.com/) We need to use the recorded audio from the mic to make a call to an api/service to detect the song
-
+- Reuse the already included files and play them at an interval
 ## Supabase emails Design
 Style the emails that supabase sends for email confirmation/reset password and everything else that we will use
 ###### It seems that Css is not being applied in the email being sent
@@ -155,14 +139,40 @@ Style the emails that supabase sends for email confirmation/reset password and e
 ## Rate Limiting
 - Currently users can spam the refresh button, limit it so that this is not possible
 
-## Chord Progressions
-- Chord Progressions - This one I'm not too sure about. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.
+## Highlight possible voicings
+- When rendering the fretboard for 7th chords or triads for example, I should do a simple check for possible shapes that can be played. These can be notes that are on adjacent frets, no more than 3 for example with triads. I will have to work on the implementation until it will helpful 
+- Only include 3 adjacent strings and +2 frets at most from the middle
+
+## Testing sign up experience
+Previously I noticed that the redirect page to github was buggy. Test some common scenarios and perhaps remove github from the providers.
+- When signing up with email, show a toast that the user needs to verify their email before being able to sign in
+- Leave only Spotify as the provider
+
+# To be developed in v2
 
 ## Multiple Scale Selection
 Allow users to select 2 or more scales at once, displaying multiple fretboards. I must pay attention to both fretboards being fully visible, although they will have to become smaller.
+##### If the keys themselves are almost never accurate, how can we trust the bars and smaller subsections? Let's leave this for a possible update and ship it without this feature
+## Play mode
+When we click play, we start the play along experience
+- Use the bars and add some sort of indicator to show the progress
+- Add a tick on each beat, play a sound if the users wants to function as a metronome
+- We can loop over all of the beats
+- Sections can be used to change the track info displayed
+- Each section will display  the tempo, key , mode, time-signature
+- For segments, try to use the pitch and timbre, but learn first what they represent
+- For tatums, as they are less than a beat, we can have some sort of visual indicator but no sound or progress on the bar
+- Scale schematics and chords will display in the middle of the image while track is playing
+- Let's try to play it using a the user's own spotify account
+- The image, name and artist will shift to the bottom
+- Allow user to mute the track and only use the metronome, or just hear the track to play along
+
+## Chord Progressions
+- Chord Progressions - This one I'm not too sure about. I could display some common chord progressions starting from the key of the song as the I chord, but I do not know if I can extract the chord progression of the song itself. Maybe by analyzing the sections/bars.
+## Shazam-like integration
+- Activate the mic to detect a song
+- Afterwards search for that song and open the track details page
+Possible APIs: [Audd](https://audd.io/) or [AcrCloud](https://www.acrcloud.com/) We need to use the recorded audio from the mic to make a call to an api/service to detect the song
 
 
-## Highlight possible voicings
-- When rendering the fretboard for 7th chords or triads for example, I should do a simple check for possible shapes that can be played. These can be notes that are on adjacent frets, no more than 3 for example with triads. I will have to work on the implementation until it will helpful 
-- Only include 3 adjacent strings
 

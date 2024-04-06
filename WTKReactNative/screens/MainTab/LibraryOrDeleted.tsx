@@ -6,13 +6,12 @@ import {
   RootStackParamList,
 } from '../../utils/types/nav-types'
 import tw from '../../utils/config/tailwindRN'
-import Toast from 'react-native-root-toast'
 import { TrackData } from '../../utils/types/spotify-types'
 import { LinearGradient } from 'expo-linear-gradient'
 import Track from '../../UiComponents/Reusable/Track/Track'
 import LoadingSpinner from '../../UiComponents/Reusable/Common/LoadingSpinner'
 import useTrackService from '../../services/TrackService'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { isApiErrorResponse } from '../../utils/types/typeGuards'
 import TrackTabModal from '../../UiComponents/Reusable/TrackAdjacent/TrackTabModal'
 import { RouteProp, useRoute } from '@react-navigation/native'
@@ -20,10 +19,17 @@ import { MaterialIcons } from '@expo/vector-icons'
 import colors from '../../assets/colors'
 import NotFoundComponent from '../../UiComponents/Reusable/Common/NotFound'
 import { dataSource } from '../../utils/types/track-service-types'
+import { displayToast } from '../../utils/toasts'
 
 const TitleCaseMap: { [key: string]: 'Library' | 'Deleted' } = {
   library: 'Library',
   recycleBin: 'Deleted',
+}
+
+interface TracksPage {
+  data: TrackData[]
+  previousCursor?: number
+  nextCursor?: number
 }
 
 function LibraryOrDeletedScreen({
@@ -54,6 +60,25 @@ function LibraryOrDeletedScreen({
   }
 
   const {
+    data: infiniteTracks,
+    error: infiniteError,
+    fetchNextPage, // Function to fetch the next page
+    fetchPreviousPage,
+    hasNextPage, // Boolean that indicates if the next page is available
+    hasPreviousPage,
+    isError, // If an Error has occurred
+    isFetching: isInfiniteFetching, // If the query function is running
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    status, // 'error' | 'loading' | 'success' - indicates state of this hook
+  } = useInfiniteQuery<TracksPage | Error>({
+    queryKey: [type],
+    queryFn: () => getTracks({ location: type as dataSource }),
+    getLastPageParam: (firstPage: TracksPage, pages: TracksPage[]) => firstPage.previousCursor,
+    getNextPageParam: (lastPage: TracksPage, pages: TracksPage[]) => lastPage.nextCursor,
+  })
+
+  const {
     data: tracks,
     isFetching,
     error,
@@ -67,14 +92,9 @@ function LibraryOrDeletedScreen({
   })
 
   if (error) {
-    Toast.show(error instanceof Error ? error.message : 'An Unknown error occured.', {
-      duration: Toast.durations.LONG,
-      position: Toast.positions.BOTTOM,
-      shadow: true,
-      animation: true,
-      hideOnPress: true,
-      delay: 0,
-      backgroundColor: 'red',
+    displayToast({
+      message: error instanceof Error ? error.message : 'An Unknown error occured.',
+      backgroundColor: 'error',
     })
   }
 

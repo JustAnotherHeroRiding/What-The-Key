@@ -140,38 +140,31 @@ export class TrackService {
   async getTracksPage(
     userId: string,
     source: 'library' | 'recycleBin',
-    cursor: string, // This is the cursor for pagination (track ID)
-    pageSize: string, // Number of items per page
+    cursor: string, // This is the cursor for pagination (addedAt ISO date string)
+    pageSize: string,
   ): Promise<{ tracks: string[]; nextCursor?: string }> {
     const user = await this.ensureUserExists(userId);
+    console.log(source);
     if (!user) {
       throw new Error('User not found, cannot fetch tracks.');
     }
 
-    let trackQuery;
-    if (source === 'library') {
-      trackQuery = {
-        where: {
-          userId: user.id,
-          addedAt: { lt: new Date(cursor) }, // Fetch tracks added before the provided cursor date
-        },
-        include: { track: true },
-        orderBy: { addedAt: 'desc' },
-        take: parseInt(pageSize), // Limit the number of items per page
-      };
-    } else if (source === 'recycleBin') {
-      trackQuery = {
-        where: {
-          userId: user.id,
-          addedAt: { lt: new Date(cursor) }, // Fetch tracks deleted before the provided cursor date
-        },
-        include: { track: true },
-        orderBy: { addedAt: 'desc' },
-        take: parseInt(pageSize), // Limit the number of items per page
-      };
-    }
+    const trackQuery = {
+      where: {
+        userId: user.id,
+        addedAt: { lt: new Date(cursor) }, // Fetch tracks added before the provided cursor date
+      },
+      include: { track: true },
+      orderBy: { addedAt: 'desc' as const },
+      take: parseInt(pageSize),
+    };
 
-    const tracks = await this.prisma.libraryTrack.findMany(trackQuery);
+    let tracks;
+    if (source === 'library') {
+      tracks = await this.prisma.libraryTrack.findMany(trackQuery);
+    } else if (source === 'recycleBin') {
+      tracks = await this.prisma.recycleBinTrack.findMany(trackQuery);
+    }
 
     // Determine the next cursor based on the last track fetched
     let nextCursor;

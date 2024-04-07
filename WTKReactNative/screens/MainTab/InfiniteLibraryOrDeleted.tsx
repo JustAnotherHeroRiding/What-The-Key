@@ -26,7 +26,7 @@ const TitleCaseMap: { [key: string]: 'Library' | 'Deleted' } = {
   recycleBin: 'Deleted',
 }
 
-function LibraryOrDeletedScreen({
+function InfiniteLibraryOrDeleted({
   navigation,
 }: {
   navigation: LibraryScreenNavigationProp | DeletedScreenNavigationProp
@@ -42,7 +42,7 @@ function LibraryOrDeletedScreen({
   const [isTabsModalVisible, setIsTabsModalVisible] = useState(false)
   const [currentTrackForModal, setCurrentTrackForModal] = useState<TrackData | null>(null)
 
-  const { getTracks, isAddingTab } = useTrackService()
+  const { getTracks, isAddingTab, getTracksCursor } = useTrackService()
 
   const openTabsModal = (trackData: TrackData) => {
     setCurrentTrackForModal(trackData)
@@ -55,23 +55,17 @@ function LibraryOrDeletedScreen({
 
   const {
     data: tracks,
-    isFetching,
-    error,
-    refetch,
+    fetchNextPage, // Function to fetch the next page
     isLoading,
-  } = useQuery({
+    isFetching,
+  } = useInfiniteQuery<TracksPage>({
     queryKey: [type],
-    queryFn: () => getTracks({ location: type as dataSource }),
-    staleTime: 500,
-    placeholderData: keepPreviousData,
+    queryFn: ({ pageParam }) =>
+      getTracksCursor({ location: type as dataSource, cursor: pageParam as string, pageSize: '5' }),
+    initialPageParam: new Date().toISOString(),
+    getNextPageParam: lastPage => lastPage.nextCursor,
+    getPreviousPageParam: firstPage => firstPage.prevCursor,
   })
-
-  if (error) {
-    displayToast({
-      message: error instanceof Error ? error.message : 'An Unknown error occured.',
-      backgroundColor: 'error',
-    })
-  }
 
   return (
     <LinearGradient
@@ -140,6 +134,15 @@ function LibraryOrDeletedScreen({
                 onChangeText={text => setQuery(text)}
               />
             </View>
+            {/* @ts-ignore */}
+            {tracks.pages.map((group, i) => (
+              <View key={i}>
+                {group.data.map((track: TrackData, j: number) => (
+                  <Track key={j} track={track} location={type} openTabsModal={() => openTabsModal(track)} /> // Ensure each item has a unique key
+                ))}
+              </View>
+            ))}
+
             <FlatList
               style={tw.style(`flex-grow mb-32`)}
               contentContainerStyle={tw.style(``)}
@@ -164,4 +167,4 @@ function LibraryOrDeletedScreen({
   )
 }
 
-export default LibraryOrDeletedScreen
+export default InfiniteLibraryOrDeleted

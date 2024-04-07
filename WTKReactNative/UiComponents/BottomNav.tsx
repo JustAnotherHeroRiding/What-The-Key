@@ -23,6 +23,7 @@ import StudyScreen from '../screens/MainTab/Study'
 import { useOrientation } from '../utils/Context/OrientationProvider'
 import TriadsScreen from '../screens/SingleTrack/Triads'
 import TwelveBars from '../screens/SingleTrack/TwelveBars'
+import InfiniteLibraryOrDeleted from '../screens/MainTab/InfiniteLibraryOrDeleted'
 
 const navTheme = {
   ...DefaultTheme,
@@ -215,14 +216,14 @@ const BottomTab = () => {
         <>
           <Tab.Screen
             name='Library'
-            component={LibraryOrDeletedScreen}
+            component={InfiniteLibraryOrDeleted}
             initialParams={{ type: 'library' }}
             options={{ title: 'Learning' }}
           />
 
           <Tab.Screen
             name='Deleted'
-            component={LibraryOrDeletedScreen}
+            component={InfiniteLibraryOrDeleted}
             initialParams={{ type: 'recycleBin' }}
             options={{ title: 'Deleted' }}
           />

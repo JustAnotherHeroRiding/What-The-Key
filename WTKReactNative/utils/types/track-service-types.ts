@@ -6,6 +6,11 @@ export interface addTrackProps {
   source: dataSource
 }
 
+export interface TrackPageResponse {
+  tracks: string[]
+  nextCursor: string
+}
+
 export interface addTabProps {
   trackId: string
   tabUrl: string
@@ -17,13 +22,18 @@ export interface getTabProps {
 
 export interface getTracksProps {
   location: dataSource
-  cursor?: string
+}
+
+export interface getTracksPageProps {
+  location: dataSource
+  cursor: string
+  pageSize: string
 }
 
 export interface TracksPage {
   data: TrackData[]
-  prevCursor?: number
-  nextCursor?: number
+  prevCursor?: string
+  nextCursor?: string
 }
 
 export interface deleteTrackProps {

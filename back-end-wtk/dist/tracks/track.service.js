@@ -103,33 +103,26 @@ let TrackService = class TrackService {
     }
     async getTracksPage(userId, source, cursor, pageSize) {
         const user = await this.ensureUserExists(userId);
+        console.log(source);
         if (!user) {
             throw new Error('User not found, cannot fetch tracks.');
         }
-        let trackQuery;
+        const trackQuery = {
+            where: {
+                userId: user.id,
+                addedAt: { lt: new Date(cursor) },
+            },
+            include: { track: true },
+            orderBy: { addedAt: 'desc' },
+            take: parseInt(pageSize),
+        };
+        let tracks;
         if (source === 'library') {
-            trackQuery = {
-                where: {
-                    userId: user.id,
-                    addedAt: { lt: new Date(cursor) },
-                },
-                include: { track: true },
-                orderBy: { addedAt: 'desc' },
-                take: parseInt(pageSize),
-            };
+            tracks = await this.prisma.libraryTrack.findMany(trackQuery);
         }
         else if (source === 'recycleBin') {
-            trackQuery = {
-                where: {
-                    userId: user.id,
-                    addedAt: { lt: new Date(cursor) },
-                },
-                include: { track: true },
-                orderBy: { addedAt: 'desc' },
-                take: parseInt(pageSize),
-            };
+            tracks = await this.prisma.recycleBinTrack.findMany(trackQuery);
         }
-        const tracks = await this.prisma.libraryTrack.findMany(trackQuery);
         let nextCursor;
         if (tracks.length > 0) {
             if (source === 'library') {

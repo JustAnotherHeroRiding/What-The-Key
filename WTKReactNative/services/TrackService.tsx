@@ -14,6 +14,8 @@ import {
   Tab,
   isTrackAdded,
   TracksPage,
+  getTracksPageProps,
+  TrackPageResponse,
 } from '../utils/types/track-service-types'
 import { apiUrl } from '../utils/consts/production'
 import { displayToast } from '../utils/toasts'
@@ -104,15 +106,16 @@ const useTrackService = () => {
     return libraryData
   }
 
-  const getTracksCursor = async ({ location, cursor }: getTracksProps): Promise<TracksPage> => {
+  const getTracksCursor = async ({ location, cursor, pageSize }: getTracksPageProps): Promise<TracksPage> => {
     const queryParams = new URLSearchParams({
       userId: session?.user.id ?? 'no user',
       source: location,
-      cursor: cursor ?? '0',
+      cursor: cursor ?? new Date().toISOString(),
+      pageSize: pageSize,
     }).toString()
 
     try {
-      const responseTrackIds = await fetch(`${apiUrl}/api/track/getTracksPage?${queryParams}`, {
+      const responseTrackIds = await fetch(`${apiUrl}/api/track/trackPage?${queryParams}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -123,8 +126,8 @@ const useTrackService = () => {
         throw new Error('Error fetching track ids from database')
       }
 
-      const trackIds = await responseTrackIds.json()
-      const trackIdsJoined = trackIds.join(',')
+      const trackIds: TrackPageResponse = await responseTrackIds.json()
+      const trackIdsJoined = trackIds.tracks.join(',')
 
       const spotifyResponse = await fetch(`${apiUrl}/api/spotify/tracks?ids=${trackIdsJoined}`, {
         method: 'GET',
@@ -137,7 +140,7 @@ const useTrackService = () => {
 
       return {
         data: libraryData,
-        prevCursor: trackIds.prevCursor,
+        prevCursor: cursor,
         nextCursor: trackIds.nextCursor,
       }
     } catch (error) {
@@ -163,7 +166,6 @@ const useTrackService = () => {
       throw new Error(trackCount.message || 'Error fetching track ids from database')
     }
 
-    console.log(trackCount)
     return trackCount
   }
 

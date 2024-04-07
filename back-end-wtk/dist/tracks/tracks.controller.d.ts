@@ -5,11 +5,11 @@ export declare class TrackController {
     private readonly userService;
     private readonly trackService;
     constructor(userService: UserService, trackService: TrackService);
-    getTracks(userId: string, source: 'library' | 'recycleBin'): Promise<{
-        id: string;
-        libraryUserId: number;
-        recycleBinUserId: number;
-    }[]>;
+    getTracks(userId: string, source: 'library' | 'recycleBin'): Promise<string[]>;
+    getTracksPage(userId: string, source: 'library' | 'recycleBin', cursor: string, pageSize: string): Promise<{
+        tracks: string[];
+        nextCursor: string;
+    }>;
     getNumberOfTracks(userId: string, source: 'library' | 'recycleBin'): Promise<number>;
     addTrack(userId: string, trackId: string, source: 'library' | 'recycleBin'): Promise<{
         id: string;

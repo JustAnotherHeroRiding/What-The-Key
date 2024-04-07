@@ -108,7 +108,7 @@ export class TrackService {
   async getUserTracks(
     userId: string,
     source: 'library' | 'recycleBin',
-  ): Promise<Track[]> {
+  ): Promise<string[]> {
     const user = await this.ensureUserExists(userId);
 
     if (!user) {
@@ -121,7 +121,7 @@ export class TrackService {
           include: { track: true },
           orderBy: { addedAt: 'desc' },
         })
-        .then((results) => results.map((r) => r.track));
+        .then((results) => results.map((r) => r.track.id));
     } else if (source === 'recycleBin') {
       return this.prisma.recycleBinTrack
         .findMany({
@@ -129,12 +129,61 @@ export class TrackService {
           include: { track: true },
           orderBy: { addedAt: 'desc' },
         })
-        .then((results) => results.map((r) => r.track));
+        .then((results) => results.map((r) => r.track.id));
     } else {
       throw new Error(
         'Please provide the correct source(library of recycleBin).',
       );
     }
+  }
+
+  async getTracksPage(
+    userId: string,
+    source: 'library' | 'recycleBin',
+    cursor: string, // This is the cursor for pagination (track ID)
+    pageSize: string, // Number of items per page
+  ): Promise<{ tracks: string[]; nextCursor?: string }> {
+    const user = await this.ensureUserExists(userId);
+    if (!user) {
+      throw new Error('User not found, cannot fetch tracks.');
+    }
+
+    let trackQuery;
+    if (source === 'library') {
+      trackQuery = {
+        where: {
+          userId: user.id,
+          addedAt: { lt: new Date(cursor) }, // Fetch tracks added before the provided cursor date
+        },
+        include: { track: true },
+        orderBy: { addedAt: 'desc' },
+        take: parseInt(pageSize), // Limit the number of items per page
+      };
+    } else if (source === 'recycleBin') {
+      trackQuery = {
+        where: {
+          userId: user.id,
+          addedAt: { lt: new Date(cursor) }, // Fetch tracks deleted before the provided cursor date
+        },
+        include: { track: true },
+        orderBy: { addedAt: 'desc' },
+        take: parseInt(pageSize), // Limit the number of items per page
+      };
+    }
+
+    const tracks = await this.prisma.libraryTrack.findMany(trackQuery);
+
+    // Determine the next cursor based on the last track fetched
+    let nextCursor;
+    if (tracks.length > 0) {
+      if (source === 'library') {
+        nextCursor = tracks[tracks.length - 1].addedAt.toISOString(); // Use the addedAt of the last track fetched as the next cursor
+      } else if (source === 'recycleBin') {
+        nextCursor = tracks[tracks.length - 1].addedAt.toISOString(); // Use the deletedAt of the last track fetched as the next cursor
+      }
+    }
+
+    return { tracks: tracks.map((r) => r.trackId), nextCursor };
   }
 
   async getNumberOfTracks(

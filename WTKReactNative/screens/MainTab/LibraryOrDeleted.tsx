@@ -18,18 +18,12 @@ import { RouteProp, useRoute } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import colors from '../../assets/colors'
 import NotFoundComponent from '../../UiComponents/Reusable/Common/NotFound'
-import { dataSource } from '../../utils/types/track-service-types'
+import { dataSource, TracksPage } from '../../utils/types/track-service-types'
 import { displayToast } from '../../utils/toasts'
 
 const TitleCaseMap: { [key: string]: 'Library' | 'Deleted' } = {
   library: 'Library',
   recycleBin: 'Deleted',
-}
-
-interface TracksPage {
-  data: TrackData[]
-  previousCursor?: number
-  nextCursor?: number
 }
 
 function LibraryOrDeletedScreen({
@@ -48,7 +42,7 @@ function LibraryOrDeletedScreen({
   const [isTabsModalVisible, setIsTabsModalVisible] = useState(false)
   const [currentTrackForModal, setCurrentTrackForModal] = useState<TrackData | null>(null)
 
-  const { getTracks, isAddingTab } = useTrackService()
+  const { getTracks, isAddingTab, getTracksCursor } = useTrackService()
 
   const openTabsModal = (trackData: TrackData) => {
     setCurrentTrackForModal(trackData)
@@ -61,21 +55,13 @@ function LibraryOrDeletedScreen({
 
   const {
     data: infiniteTracks,
-    error: infiniteError,
     fetchNextPage, // Function to fetch the next page
-    fetchPreviousPage,
-    hasNextPage, // Boolean that indicates if the next page is available
-    hasPreviousPage,
-    isError, // If an Error has occurred
-    isFetching: isInfiniteFetching, // If the query function is running
-    isFetchingNextPage,
-    isFetchingPreviousPage,
-    status, // 'error' | 'loading' | 'success' - indicates state of this hook
-  } = useInfiniteQuery<TracksPage | Error>({
+  } = useInfiniteQuery<TracksPage>({
     queryKey: [type],
-    queryFn: () => getTracks({ location: type as dataSource }),
-    getLastPageParam: (firstPage: TracksPage, pages: TracksPage[]) => firstPage.previousCursor,
-    getNextPageParam: (lastPage: TracksPage, pages: TracksPage[]) => lastPage.nextCursor,
+    queryFn: ({ pageParam }) => getTracksCursor({ location: type as dataSource, cursor: '0' }),
+    initialPageParam: 0,
+    getNextPageParam: lastPage => lastPage.nextCursor,
+    getPreviousPageParam: firstPage => firstPage.prevCursor,
   })
 
   const {

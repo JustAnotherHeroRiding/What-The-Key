@@ -32,6 +32,16 @@ let TrackController = class TrackController {
             throw new common_1.InternalServerErrorException(error.message);
         }
     }
+    async getTracksPage(userId, source, cursor, pageSize) {
+        try {
+            const { tracks, nextCursor } = await this.trackService.getTracksPage(userId, source, cursor, pageSize);
+            return { tracks, nextCursor };
+        }
+        catch (error) {
+            console.log(error);
+            throw new common_1.InternalServerErrorException(error.message);
+        }
+    }
     async getNumberOfTracks(userId, source) {
         try {
             const tracks = await this.trackService.getNumberOfTracks(userId, source);
@@ -132,6 +142,16 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], TrackController.prototype, "getTracks", null);
+__decorate([
+    (0, common_1.Get)('trackPage'),
+    __param(0, (0, common_1.Query)('userId')),
+    __param(1, (0, common_1.Query)('source')),
+    __param(2, (0, common_1.Query)('cursor')),
+    __param(3, (0, common_1.Query)('pageSize')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], TrackController.prototype, "getTracksPage", null);
 __decorate([
     (0, common_1.Get)('getNumberOfTracks'),
     (0, swagger_1.ApiOperation)({

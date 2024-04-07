@@ -13,6 +13,7 @@ import {
   getTabProps,
   Tab,
   isTrackAdded,
+  TracksPage,
 } from '../utils/types/track-service-types'
 import { apiUrl } from '../utils/consts/production'
 import { displayToast } from '../utils/toasts'
@@ -88,7 +89,7 @@ const useTrackService = () => {
       throw new Error(trackIds.message || 'Error fetching track ids from database')
     }
 
-    const trackIdsJoined = trackIds.map((track: { id: any }) => track.id).join(',')
+    const trackIdsJoined = trackIds.join(',')
     const spotifyResponse = await fetch(
       `${apiUrl}/api/spotify/tracks?ids=${trackIdsJoined}
           `,
@@ -101,6 +102,47 @@ const useTrackService = () => {
     )
     const libraryData: TrackData[] = await spotifyResponse.json()
     return libraryData
+  }
+
+  const getTracksCursor = async ({ location, cursor }: getTracksProps): Promise<TracksPage> => {
+    const queryParams = new URLSearchParams({
+      userId: session?.user.id ?? 'no user',
+      source: location,
+      cursor: cursor ?? '0',
+    }).toString()
+
+    try {
+      const responseTrackIds = await fetch(`${apiUrl}/api/track/getTracksPage?${queryParams}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (!responseTrackIds.ok) {
+        throw new Error('Error fetching track ids from database')
+      }
+
+      const trackIds = await responseTrackIds.json()
+      const trackIdsJoined = trackIds.join(',')
+
+      const spotifyResponse = await fetch(`${apiUrl}/api/spotify/tracks?ids=${trackIdsJoined}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      const libraryData: TrackData[] = await spotifyResponse.json()
+
+      return {
+        data: libraryData,
+        prevCursor: trackIds.prevCursor,
+        nextCursor: trackIds.nextCursor,
+      }
+    } catch (error) {
+      throw new Error('Error fetching tracks')
+    }
   }
 
   const getNumberOfTracksAdded = async ({ location }: getTracksProps): Promise<number | ApiErrorResponse> => {
@@ -281,6 +323,7 @@ const useTrackService = () => {
     isTrackAdded,
     getHistoryTracks,
     getNumberOfTracksAdded,
+    getTracksCursor,
     isAddingTab,
     isDeletingTrack,
     isAddingTrack,

@@ -64,6 +64,27 @@ export class TrackController {
     }
   }
 
+  @Get('trackPage')
+  async getTracksPage(
+    @Query('userId') userId: string,
+    @Query('source') source: 'library' | 'recycleBin',
+    @Query('cursor') cursor: string, // Cursor for pagination
+    @Query('pageSize') pageSize: string, // Number of items per page
+  ) {
+    try {
+      const { tracks, nextCursor } = await this.trackService.getTracksPage(
+        userId,
+        source,
+        cursor,
+        pageSize,
+      );
+      return { tracks, nextCursor };
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
   @Get('getNumberOfTracks')
   @ApiOperation({
     summary: 'Get number of tracks',

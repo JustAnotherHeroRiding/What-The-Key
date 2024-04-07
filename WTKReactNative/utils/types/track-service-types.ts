@@ -1,3 +1,5 @@
+import { TrackData } from './spotify-types'
+
 export type dataSource = 'library' | 'recycleBin'
 export interface addTrackProps {
   trackId: string
@@ -15,6 +17,13 @@ export interface getTabProps {
 
 export interface getTracksProps {
   location: dataSource
+  cursor?: string
+}
+
+export interface TracksPage {
+  data: TrackData[]
+  prevCursor?: number
+  nextCursor?: number
 }
 
 export interface deleteTrackProps {

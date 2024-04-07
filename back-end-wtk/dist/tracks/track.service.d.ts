@@ -12,7 +12,11 @@ export declare class TrackService {
     ensureUserExists(profileId: string): Promise<User>;
     addTrackToUserLibraryOrBin(trackId: string, userId: string, source: 'library' | 'recycleBin'): Promise<Track>;
     deleteTrackPermanently(trackId: string, userId: string): Promise<Prisma.BatchPayload>;
-    getUserTracks(userId: string, source: 'library' | 'recycleBin'): Promise<Track[]>;
+    getUserTracks(userId: string, source: 'library' | 'recycleBin'): Promise<string[]>;
+    getTracksPage(userId: string, source: 'library' | 'recycleBin', cursor: string, pageSize: string): Promise<{
+        tracks: string[];
+        nextCursor?: string;
+    }>;
     getNumberOfTracks(userId: string, source: 'library' | 'recycleBin'): Promise<number>;
     addTabToTrack(trackId: string, userId: string, tabUrl: string): Promise<TrackTab>;
     getTabsForTrack(trackId: string, userId: string): Promise<TrackTab[]>;

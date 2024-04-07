@@ -86,7 +86,7 @@ let TrackService = class TrackService {
                 include: { track: true },
                 orderBy: { addedAt: 'desc' },
             })
-                .then((results) => results.map((r) => r.track));
+                .then((results) => results.map((r) => r.track.id));
         }
         else if (source === 'recycleBin') {
             return this.prisma.recycleBinTrack
@@ -95,11 +95,51 @@ let TrackService = class TrackService {
                 include: { track: true },
                 orderBy: { addedAt: 'desc' },
             })
-                .then((results) => results.map((r) => r.track));
+                .then((results) => results.map((r) => r.track.id));
         }
         else {
             throw new Error('Please provide the correct source(library of recycleBin).');
         }
+    }
+    async getTracksPage(userId, source, cursor, pageSize) {
+        const user = await this.ensureUserExists(userId);
+        if (!user) {
+            throw new Error('User not found, cannot fetch tracks.');
+        }
+        let trackQuery;
+        if (source === 'library') {
+            trackQuery = {
+                where: {
+                    userId: user.id,
+                    addedAt: { lt: new Date(cursor) },
+                },
+                include: { track: true },
+                orderBy: { addedAt: 'desc' },
+                take: parseInt(pageSize),
+            };
+        }
+        else if (source === 'recycleBin') {
+            trackQuery = {
+                where: {
+                    userId: user.id,
+                    addedAt: { lt: new Date(cursor) },
+                },
+                include: { track: true },
+                orderBy: { addedAt: 'desc' },
+                take: parseInt(pageSize),
+            };
+        }
+        const tracks = await this.prisma.libraryTrack.findMany(trackQuery);
+        let nextCursor;
+        if (tracks.length > 0) {
+            if (source === 'library') {
+                nextCursor = tracks[tracks.length - 1].addedAt.toISOString();
+            }
+            else if (source === 'recycleBin') {
+                nextCursor = tracks[tracks.length - 1].addedAt.toISOString();
+            }
+        }
+        return { tracks: tracks.map((r) => r.trackId), nextCursor };
     }
     async getNumberOfTracks(userId, source) {
         const user = await this.ensureUserExists(userId);

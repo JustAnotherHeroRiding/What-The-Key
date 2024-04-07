@@ -142,6 +142,9 @@ function InfiniteLibraryOrDeleted({
                 ))}
               </View>
             ))}
+            <TouchableOpacity onPress={()=> fetchNextPage()} style={tw.style(`bg-beigeCustom p-1 mx-auto my-2`)}>
+              <Text style={tw.style(`text-black`)}>Load more</Text>
+            </TouchableOpacity>
 
             <FlatList
               style={tw.style(`flex-grow mb-32`)}

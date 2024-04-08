@@ -84,8 +84,10 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
 
   if (randomTrackError || searchError) {
     return (
-      <View>
-        <Text>Error: {(randomTrackError || searchError)?.message}</Text>
+      <View style={tw.style(`bg-zinc-800 p-4`)}>
+        <Text style={tw.style(`text-slate-50 text-2xl text-center`)}>
+          Error: {(randomTrackError || searchError)?.message}
+        </Text>
       </View>
     )
   }
@@ -131,7 +133,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream rounded-lg w-[95%] mt-[3%]`)}
+        style={tw.style(`border border-cream rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
       >
         <TheoryOfTheDay />
       </LinearGradient>
@@ -139,7 +141,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
+        style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
       >
         <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Songs to Learn</Text>
 
@@ -149,7 +151,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
+        style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
       >
         <View style={tw.style(`gap-2`)}>
           <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Recently Opened</Text>
@@ -160,7 +162,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
         colors={['#27272a', '#52525b']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-2 rounded-lg w-[95%] mt-[3%]`)}
+        style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
       >
         <View style={tw.style(`gap-2`)}>
           <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Favorites</Text>

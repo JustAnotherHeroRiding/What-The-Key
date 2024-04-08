@@ -8,6 +8,7 @@ import { CustomButton } from '../../Reusable/Common/CustomButtom'
 import Avatar from './Avatar'
 import { ProfilePicContext } from '../../../utils/Context/Profile/ProfileProvider'
 import { LinearGradient } from 'expo-linear-gradient'
+import { useQueryClient } from '@tanstack/react-query'
 export interface Profile {
   id?: string
   username: string
@@ -17,6 +18,8 @@ export interface Profile {
 }
 
 export default function Account({ session }: { session: Session }) {
+  const queryClient = useQueryClient()
+
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
@@ -155,6 +158,7 @@ export default function Account({ session }: { session: Session }) {
           onPress={() => {
             setProfilePicUrl(null)
             supabase.auth.signOut()
+            queryClient.clear()
           }}
           txtStyle={tw`text-black`}
           btnStyle={tw`bg-cream`}

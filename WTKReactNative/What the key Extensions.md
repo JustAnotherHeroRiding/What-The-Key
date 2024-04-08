@@ -107,8 +107,9 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 - Render the combined items from all pages in a **Flatlist** so it is scrollable #DONE 
 ##### Trying to fetch the last page currently crashes the app the api returns an error
 - Scrolling down will trigger the second page to load, make the limit 20 tracks #DONE 
-- Create a search endpoint
-- Make a db call to display the filtered results, the query key will be the location and the query
+- Create a search endpoint that will search the user's library or deleted tracks.  #Scrapped
+###### Since we are using paginated data, it is better to be safe and use db search instead of filtering locally. However since we have no track metadata outside of the id, we cannot filter our db so we must fetch all tracks and then filter those. The initial query will be cached so this will be a one time big query.
+- Make a db call to display the filtered results, the query key will be the location and the query #DONE 
 
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin

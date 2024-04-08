@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, FlatList, TextInput, ListRenderItemInfo } from 'react-native'
 import {
   DeletedScreenNavigationProp,
@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import Track from '../../UiComponents/Reusable/Track/Track'
 import LoadingSpinner from '../../UiComponents/Reusable/Common/LoadingSpinner'
 import useTrackService from '../../services/TrackService'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { keepPreviousData, useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
 import { isApiErrorResponse } from '../../utils/types/typeGuards'
 import TrackTabModal from '../../UiComponents/Reusable/TrackAdjacent/TrackTabModal'
 import { RouteProp, useRoute } from '@react-navigation/native'
@@ -20,6 +20,7 @@ import colors from '../../assets/colors'
 import NotFoundComponent from '../../UiComponents/Reusable/Common/NotFound'
 import { ApiErrorResponse, dataSource, TracksPage } from '../../utils/types/track-service-types'
 import { displayToast } from '../../utils/toasts'
+import _ from 'lodash'
 
 const PAGE_SIZE = '20'
 const TitleCaseMap: { [key: string]: 'Library' | 'Deleted' } = {
@@ -34,6 +35,8 @@ function InfiniteLibraryOrDeleted({
 }: {
   navigation: LibraryScreenNavigationProp | DeletedScreenNavigationProp
 }) {
+  const queryClient = useQueryClient()
+
   const router = useRoute<RouteProp<RootStackParamList['MainTab']>>()
   const params = router.params as { type: dataSource }
   const type = params.type ?? ''
@@ -45,7 +48,7 @@ function InfiniteLibraryOrDeleted({
   const [isTabsModalVisible, setIsTabsModalVisible] = useState(false)
   const [currentTrackForModal, setCurrentTrackForModal] = useState<TrackData | null>(null)
 
-  const { isAddingTab, getTracksCursor } = useTrackService()
+  const { isAddingTab, getTracksCursor, getFilteredTracks } = useTrackService()
 
   const openTabsModal = (trackData: TrackData) => {
     setCurrentTrackForModal(trackData)
@@ -55,6 +58,35 @@ function InfiniteLibraryOrDeleted({
   const closeTabsModal = () => {
     setIsTabsModalVisible(false)
   }
+
+  const {
+    data: filteredTracks,
+    isFetching: isFetchingFiltered,
+    error: searchError,
+    refetch: getSearchResults,
+  } = useQuery({
+    queryKey: [type, query],
+    queryFn: () => getFilteredTracks({ location: type as dataSource, query }),
+    enabled: false,
+    staleTime: 1000,
+    placeholderData: keepPreviousData,
+  })
+
+  const debouncedSearch = useCallback(
+    _.debounce(() => {
+      getSearchResults()
+    }, 500),
+    [queryClient],
+  )
+
+  useEffect(() => {
+    if (query) {
+      debouncedSearch()
+    } else {
+      queryClient.setQueryData(['searchTracks', query], null)
+    }
+    return () => debouncedSearch.cancel()
+  }, [query, debouncedSearch])
 
   const {
     data: tracks,
@@ -153,7 +185,7 @@ function InfiniteLibraryOrDeleted({
             <FlatList
               style={tw.style(`flex-grow mb-32`)}
               contentContainerStyle={tw.style(``)}
-              data={flattenedTracks as TrackData[]}
+              data={filteredTracks ? (filteredTracks as TrackData[]) : (flattenedTracks as TrackData[])}
               renderItem={({ item }: ListRenderItemInfo<FlatListItem>) =>
                 // If we try to fetch a track that is out of bounds, we get an api error
                 // I cast the item as an error and I check the status code
@@ -169,11 +201,12 @@ function InfiniteLibraryOrDeleted({
               refreshing={isFetching}
               onRefresh={() => hasNextPage && fetchNextPage()}
               onEndReached={() => {
-                if (hasNextPage) {
+                if (flattenedTracks && hasNextPage) {
                   fetchNextPage()
                 }
               }}
-              onEndReachedThreshold={0.1}
+              onEndReachedThreshold={0.2}
+              ListHeaderComponent={() => isFetchingFiltered && <LoadingSpinner />}
             />
           </>
         )

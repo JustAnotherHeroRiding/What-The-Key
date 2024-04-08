@@ -64,6 +64,37 @@ export class TrackController {
     }
   }
 
+  @ApiOperation({
+    summary: 'Get page of Tracks',
+    description:
+      'Get tracks for a user from either the library or recycle bin, using a cursor to fetch and take limit to only return one page.',
+  })
+  @ApiQuery({
+    name: 'userId',
+    type: String,
+    required: true,
+    description: 'User ID',
+  })
+  @ApiQuery({
+    name: 'source',
+    enum: ['library', 'recycleBin'],
+    required: true,
+    description: 'Source of the tracks',
+  })
+  @ApiQuery({
+    name: 'cursor',
+    type: String,
+    required: true,
+    description: 'Cursor that will use the addedAt to mark the last track.',
+  })
+  @ApiQuery({
+    name: 'pageSize',
+    type: String,
+    required: true,
+    description: 'Number of tracks to fetch for the page',
+  })
+  @ApiResponse({ status: 200, description: 'List of tracks' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
   @Get('trackPage')
   async getTracksPage(
     @Query('userId') userId: string,

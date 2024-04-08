@@ -16,6 +16,7 @@ import {
   TracksPage,
   getTracksPageProps,
   TrackPageResponse,
+  dataSource,
 } from '../utils/types/track-service-types'
 import { apiUrl } from '../utils/consts/production'
 import { displayToast } from '../utils/toasts'
@@ -104,6 +105,25 @@ const useTrackService = () => {
     )
     const libraryData: TrackData[] = await spotifyResponse.json()
     return libraryData
+  }
+
+  const getFilteredTracks = async ({
+    location,
+    query,
+  }: {
+    location: dataSource
+    query: string
+  }): Promise<TrackData[] | ApiErrorResponse> => {
+    const libraryData = await getTracks({ location })
+    const filteredTracks = (libraryData as TrackData[]).filter(track => {
+      return (
+        track.track.name.toLowerCase().includes(query.toLowerCase()) ||
+        track.track.artists[0].name.toLowerCase().includes(query.toLowerCase()) ||
+        track.track.album.name.toLowerCase().includes(query.toLowerCase())
+      )
+    })
+
+    return filteredTracks
   }
 
   const getTracksCursor = async ({ location, cursor, pageSize }: getTracksPageProps): Promise<TracksPage> => {
@@ -326,6 +346,7 @@ const useTrackService = () => {
     getHistoryTracks,
     getNumberOfTracksAdded,
     getTracksCursor,
+    getFilteredTracks,
     isAddingTab,
     isDeletingTrack,
     isAddingTrack,

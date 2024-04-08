@@ -126,7 +126,7 @@ export class SpotifyService {
 
   async fetchTrackDetailed(
     trackId: string,
-    userId?: string,
+    userId = undefined,
   ): Promise<TrackData> {
     await this.getAuthToken();
     let historyResponse;

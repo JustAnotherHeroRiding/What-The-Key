@@ -26,7 +26,11 @@ const useSpotifyService = () => {
     if (!response.ok) {
       throw new Error(data.message || 'Error fetching track')
     }
-    const responseExtended = await fetch(`${apiUrl}/api/spotify/trackDetailed/${data.tracks[0].id}`)
+    const userId = session?.user.id
+
+    const queryString = userId ? `?userId=${encodeURIComponent(userId)}` : ''
+
+    const responseExtended = await fetch(`${apiUrl}/api/spotify/trackDetailed/${data.tracks[0].id}${queryString}`)
     const dataExtended = await responseExtended.json()
 
     if (!responseExtended.ok) {

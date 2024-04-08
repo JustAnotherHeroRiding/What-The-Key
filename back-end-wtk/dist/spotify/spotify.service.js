@@ -91,7 +91,7 @@ let SpotifyService = class SpotifyService {
             audioFeatures: audioFeaturesResponse.data,
         };
     }
-    async fetchTrackDetailed(trackId, userId) {
+    async fetchTrackDetailed(trackId, userId = undefined) {
         await this.getAuthToken();
         let historyResponse;
         if (userId) {

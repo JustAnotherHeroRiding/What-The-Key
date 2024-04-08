@@ -48,8 +48,6 @@ function InfiniteLibraryOrDeleted({
   const [isTabsModalVisible, setIsTabsModalVisible] = useState(false)
   const [currentTrackForModal, setCurrentTrackForModal] = useState<TrackData | null>(null)
 
-  const [flattenedTracks, setFlattenedTracks] = useState<TrackData[]>([])
-
   const { isAddingTab, getTracksCursor, getFilteredTracks } = useTrackService()
 
   const openTabsModal = (trackData: TrackData) => {
@@ -109,10 +107,6 @@ function InfiniteLibraryOrDeleted({
   const flattenTracks = (tracksToFlatten: InfiniteData<TracksPage>) => {
     return tracksToFlatten?.pages.flatMap(group => group.data)
   }
-
-  useEffect(() => {
-    setFlattenedTracks(flattenTracks(tracks as InfiniteData<TracksPage>))
-  }, [tracks, type])
 
   return (
     <LinearGradient
@@ -185,7 +179,11 @@ function InfiniteLibraryOrDeleted({
             <FlatList
               style={tw.style(`flex-grow mb-32`)}
               contentContainerStyle={tw.style(``)}
-              data={filteredTracks ? (filteredTracks as TrackData[]) : flattenedTracks}
+              data={
+                filteredTracks
+                  ? (filteredTracks as TrackData[])
+                  : (tracks as InfiniteData<TracksPage>).pages.flatMap(group => group.data)
+              }
               renderItem={({ item }: ListRenderItemInfo<FlatListItem>) =>
                 // If we try to fetch a track that is out of bounds, we get an api error
                 // I cast the item as an error and I check the status code
@@ -212,7 +210,9 @@ function InfiniteLibraryOrDeleted({
                   title='Invalidate'
                   btnStyle={tw`mx-auto my-4`}
                   onPress={() => {
-                    queryClient.invalidateQueries({ queryKey: [type] })
+                    queryClient.setQueryData(['recycleBin'], undefined)
+                    queryClient.invalidateQueries({ queryKey: ['library'] })
+                    queryClient.setQueryData(['library'], undefined)
                     refetchTracks()
                   }}
                 ></CustomButton>

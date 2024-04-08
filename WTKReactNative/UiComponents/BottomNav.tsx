@@ -216,14 +216,14 @@ const BottomTab = () => {
         <>
           <Tab.Screen
             name='Library'
-            component={InfiniteLibraryOrDeleted}
+            component={LibraryOrDeletedScreen}
             initialParams={{ type: 'library' }}
             options={{ title: 'Learning' }}
           />
 
           <Tab.Screen
             name='Deleted'
-            component={InfiniteLibraryOrDeleted}
+            component={LibraryOrDeletedScreen}
             initialParams={{ type: 'recycleBin' }}
             options={{ title: 'Deleted' }}
           />

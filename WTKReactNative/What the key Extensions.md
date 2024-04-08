@@ -111,6 +111,10 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 ###### Since we are using paginated data, it is better to be safe and use db search instead of filtering locally. However since we have no track metadata outside of the id, we cannot filter our db so we must fetch all tracks and then filter those. The initial query will be cached so this will be a one time big query.
 - Make a db call to display the filtered results, the query key will be the location and the query #DONE 
 
+
+### Infinite TODOs
+When removing a track from the library, it is removed from the list. But even though the cache is invalidated for the recycle bin, the newly deleted track does not appear there. Same for restoring a track to the library. It likely has something to do with the cursor as it is a date and the newly added/restored track has a newer timestamp than the original `date.now` call. I will leave the library pages with a normal query as it should not be a problem unless a user adds 100s of tracks
+
 ## Incorrect keys
 If a user notices that the key is not correct they can report it
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
@@ -149,7 +153,6 @@ Previously I noticed that the redirect page to github was buggy. Test some commo
 - Leave only Spotify as the provider
 
 # To be developed in v2
-
 
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin

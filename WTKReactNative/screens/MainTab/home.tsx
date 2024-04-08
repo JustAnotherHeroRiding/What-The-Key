@@ -83,7 +83,11 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
   }, [query, debouncedSearch])
 
   if (randomTrackError || searchError) {
-    return <View>Error: {(randomTrackError || searchError)?.message}</View>
+    return (
+      <View>
+        <Text>Error: {(randomTrackError || searchError)?.message}</Text>
+      </View>
+    )
   }
 
   return (

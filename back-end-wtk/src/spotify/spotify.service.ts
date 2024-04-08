@@ -131,23 +131,19 @@ export class SpotifyService {
     await this.getAuthToken();
     let historyResponse;
     if (userId) {
-      try {
-        // Change to the production url https://what-the-key.vercel.app
-        historyResponse = await axios.post(
-          'https://what-the-key.vercel.app/api/track/addHistory',
-          {
-            userId,
-            trackId,
+      // Change to the production url https://what-the-key.vercel.app
+      historyResponse = await axios.post(
+        'https://what-the-key.vercel.app/api/track/addHistory',
+        {
+          userId,
+          trackId,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
           },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-      } catch (error) {
-        console.error('Error adding track to the history:', error);
-      }
+        },
+      );
     }
 
     const headers = this.createHeaders();
@@ -157,7 +153,6 @@ export class SpotifyService {
         headers,
       }),
     ]);
-
     return {
       track: trackResponse.data,
       audioAnalysis: audioFeaturesResponse.data as TrackDataAnalysis,

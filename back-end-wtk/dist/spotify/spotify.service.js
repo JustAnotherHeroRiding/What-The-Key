@@ -95,19 +95,14 @@ let SpotifyService = class SpotifyService {
         await this.getAuthToken();
         let historyResponse;
         if (userId) {
-            try {
-                historyResponse = await axios_1.default.post('https://what-the-key.vercel.app/api/track/addHistory', {
-                    userId,
-                    trackId,
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-            }
-            catch (error) {
-                console.error('Error adding track to the history:', error);
-            }
+            historyResponse = await axios_1.default.post('https://what-the-key.vercel.app/api/track/addHistory', {
+                userId,
+                trackId,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
         }
         const headers = this.createHeaders();
         const [trackResponse, audioFeaturesResponse] = await Promise.all([

@@ -55,7 +55,7 @@ function InfiniteLibraryOrDeleted({
 
   const {
     data: tracks,
-    fetchNextPage, // Function to fetch the next page
+    fetchNextPage,
     isLoading,
     isFetching,
   } = useInfiniteQuery<TracksPage>({
@@ -66,6 +66,8 @@ function InfiniteLibraryOrDeleted({
     getNextPageParam: lastPage => lastPage.nextCursor,
     getPreviousPageParam: firstPage => firstPage.prevCursor,
   })
+
+  const flattenedTracks: TrackData[] | undefined = tracks?.pages.flatMap(group => group.data)
 
   return (
     <LinearGradient
@@ -142,14 +144,14 @@ function InfiniteLibraryOrDeleted({
                 ))}
               </View>
             ))}
-            <TouchableOpacity onPress={()=> fetchNextPage()} style={tw.style(`bg-beigeCustom p-1 mx-auto my-2`)}>
+
+            <TouchableOpacity onPress={() => fetchNextPage()} style={tw.style(`bg-beigeCustom p-1 mx-auto my-2`)}>
               <Text style={tw.style(`text-black`)}>Load more</Text>
             </TouchableOpacity>
-
             <FlatList
               style={tw.style(`flex-grow mb-32`)}
               contentContainerStyle={tw.style(``)}
-              data={tracks as TrackData[]}
+              data={flattenedTracks as TrackData[]}
               renderItem={({ item }) => (
                 <Track track={item} location={type} openTabsModal={() => openTabsModal(item)} />
               )}

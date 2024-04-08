@@ -89,7 +89,7 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 - Stop add track requests if the limit is reached
 - Add settings in the profile to allow users to disable the limit
 - Add an info sign next to the limit to explain what it does with a little pop up modal
-## Scrapped I will not add the track limit
+## **Scrapped** I will not add the track limit
 
 
 ### Single track update
@@ -103,7 +103,8 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 - Create an endpoint to fetch only a single page #DONE 
 - Create separate component to use the infinite query and test it out with a button to get the next page #DONE 
 - Make the library/bin query infinite #DONE 
-##### Seems to be fetching the same 5 tracks for both the library and the deleted page. changing the param manually also returns the same 5 ids
+##### Seems to be fetching the same 5 tracks for both the library and the deleted page. changing the param manually also returns the same 5 ids #FIXED
+- Render the combined items from all pages in a **Flatlist** so it is scrollable
 - Scrolling down will trigger the second page to load, make the limit 20 tracks
 - Create a search endpoint
 - Make a db call to display the filtered results, the query key will be the location and the query

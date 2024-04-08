@@ -40,7 +40,8 @@ let SpotifyController = class SpotifyController {
     }
     async fetchTrackDetailed(trackId, userId) {
         try {
-            return await this.spotifyService.fetchTrackDetailed(trackId, userId);
+            const resolvedUserId = userId ? userId : 'anonymous';
+            return await this.spotifyService.fetchTrackDetailed(trackId, resolvedUserId);
         }
         catch (error) {
             throw new common_1.HttpException('Error fetching track', common_1.HttpStatus.INTERNAL_SERVER_ERROR);

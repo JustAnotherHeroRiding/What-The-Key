@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import {
   SpotifyItem,
@@ -126,40 +126,49 @@ export class SpotifyService {
 
   async fetchTrackDetailed(
     trackId: string,
-    userId = undefined,
+    userId?: string,
   ): Promise<TrackData> {
     await this.getAuthToken();
-    let historyResponse;
-    if (userId) {
-      // Change to the production url https://what-the-key.vercel.app
-      historyResponse = await axios.post(
-        'https://what-the-key.vercel.app/api/track/addHistory',
-        {
-          userId,
-          trackId,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
+    try {
+      let historyResponse;
+
+      // Check if userId is provided and not 'anonymous'
+      if (userId && userId !== 'anonymous') {
+        // Change to the production URL https://what-the-key.vercel.app
+        historyResponse = await axios.post(
+          'https://what-the-key.vercel.app/api/track/addHistory',
+          {
+            userId,
+            trackId,
           },
-        },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+      }
+
+      const headers = this.createHeaders();
+      const [trackResponse, audioFeaturesResponse] = await Promise.all([
+        axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, { headers }),
+        axios.get(`https://api.spotify.com/v1/audio-analysis/${trackId}`, {
+          headers,
+        }),
+      ]);
+
+      return {
+        track: trackResponse.data,
+        audioAnalysis: audioFeaturesResponse.data as TrackDataAnalysis,
+        trackHistory: historyResponse ? historyResponse.data : null, // Ensure historyResponse is defined before accessing data
+      };
+    } catch (error) {
+      throw new HttpException(
+        'Error fetching track',
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-
-    const headers = this.createHeaders();
-    const [trackResponse, audioFeaturesResponse] = await Promise.all([
-      axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, { headers }),
-      axios.get(`https://api.spotify.com/v1/audio-analysis/${trackId}`, {
-        headers,
-      }),
-    ]);
-    return {
-      track: trackResponse.data,
-      audioAnalysis: audioFeaturesResponse.data as TrackDataAnalysis,
-      trackHistory: historyResponse.data,
-    };
   }
-
   async searchTracks(searchQuery: string): Promise<SpotifyTracksSearchResult> {
     await this.getAuthToken();
 

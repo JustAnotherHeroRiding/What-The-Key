@@ -102,7 +102,11 @@ export class SpotifyController {
     @Query('userId') userId?: string,
   ) {
     try {
-      return await this.spotifyService.fetchTrackDetailed(trackId, userId);
+      const resolvedUserId = userId ? userId : 'anonymous';
+      return await this.spotifyService.fetchTrackDetailed(
+        trackId,
+        resolvedUserId,
+      );
     } catch (error) {
       throw new HttpException(
         'Error fetching track',

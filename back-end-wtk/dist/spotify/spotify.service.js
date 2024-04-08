@@ -91,31 +91,36 @@ let SpotifyService = class SpotifyService {
             audioFeatures: audioFeaturesResponse.data,
         };
     }
-    async fetchTrackDetailed(trackId, userId = undefined) {
+    async fetchTrackDetailed(trackId, userId) {
         await this.getAuthToken();
-        let historyResponse;
-        if (userId) {
-            historyResponse = await axios_1.default.post('https://what-the-key.vercel.app/api/track/addHistory', {
-                userId,
-                trackId,
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        try {
+            let historyResponse;
+            if (userId && userId !== 'anonymous') {
+                historyResponse = await axios_1.default.post('https://what-the-key.vercel.app/api/track/addHistory', {
+                    userId,
+                    trackId,
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+            }
+            const headers = this.createHeaders();
+            const [trackResponse, audioFeaturesResponse] = await Promise.all([
+                axios_1.default.get(`https://api.spotify.com/v1/tracks/${trackId}`, { headers }),
+                axios_1.default.get(`https://api.spotify.com/v1/audio-analysis/${trackId}`, {
+                    headers,
+                }),
+            ]);
+            return {
+                track: trackResponse.data,
+                audioAnalysis: audioFeaturesResponse.data,
+                trackHistory: historyResponse ? historyResponse.data : null,
+            };
         }
-        const headers = this.createHeaders();
-        const [trackResponse, audioFeaturesResponse] = await Promise.all([
-            axios_1.default.get(`https://api.spotify.com/v1/tracks/${trackId}`, { headers }),
-            axios_1.default.get(`https://api.spotify.com/v1/audio-analysis/${trackId}`, {
-                headers,
-            }),
-        ]);
-        return {
-            track: trackResponse.data,
-            audioAnalysis: audioFeaturesResponse.data,
-            trackHistory: historyResponse.data,
-        };
+        catch (error) {
+            throw new common_1.HttpException('Error fetching track', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     async searchTracks(searchQuery) {
         await this.getAuthToken();

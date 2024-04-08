@@ -16,7 +16,7 @@ export declare class SpotifyService {
     private getAuthToken;
     fetchMultipleTracks(trackIds: string): Promise<TrackData[]>;
     fetchTrack(trackId: string): Promise<TrackData>;
-    fetchTrackDetailed(trackId: string, userId?: any): Promise<TrackData>;
+    fetchTrackDetailed(trackId: string, userId?: string): Promise<TrackData>;
     searchTracks(searchQuery: string): Promise<SpotifyTracksSearchResult>;
     getRandomGuitarTrack(): Promise<TrackData>;
     getRecs(seeds: RecommendationSeed[]): Promise<TrackData>;

@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import Track from '../../UiComponents/Reusable/Track/Track'
 import LoadingSpinner from '../../UiComponents/Reusable/Common/LoadingSpinner'
 import useTrackService from '../../services/TrackService'
-import { keepPreviousData, useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
+import { InfiniteData, keepPreviousData, useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
 import { isApiErrorResponse } from '../../utils/types/typeGuards'
 import TrackTabModal from '../../UiComponents/Reusable/TrackAdjacent/TrackTabModal'
 import { RouteProp, useRoute } from '@react-navigation/native'
@@ -19,8 +19,8 @@ import { MaterialIcons } from '@expo/vector-icons'
 import colors from '../../assets/colors'
 import NotFoundComponent from '../../UiComponents/Reusable/Common/NotFound'
 import { ApiErrorResponse, dataSource, TracksPage } from '../../utils/types/track-service-types'
-import { displayToast } from '../../utils/toasts'
 import _ from 'lodash'
+import { CustomButton } from '../../UiComponents/Reusable/Common/CustomButtom'
 
 const PAGE_SIZE = '20'
 const TitleCaseMap: { [key: string]: 'Library' | 'Deleted' } = {
@@ -48,6 +48,8 @@ function InfiniteLibraryOrDeleted({
   const [isTabsModalVisible, setIsTabsModalVisible] = useState(false)
   const [currentTrackForModal, setCurrentTrackForModal] = useState<TrackData | null>(null)
 
+  const [flattenedTracks, setFlattenedTracks] = useState<TrackData[]>([])
+
   const { isAddingTab, getTracksCursor, getFilteredTracks } = useTrackService()
 
   const openTabsModal = (trackData: TrackData) => {
@@ -65,7 +67,7 @@ function InfiniteLibraryOrDeleted({
     error: searchError,
     refetch: getSearchResults,
   } = useQuery({
-    queryKey: [type, query],
+    queryKey: ['filteredTracks'],
     queryFn: () => getFilteredTracks({ location: type as dataSource, query }),
     enabled: false,
     staleTime: 1000,
@@ -83,7 +85,7 @@ function InfiniteLibraryOrDeleted({
     if (query) {
       debouncedSearch()
     } else {
-      queryClient.setQueryData(['searchTracks', query], null)
+      queryClient.setQueryData(['filteredTracks'], null)
     }
     return () => debouncedSearch.cancel()
   }, [query, debouncedSearch])
@@ -94,6 +96,7 @@ function InfiniteLibraryOrDeleted({
     isLoading,
     isFetching,
     hasNextPage,
+    refetch: refetchTracks,
   } = useInfiniteQuery<TracksPage>({
     queryKey: [type],
     queryFn: ({ pageParam }) =>
@@ -103,16 +106,13 @@ function InfiniteLibraryOrDeleted({
     getPreviousPageParam: firstPage => firstPage.prevCursor,
   })
 
-  useEffect(() => {
-    if (tracks && !hasNextPage) {
-      displayToast({
-        message: 'No more tracks to load',
-        backgroundColor: 'default',
-      })
-    }
-  }, [hasNextPage])
+  const flattenTracks = (tracksToFlatten: InfiniteData<TracksPage>) => {
+    return tracksToFlatten?.pages.flatMap(group => group.data)
+  }
 
-  const flattenedTracks: TrackData[] | undefined = tracks?.pages.flatMap(group => group.data)
+  useEffect(() => {
+    setFlattenedTracks(flattenTracks(tracks as InfiniteData<TracksPage>))
+  }, [tracks, type])
 
   return (
     <LinearGradient
@@ -174,7 +174,7 @@ function InfiniteLibraryOrDeleted({
                 {TitleCaseMap[type]}
               </Text>
               <TextInput
-                style={tw.style(`bg-[#fff] flex-1 rounded-2xl p-3 text-black`)}
+                style={tw.style(`bg-[#fff] flex-1 rounded-2xl p-3 text-black mx-3`)}
                 placeholder='Search'
                 placeholderTextColor='gray'
                 value={query}
@@ -185,7 +185,7 @@ function InfiniteLibraryOrDeleted({
             <FlatList
               style={tw.style(`flex-grow mb-32`)}
               contentContainerStyle={tw.style(``)}
-              data={filteredTracks ? (filteredTracks as TrackData[]) : (flattenedTracks as TrackData[])}
+              data={filteredTracks ? (filteredTracks as TrackData[]) : flattenedTracks}
               renderItem={({ item }: ListRenderItemInfo<FlatListItem>) =>
                 // If we try to fetch a track that is out of bounds, we get an api error
                 // I cast the item as an error and I check the status code
@@ -199,14 +199,24 @@ function InfiniteLibraryOrDeleted({
               }
               keyExtractor={(item, index) => index.toString()}
               refreshing={isFetching}
-              onRefresh={() => hasNextPage && fetchNextPage()}
+              onRefresh={() => refetchTracks()}
               onEndReached={() => {
-                if (flattenedTracks && hasNextPage) {
+                if (tracks && hasNextPage) {
                   fetchNextPage()
                 }
               }}
               onEndReachedThreshold={0.2}
               ListHeaderComponent={() => isFetchingFiltered && <LoadingSpinner />}
+              ListFooterComponent={() => (
+                <CustomButton
+                  title='Invalidate'
+                  btnStyle={tw`mx-auto my-4`}
+                  onPress={() => {
+                    queryClient.invalidateQueries({ queryKey: [type] })
+                    refetchTracks()
+                  }}
+                ></CustomButton>
+              )}
             />
           </>
         )

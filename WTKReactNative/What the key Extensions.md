@@ -111,12 +111,6 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 ###### Since we are using paginated data, it is better to be safe and use db search instead of filtering locally. However since we have no track metadata outside of the id, we cannot filter our db so we must fetch all tracks and then filter those. The initial query will be cached so this will be a one time big query.
 - Make a db call to display the filtered results, the query key will be the location and the query #DONE 
 
-## Drag and drop
-- Allow users to reorder the tracks in the library/Bin
-- This will require a db call to rearrange the order in the database
-##### Currently we are sorting by timestamp, let's see how we can manipulate this with the drag and drop
-
-
 ## Incorrect keys
 If a user notices that the key is not correct they can report it
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
@@ -155,6 +149,12 @@ Previously I noticed that the redirect page to github was buggy. Test some commo
 - Leave only Spotify as the provider
 
 # To be developed in v2
+
+
+## Drag and drop
+- Allow users to reorder the tracks in the library/Bin
+- This will require a db call to rearrange the order in the database
+##### Currently we are sorting by timestamp, let's see how we can manipulate this with the drag and drop
 
 ## Multiple Scale Selection
 Allow users to select 2 or more scales at once, displaying multiple fretboards. I must pay attention to both fretboards being fully visible, although they will have to become smaller.

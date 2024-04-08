@@ -137,38 +137,42 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
       >
         <TheoryOfTheDay />
       </LinearGradient>
-      <LinearGradient
-        colors={['#27272a', '#52525b']}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
-      >
-        <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Songs to Learn</Text>
+      {session && (
+        <>
+          <LinearGradient
+            colors={['#27272a', '#52525b']}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 0 }}
+            style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
+          >
+            <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Songs to Learn</Text>
 
-        <TrackRecommendations />
-      </LinearGradient>
-      <LinearGradient
-        colors={['#27272a', '#52525b']}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
-      >
-        <View style={tw.style(`gap-2`)}>
-          <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Recently Opened</Text>
-          <TrackHistory type='latest' />
-        </View>
-      </LinearGradient>
-      <LinearGradient
-        colors={['#27272a', '#52525b']}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
-      >
-        <View style={tw.style(`gap-2`)}>
-          <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Favorites</Text>
-          <TrackHistory type='favorites' />
-        </View>
-      </LinearGradient>
+            <TrackRecommendations />
+          </LinearGradient>
+          <LinearGradient
+            colors={['#27272a', '#52525b']}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 0 }}
+            style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
+          >
+            <View style={tw.style(`gap-2`)}>
+              <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Recently Opened</Text>
+              <TrackHistory type='latest' />
+            </View>
+          </LinearGradient>
+          <LinearGradient
+            colors={['#27272a', '#52525b']}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 0 }}
+            style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
+          >
+            <View style={tw.style(`gap-2`)}>
+              <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Favorites</Text>
+              <TrackHistory type='favorites' />
+            </View>
+          </LinearGradient>
+        </>
+      )}
     </ScrollView>
   )
 }

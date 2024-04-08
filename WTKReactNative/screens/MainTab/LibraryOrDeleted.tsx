@@ -35,7 +35,6 @@ function LibraryOrDeletedScreen({
   const router = useRoute<RouteProp<RootStackParamList['MainTab']>>()
   const params = router.params as { type: dataSource }
   const type = params.type ?? ''
-  const queryClient = useQueryClient()
 
   const [query, setQuery] = useState('')
   const [filteredTracks, setFilteredTracks] = useState<TrackData[]>([])
@@ -160,7 +159,7 @@ function LibraryOrDeletedScreen({
                 {TitleCaseMap[type]}
               </Text>
               <TextInput
-                style={tw.style(`bg-[#fff] flex-1 rounded-2xl p-3 text-black`)}
+                style={tw.style(`bg-[#fff] flex-1 rounded-2xl px-3 py-2 text-black mx-3`)}
                 placeholder='Search'
                 placeholderTextColor='gray'
                 value={query}

@@ -61,7 +61,7 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus, isFetching
       </Text>
       <Image
         source={{ uri: track.track.album.images[0].url }}
-        style={tw.style(`mb-4 w-[250px] max-w-[${imageSize}px] h-[250px] rounded-md border border-cream`, {
+        style={tw.style(`mb-4 w-[250px] max-w-[${imageSize}px] h-[250px] rounded-md`, {
           objectFit: 'contain',
         })}
         alt={track.track.name}

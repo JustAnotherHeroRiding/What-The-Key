@@ -110,19 +110,29 @@ Deleted should be for songs I have already learned or stopped learning #DONE
 - Create a search endpoint that will search the user's library or deleted tracks.  #Scrapped
 ###### Since we are using paginated data, it is better to be safe and use db search instead of filtering locally. However since we have no track metadata outside of the id, we cannot filter our db so we must fetch all tracks and then filter those. The initial query will be cached so this will be a one time big query.
 - Make a db call to display the filtered results, the query key will be the location and the query #DONE 
+The search endpoint uses the get all tracks to filter as we have no metadata in the database. If we start including the track, artist and album names it would make sense to use an infinite query and make it work #TODO 
 
 
-### Infinite TODOs
-When removing a track from the library, it is removed from the list. But even though the cache is invalidated for the recycle bin, the newly deleted track does not appear there. Same for restoring a track to the library. It likely has something to do with the cursor as it is a date and the newly added/restored track has a newer timestamp than the original `date.now` call. I will leave the library pages with a normal query as it should not be a problem unless a user adds 100s of tracks
+## Multi Touch
+- When pressing on two notes/columns at the same time, both notes should play #DONE
+- Add feedback when a click is registered #DONE 
+#### Bug - Sometimes long presses keep the button with low opacity and it will reset only on a new tap
+- Add it to the fretboard
+
 
 ## Incorrect keys
 If a user notices that the key is not correct they can report it
+- Report incorrect key button in the detailed track component
+- This will send a post request that the user can then browse
+- We will need a new table, which will have the trackId, description, userId that submitted it and the correct key
 - Admin can then edit the key and the correct key will be displayed instead of the one fetched from spotify
-- User can either locally set his key or browse for user suggested keys
+- User can either locally set his key or browse for user suggested keys that have been submitted
+- each submission can have a description as well
 
 ## Circle of Fifths
 - Add an option on the study page to display the circle of fifths
-- When the user selects a key, the wheel should rotate
+- When the user selects a key, show possible chord progressions and relationships between the keys
+- Try creating lines to explain diatonic keys, tritones etc
 - Add advice on how to use it #Research
 
 ## The Lick
@@ -153,6 +163,9 @@ Previously I noticed that the redirect page to github was buggy. Test some commo
 - Leave only Spotify as the provider
 
 # To be developed in v2
+
+### Infinite TODOs
+When removing a track from the library, it is removed from the list. But even though the cache is invalidated for the recycle bin, the newly deleted track does not appear there. Same for restoring a track to the library. It likely has something to do with the cursor as it is a date and the newly added/restored track has a newer timestamp than the original `date.now` call. I will leave the library pages with a normal query as it should not be a problem unless a user adds 100s of tracks
 
 ## Drag and drop
 - Allow users to reorder the tracks in the library/Bin

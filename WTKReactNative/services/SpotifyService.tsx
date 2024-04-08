@@ -30,7 +30,7 @@ const useSpotifyService = () => {
 
     const queryString = userId ? `?userId=${encodeURIComponent(userId)}` : ''
 
-    const responseExtended = await fetch(`${apiUrl}/api/spotify/trackDetailed/${data.tracks[0].id}${queryString}`)
+    const responseExtended = await fetch(`${apiUrl}/api/spotify/trackDetailed/${data.tracks[0].id}`)
     console.log(`${apiUrl}/api/spotify/trackDetailed/${data.tracks[0].id}${queryString}`)
     const dataExtended = await responseExtended.json()
 

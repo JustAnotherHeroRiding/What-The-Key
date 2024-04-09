@@ -117,6 +117,7 @@ The search endpoint uses the get all tracks to filter as we have no metadata in 
 - When pressing on two notes/columns at the same time, both notes should play #DONE
 - Add feedback when a click is registered #DONE 
 #### Bug - Sometimes long presses keep the button with low opacity and it will reset only on a new tap
+- Turn the fretboard maps into `FlatList`
 - Add it to the fretboard
 
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, FlatList } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { NOTES as chromaticScale, intervalNamesSingle } from '../../../utils/formating/track-formating'
 import { CustomButton } from '../Common/CustomButtom'
@@ -57,15 +57,11 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
   }, [noteRotation])
 
   return (
-    <ScrollView>
+    <>
       {/* flex-row for portait */}
-      <ScrollView
-        horizontal={true}
-        style={tw.style('flex-row')}
-        contentContainerStyle={tw.style(`justify-between gap-2`)}
-      >
+      <View style={tw.style('flex-row justify-center gap-2 flex-wrap')}>
         <CustomButton
-          title={`Show ${noteType === 'note' ? 'Intervals' : 'Notes'}`}
+          title={`${noteType === 'note' ? 'Intervals' : 'Notes'}`}
           onPress={() => toggleNoteType()}
         ></CustomButton>
         <CustomButton onPress={toggleOrientation} title={isLandscape ? 'Portrait' : 'Landscape'}></CustomButton>
@@ -75,34 +71,39 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
           onPress={rotateNotes}
           title={'Rotate'}
         ></CustomButton>
-      </ScrollView>
+      </View>
       {/*  flex-col for portait  */}
-      <ScrollView horizontal={isLandscape} style={tw.style('flex-1', isLandscape ? 'flex-row' : 'flex-col')}>
-        {/* String Names */}
-        {/* flex-row for portait */}
+      {/* String Names */}
 
-        <View style={tw`${isLandscape ? 'flex-col' : 'flex-row'} justify-center ml-10 items-center`}>
-          {strings.map((string, stringIndex) => (
-            <Text
-              key={stringIndex}
-              style={tw.style(
-                `w-10 h-10 p-1 m-0.5 text-xl text-center text-white`,
-                !isLandscape && { transform: [{ rotate: `${noteRotation}deg` }] },
-              )}
-            >
-              {string}
-            </Text>
-          ))}
+      <View style={tw.style(`${isLandscape ? 'flex-row' : 'flex-col'}`)}>
+        <View style={tw.style(`h-12`)}>
+          <FlatList
+            style={tw.style(`${isLandscape ? 'flex-col' : 'flex-row'} ml-10`)}
+            contentContainerStyle={tw.style(`justify-center items-center  mx-auto`)}
+            data={strings}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal={!isLandscape}
+            renderItem={({ item: string, index: stringIndex }) => (
+              <Text
+                style={tw.style(
+                  `w-10 h-10 p-1 m-0.5 text-xl text-center text-white`,
+                  !isLandscape && { transform: [{ rotate: `${noteRotation}deg` }] },
+                )}
+              >
+                {string}
+              </Text>
+            )}
+          />
         </View>
-
         {/* Frets and Fret Numbers */}
         {/* flex-row for portait */}
-        <ScrollView horizontal={isLandscape}>
-          {frets.map((fret, fretIndex) => (
-            <View
-              key={fretIndex}
-              style={tw.style('items-center justify-center', isLandscape ? 'flex-col' : 'flex-row')}
-            >
+        <FlatList
+          data={frets}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal={isLandscape}
+          contentContainerStyle={tw.style('justify-center items-center')}
+          renderItem={({ item: fret, index: fretIndex }) => (
+            <View style={tw.style('items-center justify-center', isLandscape ? 'flex-col' : 'flex-row')}>
               {/* Fret Number */}
               <Text
                 style={tw.style(
@@ -114,22 +115,27 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
               </Text>
 
               {/* Frets for each string */}
-              {strings.map((string, stringIndex) => (
-                <Fret
-                  key={`${stringIndex}-${fretIndex}`}
-                  string={string}
-                  fret={fret}
-                  scaleNotes={scaleNotes}
-                  noteType={noteType}
-                  isLandscape={isLandscape}
-                  noteRotation={noteRotation}
-                />
-              ))}
+              <FlatList
+                horizontal={!isLandscape}
+                data={strings}
+                keyExtractor={(item, index) => `${index}-${fretIndex}`}
+                contentContainerStyle={tw.style('justify-center items-center')}
+                renderItem={({ item: string, index: stringIndex }) => (
+                  <Fret
+                    string={string}
+                    fret={fret}
+                    scaleNotes={scaleNotes}
+                    noteType={noteType}
+                    isLandscape={isLandscape}
+                    noteRotation={noteRotation}
+                  />
+                )}
+              />
             </View>
-          ))}
-        </ScrollView>
-      </ScrollView>
-    </ScrollView>
+          )}
+        />
+      </View>
+    </>
   )
 }
 

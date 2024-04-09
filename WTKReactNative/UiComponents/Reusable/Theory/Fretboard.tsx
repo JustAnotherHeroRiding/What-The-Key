@@ -76,9 +76,9 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
       {/* String Names */}
 
       <View style={tw.style(`${isLandscape ? 'flex-row' : 'flex-col'}`)}>
-        <View style={tw.style(`h-12`)}>
+        <View style={tw.style(`${!isLandscape ? 'h-12 ' : ''}`)}>
           <FlatList
-            style={tw.style(`${isLandscape ? 'flex-col' : 'flex-row'} ml-10`)}
+            style={tw.style(`${isLandscape ? 'flex-col mt-10' : 'flex-row ml-10'} `)}
             contentContainerStyle={tw.style(`justify-center items-center  mx-auto`)}
             data={strings}
             keyExtractor={(item, index) => index.toString()}

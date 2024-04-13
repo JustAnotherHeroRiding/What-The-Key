@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { View, Text, ScrollView, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, Animated } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { NOTES as chromaticScale, intervalNamesSingle } from '../../../utils/formating/track-formating'
 import { CustomButton } from '../Common/CustomButtom'
-import { useOrientation } from '../../../utils/Context/OrientationProvider'
 import { scaleNotesAndIntervals } from '../../../utils/consts/scales-consts-types'
 import { useSounds } from '../../../utils/Context/SoundPlayer'
 import { StringNames, FretNumber, NoteType, soundFiles } from '../../../utils/consts/soundFilesTypes'
+import { GestureHandlerRootView, LongPressGestureHandler, State, TapGestureHandler } from 'react-native-gesture-handler'
 
 const getNoteAtFret = (openStringNote: string, fret: number, key: string, noteType: 'interval' | 'note'): string => {
   // we are passing a lowercase 'e' which returned duplicated notes from the b string
@@ -70,9 +70,9 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
 
       <View style={tw.style(`flex-col`)}>
         <View style={tw.style(`h-12`)}>
-          <View style={tw.style(`flex-row ml-10`)}>
+          <View style={tw.style(`flex-row ml-12`)}>
             {strings.map((string, stringIndex) => (
-              <Text key={stringIndex} style={tw.style(`w-10 h-10 p-1 m-0.5 text-xl text-center text-white`)}>
+              <Text key={stringIndex} style={tw.style(`w-12 h-12 p-1 m-0.5 text-xl text-center text-white`)}>
                 {string}
               </Text>
             ))}
@@ -80,12 +80,12 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
         </View>
         {/* Frets and Fret Numbers */}
         {/* flex-row for portait */}
-        <View style={tw.style('justify-center items-center')}>
+        <GestureHandlerRootView style={tw.style('justify-center items-center')}>
           {frets.map((fret, fretIndex) => (
             <View key={fretIndex} style={tw.style('items-center justify-center flex-row')}>
               {/* Fret Number */}
               <Text
-                style={tw.style(`w-10 h-10 mt-1 text-xl text-center text-white`, {
+                style={tw.style(`w-12 h-12 mt-1 text-xl text-center text-white`, {
                   transform: [{ rotate: `${noteRotation}deg` }],
                 })}
               >
@@ -105,7 +105,7 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
               ))}
             </View>
           ))}
-        </View>
+        </GestureHandlerRootView>
       </View>
     </>
   )
@@ -124,6 +124,8 @@ const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, noteRot
   const note = useMemo(() => getNoteAtFret(string, fret, scaleKey, noteType), [string, fret, scaleKey, noteType])
   const { playSound, stopSound } = useSounds()
 
+  const opacity = new Animated.Value(1)
+
   let isNoteInScale = false
   if (noteType === 'note') {
     isNoteInScale = scaleNotes.notes.includes(note)
@@ -136,6 +138,21 @@ const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, noteRot
   const handlePressIn = () => {
     stopPreviousSound()
     playSound(string, fret)
+    // Update the opacity to 0.5 when pressed
+    Animated.timing(opacity, {
+      toValue: 0.5,
+      duration: 200,
+      useNativeDriver: true,
+    }).start()
+  }
+
+  const handlePressOut = () => {
+    // Update the opacity back to 1 when released
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start()
   }
 
   useEffect(() => {
@@ -149,23 +166,50 @@ const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, noteRot
   }
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        handlePressIn()
+    <LongPressGestureHandler
+      onHandlerStateChange={({ nativeEvent }) => {
+        if (
+          nativeEvent.state === State.END ||
+          nativeEvent.state === State.CANCELLED ||
+          nativeEvent.state === State.FAILED
+        ) {
+          handlePressOut()
+        }
       }}
-      style={tw.style(
-        [
-          'p-1 w-10  h-10 justify-center items-center shadow-lg shadow-slate-200 rounded-md m-0.5',
-          isNoteInScale ? 'border border-gray-400' : '',
-          isNoteInScale ? (isRootNote ? 'bg-beigeCustom border border-zinc-600' : 'bg-creamLight') : 'bg-slate-200',
-        ],
-        { transform: [{ rotate: `${noteRotation}deg` }] },
-      )}
     >
-      {isNoteInScale && (
-        <Text style={tw.style([` ${isRootNote ? 'text-xl' : 'text-lg'}`], { fontFamily: 'figtree-bold' })}>{note}</Text>
-      )}
-    </TouchableOpacity>
+      <TapGestureHandler
+        numberOfTaps={1}
+        onHandlerStateChange={({ nativeEvent }) => {
+          if (nativeEvent.state === State.BEGAN) {
+            handlePressIn()
+          } else if (
+            nativeEvent.state === State.END ||
+            nativeEvent.state === State.CANCELLED ||
+            nativeEvent.state === State.FAILED
+          ) {
+            handlePressOut()
+          }
+        }}
+      >
+        <Animated.View
+          style={tw.style(
+            [
+              'p-1 w-12  h-12 justify-center items-center shadow-lg shadow-slate-200 rounded-md m-0.5',
+              isNoteInScale ? 'border border-gray-400' : '',
+              isNoteInScale ? (isRootNote ? 'bg-beigeCustom border border-zinc-600' : 'bg-creamLight') : 'bg-slate-200',
+            ],
+            { transform: [{ rotate: `${noteRotation}deg` }] },
+            { opacity },
+          )}
+        >
+          {isNoteInScale && (
+            <Text style={tw.style([` ${isRootNote ? 'text-xl' : 'text-lg'}`], { fontFamily: 'figtree-bold' })}>
+              {note}
+            </Text>
+          )}
+        </Animated.View>
+      </TapGestureHandler>
+    </LongPressGestureHandler>
   )
 }
 

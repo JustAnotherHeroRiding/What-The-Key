@@ -47,7 +47,11 @@ function NoteIntervalColumns({ selectedOption, intervalToFret }: NoteIntervalCol
           // Inside your renderItem function
           <LongPressGestureHandler
             onHandlerStateChange={({ nativeEvent }) => {
-              if (nativeEvent.state === State.END) {
+              if (
+                nativeEvent.state === State.END ||
+                nativeEvent.state === State.CANCELLED ||
+                nativeEvent.state === State.FAILED
+              ) {
                 onPressOut(index)
               }
             }}

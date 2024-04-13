@@ -100,12 +100,7 @@ function LibraryOrDeletedScreen({
   }, [query, debouncedSearch])
 
   return (
-    <LinearGradient
-      colors={['#27272a', '#52525b']}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 0, y: 0 }}
-      style={tw.style(`flex-grow w-full`)}
-    >
+    <View style={tw.style(`flex-grow w-full bg-stone-800`)}>
       {isValidType ? (
         isLoading ? (
           <View style={tw.style(`flex items-center justify-center my-auto`)}>
@@ -186,7 +181,7 @@ function LibraryOrDeletedScreen({
       {isTabsModalVisible && currentTrackForModal && (
         <TrackTabModal currentTrack={currentTrackForModal} closeTabsModal={closeTabsModal} isAddingTab={isAddingTab} />
       )}
-    </LinearGradient>
+    </View>
   )
 }
 

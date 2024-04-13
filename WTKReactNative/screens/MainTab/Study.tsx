@@ -53,12 +53,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
   }, [params])
 
   return (
-    <LinearGradient
-      colors={['#27272a', '#52525b']}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 0, y: 0 }}
-      style={tw.style(`flex-grow w-full pb-16`)}
-    >
+    <ScrollView contentContainerStyle={tw.style(`flex-grow w-full pb-16 bg-stone-800`)}>
       <View style={tw.style(`flex justify-center items-center gap-2 p-4`)}>
         <View style={tw.style(`justify-between gap-4 flex-row`)}>
           <View style={tw.style(`flex-col w-1/3 gap-2`)}>
@@ -93,7 +88,6 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
             </Picker>
           </View>
         </View>
-
         <ScrollView
           horizontal={true}
           contentContainerStyle={tw.style(`flex-grow items-stretch flex-row gap-4`)}
@@ -128,7 +122,6 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
           </Text>
           <Text style={tw.style(`text-slate-50`)}>{selectedOption?.description}</Text>
         </View>
-
         {(scaleType === 'triad' || scaleType === 'seventh') && (
           <ModeSelector
             scaleMode={scaleMode ?? 'Major'}
@@ -147,11 +140,10 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
           />
         )}
         {twelveBarsActive && <TwelveBarsSelector selectedKey={selectedKey} />}
-
         {/* Fretboard that will show up once a scale is selected */}
         {selectedOption?.notes && <Fretboard scaleNotes={selectedOption} />}
         <IntervalSymbolsLegend />
       </View>
-    </LinearGradient>
+    </ScrollView>
   )
 }

@@ -166,8 +166,7 @@ export const getSeventhNotes = (key: string, mode: Mode = 'Major', addFifth: boo
     name: mode,
     notes,
     intervals: intervalNames,
-    description: `A seventh chord is a four-note chord consisting of a root, 
-    a major or minor third, a perfect fifth(can be left out), and a seventh interval.`,
+    description: `A seventh chord is a four-note chord consisting of a root, a major or minor third, a perfect fifth(can be left out), and a seventh interval.`,
   }
 }
 
@@ -178,7 +177,6 @@ export const selectSeventh = (
   addFifth: boolean = false,
 ) => {
   const scaleNotes = getSeventhNotes(selectedKey, mode, addFifth)
-  console.log(selectedKey, mode, addFifth)
   setSelectedOption(scaleNotes)
 }
 

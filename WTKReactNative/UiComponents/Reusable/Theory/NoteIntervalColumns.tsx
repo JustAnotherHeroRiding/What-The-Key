@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, TouchableOpacity, Text, View, Animated } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { IntervalNames } from '../../../utils/formating/track-formating'
@@ -58,7 +58,11 @@ function NoteIntervalColumns({ selectedOption, intervalToFret }: NoteIntervalCol
                 if (nativeEvent.state === State.BEGAN) {
                   onPressIn(index)
                   playSound('B', intervalToFret[selectedOption?.intervals[index] as IntervalNames])
-                } else if (nativeEvent.state === State.END) {
+                } else if (
+                  nativeEvent.state === State.END ||
+                  nativeEvent.state === State.CANCELLED ||
+                  nativeEvent.state === State.FAILED
+                ) {
                   onPressOut(index)
                 }
               }}

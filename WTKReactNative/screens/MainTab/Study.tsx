@@ -120,7 +120,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
           <Text style={tw.style(`text-beigeCustom text-xl`, { fontFamily: 'figtree-bold' })}>
             {splitAndJoinAndCapitalizeFirstLetter(selectedOption?.name ?? '')}
           </Text>
-          <Text style={tw.style(`text-slate-50`)}>{selectedOption?.description}</Text>
+          <Text style={tw.style(`text-slate-50 text-left`)}>{selectedOption?.description}</Text>
         </View>
         {(scaleType === 'triad' || scaleType === 'seventh') && (
           <ModeSelector

@@ -88,13 +88,6 @@ const TrackDetailed = ({ track, src, openTabsModal, trackAddedStatus, isFetching
         />
       </View>
       <View style={tw.style(`flex flex-wrap items-center justify-center flex-row gap-2`)}>
-        <TouchableOpacity
-          disabled={true}
-          style={tw`px-4 py-3 border opacity-70  border-black rounded-2xl bg-beigeCustom font-800 shadow-lg`}
-          // Start the Play mode
-        >
-          <Text style={tw.style(`text-center text-2xl`, { fontFamily: 'figtree-bold' })}>Play</Text>
-        </TouchableOpacity>
         {session && isFetchingTrackStatus ? (
           <LoadingSpinner />
         ) : trackAddedStatus.isInLibrary || trackAddedStatus.isInRecycleBin ? (

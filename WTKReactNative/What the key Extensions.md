@@ -135,7 +135,7 @@ If a user notices that the key is not correct they can report it
 ## Circle of Fifths
 - Add an option on the study page to display the circle of fifths
 - When the user selects a key, show possible chord progressions and relationships between the keys
-- Try creating lines to explain diatonic keys, tritones etc
+- Try creating lines between the keys to explain diatonic keys, tritones etc
 - Add advice on how to use it #Research
 
 ## The Lick

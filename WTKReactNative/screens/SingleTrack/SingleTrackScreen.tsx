@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native'
-import { BackHandler } from 'react-native'
+import { BackHandler, View } from 'react-native'
 import useSpotifyService from '../../services/SpotifyService'
 import { useQuery } from '@tanstack/react-query'
 import tw from '../../utils/config/tailwindRN'
@@ -65,11 +65,8 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
   }
 
   return (
-    <LinearGradient
-      colors={['#27272a', '#52525b']}
-      start={{ x: 1, y: 0 }}
-      end={{ x: 0, y: 0 }}
-      style={tw.style(`flex-grow w-full opacity-100`)}
+    <View
+      style={tw.style(`flex-grow w-full opacity-100 bg-stone-800`)}
     >
       {isFetchingTrack ? (
         <LoadingSpinner />
@@ -87,7 +84,7 @@ function SingleTrackScreen({ navigation }: { navigation: SingleTrackOverviewNavi
       {isTabsModalVisible && currentTrackForModal && (
         <TrackTabModal currentTrack={currentTrackForModal} closeTabsModal={closeTabsModal} isAddingTab={isAddingTab} />
       )}
-    </LinearGradient>
+    </View>
   )
 }
 

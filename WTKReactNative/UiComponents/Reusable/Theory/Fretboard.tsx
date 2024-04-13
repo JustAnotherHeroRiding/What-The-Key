@@ -82,10 +82,10 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
         {/* flex-row for portait */}
         <GestureHandlerRootView style={tw.style('justify-center items-center')}>
           {frets.map((fret, fretIndex) => (
-            <View key={fretIndex} style={tw.style('items-center justify-center flex-row')}>
+            <View key={fretIndex} style={tw.style('flex-row')}>
               {/* Fret Number */}
               <Text
-                style={tw.style(`w-12 h-12 mt-1 text-xl text-center text-white`, {
+                style={tw.style(`w-12 h-12 mt-1 pt-2 text-xl text-center text-white`, {
                   transform: [{ rotate: `${noteRotation}deg` }],
                 })}
               >

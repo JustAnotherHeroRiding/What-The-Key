@@ -120,7 +120,7 @@ The search endpoint uses the get all tracks to filter as we have no metadata in 
 - After I removed the scrollview from the study page, the scaleslist do not get rendered #DONE - Reverted it back to maps
 - After refactoring the fretboard to use flatlists when going into landscape mode it is upside down #REMOVED - the landscape mode is not really needed and only used for the fretboard. the note rotation handles a landscape use case
 #### Bug - Sometimes quick taps keep the button stuck with low opacity and it will reset only on a new tap #DONE This bug was caused when we press and slide the finger away, causing the END state to never trigger
-- Add it to the fretboard
+- Add it to the fretboard #DONE 
 
 
 ## Incorrect keys

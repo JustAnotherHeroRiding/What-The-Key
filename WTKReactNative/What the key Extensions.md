@@ -1,4 +1,3 @@
-ex
 Now that the basic functionality is complete and users can search and save songs, have tabs ready to go along with a powerful study screen to learn all scales, modes, triad positions and 7th chords, we can get to work on extending and improving the existing features to provide a professional feeling UX
 
 ## Home page - Recently Opened
@@ -116,9 +115,12 @@ The search endpoint uses the get all tracks to filter as we have no metadata in 
 ## Multi Touch
 - When pressing on two notes/columns at the same time, both notes should play #DONE
 - Add feedback when a click is registered #DONE 
-#### Bug - Sometimes long presses keep the button with low opacity and it will reset only on a new tap
-- Turn the fretboard maps into `FlatList`
+- Turn the fretboard maps into `FlatList` #DONE 
+#### Bug - Sometimes quick taps keep the button stuck with low opacity and it will reset only on a new tap
 - Add it to the fretboard
+- After refactoring the fretboard to use flatlists when going into landscape mode it is upside down
+- Remove the nested virtualized list warning, perhaps convert the child flatlist to a normal view
+- After I removed the scrollview from the study page, the scaleslist do not get rendered
 
 
 ## Incorrect keys

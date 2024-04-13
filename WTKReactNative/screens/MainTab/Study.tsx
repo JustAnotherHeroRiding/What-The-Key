@@ -59,7 +59,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
       end={{ x: 0, y: 0 }}
       style={tw.style(`flex-grow w-full pb-16`)}
     >
-      <ScrollView contentContainerStyle={tw.style(`flex justify-center items-center gap-2 p-4`)}>
+      <View style={tw.style(`flex justify-center items-center gap-2 p-4`)}>
         <View style={tw.style(`justify-between gap-4 flex-row`)}>
           <View style={tw.style(`flex-col w-1/3 gap-2`)}>
             <Text style={tw.style(`text-slate-200 text-center`)}>Select a Key:</Text>
@@ -151,7 +151,7 @@ export default function StudyScreen({ navigation }: { navigation: StudyScreenNav
         {/* Fretboard that will show up once a scale is selected */}
         {selectedOption?.notes && <Fretboard scaleNotes={selectedOption} />}
         <IntervalSymbolsLegend />
-      </ScrollView>
+      </View>
     </LinearGradient>
   )
 }

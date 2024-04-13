@@ -96,12 +96,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
     <ScrollView contentContainerStyle={tw.style(`justify-center items-center pb-16`)}>
       <StatusBar style='auto' />
 
-      <LinearGradient
-        colors={['#27272a', '#52525b']}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream p-5 rounded-lg items-center w-[90%] mt-[3%]`)}
-      >
+      <View style={tw.style(`border border-cream p-5 rounded-lg items-center w-[90%] mt-[3%] bg-stone-800`)}>
         <TextInput
           style={tw.style(`bg-[#fff] w-full rounded-2xl p-3 mb-5 text-black`)}
           placeholder='Search'
@@ -118,7 +113,7 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
             <Text style={tw.style(`text-black text-base font-bold`)}>Random Scale</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </View>
       {(isRandomTrackLoading || isSearchLoading) && <LoadingSpinner />}
 
       {searchResults && <SearchResults results={searchResults as SpotifyTracksSearchResult} />}
@@ -129,48 +124,28 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
           userId={session?.user.id}
         />
       )}
-      <LinearGradient
-        colors={['#27272a', '#52525b']}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 0 }}
-        style={tw.style(`border border-cream rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
-      >
+      <View style={tw.style(`border border-cream rounded-lg min-h-[15%] w-[95%] mt-[3%] bg-stone-800`)}>
         <TheoryOfTheDay />
-      </LinearGradient>
+      </View>
       {session && (
         <>
-          <LinearGradient
-            colors={['#27272a', '#52525b']}
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 0 }}
-            style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
-          >
+          <View style={tw.style(`border border-cream rounded-lg min-h-[15%] w-[95%] mt-[3%] bg-stone-800 px-3 py-2`)}>
             <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Songs to Learn</Text>
 
             <TrackRecommendations />
-          </LinearGradient>
-          <LinearGradient
-            colors={['#27272a', '#52525b']}
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 0 }}
-            style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
-          >
+          </View>
+          <View style={tw.style(`border border-cream rounded-lg min-h-[15%] w-[95%] mt-[3%] bg-stone-800 px-3 py-2`)}>
             <View style={tw.style(`gap-2`)}>
               <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Recently Opened</Text>
               <TrackHistory type='latest' />
             </View>
-          </LinearGradient>
-          <LinearGradient
-            colors={['#27272a', '#52525b']}
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 0 }}
-            style={tw.style(`border border-cream p-2 rounded-lg min-h-[15%] w-[95%] mt-[3%]`)}
-          >
+          </View>
+          <View style={tw.style(`border border-cream rounded-lg min-h-[15%] w-[95%] mt-[3%] bg-stone-800 px-3 py-2`)}>
             <View style={tw.style(`gap-2`)}>
               <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Favorites</Text>
               <TrackHistory type='favorites' />
             </View>
-          </LinearGradient>
+          </View>
         </>
       )}
     </ScrollView>

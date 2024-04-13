@@ -74,7 +74,7 @@ function TheoryOfTheDay() {
   }, [])
 
   return (
-    <View style={tw.style(`p-2`)}>
+    <View style={tw.style(`px-3 py-2`)}>
       <View style={tw.style(`gap-2`)}>
         <Text style={tw.style(`text-beigeCustom text-2xl font-bold`)}>Theory of the Day</Text>
 

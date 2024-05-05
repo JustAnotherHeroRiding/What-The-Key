@@ -121,6 +121,14 @@ The search endpoint uses the get all tracks to filter as we have no metadata in 
 - After refactoring the fretboard to use flatlists when going into landscape mode it is upside down #REMOVED - the landscape mode is not really needed and only used for the fretboard. the note rotation handles a landscape use case
 #### Bug - Sometimes quick taps keep the button stuck with low opacity and it will reset only on a new tap #DONE This bug was caused when we press and slide the finger away, causing the END state to never trigger
 - Add it to the fretboard #DONE 
+### Launch 
+It is time to launch on the app store. Test the auth experience and clean up any uncomplete features if any exist and try to get the get app launched. This will also require some screenshots and a description
+
+#### Testing sign up experience
+Previously I noticed that the redirect page to github was buggy. Test some common scenarios and perhaps remove github from the providers.
+- When signing up with email, show a toast that the user needs to verify their email before being able to sign in
+- Leave only Spotify as the provider
+- Use flex wrap for note-interval columns
 
 
 ## Incorrect keys
@@ -137,6 +145,9 @@ If a user notices that the key is not correct they can report it
 - When the user selects a key, show possible chord progressions and relationships between the keys
 - Try creating lines between the keys to explain diatonic keys, tritones etc
 - Add advice on how to use it #Research
+
+## Scale builder
+On the study page, allow users to build and save custom scales where they can select the intervals and name the scales and the fretboard will be populated with the intervals in the selected key
 
 ## The Lick
 - On the study page, add the lick in each key as a sound sample
@@ -160,10 +171,6 @@ Style the emails that supabase sends for email confirmation/reset password and e
 - When rendering the fretboard for 7th chords or triads for example, I should do a simple check for possible shapes that can be played. These can be notes that are on adjacent frets, no more than 3 for example with triads. I will have to work on the implementation until it will helpful 
 - Only include 3 adjacent strings and +2 frets at most from the middle
 
-## Testing sign up experience
-Previously I noticed that the redirect page to github was buggy. Test some common scenarios and perhaps remove github from the providers.
-- When signing up with email, show a toast that the user needs to verify their email before being able to sign in
-- Leave only Spotify as the provider
 
 # To be developed in v2
 

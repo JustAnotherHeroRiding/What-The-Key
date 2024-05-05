@@ -69,10 +69,10 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
       {/* String Names */}
 
       <View style={tw.style(`flex-col`)}>
-        <View style={tw.style(`h-12`)}>
-          <View style={tw.style(`flex-row ml-12`)}>
+        <View style={tw.style(`h-11`)}>
+          <View style={tw.style(`flex-row ml-11`)}>
             {strings.map((string, stringIndex) => (
-              <Text key={stringIndex} style={tw.style(`w-12 h-12 p-1 m-0.5 text-xl text-center text-white`)}>
+              <Text key={stringIndex} style={tw.style(`w-11 h-11 p-1 m-0.5 text-xl text-center text-white`)}>
                 {string}
               </Text>
             ))}
@@ -85,7 +85,7 @@ const Fretboard: React.FC<FretboardProps> = ({ scaleNotes }) => {
             <View key={fretIndex} style={tw.style('flex-row')}>
               {/* Fret Number */}
               <Text
-                style={tw.style(`w-12 h-12 mt-1 pt-2 text-xl text-center text-white`, {
+                style={tw.style(`w-11 h-11 mt-1 pt-2 text-xl text-center text-white`, {
                   transform: [{ rotate: `${noteRotation}deg` }],
                 })}
               >
@@ -194,7 +194,7 @@ const Fret: React.FC<FretProps> = ({ string, fret, scaleNotes, noteType, noteRot
         <Animated.View
           style={tw.style(
             [
-              'p-1 w-12  h-12 justify-center items-center shadow-lg shadow-slate-200 rounded-md m-0.5',
+              'p-1 w-11  h-11 justify-center items-center shadow-lg shadow-slate-200 rounded-md m-0.5',
               isNoteInScale ? 'border border-gray-400' : '',
               isNoteInScale ? (isRootNote ? 'bg-beigeCustom border border-zinc-600' : 'bg-creamLight') : 'bg-slate-200',
             ],

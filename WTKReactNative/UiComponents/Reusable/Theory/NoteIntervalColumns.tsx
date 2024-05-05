@@ -35,17 +35,11 @@ function NoteIntervalColumns({ selectedOption, intervalToFret }: NoteIntervalCol
   }
 
   return (
-    <GestureHandlerRootView style={tw.style(`flex justify-center items-center`)}>
-      <FlatList
-        horizontal={true}
-        style={tw.style('flex-row')}
-        contentContainerStyle={tw.style(``)}
-        data={Object.values(selectedOption?.notes ?? {})}
-        keyExtractor={(item, index) => index.toString()}
-        ItemSeparatorComponent={() => renderSeparator(2)}
-        renderItem={({ item, index }) => (
-          // Inside your renderItem function
+    <GestureHandlerRootView style={tw.style(`flex flex-wrap flex-row gap-2 justify-center items-center`)}>
+      {selectedOption?.notes.map((note, index) => {
+        return (
           <LongPressGestureHandler
+          key={`${note}-${index}`}
             onHandlerStateChange={({ nativeEvent }) => {
               if (
                 nativeEvent.state === State.END ||
@@ -77,17 +71,16 @@ function NoteIntervalColumns({ selectedOption, intervalToFret }: NoteIntervalCol
                   { opacity: opacities[index] },
                 ]}
               >
-                <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{item}</Text>
+                <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>{note}</Text>
                 <Text style={tw.style(' text-xl', { fontFamily: 'figtree-bold' })}>
                   {selectedOption?.intervals[index]}
                 </Text>
               </Animated.View>
             </TapGestureHandler>
           </LongPressGestureHandler>
-        )}
-      />
+        )
+      })}
     </GestureHandlerRootView>
   )
 }
-
 export default NoteIntervalColumns

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { FlatList, TouchableOpacity, Text, View, Animated } from 'react-native'
+import React from 'react'
+import { Text, Animated } from 'react-native'
 import tw from '../../../utils/config/tailwindRN'
 import { IntervalNames } from '../../../utils/formating/track-formating'
-import { renderSeparator } from '../Common/FlatListHelpers'
 import { useSounds } from '../../../utils/Context/SoundPlayer'
 import { scaleNotesAndIntervals } from '../../../utils/consts/scales-consts-types'
 import { FretNumber } from '../../../utils/consts/soundFilesTypes'
@@ -39,7 +38,7 @@ function NoteIntervalColumns({ selectedOption, intervalToFret }: NoteIntervalCol
       {selectedOption?.notes.map((note, index) => {
         return (
           <LongPressGestureHandler
-          key={`${note}-${index}`}
+            key={`${note}-${index}`}
             onHandlerStateChange={({ nativeEvent }) => {
               if (
                 nativeEvent.state === State.END ||
